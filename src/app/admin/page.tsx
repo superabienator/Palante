@@ -5,6 +5,7 @@ import Link from 'next/link';
 import reignsDeckData from '../../content/reignsDeck.json';
 import initialPendingCards from '../../content/pendingNewsCards.json';
 import { ReignsCard, SphereType } from '../../types/story';
+import { CharacterPortrait } from '../../components/CharacterPortrait';
 
 const STORAGE_ACTIVE_KEY = 'ibex35_admin_active_cards_v1';
 const STORAGE_PENDING_KEY = 'ibex35_admin_pending_cards_v1';
@@ -667,13 +668,22 @@ export default function AdminPage() {
                         )}
                       </div>
 
-                      {/* Interlocutor */}
-                      <div className="mb-2">
-                        <div className="text-xs font-black uppercase text-black">
-                          {card.speaker}
-                        </div>
-                        <div className="text-[11px] text-zinc-600 italic">
-                          {card.speakerRole}
+                      {/* Interlocutor con Retrato Fanzine */}
+                      <div className="flex items-center gap-2 mb-2">
+                        <CharacterPortrait
+                          speaker={card.speaker}
+                          speakerRole={card.speakerRole}
+                          alt={card.speaker}
+                          size="sm"
+                          className="w-10 h-10 min-w-[40px] min-h-[40px] shrink-0"
+                        />
+                        <div>
+                          <div className="text-xs font-black uppercase text-black leading-snug">
+                            {card.speaker}
+                          </div>
+                          <div className="text-[11px] text-zinc-600 italic">
+                            {card.speakerRole}
+                          </div>
                         </div>
                       </div>
 
@@ -808,8 +818,17 @@ export default function AdminPage() {
                         </span>
                       </div>
 
-                      <div className="text-xs font-bold text-zinc-600 uppercase">
-                        Interlocutor: <span className="text-black font-black">{card.speaker}</span> ({card.speakerRole})
+                      <div className="flex items-center gap-2">
+                        <CharacterPortrait
+                          speaker={card.speaker}
+                          speakerRole={card.speakerRole}
+                          alt={card.speaker}
+                          size="sm"
+                          className="w-10 h-10 min-w-[40px] min-h-[40px] shrink-0"
+                        />
+                        <div className="text-xs font-bold text-zinc-600 uppercase">
+                          Interlocutor: <span className="text-black font-black">{card.speaker}</span> ({card.speakerRole})
+                        </div>
                       </div>
                     </div>
 

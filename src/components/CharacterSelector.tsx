@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { ArchetypeId, SphereType } from '../types/story';
 import { useGameStore } from '../store/gameStore';
 import reignsDeckData from '../content/reignsDeck.json';
+import { CharacterPortrait } from './CharacterPortrait';
 
 interface SphereConfig {
   key: SphereType;
@@ -151,12 +152,21 @@ export function CharacterSelector() {
                   </span>
                 </div>
 
-                <h2 className="text-xl font-black uppercase text-black mb-1 leading-tight">
-                  {char.name}
-                </h2>
-
-                <div className="text-xs text-red-800 font-bold mb-3 italic">
-                  Inspiración: {char.realInspiration}
+                <div className="flex items-start gap-3 mb-3">
+                  <CharacterPortrait
+                    archetypeId={char.id}
+                    alt={char.name}
+                    size="md"
+                    className="shrink-0"
+                  />
+                  <div>
+                    <h2 className="text-lg sm:text-xl font-black uppercase text-black leading-tight mb-1">
+                      {char.name}
+                    </h2>
+                    <div className="text-xs text-red-800 font-bold italic">
+                      Inspiración: {char.realInspiration}
+                    </div>
+                  </div>
                 </div>
 
                 <p className="text-xs text-zinc-800 leading-relaxed mb-4 bg-white/60 p-2.5 border-l-3 border-black">

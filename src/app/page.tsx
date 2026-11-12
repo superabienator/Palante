@@ -5,6 +5,7 @@ import { StatsBar } from '../components/StatsBar';
 import { ReignsCard } from '../components/ReignsCard';
 import { CharacterSelector } from '../components/CharacterSelector';
 import { VerdictModal } from '../components/VerdictModal';
+import { CharacterPortrait } from '../components/CharacterPortrait';
 import { useGameStore } from '../store/gameStore';
 
 export default function HomePage() {
@@ -88,6 +89,12 @@ export default function HomePage() {
             {/* Barra Superior con Imputado Activo y Control */}
             <div className="flex flex-wrap items-center justify-between gap-3 border-2 border-black bg-stone-100 p-3 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
               <div className="flex items-center gap-2">
+                <CharacterPortrait
+                  archetypeId={characterProfile?.id}
+                  alt={characterProfile?.name || ''}
+                  size="sm"
+                  className="w-8 h-8 min-w-[32px] min-h-[32px]"
+                />
                 <span className="bg-black text-white px-2 py-0.5 text-xs font-black uppercase tracking-wider">
                   EN LA POLTRONA
                 </span>

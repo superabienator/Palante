@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, useMotionValue, useTransform, PanInfo } from 'framer-motion';
 import { useGameStore } from '../store/gameStore';
 import { ReignsCard as ReignsCardType } from '../types/story';
-import { CharacterAvatar } from './avatars/CharacterAvatar';
+import { CharacterPortrait } from './CharacterPortrait';
 
 export interface ReignsCardProps {
   card?: ReignsCardType | null;
@@ -159,14 +159,16 @@ export function ReignsCard({
             </div>
           </motion.div>
 
-          {/* Membrete Oficial, Avatar Satírico y Emisor */}
+          {/* Membrete Oficial, Retrato Satírico y Emisor */}
           <header className="border-b-2 border-black pb-3 mb-4 flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
-              <CharacterAvatar
+              <CharacterPortrait
                 speaker={card.speaker}
                 speakerRole={card.speakerRole}
+                alt={card.speaker}
                 isCrisis={isCrisis}
                 crisisType={crisisType}
+                size="md"
                 className="shrink-0"
               />
               <div>
