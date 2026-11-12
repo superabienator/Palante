@@ -22,8 +22,7 @@
 
 ---
 
-## Despliegue en Vercel
-- **Rama de Producción:** `main` (commit: `feat(core): Hito 6 - preparacion de produccion y optimizacion vercel`).
-- **Instrucción de Vinculación / Despliegue:**
-  - **Opción A (Git CI/CD):** Vincular este repositorio a GitHub (`git remote add origin <url>` y `git push -u origin main`). Vercel detecta Next.js automáticamente y despliega sin configuración adicional.
-  - **Opción B (Vercel CLI):** Ejecutar `npx vercel login` seguido de `npx vercel --prod`.
+## Repositorio Remoto y Despliegue en Vercel
+- **Repositorio GitHub:** [superabienator/Palante](https://github.com/superabienator/Palante)
+- **Rama de Producción:** `main` (rastreada en `origin/main`).
+- **Despliegue Automático Vercel:** Puedes vincular el proyecto directamente en [Vercel New Project](https://vercel.com/new/clone?repository-url=https://github.com/superabienator/Palante) con 1 clic para despliegue continuo en cada push a `main`.
