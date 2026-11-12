@@ -743,6 +743,60 @@
         }
       ],
       "ending": "FUGA_Y_PRESCRIPCION"
+    },
+    "nodo_ibex_puertas_giratorias": {
+      "id": "nodo_ibex_puertas_giratorias",
+      "archetypeId": "PASANTE_GIRATORIO",
+      "sphere": "EMPRESARIAL",
+      "headline": "EL CONSEJO DE ADMINISTRACIÓN DE LA ELÉCTRICA OFRECE BLINDAJE",
+      "context": "Has cesado como ministro de Energía. En el reservado del Club Financiero te ofrecen la presidencia de la comisión de retribuciones de la multinacional energética: trescientos mil euros de sueldo fijo y coche oficial blindado a cambio de frenar la reforma del mercado eléctrico.",
+      "evidenceDocument": "Borrador de acta de nombramiento de consejero independiente con cláusula de confidencialidad reforzada.",
+      "choices": [
+        {
+          "id": "c_ibex_1",
+          "label": "Aceptar el sillón de consejero y brindar con champán en el palco de honor",
+          "flavorQuote": "Un exministro no hace cola en el paro; el Estado lo forma y el IBEX se lo queda.",
+          "mechanicId": 40,
+          "modifiers": { "pastaEnB": 25, "presionJudicial": -15, "impunidad": 30 },
+          "nextNodeId": "proconsul_fin_ibex"
+        },
+        {
+          "id": "c_ibex_2",
+          "label": "Rechazar la oferta y fundar una consultora de relaciones institucionales para cobrar en Suiza",
+          "flavorQuote": "Desde fuera del consejo se factura el triple por redactar informes de dos folios.",
+          "mechanicId": 34,
+          "modifiers": { "pastaEnB": 20, "presionJudicial": -20, "impunidad": 25 },
+          "nextNodeId": "proconsul_fin_sobreseimiento"
+        }
+      ],
+      "ending": "CONSEJO_IBEX"
+    },
+    "nodo_paesa_falsa_muerte_bangkok": {
+      "id": "nodo_paesa_falsa_muerte_bangkok",
+      "archetypeId": "DIFUNTO_CONVENIENCIA",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "PUBLICAR LA ESQUELA EN 'EL PAÍS' Y DESAPARECER EN BANGKOK",
+      "context": "La Audiencia Nacional y la Guardia Civil cercan tu paradero tras la entrega de los fondos reservados. Tu sobrino en Luxemburgo tiene listos los certificados médicos tailandeses y la esquela en prensa: o te mueres oficialmente en el periódico o ingresas en Soto del Real.",
+      "evidenceDocument": "Certificado médico de defunción de Bangkok y recorte de necrológica publicado en el diario El País.",
+      "choices": [
+        {
+          "id": "c_paesa_1",
+          "label": "Celebrar el funeral ficticio y reaparecer con pasaporte diplomático en Ginebra",
+          "flavorQuote": "Nadie juzga a un muerto; se publican las misas en Madrid y nos quedamos con el botín de los cuarteles.",
+          "mechanicId": 32,
+          "modifiers": { "pastaEnB": 35, "presionJudicial": -40, "impunidad": 45 },
+          "nextNodeId": "proconsul_fin_sobreseimiento"
+        },
+        {
+          "id": "c_paesa_2",
+          "label": "Cobrar la prima de indemnización estatal y fugarse a una residencia en París",
+          "flavorQuote": "España es un país formidable: te aplauden en el cine y la justicia no puede tocarte.",
+          "mechanicId": 18,
+          "modifiers": { "pastaEnB": 30, "presionJudicial": -35, "impunidad": 40 },
+          "nextNodeId": "nodo_inicio_proconsul"
+        }
+      ],
+      "ending": "FUGA_Y_PRESCRIPCION"
     }
   }
 }

@@ -226,5 +226,149 @@
       "grantedFlags": ["VIRAL_MINISTRO_ROTONDA"]
     },
     "requiredFlags": []
+  },
+  {
+    "id": "VIRAL_IBEX_PUERTA_GIRATORIA_BOE",
+    "speaker": "El Corresponsal de Economía",
+    "speakerRole": "Analista de Mercados en la Castellana",
+    "sphere": "EMPRESARIAL",
+    "headline": "EL MINISTRO DE INDUSTRIA CESADO AYER YA TIENE DESPACHO EN EL CONSEJO DEL IBEX",
+    "context": "La tinta del BOE que publica su cese como ministro aún está fresca cuando la Comisión Nacional del Mercado de Valores comunica su fichaje como consejero de la multinacional energética privatizada.",
+    "evidenceDocument": "Hecho relevante remitido a la CNMV con la comunicación formal de nombramiento de consejero independiente.",
+    "leftChoice": {
+      "id": "c_ibex_v1_1",
+      "label": "Defender que la experiencia de Estado aporta seguridad jurídica a las inversiones",
+      "stampText": "SEGURIDAD",
+      "flavorQuote": "En las democracias anglosajonas el trasvase entre lo público y lo privado se premia como valor cívico.",
+      "modifiers": {
+        "pastaEnB": 15,
+        "presionJudicial": -5,
+        "impunidad": 15,
+        "reputacionMediatica": -15
+      },
+      "grantedFlags": ["VIRAL_PUERTA_DEFENDIDA"]
+    },
+    "rightChoice": {
+      "id": "c_ibex_v1_2",
+      "label": "Filtrar que asesorará de forma no remunerada a la fundación filantrópica de la entidad",
+      "stampText": "FILANTROPÍA",
+      "flavorQuote": "Decimos que solo cobrará las dietas del patronato cultural y cobramos el grueso a través de una sociedad instrumental.",
+      "modifiers": {
+        "pastaEnB": 10,
+        "presionJudicial": -10,
+        "impunidad": 10,
+        "reputacionMediatica": 10
+      },
+      "grantedFlags": ["VIRAL_FILANTROPIA_CAMUFLADA"]
+    },
+    "requiredFlags": []
+  },
+  {
+    "id": "VIRAL_IBEX_CAMPANITA_BANKIA",
+    "speaker": "El Cronista de la Bolsa de Madrid",
+    "speakerRole": "Reportero del Parqué Financiero",
+    "sphere": "EMPRESARIAL",
+    "headline": "¿TOQUE DE CAMPANA O FUNERAL BURSÁTIL? DEBUT DE LAS CAJAS EN EL MERCADO",
+    "context": "La fusión de las siete cajas de ahorros debuta en el parqué con reparto de bufandas con el logotipo corporativo y copas de cava, mientras la prima de riesgo bate récords históricos en las pantallas electrónicas.",
+    "evidenceDocument": "Fotografía en portada con el presidente de la entidad tocando la campana de bronce con un ramo de claveles.",
+    "leftChoice": {
+      "id": "c_campanita_1",
+      "label": "Brindar ante las cámaras y anunciar que la acción superará los diez euros en un año",
+      "stampText": "EUFORIA",
+      "flavorQuote": "La salida a bolsa es un éxito patriótico incontestable; los analistas pesimistas no creen en España.",
+      "modifiers": {
+        "pastaEnB": 15,
+        "presionJudicial": 10,
+        "impunidad": 15,
+        "reputacionMediatica": 15
+      },
+      "grantedFlags": ["VIRAL_CAMPANITA_EUFORICA"]
+    },
+    "rightChoice": {
+      "id": "c_campanita_2",
+      "label": "Salir por la puerta de servicio del parqué esquivando las preguntas de los corresponsales",
+      "stampText": "MUTIS",
+      "flavorQuote": "Cuanto menos hablemos de los balances y de las tasaciones inmobiliarias, más tardará en pinchar la cotización.",
+      "modifiers": {
+        "pastaEnB": 5,
+        "presionJudicial": -5,
+        "impunidad": 10,
+        "reputacionMediatica": -10
+      },
+      "grantedFlags": ["VIRAL_SALIDA_DISCRETA"]
+    },
+    "requiredFlags": []
+  },
+  {
+    "id": "VIRAL_PAESA_ESQUELA_RESURRECCION",
+    "speaker": "El Fotógrafo de la Agencia Parisina",
+    "speakerRole": "Paparazzi de los Muertos Vivientes",
+    "sphere": "ORDEN_JUSTICIA",
+    "headline": "¿EL MUERTO ESTÁ VIVO? PAESA ES CAZADO COMIENDO OSTRAS Y CHAMPÁN EN PARÍS",
+    "context": "Siete años después de publicarse su esquela de defunción por paro cardíaco en Bangkok en El País, una agencia de detectives fotografía al espía paseando por el bulevar Saint-Germain con abrigo de cachemira y reloj de oro.",
+    "evidenceDocument": "Teleobjetivo de portada con Paesa saliendo de una pastelería de lujo en la rue O'Donnell de París.",
+    "leftChoice": {
+      "id": "c_paesa_v1_1",
+      "label": "Declarar a la prensa que los delitos han prescrito y brindar por la picaresca española",
+      "stampText": "PRESCRIPCIÓN",
+      "flavorQuote": "Un muerto viviente no tiene cuentas pendientes con el juzgado; las querellas prescribieron por defunción.",
+      "modifiers": {
+        "pastaEnB": 20,
+        "presionJudicial": -20,
+        "impunidad": 30,
+        "reputacionMediatica": 25
+      },
+      "grantedFlags": ["VIRAL_PAESA_CONFIRMADO"]
+    },
+    "rightChoice": {
+      "id": "c_paesa_v1_2",
+      "label": "Asegurar que se trata de un hermano gemelo desconocido que vive retirado",
+      "stampText": "HERMANO GEMELO",
+      "flavorQuote": "Todo el mundo tiene un doble en este mundo; en Chamberí éramos dos gotas de agua.",
+      "modifiers": {
+        "pastaEnB": 10,
+        "presionJudicial": 10,
+        "impunidad": 15,
+        "reputacionMediatica": -15
+      },
+      "grantedFlags": ["VIRAL_PAESA_GEMELO"]
+    },
+    "requiredFlags": []
+  },
+  {
+    "id": "VIRAL_PAESA_PAPELES_LAOS",
+    "speaker": "El Cronista Parlamentario de Cortes",
+    "speakerRole": "Voz de la Tribuna del Congreso",
+    "sphere": "POLITICA",
+    "headline": "EL TIMO DE LOS PAPELES DE LAOS: EL MINISTRO COMPARECE TRAS EL ENGAÑO DEL ESPÍA",
+    "context": "El Congreso de los Diputados vive una jornada de máxima tensión: se descubre que la extradición del exdirector de la Guardia Civil se basó en sellos laosianos falsificados con tinta china por el propio espía para cobrar la recompensa estatal.",
+    "evidenceDocument": "Diario de Sesiones del Congreso con petición urgente de dimisión del ministro del Interior.",
+    "leftChoice": {
+      "id": "c_paesa_v2_1",
+      "label": "Alegar razón de Estado y clasificar los expedientes de extradición como Alto Secreto",
+      "stampText": "ALTO SECRETO",
+      "flavorQuote": "En las operaciones especiales no se miran los visados; lo importante es que el reo duerme en prisión.",
+      "modifiers": {
+        "pastaEnB": -5,
+        "presionJudicial": -15,
+        "impunidad": 25,
+        "reputacionMediatica": -20
+      },
+      "grantedFlags": ["VIRAL_LAOS_SECRETO_ESTADO"]
+    },
+    "rightChoice": {
+      "id": "c_paesa_v2_2",
+      "label": "Cesarse mutuamente las culpas entre Interior y Asuntos Exteriores",
+      "stampText": "BALONES FUERA",
+      "flavorQuote": "La culpa de validar el pasaporte es de los diplomáticos; nosotros solo pusimos el avión de vuelta.",
+      "modifiers": {
+        "pastaEnB": 0,
+        "presionJudicial": 10,
+        "impunidad": -10,
+        "reputacionMediatica": 10
+      },
+      "grantedFlags": ["VIRAL_BALONES_FUERA"]
+    },
+    "requiredFlags": []
   }
 ]

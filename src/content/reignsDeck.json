@@ -4581,6 +4581,1290 @@
       "requiredFlags": [
         "exilio_dorado_monaco"
       ]
+    },
+    {
+      "id": "saga_ibex_01_privatizacion_joyas",
+      "speaker": "Carlos Solchaga",
+      "speakerRole": "El Ministro de la Beautiful People",
+      "sphere": "POLITICA",
+      "headline": "VENTA DE EMPRESAS PÚBLICAS: 'ESPAÑA ES EL PAÍS DONDE ES MÁS FÁCIL HACERSE RICO'",
+      "context": "El Gobierno inicia la desinversión masiva de los monopolios industriales del Estado. Los bancos y las familias del viejo régimen compiten en los despachos ministeriales por hacerse con las eléctricas, las telecomunicaciones y la petrolera pública a precio de saldo.",
+      "evidenceDocument": "Decreto de liberalización del sector público industrial y listado de adjudicatarios de ofertas públicas de venta.",
+      "leftChoice": {
+        "label": "Adjudicar los lotes a las grandes constructoras y bancos afines al Gobierno",
+        "stampText": "PRIVATIZAR",
+        "flavorQuote": "La riqueza ni se crea ni se destruye, sólo cambia de bolsillo hacia la gente bien.",
+        "mechanicId": 37,
+        "modifiers": {
+          "pastaEnB": 20,
+          "presionJudicial": -5,
+          "impunidad": 15,
+          "reputacionMediatica": -10
+        },
+        "grantedFlags": [
+          "IBEX_PRIVATIZACIONES_INICIADAS"
+        ]
+      },
+      "rightChoice": {
+        "label": "Vender las acciones a fondos soberanos internacionales para recaudar divisas frescas",
+        "stampText": "CAPITAL FORÁNEO",
+        "flavorQuote": "Metemos a los fondos de Wall Street en el accionariado y nos aseguramos el aplauso de Bruselas.",
+        "mechanicId": 6,
+        "modifiers": {
+          "pastaEnB": 10,
+          "presionJudicial": -10,
+          "impunidad": 10,
+          "reputacionMediatica": 15
+        },
+        "grantedFlags": [
+          "IBEX_FONDOS_EXTRANJEROS"
+        ]
+      },
+      "weight": 3,
+      "requiredFlags": []
+    },
+    {
+      "id": "saga_ibex_02_puerta_giratoria_ministro",
+      "speaker": "Don Eduardo",
+      "speakerRole": "El Pasante Giratorio Multiministerial",
+      "sphere": "POLITICA",
+      "headline": "DEL CONSEJO DE MINISTROS AL CONSEJO DE ADMINISTRACIÓN DE LA ELÉCTRICA",
+      "context": "Acabas de cesar como ministro de Industria y Energía. Al día siguiente de publicarse tu cese en el BOE, el presidente de la mayor eléctrica privatizada te ofrece un sillón de consejero independiente con trescientos mil euros de sueldo fijo y chófer con cristales blindados.",
+      "evidenceDocument": "Acta de la junta general de accionistas aprobando el nombramiento de exministros en el consejo de administración.",
+      "leftChoice": {
+        "label": "Aceptar el sillón de consejero y cobrar dietas vitalicias por asistir a dos reuniones al año",
+        "stampText": "GIRAR PUERTA",
+        "flavorQuote": "Un exministro no puede estar en la cola del paro; el Estado lo forma y el IBEX se lo queda.",
+        "mechanicId": 40,
+        "modifiers": {
+          "pastaEnB": 15,
+          "presionJudicial": -10,
+          "impunidad": 20,
+          "reputacionMediatica": -15
+        },
+        "grantedFlags": [
+          "IBEX_PUERTA_GIRATORIA_CONSUMADA"
+        ]
+      },
+      "rightChoice": {
+        "label": "Fundar una consultora de relaciones institucionales para cobrar minutas millonarias en B",
+        "stampText": "CONSULTORÍA",
+        "flavorQuote": "Desde fuera del consejo se factura el triple por redactar informes de dos páginas que nadie lee.",
+        "mechanicId": 34,
+        "modifiers": {
+          "pastaEnB": 25,
+          "presionJudicial": 10,
+          "impunidad": 10,
+          "reputacionMediatica": 10
+        },
+        "grantedFlags": [
+          "IBEX_CONSULTORIA_LOBBY"
+        ]
+      },
+      "weight": 3,
+      "requiredFlags": [
+        "IBEX_PRIVATIZACIONES_INICIADAS"
+      ]
+    },
+    {
+      "id": "saga_ibex_03_palco_bernabeu_pacto",
+      "speaker": "El Presidente del Palco",
+      "speakerRole": "El Patriarca de la Obra y el Deporte",
+      "sphere": "EMPRESARIAL",
+      "headline": "EL BESAMANOS DEL PALCO: LICITACIONES MILLONARIAS EN EL DESCANSO DEL PARTIDO",
+      "context": "En el descanso de un partido de Champions se congregan tres ministros, dos magistrados de la Sala Segunda del Tribunal Supremo y los cinco grandes constructores de España. Entre canapés de ibérico y copas de champán, se pacta el reparto de la contrata de alta velocidad.",
+      "evidenceDocument": "Listado confidencial de protocolo del palco de honor con asientos asignados a altos cargos de la administración.",
+      "leftChoice": {
+        "label": "Pactar el reparto de los tramos del AVE al 25% para cada una de las cuatro grandes",
+        "stampText": "REPARTO CÁRTEL",
+        "flavorQuote": "Aquí no venimos a ver fútbol; venimos a evitar que una licitación pública baje de precio por competir.",
+        "mechanicId": 38,
+        "modifiers": {
+          "pastaEnB": 20,
+          "presionJudicial": 12,
+          "impunidad": 15,
+          "reputacionMediatica": -10
+        },
+        "grantedFlags": [
+          "IBEX_CARTEL_OBRA_PACTADO"
+        ]
+      },
+      "rightChoice": {
+        "label": "Exigir una donación extraordinaria de campaña para la sede central del partido",
+        "stampText": "MORDIDA SEDE",
+        "flavorQuote": "Quien quiera hormigón en la alta velocidad tiene que colaborar con los gastos electorales de la casa.",
+        "mechanicId": 7,
+        "modifiers": {
+          "pastaEnB": 25,
+          "presionJudicial": 15,
+          "impunidad": 10,
+          "reputacionMediatica": -15
+        },
+        "grantedFlags": [
+          "IBEX_MORDIDA_SEDE_COBRADA"
+        ]
+      },
+      "weight": 3,
+      "requiredFlags": [
+        "IBEX_PUERTA_GIRATORIA_CONSUMADA"
+      ]
+    },
+    {
+      "id": "saga_ibex_04_rescate_radiales_rpa",
+      "speaker": "El Abogado del Estado en Excedencia",
+      "speakerRole": "Secretario General de la Concesionaria",
+      "sphere": "EMPRESARIAL",
+      "headline": "QUIEBRAN LAS AUTOPISTAS RADIALES: EL ESTADO DEBE PAGAR 4.500 MILLONES DE RESCATE",
+      "context": "Las autopistas de peaje de acceso a Madrid están vacías; nadie usa las radiales habiendo autovías gratuitas al lado. La constructora entra en concurso de acreedores y exige activar la cláusula de Responsabilidad Patrimonial de la Administración (RPA) blindada en el BOE.",
+      "evidenceDocument": "Cláusula 14 del pliego de condiciones de adjudicación de las autopistas R-3 y R-5 garantizando el pago íntegro de la inversión.",
+      "leftChoice": {
+        "label": "Abonar los 4.500 millones con cargo a la deuda pública nacional sin rechistar",
+        "stampText": "PAGAR RESCATE",
+        "flavorQuote": "Las pérdidas se socializan en los presupuestos del Estado; la seguridad jurídica del capital es innegociable.",
+        "mechanicId": 4,
+        "modifiers": {
+          "pastaEnB": -10,
+          "presionJudicial": -10,
+          "impunidad": 25,
+          "reputacionMediatica": -25
+        },
+        "grantedFlags": [
+          "IBEX_RADIALES_RESCATADAS"
+        ]
+      },
+      "rightChoice": {
+        "label": "Prorrogar las concesiones treinta años más y permitir que instalen casinos en los peajes",
+        "stampText": "PRÓRROGA",
+        "flavorQuote": "Les regalamos treinta años más de concesión y así el agujero presupuestario se lo come el próximo gobierno.",
+        "mechanicId": 20,
+        "modifiers": {
+          "pastaEnB": 15,
+          "presionJudicial": 10,
+          "impunidad": 10,
+          "reputacionMediatica": 10
+        },
+        "grantedFlags": [
+          "IBEX_CONCESION_PRORROGADA"
+        ]
+      },
+      "weight": 2,
+      "requiredFlags": [
+        "IBEX_CARTEL_OBRA_PACTADO"
+      ]
+    },
+    {
+      "id": "saga_ibex_05_opa_electrica_italiana",
+      "speaker": "Don Borja",
+      "speakerRole": "El Fiduciario del Holding Energético",
+      "sphere": "EMPRESARIAL",
+      "headline": "LA GUERRA DE LAS ELÉCTRICAS: VENDER ENDESA A LOS ITALIANOS DE ENEL",
+      "context": "Gas Natural intentó una OPA hostil con apoyo de Moncloa. Para evitar que la sede de la eléctrica se traslade a Barcelona, la presidencia de la compañía llama a la empresa pública italiana Enel, pagando un dividendo extraordinario multimillonario que vacía la caja.",
+      "evidenceDocument": "Pacto parasocial de accionistas entre la pública italiana Enel y la constructora española para repartirse el monopolio eléctrico.",
+      "leftChoice": {
+        "label": "Entregar la eléctrica a Enel y cobrar una indemnización blindada de 18 millones de euros",
+        "stampText": "BLINDAJE DE ORO",
+        "flavorQuote": "Mejor italianos que catalanes; cobramos el bonus de salida y nos retiramos a una finca en Extremadura.",
+        "mechanicId": 20,
+        "modifiers": {
+          "pastaEnB": 25,
+          "presionJudicial": -5,
+          "impunidad": 20,
+          "reputacionMediatica": -20
+        },
+        "grantedFlags": [
+          "IBEX_ENDESA_VENDIDA_ENEL"
+        ]
+      },
+      "rightChoice": {
+        "label": "Promover una contraopa con el gigante alemán E.ON para internacionalizar el conflicto",
+        "stampText": "E.ON",
+        "flavorQuote": "Llamamos a los alemanes y convertimos la OPA en un pulso geopolítico en la Comisión Europea.",
+        "mechanicId": 6,
+        "modifiers": {
+          "pastaEnB": 10,
+          "presionJudicial": 10,
+          "impunidad": 15,
+          "reputacionMediatica": 5
+        },
+        "grantedFlags": [
+          "IBEX_OPA_ALEMANA_ACTIVA"
+        ]
+      },
+      "weight": 2,
+      "requiredFlags": [
+        "IBEX_RADIALES_RESCATADAS"
+      ]
+    },
+    {
+      "id": "saga_ibex_06_enmienda_telefonica",
+      "speaker": "El Consejero Delegado de Telecomunicaciones",
+      "speakerRole": "El Virrey de las Frecuencias",
+      "sphere": "POLITICA",
+      "headline": "LA ENMIENDA TELEFÓNICA: 6.500 PREJUBILACIONES CON BENEFICIOS RÉCORD",
+      "context": "La mayor teleco del país anuncia los mayores beneficios de su historia (10.000 millones de euros) y, en la misma semana, tramita un ERE para prejubilar a 6.500 empleados mayores de 50 años a cuenta del subsidio público de desempleo. El Parlamento amenaza con una tasa correctora.",
+      "evidenceDocument": "Texto de enmienda a la Ley de la Seguridad Social para obligar a empresas con beneficios a compensar el desempleo.",
+      "leftChoice": {
+        "label": "Presionar a los portavoces del Congreso para rebajar la tasa de prejubilaciones al mínimo",
+        "stampText": "REBAJAR TASA",
+        "flavorQuote": "A los portavoces parlamentarios les recordamos las líneas de crédito abiertas que tienen sus partidos con nuestra matriz.",
+        "mechanicId": 40,
+        "modifiers": {
+          "pastaEnB": 15,
+          "presionJudicial": -10,
+          "impunidad": 20,
+          "reputacionMediatica": -15
+        },
+        "grantedFlags": [
+          "IBEX_ENMIENDA_DULCIFICADA"
+        ]
+      },
+      "rightChoice": {
+        "label": "Pagar la tasa completa pero compensarla aumentando el precio de las tarifas de fibra óptica",
+        "stampText": "SUBIR TARIFAS",
+        "flavorQuote": "El Estado nos cobra una tasa y nosotros se la repercutimos a veinte millones de abonados en la factura del lunes.",
+        "mechanicId": 38,
+        "modifiers": {
+          "pastaEnB": 20,
+          "presionJudicial": 5,
+          "impunidad": 10,
+          "reputacionMediatica": -20
+        },
+        "grantedFlags": [
+          "IBEX_TARIFAS_REPERCUTIDAS"
+        ]
+      },
+      "weight": 2,
+      "requiredFlags": [
+        "IBEX_ENDESA_VENDIDA_ENEL"
+      ]
+    },
+    {
+      "id": "saga_ibex_07_contratas_basuras_urbaser",
+      "speaker": "El Magnate de los Servicios Urbanos",
+      "speakerRole": "El Rey de los Contenedores y Vertederos",
+      "sphere": "EMPRESARIAL",
+      "headline": "CONTRATO DE LIMPIEZA DE LA CAPITAL: 687 MILLONES REPARTIDOS ENTRE LAS SEIS GRANDES",
+      "context": "El megacontrato de recogida de residuos de la capital sale a concurso. Las seis grandes constructoras del IBEX presentan ofertas pactadas para repartirse la ciudad por distritos sin competir en precios ni bajarse un solo euro del margen de beneficio.",
+      "evidenceDocument": "Informe de la Comisión Nacional de los Mercados y la Competencia (CNMC) multando el cártel de las basuras.",
+      "leftChoice": {
+        "label": "Firmar la adjudicación fraccionada entre las seis constructoras y recurrir la multa de la CNMC",
+        "stampText": "REPARTO CÁRTEL",
+        "flavorQuote": "La multa de Competencia se recurre en la Audiencia Nacional y tarda doce años en resolverse; mientras, cobramos la basura.",
+        "mechanicId": 14,
+        "modifiers": {
+          "pastaEnB": 20,
+          "presionJudicial": 12,
+          "impunidad": 15,
+          "reputacionMediatica": -15
+        },
+        "grantedFlags": [
+          "IBEX_BASURAS_REPARTIDAS"
+        ]
+      },
+      "rightChoice": {
+        "label": "Municipalizar una parte simbólica del servicio para calmar a las asociaciones vecinales",
+        "stampText": "MUNICIPALIZAR",
+        "flavorQuote": "Les dejamos barrer dos plazas peatonales para que presuman de izquierdas y nosotros nos quedamos con los residuos pesados.",
+        "mechanicId": 25,
+        "modifiers": {
+          "pastaEnB": -10,
+          "presionJudicial": -8,
+          "impunidad": 10,
+          "reputacionMediatica": 15
+        },
+        "grantedFlags": [
+          "IBEX_BASURAS_PACTO_MUNICIPAL"
+        ]
+      },
+      "weight": 2,
+      "requiredFlags": [
+        "IBEX_ENMIENDA_DULCIFICADA"
+      ]
+    },
+    {
+      "id": "saga_ibex_08_fondos_buitre_invesco",
+      "speaker": "El Gestor del Fondo Angloamericano",
+      "speakerRole": "El Enviado de la City y Wall Street",
+      "sphere": "EMPRESARIAL",
+      "headline": "LOS FONDOS BUITRE ENTRAN EN EL CAPITAL: EXIGEN EL DESPIDO DEL 30% DE LA PLANTILLA",
+      "context": "El fondo de inversión neoyorquino ha comprado el 15% de la constructora en la bolsa de Londres. Su representante se presenta en el consejo exigiendo recortar 5.000 empleos y vender las filiales latinoamericanas para pagar dividendos trimestrales récord.",
+      "evidenceDocument": "Burofax de advertencia accionarial amenazando con bloquear la junta general y destituir al consejo de administración.",
+      "leftChoice": {
+        "label": "Ejecutar el ERE masivo y pagar el dividendo extraordinario que exige Wall Street",
+        "stampText": "DIVIDENDO ERE",
+        "flavorQuote": "El mercado no tiene sentimientos patrios; a los fondos se les entrega la rentabilidad prometida o te hunden la cotización.",
+        "mechanicId": 38,
+        "modifiers": {
+          "pastaEnB": 25,
+          "presionJudicial": 5,
+          "impunidad": 10,
+          "reputacionMediatica": -25
+        },
+        "grantedFlags": [
+          "IBEX_FONDOS_COMPLACIDOS"
+        ]
+      },
+      "rightChoice": {
+        "label": "Pedir protección al Gobierno central declarando a la empresa 'activo estratégico de seguridad nacional'",
+        "stampText": "ESCUDO ESTATAL",
+        "flavorQuote": "El Consejo de Ministros aprueba un decreto anti-OPA y dejamos a los fondos con las ganas de desguazarnos.",
+        "mechanicId": 40,
+        "modifiers": {
+          "pastaEnB": -12,
+          "presionJudicial": -10,
+          "impunidad": 25,
+          "reputacionMediatica": 15
+        },
+        "grantedFlags": [
+          "IBEX_ESCUDO_NACIONAL_ACTIVADO"
+        ]
+      },
+      "weight": 2,
+      "requiredFlags": [
+        "IBEX_BASURAS_REPARTIDAS"
+      ]
+    },
+    {
+      "id": "saga_ibex_09_quiebra_martinsa_fadesa",
+      "speaker": "El Gran Promotor Inmobiliario",
+      "speakerRole": "El Gigante del Ladrillo Cotizado",
+      "sphere": "EMPRESARIAL",
+      "headline": "EL COLAPSO DEL LADRILLO: MARTINSA-FADESA ENTRA EN EL MAYOR CONCURSO DE LA HISTORIA",
+      "context": "La mayor inmobiliaria cotizada del país no puede devolver los 7.000 millones de deuda a los bancos. Es la primera y única gran corporación del IBEX que se declara en quiebra tras el pinchazo de la burbuja, arrastrando a miles de acreedores.",
+      "evidenceDocument": "Auto judicial del Juzgado de lo Mercantil número 1 de A Coruña admitiendo a trámite el concurso de acreedores de 7.000 millones.",
+      "leftChoice": {
+        "label": "Traspasar los activos inmobiliarios tóxicos al banco público SAREB para que pague el Estado",
+        "stampText": "AL BANCO MALO",
+        "flavorQuote": "El suelo rústico sobrevalorado y los esqueletos de hormigón se los queda la SAREB con dinero de todos los españoles.",
+        "mechanicId": 24,
+        "modifiers": {
+          "pastaEnB": 15,
+          "presionJudicial": 10,
+          "impunidad": 20,
+          "reputacionMediatica": -20
+        },
+        "grantedFlags": [
+          "IBEX_TOXICOS_EN_SAREB"
+        ]
+      },
+      "rightChoice": {
+        "label": "Reestructurar la deuda canjeándola por acciones sin valor para pillar a los pequeños accionistas",
+        "stampText": "DILUIR",
+        "flavorQuote": "Los pequeños ahorradores que compraron acciones con la pensión se quedan a cero; los créditos gordos se renegocian.",
+        "mechanicId": 24,
+        "modifiers": {
+          "pastaEnB": 10,
+          "presionJudicial": 15,
+          "impunidad": 5,
+          "reputacionMediatica": -25
+        },
+        "grantedFlags": [
+          "IBEX_ACCIONISTAS_ATRAPADOS"
+        ]
+      },
+      "weight": 2,
+      "requiredFlags": [
+        "IBEX_FONDOS_COMPLACIDOS"
+      ]
+    },
+    {
+      "id": "saga_ibex_10_climax_consejo_vitalicio",
+      "speaker": "Don Florentino del Selectivo",
+      "speakerRole": "El Emperador de las Licitaciones",
+      "sphere": "EMPRESARIAL",
+      "headline": "CLÍMAX DEL IBEX: SILLÓN VITALICIO EN EL SELECTIVO O CONDENA POR CÁRTEL",
+      "context": "Tras treinta años de privatizaciones, contratas infladas, rescates con dinero público y puertas giratorias, se reúne la cumbre anual del empresariado en el palacio de la Castellana. O te consagras como presidente vitalicio de una corporación del IBEX 35 con blindaje del Estado, o Competencia y Anticorrupción te llevan al banquillo.",
+      "evidenceDocument": "Contrato de blindaje societario vitalicio con cláusula de indemnización de treinta millones y seguro de responsabilidad D&O.",
+      "leftChoice": {
+        "label": "Firmar el blindaje vitalicio y brindar con champagne en el palco de honor",
+        "stampText": "GLORIA IBEX",
+        "flavorQuote": "Los gobiernos caen, los partidos se hunden, pero el consejo del IBEX gobierna España eternamente.",
+        "mechanicId": 40,
+        "modifiers": {
+          "pastaEnB": 30,
+          "presionJudicial": -20,
+          "impunidad": 30,
+          "reputacionMediatica": 20
+        },
+        "grantedFlags": [
+          "IBEX_TRIUNFO_HISTORICO"
+        ]
+      },
+      "rightChoice": {
+        "label": "Desviar las plusvalías a fundaciones patrimoniales en Suiza y retirarse a una isla privada",
+        "stampText": "ISLA PRIVADA",
+        "flavorQuote": "El juego ha terminado; con trescientos millones en Ginebra que vengan los inspectores a buscarme al Caribe.",
+        "mechanicId": 31,
+        "modifiers": {
+          "pastaEnB": 25,
+          "presionJudicial": -30,
+          "impunidad": 35,
+          "reputacionMediatica": -30
+        },
+        "grantedFlags": [
+          "IBEX_RETIRO_CARIBE"
+        ]
+      },
+      "weight": 1,
+      "requiredFlags": [
+        "IBEX_TOXICOS_EN_SAREB"
+      ]
+    },
+    {
+      "id": "saga_cajas_01_politizacion_consejos",
+      "speaker": "El Presidente de la Caja Autonómica",
+      "speakerRole": "El Banquero Político de Cabecera",
+      "sphere": "POLITICA",
+      "headline": "LA ASAMBLEA GENERAL DE LA CAJA: POLÍTICOS Y SINDICATOS SE REPARTEN EL CONSEJO",
+      "context": "El Parlamento autonómico vota el nuevo consejo de administración de la caja de ahorros pública. Diputados, exalcaldes de pueblos pequeños y delegados sindicales copan los asientos de la entidad bancaria sin tener conocimientos financieros básicos.",
+      "evidenceDocument": "Acta de la asamblea general de la caja con el reparto por cuotas de partido de los sillones del consejo de administración.",
+      "leftChoice": {
+        "label": "Repartir las comisiones del consejo y aprobar dietas de doce mil euros mensuales por vocal",
+        "stampText": "DIETAS ORO",
+        "flavorQuote": "A los vocales de la oposición se les paga el doble de dieta y así votan a favor de cualquier crédito inmobiliario.",
+        "mechanicId": 23,
+        "modifiers": {
+          "pastaEnB": 15,
+          "presionJudicial": 5,
+          "impunidad": 15,
+          "reputacionMediatica": -10
+        },
+        "grantedFlags": [
+          "CAJAS_CONSEJO_REPARTIDO"
+        ]
+      },
+      "rightChoice": {
+        "label": "Nombrar a técnicos independientes y resistir las presiones del presidente autonómico",
+        "stampText": "TÉCNICOS",
+        "flavorQuote": "Si ponemos a técnicos rigurosos nos cierran el grifo de los créditos de la caja para la campaña electoral.",
+        "mechanicId": 40,
+        "modifiers": {
+          "pastaEnB": -10,
+          "presionJudicial": -10,
+          "impunidad": 5,
+          "reputacionMediatica": 15
+        },
+        "grantedFlags": [
+          "CAJAS_TECNICOS_AISLADOS"
+        ]
+      },
+      "weight": 3,
+      "requiredFlags": []
+    },
+    {
+      "id": "saga_cajas_02_credito_parque_tematico",
+      "speaker": "El Consejero de Urbanismo Autonómico",
+      "speakerRole": "El Padrino de los Megaproyectos",
+      "sphere": "POLITICA",
+      "headline": "CRÉDITO DE 400 MILLONES A FONDO PERDIDO PARA EL PARQUE TEMÁTICO EN EL DESIERTO",
+      "context": "El gobierno regional exige a la caja que financie la construcción de un parque temático de atracciones con réplicas de pirámides egipcias en mitad de un secarral. Ningún banco comercial privado ha querido poner un euro porque el plan de negocio es una ruina.",
+      "evidenceDocument": "Informe de riesgo del comité de crédito tachado con un bolígrafo rojo y la palabra «APROBAR POR INTERÉS REGIONAL».",
+      "leftChoice": {
+        "label": "Aprobar el crédito de 400 millones saltándose los controles de solvencia",
+        "stampText": "APROBAR",
+        "flavorQuote": "Para eso la caja es pública; si el parque quiebra, la factura del agujero la cubrirán los contribuyentes.",
+        "mechanicId": 1,
+        "modifiers": {
+          "pastaEnB": 20,
+          "presionJudicial": 12,
+          "impunidad": 10,
+          "reputacionMediatica": -15
+        },
+        "grantedFlags": [
+          "CAJAS_PARQUE_FINANCIADO"
+        ]
+      },
+      "rightChoice": {
+        "label": "Exigir avales personales al presidente autonómico y a los constructores amigos",
+        "stampText": "AVALES",
+        "flavorQuote": "A estos jerarcas les pides que pongan su patrimonio por delante y se les quitan las ganas de montar pirámides.",
+        "mechanicId": 34,
+        "modifiers": {
+          "pastaEnB": -15,
+          "presionJudicial": -5,
+          "impunidad": 5,
+          "reputacionMediatica": 10
+        },
+        "grantedFlags": [
+          "CAJAS_AVALES_EXIGIDOS"
+        ]
+      },
+      "weight": 3,
+      "requiredFlags": [
+        "CAJAS_CONSEJO_REPARTIDO"
+      ]
+    },
+    {
+      "id": "saga_cajas_03_tarjetas_black_lujo",
+      "speaker": "Don Miguel 'El Cazador'",
+      "speakerRole": "El Presidente Ejecutivo de la Entidad",
+      "sphere": "EMPRESARIAL",
+      "headline": "LAS TARJETAS BLACK CORPORATIVAS: TARJETAS DE CRÉDITO SIN RETENCIÓN FISCAL",
+      "context": "Entregas a cada miembro del consejo de administración y de la comisión de control una tarjeta de crédito visa opaca con límites de hasta cincuenta mil euros al mes para gastos personales sin justificante: joyerías, safaris en Namibia y compras en tiendas de lujo.",
+      "evidenceDocument": "Hoja de cálculo incautada con el desglose de 15 millones de euros en gastos con tarjetas opacas sin declarar a Hacienda.",
+      "leftChoice": {
+        "label": "Repartir las tarjetas black a todos los miembros para blindar su complicidad",
+        "stampText": "TARJETAS BLACK",
+        "flavorQuote": "El dinero de las tarjetas obra el milagro: comunistas, liberales y sindicatos votan todos al unísono.",
+        "mechanicId": 23,
+        "modifiers": {
+          "pastaEnB": 25,
+          "presionJudicial": 18,
+          "impunidad": 20,
+          "reputacionMediatica": -25
+        },
+        "grantedFlags": [
+          "CAJAS_TARJETAS_BLACK_ACTIVAS"
+        ]
+      },
+      "rightChoice": {
+        "label": "Eliminar los plásticos opacos y pagar sobresueldos camuflados como dietas de viaje",
+        "stampText": "SOBRESUELDO",
+        "flavorQuote": "Las tarjetas dejan rastro electrónico en los datáfonos; los sobres con billetes en mano no se rastrean jamás.",
+        "mechanicId": 26,
+        "modifiers": {
+          "pastaEnB": 15,
+          "presionJudicial": 10,
+          "impunidad": 15,
+          "reputacionMediatica": -10
+        },
+        "grantedFlags": [
+          "CAJAS_SOBRES_MANILA_ACTIVADOS"
+        ]
+      },
+      "weight": 2,
+      "requiredFlags": [
+        "CAJAS_PARQUE_FINANCIADO"
+      ]
+    },
+    {
+      "id": "saga_cajas_04_colocacion_preferentes",
+      "speaker": "El Director de Sucursal Bancaria",
+      "speakerRole": "El Soldado de la Red Comercial",
+      "sphere": "EMPRESARIAL",
+      "headline": "CAMPAÑA DE PREFERENTES: 'HAY QUE VENDER CUOTA A LOS JUBILADOS'",
+      "context": "La caja necesita cinco mil millones de capital propio urgente para evitar la intervención del Banco de España. La dirección ordena a los directores de sucursal comercializar participaciones preferentes perpetuas entre los clientes de toda la vida diciéndoles que son a plazo fijo.",
+      "evidenceDocument": "Circular interna de la dirección comercial con instrucciones: «Objetivo: 100.000 € por empleado en productos perpetuos».",
+      "leftChoice": {
+        "label": "Presionar a las sucursales para colocar los 5.000 millones en preferentes a los ahorradores",
+        "stampText": "COLOCAR",
+        "flavorQuote": "Les dices que es un depósito garantizado al 7% y los abuelos firman sin mirar; necesitamos el capital ya.",
+        "mechanicId": 24,
+        "modifiers": {
+          "pastaEnB": 25,
+          "presionJudicial": 20,
+          "impunidad": -10,
+          "reputacionMediatica": -30
+        },
+        "grantedFlags": [
+          "CAJAS_PREFERENTES_COLOCADAS"
+        ]
+      },
+      "rightChoice": {
+        "label": "Frenar la colocación a minoristas y vender los títulos con descuento a fondos buitre",
+        "stampText": "VENDER A BUITRES",
+        "flavorQuote": "Los fondos nos exigen una quita del 40%, pero nos evitamos que miles de ancianos rodeen las sucursales con pancartas.",
+        "mechanicId": 6,
+        "modifiers": {
+          "pastaEnB": -15,
+          "presionJudicial": -10,
+          "impunidad": 10,
+          "reputacionMediatica": 10
+        },
+        "grantedFlags": [
+          "CAJAS_BUITRES_COMPRADORES"
+        ]
+      },
+      "weight": 3,
+      "requiredFlags": [
+        "CAJAS_TARJETAS_BLACK_ACTIVAS"
+      ]
+    },
+    {
+      "id": "saga_cajas_05_salida_bolsa_campanita",
+      "speaker": "Don Rodrigo 'El Prócer'",
+      "speakerRole": "El Exdirector del Fondo Monetario",
+      "sphere": "EMPRESARIAL",
+      "headline": "SALIDA A BOLSA CON CUENTAS MAQUILLADAS: EL TOQUE DE LA CAMPANITA",
+      "context": "Vistes chaqué y tocas la campana del parqué de la Bolsa de Madrid. La fusión de las siete cajas quebradas debuta en el mercado continuo anunciando beneficios millonarios, a pesar de que la auditoría interna oculta un agujero de 22.000 millones en activos inmobiliarios tóxicos.",
+      "evidenceDocument": "Folleto de emisión de salida a bolsa visado por la CNMV con cuentas de resultados presuntamente falseadas.",
+      "leftChoice": {
+        "label": "Tocar la campanita en directo ante las cámaras y vender las acciones a inversores institucionales",
+        "stampText": "CAMPANITA",
+        "flavorQuote": "Es el mercado, amigos; quien no crea en nuestro banco que se quede con los billetes debajo del colchón.",
+        "mechanicId": 40,
+        "modifiers": {
+          "pastaEnB": 25,
+          "presionJudicial": 15,
+          "impunidad": 20,
+          "reputacionMediatica": 15
+        },
+        "grantedFlags": [
+          "CAJAS_CAMPANITA_TOCADA"
+        ]
+      },
+      "rightChoice": {
+        "label": "Pactar con el Ministerio de Economía un rescate bancario con fondos de la Unión Europea",
+        "stampText": "RESCATE UE",
+        "flavorQuote": "Pedimos el rescate a Bruselas: cien mil millones de euros que pagará el Estado mientras la entidad sobrevive.",
+        "mechanicId": 21,
+        "modifiers": {
+          "pastaEnB": -10,
+          "presionJudicial": -15,
+          "impunidad": 25,
+          "reputacionMediatica": -20
+        },
+        "grantedFlags": [
+          "CAJAS_RESCATE_EUROPEO_PEDIDO"
+        ]
+      },
+      "weight": 3,
+      "requiredFlags": [
+        "CAJAS_PREFERENTES_COLOCADAS"
+      ]
+    },
+    {
+      "id": "saga_cajas_06_safari_leones_blesa",
+      "speaker": "El Mayordomo del Cortijo",
+      "speakerRole": "Custodio de las Fotos Secretas",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "SE FILTRAN LAS FOTOS DEL SAFARI EN ÁFRICA MIENTRAS COLAPSA LA ENTIDAD",
+      "context": "Un diario digital publica las fotos del expresidente de la caja posando con un rifle de gran calibre junto a un león y un elefante abatidos en una reserva de Namibia. Los viajes se pagaron con cargo a la cuenta de representación de la entidad financiera quebrada.",
+      "evidenceDocument": "Fotografías a color de alta resolución del safari privado de lujo y facturas de fletamento de avión privado.",
+      "leftChoice": {
+        "label": "Declarar que fue un viaje diplomático de relaciones internacionales para captar depósitos",
+        "stampText": "DIPLOMACIA",
+        "flavorQuote": "Cazar leones con emires árabes es alta diplomacia financiera; los periodistas provincianos no entienden el mundo global.",
+        "mechanicId": 27,
+        "modifiers": {
+          "pastaEnB": 5,
+          "presionJudicial": 15,
+          "impunidad": -10,
+          "reputacionMediatica": -25
+        },
+        "grantedFlags": [
+          "CAJAS_SAFARI_JUSTIFICADO"
+        ]
+      },
+      "rightChoice": {
+        "label": "Pagar a un bufete de reputación digital para borrar las fotos de los servidores y desviar la atención",
+        "stampText": "BORRAR HUELLAS",
+        "flavorQuote": "Cien mil euros en consultoría de imagen y la foto del león desaparece de Google antes de las diez de la noche.",
+        "mechanicId": 28,
+        "modifiers": {
+          "pastaEnB": -15,
+          "presionJudicial": -5,
+          "impunidad": 15,
+          "reputacionMediatica": 10
+        },
+        "grantedFlags": [
+          "CAJAS_HUELLAS_BORRADAS"
+        ]
+      },
+      "weight": 2,
+      "requiredFlags": [
+        "CAJAS_CAMPANITA_TOCADA"
+      ]
+    },
+    {
+      "id": "saga_cajas_07_condonacion_deuda_partidos",
+      "speaker": "El Tesorero del Partido en el Gobierno",
+      "speakerRole": "El Fontanero de los Créditos Electorales",
+      "sphere": "POLITICA",
+      "headline": "CONDONACIÓN MILLONARIA: LA CAJA PERDONA LA DEUDA HISTÓRICA DEL PARTIDO",
+      "context": "El partido en el Gobierno arrastra una deuda electoral de cuarenta millones de euros con la caja de ahorros que vence este trimestre. El presidente de la entidad propone una condonación formal del 80% camuflada como 'renegociación de pasivo incobrable'.",
+      "evidenceDocument": "Escritura pública de novación de deuda y quita bancaria con firma del tesorero y el presidente de la entidad.",
+      "leftChoice": {
+        "label": "Aprobar la condonación total de la deuda del partido a cambio de blindaje judicial",
+        "stampText": "CONDONAR",
+        "flavorQuote": "Les perdonamos la deuda del partido y el fiscal general se olvida de pedir prisión provisional para el consejo.",
+        "mechanicId": 19,
+        "modifiers": {
+          "pastaEnB": -10,
+          "presionJudicial": -20,
+          "impunidad": 30,
+          "reputacionMediatica": -15
+        },
+        "grantedFlags": [
+          "CAJAS_DEUDA_PARTIDO_CONDONADA"
+        ]
+      },
+      "rightChoice": {
+        "label": "Exigir el cobro íntegro amenazando con publicar la lista de altos cargos morosos",
+        "stampText": "COBRAR",
+        "flavorQuote": "Si el partido no paga sus pagarés, sacamos las listas de los diputados que tienen la hipoteca sin pagar.",
+        "mechanicId": 30,
+        "modifiers": {
+          "pastaEnB": 20,
+          "presionJudicial": 15,
+          "impunidad": -20,
+          "reputacionMediatica": 10
+        },
+        "grantedFlags": [
+          "CAJAS_PARTIDO_CHANTAGEADO"
+        ]
+      },
+      "weight": 3,
+      "requiredFlags": [
+        "CAJAS_HUELLAS_BORRADAS"
+      ]
+    },
+    {
+      "id": "saga_cajas_08_auditoria_deloitte_informe",
+      "speaker": "El Socio Auditor de la Big Four",
+      "speakerRole": "El Mago de los Balances Corporativos",
+      "sphere": "EMPRESARIAL",
+      "headline": "LA AUDITORÍA EXTERNA: FIRMAR EL INFORME SIN SALVEDADES O DESTAPAR EL AGUJERO",
+      "context": "La firma de auditoría internacional debe emitir su dictamen anual antes de enviar las cuentas a la CNMV. Si ponen salvedades por el valor ficticio de los suelos, la cotización colapsará; si firman el visto bueno, cobran una minuta de quince millones por asesoría.",
+      "evidenceDocument": "Borrador de informe de auditoría con el sello de la firma y advertencia interna sobre el desfase patrimonial.",
+      "leftChoice": {
+        "label": "Pagar la minuta de quince millones y firmar el informe limpio sin salvedades",
+        "stampText": "INFORME LIMPIO",
+        "flavorQuote": "Una firma de una Big Four limpia cualquier balance; los auditores cobran su minuta y miran hacia el horizonte.",
+        "mechanicId": 34,
+        "modifiers": {
+          "pastaEnB": -15,
+          "presionJudicial": -15,
+          "impunidad": 25,
+          "reputacionMediatica": 15
+        },
+        "grantedFlags": [
+          "CAJAS_AUDITORIA_LIMPIA_FIRMADA"
+        ]
+      },
+      "rightChoice": {
+        "label": "Publicar las salvedades y forzar la intervención inmediata del Banco de España",
+        "stampText": "INTERVENIR",
+        "flavorQuote": "Que entre el Fondo de Reestructuración Bancaria; caemos nosotros pero destapamos las vergüenzas de todo el sistema.",
+        "mechanicId": 24,
+        "modifiers": {
+          "pastaEnB": -20,
+          "presionJudicial": 15,
+          "impunidad": -15,
+          "reputacionMediatica": -20
+        },
+        "grantedFlags": [
+          "CAJAS_INTERVENCION_FROB"
+        ]
+      },
+      "weight": 2,
+      "requiredFlags": [
+        "CAJAS_DEUDA_PARTIDO_CONDONADA"
+      ]
+    },
+    {
+      "id": "saga_cajas_09_motin_plataforma_preferentes",
+      "speaker": "Portavoz de los Ahorradores Estafados",
+      "speakerRole": "Líder de la Marea de Afectados",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "CERCO A LA AUDIENCIA NACIONAL: CIENTOS DE JUBILADOS CORTAN LA CALLE CON BOCINAS",
+      "context": "El día en que el consejo de administración declara como investigado en la Audiencia Nacional, quinientos ahorradores de avanzada edad con silbatos, cacerolas y pancartas rodean el furgón policial gritando: «¡Ladrones, devolvednos los ahorros!»",
+      "evidenceDocument": "Pancarta incautada en la escalinata de los juzgados: «Bankia nos roba con el visto bueno del Banco de España».",
+      "leftChoice": {
+        "label": "Entrar por la puerta trasera del juzgado en coche blindado con lunas tintadas",
+        "stampText": "PUERTA TRASERA",
+        "flavorQuote": "A los estafados ni mirarlos a la cara; entramos por el garaje escoltados por los antidisturbios y declaramos sin prisa.",
+        "mechanicId": 16,
+        "modifiers": {
+          "pastaEnB": 0,
+          "presionJudicial": 10,
+          "impunidad": 15,
+          "reputacionMediatica": -25
+        },
+        "grantedFlags": [
+          "CAJAS_DECLARACION_BLINDADA"
+        ]
+      },
+      "rightChoice": {
+        "label": "Pactar un arbitraje exprés devolviendo el dinero solo a los ancianos más vulnerables",
+        "stampText": "ARBITRAJE",
+        "flavorQuote": "Devolvemos la pasta a cuatro ancianos que lloren ante las cámaras de televisión y desactivamos la protesta social.",
+        "mechanicId": 17,
+        "modifiers": {
+          "pastaEnB": -18,
+          "presionJudicial": -12,
+          "impunidad": 10,
+          "reputacionMediatica": 20
+        },
+        "grantedFlags": [
+          "CAJAS_ARBITRAJE_DESACTIVADOR"
+        ]
+      },
+      "weight": 2,
+      "requiredFlags": [
+        "CAJAS_AUDITORIA_LIMPIA_FIRMADA"
+      ]
+    },
+    {
+      "id": "saga_cajas_10_juicio_absolucion_audiencia",
+      "speaker": "El Presidente de la Sala de lo Penal",
+      "speakerRole": "El Magistrado de la Docta Jurisprudencia",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "SENTENCIA HISTÓRICA: ABSOLUCIÓN TOTAL DEL CONSEJO POR LA SALIDA A BOLSA",
+      "context": "La Audiencia Nacional dicta sentencia absolutoria para todos los acusados por la salida a bolsa. El fallo judicial argumenta que la operación contó con el visto bueno de la CNMV, del Banco de España y de las consultoras, eximiendo a los directivos de cualquier dolo penal.",
+      "evidenceDocument": "Sentencia de 450 folios de la Sala de lo Penal de la Audiencia Nacional decretando la absolución libre de todos los directivos.",
+      "leftChoice": {
+        "label": "Celebrar la absolución definitiva con una comida de tres mil euros en el asador",
+        "stampText": "ABSOLUCIÓN",
+        "flavorQuote": "La justicia ha hablado: aquí nadie ha robado nada y los cincuenta mil millones del rescate los paga el pueblo soberano.",
+        "mechanicId": 17,
+        "modifiers": {
+          "pastaEnB": 20,
+          "presionJudicial": -30,
+          "impunidad": 35,
+          "reputacionMediatica": 10
+        },
+        "grantedFlags": [
+          "CAJAS_ABSOLUCION_TRIUNFAL"
+        ]
+      },
+      "rightChoice": {
+        "label": "Aceptar un retiro dorado como asesor emérito en una universidad privada católica",
+        "stampText": "RETIRO EMÉRITO",
+        "flavorQuote": "Mejor pasar desapercibido dando conferencias de ética financiera mientras el país olvida los agujeros contables.",
+        "mechanicId": 40,
+        "modifiers": {
+          "pastaEnB": 10,
+          "presionJudicial": -25,
+          "impunidad": 30,
+          "reputacionMediatica": 25
+        },
+        "grantedFlags": [
+          "CAJAS_RETIRO_ACADEMICO"
+        ]
+      },
+      "weight": 1,
+      "requiredFlags": [
+        "CAJAS_DECLARACION_BLINDADA"
+      ]
+    },
+    {
+      "id": "saga_paesa_01_botin_cuarteles",
+      "speaker": "El Director General Fugitivo",
+      "speakerRole": "El Jefe de la Benemérita con Maletines",
+      "sphere": "POLITICA",
+      "headline": "EL BOTÍN DE LOS FONDOS RESERVADOS: DIEZ MILLONES EN BILLETES DE LA SERIE W",
+      "context": "Te reúnes en un piso franco de París con el director de la Guardia Civil. Lleva dos maletines repletos de francos suizos procedentes de las comisiones del 5% cobradas a constructoras de cuarteles y fondos reservados del Ministerio. La policía española le pisa los talones.",
+      "evidenceDocument": "Libreta manuscrita con desglose de comisiones de 124 cuarteles de la Guardia Civil y números de cuenta en Ginebra.",
+      "leftChoice": {
+        "label": "Ofrecerle asilo secreto y transferir el botín a cuentas puente en Singapur a tu nombre",
+        "stampText": "FIDUCIARIO",
+        "flavorQuote": "Tú déjame la pasta a mí, Luisito, que en Singapur los jueces de la Audiencia Nacional no saben ni qué hora es.",
+        "mechanicId": 33,
+        "modifiers": {
+          "pastaEnB": 25,
+          "presionJudicial": 15,
+          "impunidad": 15,
+          "reputacionMediatica": -15
+        },
+        "grantedFlags": [
+          "PAESA_BOTIN_SINGAPUR_TRANSFERIDO"
+        ]
+      },
+      "rightChoice": {
+        "label": "Aconsejarle que se entregue en la embajada prometiéndole un indulto pactado con Moncloa",
+        "stampText": "ENTREGA SUAVE",
+        "flavorQuote": "Si vuelves voluntariamente decimos que fue un descuido contable y te vas a una granja penitenciaria dos años.",
+        "mechanicId": 36,
+        "modifiers": {
+          "pastaEnB": -10,
+          "presionJudicial": -10,
+          "impunidad": 10,
+          "reputacionMediatica": 15
+        },
+        "grantedFlags": [
+          "PAESA_ENTREGA_PACTADA"
+        ]
+      },
+      "weight": 3,
+      "requiredFlags": []
+    },
+    {
+      "id": "saga_paesa_02_pasaportes_falsos_paris",
+      "speaker": "Francisco Paesa",
+      "speakerRole": "El Agente de las Mil Identidades",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "TALLER DE FALSIFICACIÓN EN MONTPARNASSE: PASAPORTES DIPLOMÁTICOS A MEDIDA",
+      "context": "En tu apartamento parisino junto al cementerio de Montparnasse, sacas los sellos de lacre, tintas especiales y cartulinas de salvoconductos. Hay que fabricar una identidad diplomática de Santo Tomé y Príncipe para burlar la circular roja de Interpol.",
+      "evidenceDocument": "Pasaporte diplomático falso sellado con el escudo de Santo Tomé a nombre de un agregado comercial ficticio.",
+      "leftChoice": {
+        "label": "Sellar el pasaporte diplomático y pagar al cónsul en Ginebra por inscribirlo en la ONU",
+        "stampText": "INMUNIDAD",
+        "flavorQuote": "Con chapa diplomática de un país africano la policía de aduanas te tiene que cuadrarse y llevarte la maleta.",
+        "mechanicId": 31,
+        "modifiers": {
+          "pastaEnB": -10,
+          "presionJudicial": -20,
+          "impunidad": 25,
+          "reputacionMediatica": -5
+        },
+        "grantedFlags": [
+          "PAESA_INMUNIDAD_DIPLOMATICA"
+        ]
+      },
+      "rightChoice": {
+        "label": "Fabricar tres identidades argentinas ordinarias para moverse en vuelos comerciales de bajo coste",
+        "stampText": "IDENTIDAD ARGENTINA",
+        "flavorQuote": "Un señor jubilado de Buenos Aires que compra cuadros antiguos no despierta sospechas en ningún control.",
+        "mechanicId": 31,
+        "modifiers": {
+          "pastaEnB": 5,
+          "presionJudicial": 5,
+          "impunidad": 15,
+          "reputacionMediatica": 10
+        },
+        "grantedFlags": [
+          "PAESA_IDENTIDAD_ARGENTINA"
+        ]
+      },
+      "weight": 2,
+      "requiredFlags": [
+        "PAESA_BOTIN_SINGAPUR_TRANSFERIDO"
+      ]
+    },
+    {
+      "id": "saga_paesa_03_negociacion_belloch",
+      "speaker": "El Enviado de Moncloa",
+      "speakerRole": "El Negociador del Doble Ministerio",
+      "sphere": "POLITICA",
+      "headline": "REUNIÓN CLANDESTINA EN EL HOTEL BRISTOL: 'EL GOBIERNO PAGA DOS MILLONES POR LA ENTREGA'",
+      "context": "El emisario del ministro de Justicia e Interior se sienta en la suite del Hotel Bristol de París. El Gobierno está en crisis terminal por la fuga del director general y ofrece dos millones de euros en fondos reservados a quien facilite su localización y captura.",
+      "evidenceDocument": "Acta manuscrita de negociación secreta entre el emisario gubernamental y el intermediario fijando la prima de entrega.",
+      "leftChoice": {
+        "label": "Exigir los dos millones en metálico en billetes sin numerar y cerrar el trato",
+        "stampText": "COBRAR PRIMA",
+        "flavorQuote": "El Estado paga dos millones por limpiar su honor; yo pongo el envoltorio y me quedo con el dinero de todos.",
+        "mechanicId": 12,
+        "modifiers": {
+          "pastaEnB": 30,
+          "presionJudicial": -10,
+          "impunidad": 20,
+          "reputacionMediatica": 5
+        },
+        "grantedFlags": [
+          "PAESA_PRIMA_DOS_MILLONES_COBRADA"
+        ]
+      },
+      "rightChoice": {
+        "label": "Pedir el sobreseimiento libre de todas tus causas pendientes en la Audiencia Nacional",
+        "stampText": "BORRÓN Y CUENTA",
+        "flavorQuote": "La pasta es secundaria si me garantizáis que el juez archiva las causas de armas y malversación.",
+        "mechanicId": 18,
+        "modifiers": {
+          "pastaEnB": 0,
+          "presionJudicial": -30,
+          "impunidad": 35,
+          "reputacionMediatica": 15
+        },
+        "grantedFlags": [
+          "PAESA_SOBRESEIMIENTO_PACTADO"
+        ]
+      },
+      "weight": 3,
+      "requiredFlags": [
+        "PAESA_INMUNIDAD_DIPLOMATICA"
+      ]
+    },
+    {
+      "id": "saga_paesa_04_timo_papeles_laos",
+      "speaker": "Francisco Paesa",
+      "speakerRole": "El Gran Falsificador de Estado",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "LA OPERACIÓN LAOS: SALVOCONDUCTOS FALSIFICADOS PARA ENGAÑAR A LA AUDIENCIA",
+      "context": "Para entregar al prófugo sin que pueda ser juzgado por delitos de corrupción y cohecho continuado, inventas una extradición exprés desde Laos. Fabricas sellos consulares falsos con tinta china y firmas apócrifas de ministros laosianos.",
+      "evidenceDocument": "Formulario de extradición del Ministerio de Asuntos Exteriores de Laos falsificado con sellos de goma tallados a mano.",
+      "leftChoice": {
+        "label": "Colar los papeles falsificados de Laos a los policías españoles en el aeropuerto de Bangkok",
+        "stampText": "TIMO LAOS",
+        "flavorQuote": "Se tragan los papeles de Laos sin llamar al embajador; el ministro se va a poner una medalla que le va a estallar en la cara.",
+        "mechanicId": 27,
+        "modifiers": {
+          "pastaEnB": 20,
+          "presionJudicial": 15,
+          "impunidad": 20,
+          "reputacionMediatica": -10
+        },
+        "grantedFlags": [
+          "PAESA_PAPALES_LAOS_CONSUMADOS"
+        ]
+      },
+      "rightChoice": {
+        "label": "Entregarlo en Roma ante la Guardia Civil sin montaje de documentos asiáticos",
+        "stampText": "ENTREGA LIMPIA",
+        "flavorQuote": "Menos comedia consular y más eficacia; lo empaquetamos en el aeropuerto de Fiumicino y cobramos igual.",
+        "mechanicId": 8,
+        "modifiers": {
+          "pastaEnB": 10,
+          "presionJudicial": -10,
+          "impunidad": 15,
+          "reputacionMediatica": 15
+        },
+        "grantedFlags": [
+          "PAESA_ENTREGA_ROMA"
+        ]
+      },
+      "weight": 2,
+      "requiredFlags": [
+        "PAESA_PRIMA_DOS_MILLONES_COBRADA"
+      ]
+    },
+    {
+      "id": "saga_paesa_05_roldan_entrega_botin_robado",
+      "speaker": "El Prófugo Encarcelado",
+      "speakerRole": "El Exdirector Traicionado en Prisión",
+      "sphere": "POLITICA",
+      "headline": "ROLDÁN ATERRIZA EN ESPAÑA: EL AGENTE SE QUEDA CON LOS DIEZ MILLONES",
+      "context": "El avión del Ejército del Aire aterriza en Torrejón y el prófugo ingresa en la prisión de Brieva. En ese mismo instante, desde un teléfono satelital en Ginebra, ordenas vaciar las cuentas del exdirector: los diez millones pasan íntegros a tu patrimonio privado.",
+      "evidenceDocument": "Orden de transferencia internacional de fondos desde Banque Cantonale de Genève hacia cuentas fiduciarias en Tórtola.",
+      "leftChoice": {
+        "label": "Consolidar el botín en fundaciones de Panamá y dejar al exdirector en la ruina absoluta",
+        "stampText": "SAQUEO TOTAL",
+        "flavorQuote": "Luisito se creía que un espía trabaja por patriotismo; él duerme en el módulo 4 y yo brindo con Dom Pérignon.",
+        "mechanicId": 33,
+        "modifiers": {
+          "pastaEnB": 30,
+          "presionJudicial": 10,
+          "impunidad": 15,
+          "reputacionMediatica": -20
+        },
+        "grantedFlags": [
+          "PAESA_BOTIN_ROLDAN_SAQUEADO"
+        ]
+      },
+      "rightChoice": {
+        "label": "Dejarle medio millón a su mujer para que no tire de la manta en el juicio",
+        "stampText": "PAGAR SILENCIO",
+        "flavorQuote": "A la familia se le deja una limosna para que no vayan al juzgado a declarar que yo tengo las llaves de Suiza.",
+        "mechanicId": 7,
+        "modifiers": {
+          "pastaEnB": 15,
+          "presionJudicial": -15,
+          "impunidad": 25,
+          "reputacionMediatica": 10
+        },
+        "grantedFlags": [
+          "PAESA_SILENCIO_COMPRADO"
+        ]
+      },
+      "weight": 3,
+      "requiredFlags": [
+        "PAESA_PAPALES_LAOS_CONSUMADOS"
+      ]
+    },
+    {
+      "id": "saga_paesa_06_garzon_pisa_talones",
+      "speaker": "El Juez Estrella de Instrucción",
+      "speakerRole": "El Magistrado de la Audiencia Nacional",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "BALTASAR PISA LOS TALONES: ORDEN DE CAPTURA INTERNACIONAL CONTRA PAESA",
+      "context": "El Juzgado Central de Instrucción número 5 emite auto de busca y captura contra ti por encubrimiento de malversación, falsedad documental y receptación. La policía judicial registra tu chalé de Madrid y bloquea tus propiedades conocidas.",
+      "evidenceDocument": "Auto de procesamiento y busca y captura internacional emitido por el Juzgado Central de Instrucción número 5.",
+      "leftChoice": {
+        "label": "Huir de Europa inmediatamente y preparar la jugada maestra: desaparecer del mapa para siempre",
+        "stampText": "DESAPARECER",
+        "flavorQuote": "A los jueces estrella se les combate de una sola manera: convirtiéndose en un fantasma que no pueden juzgar.",
+        "mechanicId": 31,
+        "modifiers": {
+          "pastaEnB": 10,
+          "presionJudicial": -15,
+          "impunidad": 20,
+          "reputacionMediatica": -15
+        },
+        "grantedFlags": [
+          "PAESA_PLAN_FANTASMA_INICIADO"
+        ]
+      },
+      "rightChoice": {
+        "label": "Filtrar a la prensa que tienes dosieres de los jueces de la Audiencia cazando en cotos privados",
+        "stampText": "KOMPROMAT JUECES",
+        "flavorQuote": "El juez tiene más miedo a sus propias fotos en el coto de caza que a la fuga de un espía.",
+        "mechanicId": 30,
+        "modifiers": {
+          "pastaEnB": 0,
+          "presionJudicial": -25,
+          "impunidad": 30,
+          "reputacionMediatica": 10
+        },
+        "grantedFlags": [
+          "PAESA_JUECES_CHANTAGEADOS"
+        ]
+      },
+      "weight": 2,
+      "requiredFlags": [
+        "PAESA_BOTIN_ROLDAN_SAQUEADO"
+      ]
+    },
+    {
+      "id": "saga_paesa_07_esquela_falsa_tailandia",
+      "speaker": "La Familia Afligida",
+      "speakerRole": "Los Deudos del Sepelio Ficticio",
+      "sphere": "POLITICA",
+      "headline": "PUBLICAR LA ESQUELA EN 'EL PAÍS': 'FALLECIDO EN BANGKOK POR PARO CARDÍACO'",
+      "context": "El 2 de julio de 1998 sale publicada en las páginas de necrológicas de El País la esquela oficial de Francisco Paesa Sánchez. Se celebran misas funerales en Madrid y un crematorio de Bangkok expide un acta de defunción médica con cenizas ficticias.",
+      "evidenceDocument": "Página recortada del diario El País con la esquela fúnebre y certificado de defunción del Hospital General de Bangkok.",
+      "leftChoice": {
+        "label": "Pagar las misas en Madrid y presentar el certificado de defunción para archivar todas las querellas",
+        "stampText": "MUERTE OFICIAL",
+        "flavorQuote": "Nadie persigue penalmente a un muerto; las causas prescriben y el reo descansa con las cuentas llenas.",
+        "mechanicId": 32,
+        "modifiers": {
+          "pastaEnB": -5,
+          "presionJudicial": -35,
+          "impunidad": 40,
+          "reputacionMediatica": -20
+        },
+        "grantedFlags": [
+          "PAESA_FALSA_MUERTE_CONSUMADA"
+        ]
+      },
+      "rightChoice": {
+        "label": "Cobrar además la póliza millonaria de seguro de vida a través de tu sobrino en Luxemburgo",
+        "stampText": "COBRAR PÓLIZA",
+        "flavorQuote": "Morirse dos veces es un engorro; que la aseguradora suiza nos abone tres millones de indemnización por viudedad.",
+        "mechanicId": 20,
+        "modifiers": {
+          "pastaEnB": 25,
+          "presionJudicial": 10,
+          "impunidad": 25,
+          "reputacionMediatica": -10
+        },
+        "grantedFlags": [
+          "PAESA_POLIZA_COBRADA"
+        ]
+      },
+      "weight": 3,
+      "requiredFlags": [
+        "PAESA_PLAN_FANTASMA_INICIADO"
+      ]
+    },
+    {
+      "id": "saga_paesa_08_mossack_fonseca_panama",
+      "speaker": "El Fiduciario de Mossack & Fonseca",
+      "speakerRole": "El Gestor de las Islas Vírgenes",
+      "sphere": "EMPRESARIAL",
+      "headline": "CONSTRUYENDO EL ATAÚD FINANCIERO: SIETE SOCIEDADES OFFSHORE EN TÓRTOLA",
+      "context": "Dos semanas después de tu supuesta incineración en Tailandia, constituyes con el bufete panameño Mossack Fonseca siete mercantiles pantalla en las Islas Vírgenes Británicas: Richville Assets, Golder Management y Regus Assets para mover el oro.",
+      "evidenceDocument": "Escritura de constitución de Golder Management Ltd con acciones al portador y poderes bancarios plenos.",
+      "leftChoice": {
+        "label": "Transferir el botín completo a las sociedades de Tórtola y comprar un palacete en París",
+        "stampText": "LAVADO OFFSHORE",
+        "flavorQuote": "El dinero da la vuelta al mundo en cables cifrados y regresa limpio para comprar pisos en la plaza Vendôme.",
+        "mechanicId": 33,
+        "modifiers": {
+          "pastaEnB": 25,
+          "presionJudicial": -15,
+          "impunidad": 25,
+          "reputacionMediatica": 10
+        },
+        "grantedFlags": [
+          "PAESA_LAVADO_OFFSHORE_CERRADO"
+        ]
+      },
+      "rightChoice": {
+        "label": "Invertir en compraventa de armas internacionales con intermediarios franceses",
+        "stampText": "ARMAS Y ORO",
+        "flavorQuote": "El negocio de las armas no pregunta por partidas de defunción; se paga al contado y deja márgenes del 300%.",
+        "mechanicId": 6,
+        "modifiers": {
+          "pastaEnB": 30,
+          "presionJudicial": 15,
+          "impunidad": 15,
+          "reputacionMediatica": -15
+        },
+        "grantedFlags": [
+          "PAESA_TRAFICO_ARMAS_ACTIVO"
+        ]
+      },
+      "weight": 2,
+      "requiredFlags": [
+        "PAESA_FALSA_MUERTE_CONSUMADA"
+      ]
+    },
+    {
+      "id": "saga_paesa_09_resurreccion_paris_detectives",
+      "speaker": "El Detective Privado de Método 3",
+      "speakerRole": "El Cazador de Muertos Vivientes",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "¡EL MUERTO ESTÁ VIVO!: FOTOGRAFIADO EN PARÍS COMIENDO OSTRAS Y CHAMPÁN",
+      "context": "Siete años después de tu funeral oficial, una agencia de detectives contratada por acreedores y periodistas te fotografía paseando con abrigo de cachemira y entrando en tu residencia de la rue O’Donnell junto a Montparnasse.",
+      "evidenceDocument": "Fotografías de seguimiento a color con teleobjetivo mostrando al espía paseando por el bulevar Saint-Germain.",
+      "leftChoice": {
+        "label": "Conceder una entrevista exclusiva en París confirmando que todos tus delitos ya han prescrito",
+        "stampText": "PRESCRIPCIÓN",
+        "flavorQuote": "Estoy vivo, señores, pero la Audiencia Nacional ya no puede tocarme: el Código Penal dice que el tiempo borró la culpa.",
+        "mechanicId": 18,
+        "modifiers": {
+          "pastaEnB": 10,
+          "presionJudicial": -25,
+          "impunidad": 40,
+          "reputacionMediatica": 30
+        },
+        "grantedFlags": [
+          "PAESA_PRESCRIPCION_ALEGADA"
+        ]
+      },
+      "rightChoice": {
+        "label": "Huir inmediatamente en avión privado a Sierra Leona fingiendo ser un marchante de arte",
+        "stampText": "SIERRA LEONA",
+        "flavorQuote": "En África compramos máscaras de oro y diamantes sin tallar; a los detectives españoles se les pierde el rastro en la selva.",
+        "mechanicId": 31,
+        "modifiers": {
+          "pastaEnB": 15,
+          "presionJudicial": 10,
+          "impunidad": 20,
+          "reputacionMediatica": -20
+        },
+        "grantedFlags": [
+          "PAESA_EXPEDICION_AFRICA"
+        ]
+      },
+      "weight": 2,
+      "requiredFlags": [
+        "PAESA_LAVADO_OFFSHORE_CERRADO"
+      ]
+    },
+    {
+      "id": "saga_paesa_10_climax_el_inmortal_de_chamberi",
+      "speaker": "Don Francisco",
+      "speakerRole": "La Leyenda Viva de la Evasión",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "CLÍMAX DEL ILUSIONISTA: EL ARCHIVO DEFINITIVO POR PRESCRIPCIÓN HISTÓRICA",
+      "context": "La justicia española archiva definitivamente todas las causas por la fuga de los fondos reservados: han transcurrido más de diez años y el reo fingido es inalcanzable. Te sientas en un café de la plaza de la Concordia a tus ochenta años, millonario e intocable.",
+      "evidenceDocument": "Auto de sobreseimiento definitivo y archivo de actuaciones por prescripción extintiva de la responsabilidad criminal.",
+      "leftChoice": {
+        "label": "Brindar con Dom Pérignon por el triunfo de la picaresca y escribir tus memorias",
+        "stampText": "TRIUNFO ETERNO",
+        "flavorQuote": "España es un país formidable: engañas a los ministros, te quedas el botín, te mueres en el periódico y te aplauden en el cine.",
+        "mechanicId": 18,
+        "modifiers": {
+          "pastaEnB": 30,
+          "presionJudicial": -40,
+          "impunidad": 40,
+          "reputacionMediatica": 35
+        },
+        "grantedFlags": [
+          "PAESA_TRIUNFO_HISTORICO_TOTAL"
+        ]
+      },
+      "rightChoice": {
+        "label": "Meterse en un timo fiduciario de veinte millones a un magnate ruso del ex-KGB",
+        "stampText": "ÚLTIMO TIMO",
+        "flavorQuote": "El dinero de los espías rusos es el más divertido de saquear; a mi edad no voy a ponerme a cuidar geranios.",
+        "mechanicId": 6,
+        "modifiers": {
+          "pastaEnB": 35,
+          "presionJudicial": 20,
+          "impunidad": 25,
+          "reputacionMediatica": 20
+        },
+        "grantedFlags": [
+          "PAESA_TIMO_RUSO_EJECUTADO"
+        ]
+      },
+      "weight": 1,
+      "requiredFlags": [
+        "PAESA_PRESCRIPCION_ALEGADA"
+      ]
     }
   ]
 }

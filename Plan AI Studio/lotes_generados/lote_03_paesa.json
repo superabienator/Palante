@@ -1,0 +1,276 @@
+{
+  "sagaName": "Paesa: El Ilusionista de las Cloacas y la Falsa Muerte",
+  "description": "Macro-sagas extraídas directamente del libro 'Paesa, el espía de las mil caras' de Manuel Cerdán. La fuga de Luis Roldán con los fondos reservados, el timo de los papeles de Laos al ministro, el cobro de la recompensa quedándose el botín, y la obra cumbre de la evasión: fingir la propia muerte con esquela en prensa y misas para que los delitos prescriban.",
+  "cards": [
+    {
+      "id": "saga_paesa_01_botin_cuarteles",
+      "speaker": "El Director General Fugitivo",
+      "speakerRole": "El Jefe de la Benemérita con Maletines",
+      "sphere": "POLITICA",
+      "headline": "EL BOTÍN DE LOS FONDOS RESERVADOS: DIEZ MILLONES EN BILLETES DE LA SERIE W",
+      "context": "Te reúnes en un piso franco de París con el director de la Guardia Civil. Lleva dos maletines repletos de francos suizos procedentes de las comisiones del 5% cobradas a constructoras de cuarteles y fondos reservados del Ministerio. La policía española le pisa los talones.",
+      "evidenceDocument": "Libreta manuscrita con desglose de comisiones de 124 cuarteles de la Guardia Civil y números de cuenta en Ginebra.",
+      "weight": 3,
+      "requiredFlags": [],
+      "leftChoice": {
+        "label": "Ofrecerle asilo secreto y transferir el botín a cuentas puente en Singapur a tu nombre",
+        "stampText": "FIDUCIARIO",
+        "flavorQuote": "Tú déjame la pasta a mí, Luisito, que en Singapur los jueces de la Audiencia Nacional no saben ni qué hora es.",
+        "mechanicId": 33,
+        "modifiers": { "pastaEnB": 25, "presionJudicial": 15, "impunidad": 15, "reputacionMediatica": -15 },
+        "grantedFlags": ["PAESA_BOTIN_SINGAPUR_TRANSFERIDO"]
+      },
+      "rightChoice": {
+        "label": "Aconsejarle que se entregue en la embajada prometiéndole un indulto pactado con Moncloa",
+        "stampText": "ENTREGA SUAVE",
+        "flavorQuote": "Si vuelves voluntariamente decimos que fue un descuido contable y te vas a una granja penitenciaria dos años.",
+        "mechanicId": 36,
+        "modifiers": { "pastaEnB": -10, "presionJudicial": -10, "impunidad": 10, "reputacionMediatica": 15 },
+        "grantedFlags": ["PAESA_ENTREGA_PACTADA"]
+      }
+    },
+    {
+      "id": "saga_paesa_02_pasaportes_falsos_paris",
+      "speaker": "Francisco Paesa",
+      "speakerRole": "El Agente de las Mil Identidades",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "TALLER DE FALSIFICACIÓN EN MONTPARNASSE: PASAPORTES DIPLOMÁTICOS A MEDIDA",
+      "context": "En tu apartamento parisino junto al cementerio de Montparnasse, sacas los sellos de lacre, tintas especiales y cartulinas de salvoconductos. Hay que fabricar una identidad diplomática de Santo Tomé y Príncipe para burlar la circular roja de Interpol.",
+      "evidenceDocument": "Pasaporte diplomático falso sellado con el escudo de Santo Tomé a nombre de un agregado comercial ficticio.",
+      "weight": 2,
+      "requiredFlags": ["PAESA_BOTIN_SINGAPUR_TRANSFERIDO"],
+      "leftChoice": {
+        "label": "Sellar el pasaporte diplomático y pagar al cónsul en Ginebra por inscribirlo en la ONU",
+        "stampText": "INMUNIDAD",
+        "flavorQuote": "Con chapa diplomática de un país africano la policía de aduanas te tiene que cuadrarse y llevarte la maleta.",
+        "mechanicId": 31,
+        "modifiers": { "pastaEnB": -10, "presionJudicial": -20, "impunidad": 25, "reputacionMediatica": -5 },
+        "grantedFlags": ["PAESA_INMUNIDAD_DIPLOMATICA"]
+      },
+      "rightChoice": {
+        "label": "Fabricar tres identidades argentinas ordinarias para moverse en vuelos comerciales de bajo coste",
+        "stampText": "IDENTIDAD ARGENTINA",
+        "flavorQuote": "Un señor jubilado de Buenos Aires que compra cuadros antiguos no despierta sospechas en ningún control.",
+        "mechanicId": 31,
+        "modifiers": { "pastaEnB": 5, "presionJudicial": 5, "impunidad": 15, "reputacionMediatica": 10 },
+        "grantedFlags": ["PAESA_IDENTIDAD_ARGENTINA"]
+      }
+    },
+    {
+      "id": "saga_paesa_03_negociacion_belloch",
+      "speaker": "El Enviado de Moncloa",
+      "speakerRole": "El Negociador del Doble Ministerio",
+      "sphere": "POLITICA",
+      "headline": "REUNIÓN CLANDESTINA EN EL HOTEL BRISTOL: 'EL GOBIERNO PAGA DOS MILLONES POR LA ENTREGA'",
+      "context": "El emisario del ministro de Justicia e Interior se sienta en la suite del Hotel Bristol de París. El Gobierno está en crisis terminal por la fuga del director general y ofrece dos millones de euros en fondos reservados a quien facilite su localización y captura.",
+      "evidenceDocument": "Acta manuscrita de negociación secreta entre el emisario gubernamental y el intermediario fijando la prima de entrega.",
+      "weight": 3,
+      "requiredFlags": ["PAESA_INMUNIDAD_DIPLOMATICA"],
+      "leftChoice": {
+        "label": "Exigir los dos millones en metálico en billetes sin numerar y cerrar el trato",
+        "stampText": "COBRAR PRIMA",
+        "flavorQuote": "El Estado paga dos millones por limpiar su honor; yo pongo el envoltorio y me quedo con el dinero de todos.",
+        "mechanicId": 12,
+        "modifiers": { "pastaEnB": 30, "presionJudicial": -10, "impunidad": 20, "reputacionMediatica": 5 },
+        "grantedFlags": ["PAESA_PRIMA_DOS_MILLONES_COBRADA"]
+      },
+      "rightChoice": {
+        "label": "Pedir el sobreseimiento libre de todas tus causas pendientes en la Audiencia Nacional",
+        "stampText": "BORRÓN Y CUENTA",
+        "flavorQuote": "La pasta es secundaria si me garantizáis que el juez archiva las causas de armas y malversación.",
+        "mechanicId": 18,
+        "modifiers": { "pastaEnB": 0, "presionJudicial": -30, "impunidad": 35, "reputacionMediatica": 15 },
+        "grantedFlags": ["PAESA_SOBRESEIMIENTO_PACTADO"]
+      }
+    },
+    {
+      "id": "saga_paesa_04_timo_papeles_laos",
+      "speaker": "Francisco Paesa",
+      "speakerRole": "El Gran Falsificador de Estado",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "LA OPERACIÓN LAOS: SALVOCONDUCTOS FALSIFICADOS PARA ENGAÑAR A LA AUDIENCIA",
+      "context": "Para entregar al prófugo sin que pueda ser juzgado por delitos de corrupción y cohecho continuado, inventas una extradición exprés desde Laos. Fabricas sellos consulares falsos con tinta china y firmas apócrifas de ministros laosianos.",
+      "evidenceDocument": "Formulario de extradición del Ministerio de Asuntos Exteriores de Laos falsificado con sellos de goma tallados a mano.",
+      "weight": 2,
+      "requiredFlags": ["PAESA_PRIMA_DOS_MILLONES_COBRADA"],
+      "leftChoice": {
+        "label": "Colar los papeles falsificados de Laos a los policías españoles en el aeropuerto de Bangkok",
+        "stampText": "TIMO LAOS",
+        "flavorQuote": "Se tragan los papeles de Laos sin llamar al embajador; el ministro se va a poner una medalla que le va a estallar en la cara.",
+        "mechanicId": 27,
+        "modifiers": { "pastaEnB": 20, "presionJudicial": 15, "impunidad": 20, "reputacionMediatica": -10 },
+        "grantedFlags": ["PAESA_PAPALES_LAOS_CONSUMADOS"]
+      },
+      "rightChoice": {
+        "label": "Entregarlo en Roma ante la Guardia Civil sin montaje de documentos asiáticos",
+        "stampText": "ENTREGA LIMPIA",
+        "flavorQuote": "Menos comedia consular y más eficacia; lo empaquetamos en el aeropuerto de Fiumicino y cobramos igual.",
+        "mechanicId": 8,
+        "modifiers": { "pastaEnB": 10, "presionJudicial": -10, "impunidad": 15, "reputacionMediatica": 15 },
+        "grantedFlags": ["PAESA_ENTREGA_ROMA"]
+      }
+    },
+    {
+      "id": "saga_paesa_05_roldan_entrega_botin_robado",
+      "speaker": "El Prófugo Encarcelado",
+      "speakerRole": "El Exdirector Traicionado en Prisión",
+      "sphere": "POLITICA",
+      "headline": "ROLDÁN ATERRIZA EN ESPAÑA: EL AGENTE SE QUEDA CON LOS DIEZ MILLONES",
+      "context": "El avión del Ejército del Aire aterriza en Torrejón y el prófugo ingresa en la prisión de Brieva. En ese mismo instante, desde un teléfono satelital en Ginebra, ordenas vaciar las cuentas del exdirector: los diez millones pasan íntegros a tu patrimonio privado.",
+      "evidenceDocument": "Orden de transferencia internacional de fondos desde Banque Cantonale de Genève hacia cuentas fiduciarias en Tórtola.",
+      "weight": 3,
+      "requiredFlags": ["PAESA_PAPALES_LAOS_CONSUMADOS"],
+      "leftChoice": {
+        "label": "Consolidar el botín en fundaciones de Panamá y dejar al exdirector en la ruina absoluta",
+        "stampText": "SAQUEO TOTAL",
+        "flavorQuote": "Luisito se creía que un espía trabaja por patriotismo; él duerme en el módulo 4 y yo brindo con Dom Pérignon.",
+        "mechanicId": 33,
+        "modifiers": { "pastaEnB": 30, "presionJudicial": 10, "impunidad": 15, "reputacionMediatica": -20 },
+        "grantedFlags": ["PAESA_BOTIN_ROLDAN_SAQUEADO"]
+      },
+      "rightChoice": {
+        "label": "Dejarle medio millón a su mujer para que no tire de la manta en el juicio",
+        "stampText": "PAGAR SILENCIO",
+        "flavorQuote": "A la familia se le deja una limosna para que no vayan al juzgado a declarar que yo tengo las llaves de Suiza.",
+        "mechanicId": 7,
+        "modifiers": { "pastaEnB": 15, "presionJudicial": -15, "impunidad": 25, "reputacionMediatica": 10 },
+        "grantedFlags": ["PAESA_SILENCIO_COMPRADO"]
+      }
+    },
+    {
+      "id": "saga_paesa_06_garzon_pisa_talones",
+      "speaker": "El Juez Estrella de Instrucción",
+      "speakerRole": "El Magistrado de la Audiencia Nacional",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "BALTASAR PISA LOS TALONES: ORDEN DE CAPTURA INTERNACIONAL CONTRA PAESA",
+      "context": "El Juzgado Central de Instrucción número 5 emite auto de busca y captura contra ti por encubrimiento de malversación, falsedad documental y receptación. La policía judicial registra tu chalé de Madrid y bloquea tus propiedades conocidas.",
+      "evidenceDocument": "Auto de procesamiento y busca y captura internacional emitido por el Juzgado Central de Instrucción número 5.",
+      "weight": 2,
+      "requiredFlags": ["PAESA_BOTIN_ROLDAN_SAQUEADO"],
+      "leftChoice": {
+        "label": "Huir de Europa inmediatamente y preparar la jugada maestra: desaparecer del mapa para siempre",
+        "stampText": "DESAPARECER",
+        "flavorQuote": "A los jueces estrella se les combate de una sola manera: convirtiéndose en un fantasma que no pueden juzgar.",
+        "mechanicId": 31,
+        "modifiers": { "pastaEnB": 10, "presionJudicial": -15, "impunidad": 20, "reputacionMediatica": -15 },
+        "grantedFlags": ["PAESA_PLAN_FANTASMA_INICIADO"]
+      },
+      "rightChoice": {
+        "label": "Filtrar a la prensa que tienes dosieres de los jueces de la Audiencia cazando en cotos privados",
+        "stampText": "KOMPROMAT JUECES",
+        "flavorQuote": "El juez tiene más miedo a sus propias fotos en el coto de caza que a la fuga de un espía.",
+        "mechanicId": 30,
+        "modifiers": { "pastaEnB": 0, "presionJudicial": -25, "impunidad": 30, "reputacionMediatica": 10 },
+        "grantedFlags": ["PAESA_JUECES_CHANTAGEADOS"]
+      }
+    },
+    {
+      "id": "saga_paesa_07_esquela_falsa_tailandia",
+      "speaker": "La Familia Afligida",
+      "speakerRole": "Los Deudos del Sepelio Ficticio",
+      "sphere": "POLITICA",
+      "headline": "PUBLICAR LA ESQUELA EN 'EL PAÍS': 'FALLECIDO EN BANGKOK POR PARO CARDÍACO'",
+      "context": "El 2 de julio de 1998 sale publicada en las páginas de necrológicas de El País la esquela oficial de Francisco Paesa Sánchez. Se celebran misas funerales en Madrid y un crematorio de Bangkok expide un acta de defunción médica con cenizas ficticias.",
+      "evidenceDocument": "Página recortada del diario El País con la esquela fúnebre y certificado de defunción del Hospital General de Bangkok.",
+      "weight": 3,
+      "requiredFlags": ["PAESA_PLAN_FANTASMA_INICIADO"],
+      "leftChoice": {
+        "label": "Pagar las misas en Madrid y presentar el certificado de defunción para archivar todas las querellas",
+        "stampText": "MUERTE OFICIAL",
+        "flavorQuote": "Nadie persigue penalmente a un muerto; las causas prescriben y el reo descansa con las cuentas llenas.",
+        "mechanicId": 32,
+        "modifiers": { "pastaEnB": -5, "presionJudicial": -35, "impunidad": 40, "reputacionMediatica": -20 },
+        "grantedFlags": ["PAESA_FALSA_MUERTE_CONSUMADA"]
+      },
+      "rightChoice": {
+        "label": "Cobrar además la póliza millonaria de seguro de vida a través de tu sobrino en Luxemburgo",
+        "stampText": "COBRAR PÓLIZA",
+        "flavorQuote": "Morirse dos veces es un engorro; que la aseguradora suiza nos abone tres millones de indemnización por viudedad.",
+        "mechanicId": 20,
+        "modifiers": { "pastaEnB": 25, "presionJudicial": 10, "impunidad": 25, "reputacionMediatica": -10 },
+        "grantedFlags": ["PAESA_POLIZA_COBRADA"]
+      }
+    },
+    {
+      "id": "saga_paesa_08_mossack_fonseca_panama",
+      "speaker": "El Fiduciario de Mossack & Fonseca",
+      "speakerRole": "El Gestor de las Islas Vírgenes",
+      "sphere": "EMPRESARIAL",
+      "headline": "CONSTRUYENDO EL ATAÚD FINANCIERO: SIETE SOCIEDADES OFFSHORE EN TÓRTOLA",
+      "context": "Dos semanas después de tu supuesta incineración en Tailandia, constituyes con el bufete panameño Mossack Fonseca siete mercantiles pantalla en las Islas Vírgenes Británicas: Richville Assets, Golder Management y Regus Assets para mover el oro.",
+      "evidenceDocument": "Escritura de constitución de Golder Management Ltd con acciones al portador y poderes bancarios plenos.",
+      "weight": 2,
+      "requiredFlags": ["PAESA_FALSA_MUERTE_CONSUMADA"],
+      "leftChoice": {
+        "label": "Transferir el botín completo a las sociedades de Tórtola y comprar un palacete en París",
+        "stampText": "LAVADO OFFSHORE",
+        "flavorQuote": "El dinero da la vuelta al mundo en cables cifrados y regresa limpio para comprar pisos en la plaza Vendôme.",
+        "mechanicId": 33,
+        "modifiers": { "pastaEnB": 25, "presionJudicial": -15, "impunidad": 25, "reputacionMediatica": 10 },
+        "grantedFlags": ["PAESA_LAVADO_OFFSHORE_CERRADO"]
+      },
+      "rightChoice": {
+        "label": "Invertir en compraventa de armas internacionales con intermediarios franceses",
+        "stampText": "ARMAS Y ORO",
+        "flavorQuote": "El negocio de las armas no pregunta por partidas de defunción; se paga al contado y deja márgenes del 300%.",
+        "mechanicId": 6,
+        "modifiers": { "pastaEnB": 30, "presionJudicial": 15, "impunidad": 15, "reputacionMediatica": -15 },
+        "grantedFlags": ["PAESA_TRAFICO_ARMAS_ACTIVO"]
+      }
+    },
+    {
+      "id": "saga_paesa_09_resurreccion_paris_detectives",
+      "speaker": "El Detective Privado de Método 3",
+      "speakerRole": "El Cazador de Muertos Vivientes",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "¡EL MUERTO ESTÁ VIVO!: FOTOGRAFIADO EN PARÍS COMIENDO OSTRAS Y CHAMPÁN",
+      "context": "Siete años después de tu funeral oficial, una agencia de detectives contratada por acreedores y periodistas te fotografía paseando con abrigo de cachemira y entrando en tu residencia de la rue O’Donnell junto a Montparnasse.",
+      "evidenceDocument": "Fotografías de seguimiento a color con teleobjetivo mostrando al espía paseando por el bulevar Saint-Germain.",
+      "weight": 2,
+      "requiredFlags": ["PAESA_LAVADO_OFFSHORE_CERRADO"],
+      "leftChoice": {
+        "label": "Conceder una entrevista exclusiva en París confirmando que todos tus delitos ya han prescrito",
+        "stampText": "PRESCRIPCIÓN",
+        "flavorQuote": "Estoy vivo, señores, pero la Audiencia Nacional ya no puede tocarme: el Código Penal dice que el tiempo borró la culpa.",
+        "mechanicId": 18,
+        "modifiers": { "pastaEnB": 10, "presionJudicial": -25, "impunidad": 40, "reputacionMediatica": 30 },
+        "grantedFlags": ["PAESA_PRESCRIPCION_ALEGADA"]
+      },
+      "rightChoice": {
+        "label": "Huir inmediatamente en avión privado a Sierra Leona fingiendo ser un marchante de arte",
+        "stampText": "SIERRA LEONA",
+        "flavorQuote": "En África compramos máscaras de oro y diamantes sin tallar; a los detectives españoles se les pierde el rastro en la selva.",
+        "mechanicId": 31,
+        "modifiers": { "pastaEnB": 15, "presionJudicial": 10, "impunidad": 20, "reputacionMediatica": -20 },
+        "grantedFlags": ["PAESA_EXPEDICION_AFRICA"]
+      }
+    },
+    {
+      "id": "saga_paesa_10_climax_el_inmortal_de_chamberi",
+      "speaker": "Don Francisco",
+      "speakerRole": "La Leyenda Viva de la Evasión",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "CLÍMAX DEL ILUSIONISTA: EL ARCHIVO DEFINITIVO POR PRESCRIPCIÓN HISTÓRICA",
+      "context": "La justicia española archiva definitivamente todas las causas por la fuga de los fondos reservados: han transcurrido más de diez años y el reo fingido es inalcanzable. Te sientas en un café de la plaza de la Concordia a tus ochenta años, millonario e intocable.",
+      "evidenceDocument": "Auto de sobreseimiento definitivo y archivo de actuaciones por prescripción extintiva de la responsabilidad criminal.",
+      "weight": 1,
+      "requiredFlags": ["PAESA_PRESCRIPCION_ALEGADA"],
+      "leftChoice": {
+        "label": "Brindar con Dom Pérignon por el triunfo de la picaresca y escribir tus memorias",
+        "stampText": "TRIUNFO ETERNO",
+        "flavorQuote": "España es un país formidable: engañas a los ministros, te quedas el botín, te mueres en el periódico y te aplauden en el cine.",
+        "mechanicId": 18,
+        "modifiers": { "pastaEnB": 30, "presionJudicial": -40, "impunidad": 40, "reputacionMediatica": 35 },
+        "grantedFlags": ["PAESA_TRIUNFO_HISTORICO_TOTAL"]
+      },
+      "rightChoice": {
+        "label": "Meterse en un timo fiduciario de veinte millones a un magnate ruso del ex-KGB",
+        "stampText": "ÚLTIMO TIMO",
+        "flavorQuote": "El dinero de los espías rusos es el más divertido de saquear; a mi edad no voy a ponerme a cuidar geranios.",
+        "mechanicId": 6,
+        "modifiers": { "pastaEnB": 35, "presionJudicial": 20, "impunidad": 25, "reputacionMediatica": 20 },
+        "grantedFlags": ["PAESA_TIMO_RUSO_EJECUTADO"]
+      }
+    }
+  ]
+}
