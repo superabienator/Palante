@@ -4,6 +4,19 @@
     "version": "1.0.0",
     "initialNodeId": "nodo_inicio_proconsul",
     "characters": {
+      "CUSTODIO_LIBRETA": {
+        "id": "CUSTODIO_LIBRETA",
+        "name": "El Custodio de la Libreta",
+        "sphere": "POLITICA",
+        "realInspiration": "Rosendo Naseiro y Luis Bárcenas (extesoreros del Partido Popular)",
+        "initialStats": {
+          "pastaEnB": 70,
+          "presionJudicial": 40,
+          "impunidad": 50,
+          "reputacionMediatica": 20
+        },
+        "unlockedMechanics": [1, 2, 3, 4, 5, 6, 7]
+      },
       "PROCONSUL_HORMIGON": {
         "id": "PROCONSUL_HORMIGON",
         "name": "El Procónsul del Hormigón",
@@ -16,6 +29,19 @@
           "reputacionMediatica": 50
         },
         "unlockedMechanics": [2, 8, 9, 10, 11, 12, 13]
+      },
+      "ARCHIVADOR_CLOACA": {
+        "id": "ARCHIVADOR_CLOACA",
+        "name": "El Archivador de Cloaca",
+        "sphere": "ORDEN_JUSTICIA",
+        "realInspiration": "José Manuel Villarejo y Enrique García Castaño",
+        "initialStats": {
+          "pastaEnB": 45,
+          "presionJudicial": 35,
+          "impunidad": 80,
+          "reputacionMediatica": 40
+        },
+        "unlockedMechanics": [16, 17, 19, 27, 28, 29, 30]
       }
     }
   },
@@ -42,7 +68,23 @@
           "flavorQuote": "Todo dentro de la ley, que para eso redactamos el pliego.",
           "mechanicId": 11,
           "modifiers": { "pastaEnB": 15, "presionJudicial": 5, "impunidad": 10 },
-          "nextNodeId": "nodo_registro_uco"
+          "nextNodeId": "proconsul_modificado_obra"
+        },
+        {
+          "id": "c_p_custodio",
+          "label": "Enviar el maletín de campaña a Génova para el Custodio de la Libreta",
+          "flavorQuote": "ACS se compromete a 1M€, ha dado 30.000; FCC daba 50.000 al mes.",
+          "mechanicId": 1,
+          "modifiers": { "pastaEnB": 10, "presionJudicial": 10, "impunidad": 15 },
+          "nextNodeId": "custodio_inicio_reparto"
+        },
+        {
+          "id": "c_p_archivador",
+          "label": "Contratar los servicios de inteligencia del Comisario para blindar el consistorio",
+          "flavorQuote": "Isidro te quiere mucho y César también.",
+          "mechanicId": 27,
+          "modifiers": { "pastaEnB": -15, "impunidad": 20, "reputacionMediatica": 10 },
+          "nextNodeId": "archivador_inicio_encargo"
         }
       ]
     },
@@ -61,6 +103,100 @@
           "mechanicId": 7,
           "modifiers": { "presionJudicial": 40, "impunidad": -30 },
           "nextNodeId": "nodo_fin_soto"
+        },
+        {
+          "id": "c_uco_recalif",
+          "label": "Invocar la doctrina Botín y exigir al fiscal amigo el archivo por falta de perjudicado directo",
+          "flavorQuote": "Fue él quien consiguió librar a Botín de la investigación de catorce años pidiendo que no se cursara acción penal alguna.",
+          "mechanicId": 35,
+          "modifiers": { "presionJudicial": -20, "impunidad": 25, "reputacionMediatica": 10 },
+          "nextNodeId": "proconsul_maniobra_judicial"
+        }
+      ]
+    },
+    "proconsul_modificado_obra": {
+      "id": "proconsul_modificado_obra",
+      "archetypeId": "PROCONSUL_HORMIGON",
+      "sphere": "POLITICA",
+      "headline": "EL MODIFICADO DE OBRA DEL HOSPITAL REGIONAL ('LA PIZZA')",
+      "context": "La UTE constructora amenaza con parar las obras del nuevo hospital alegando fallas geotécnicas imprevistas. En el reservado del asador, el presidente de la constructora te ofrece un sobre con 300.000 € si apruebas una alteración del proyecto con sobrecoste del 30%.",
+      "evidenceDocument": "Pliego de condiciones con anexo manuscrito firmado en servilleta de papel.",
+      "choices": [
+        {
+          "id": "c_p_pizza",
+          "label": "Aprobar 'la pizza' técnica inflando el presupuesto sin informe de intervención",
+          "flavorQuote": "Introducían modificaciones falsas en el proyecto y, sobre esa modificación, la mordida era hasta del 30%.",
+          "mechanicId": 12,
+          "modifiers": { "pastaEnB": 35, "presionJudicial": 20, "impunidad": 10 },
+          "nextNodeId": "proconsul_blanqueo_litoral"
+        },
+        {
+          "id": "c_p_concesion",
+          "label": "Blindar la concesión hospitalaria a 30 años a cambio de un asiento futuro en el consejo",
+          "flavorQuote": "La gestión del hospital de Son Espases, una concesión por treinta años a la UTE por valor de 1000 millones.",
+          "mechanicId": 13,
+          "modifiers": { "pastaEnB": 20, "impunidad": 25, "reputacionMediatica": 15 },
+          "nextNodeId": "proconsul_maniobra_judicial"
+        }
+      ]
+    },
+    "proconsul_blanqueo_litoral": {
+      "id": "proconsul_blanqueo_litoral",
+      "archetypeId": "PROCONSUL_HORMIGON",
+      "sphere": "POLITICA",
+      "headline": "INVERSIÓN MASIVA DE DOLAR-RUBLOS EN MARINA RESIDENCIAL",
+      "context": "Un intermediario opaco con maletines de billetes de 500 € y el concejal de urbanismo te proponen recalificar la primera línea de costa para un macrocomplejo náutico financiado por capitales del Este. La fiscalía de medio ambiente ha solicitado los expedientes.",
+      "evidenceDocument": "Escritura de compraventa otorgada por mercantil instrumental con sede en Belice.",
+      "choices": [
+        {
+          "id": "c_p_dolar",
+          "label": "Aceptar los 'dolar-rublos' y dar licencia de obras exprés antes de elecciones",
+          "flavorQuote": "Otra máquina de lavar dolarrublos... lo que le inyectan bajo cuerda Traian y los rusos.",
+          "mechanicId": 10,
+          "modifiers": { "pastaEnB": 40, "presionJudicial": 30, "reputacionMediatica": -20 },
+          "nextNodeId": "nodo_registro_uco"
+        },
+        {
+          "id": "c_p_pgou",
+          "label": "Alterar el PGOU a medianoche para calificar el monte público como suelo hotelero",
+          "flavorQuote": "Le acababa de robar un montón de millones haciéndole creer que eran rústicos cuando él ya tenía pactada la recalificación.",
+          "mechanicId": 8,
+          "modifiers": { "pastaEnB": 25, "presionJudicial": 15, "impunidad": 15 },
+          "nextNodeId": "proconsul_maniobra_judicial"
+        }
+      ]
+    },
+    "proconsul_maniobra_judicial": {
+      "id": "proconsul_maniobra_judicial",
+      "archetypeId": "PROCONSUL_HORMIGON",
+      "sphere": "POLITICA",
+      "headline": "PACTO EN EL PALCO DEL ESTADIO Y PUERTA GIRATORIA",
+      "context": "En el descanso del partido de Champions, el presidente del club y magnate de la energía te ofrece una salida honorable: renunciar al acta antes del suplicatorio a cambio de un sillón en el consejo del IBEX con sueldo millonario y coche blindado.",
+      "evidenceDocument": "Contrato de blindaje ejecutivo con remuneración anual de 800.000 € y cláusula de rescisión.",
+      "choices": [
+        {
+          "id": "c_p_ibex",
+          "label": "Aceptar la puerta giratoria en el consejo de administración del selectivo",
+          "flavorQuote": "¿Por qué no podía un ministro hacerse rico? El Estado lo crea y el IBEX se lo lleva.",
+          "mechanicId": 20,
+          "modifiers": { "pastaEnB": 20, "presionJudicial": -30, "impunidad": 40, "reputacionMediatica": 30 },
+          "nextNodeId": "proconsul_fin_ibex"
+        },
+        {
+          "id": "c_p_botin",
+          "label": "Pactar el sobreseimiento con la Fiscalía mediante doctrina Botín",
+          "flavorQuote": "Consiguió librar a Botín pidiendo que no se cursara acción penal alguna.",
+          "mechanicId": 35,
+          "modifiers": { "presionJudicial": -25, "impunidad": 35, "reputacionMediatica": 10 },
+          "nextNodeId": "proconsul_fin_sobreseimiento"
+        },
+        {
+          "id": "c_p_sobresueldo",
+          "label": "Cobrar un último sobresueldo en efectivo en sobre manila para los letrados",
+          "flavorQuote": "Introduciendo en la máquina trituradora los documentos con el pago de los sobresueldos.",
+          "mechanicId": 2,
+          "modifiers": { "pastaEnB": 25, "presionJudicial": 35, "impunidad": -20 },
+          "nextNodeId": "nodo_fin_soto"
         }
       ]
     },
@@ -70,15 +206,490 @@
       "sphere": "POLITICA",
       "headline": "PRISIÓN INCONDICIONAL EN SOTO DEL REAL",
       "context": "El juez de guardia dicta auto de prisión preventiva sin fianza. El partido anuncia tu expulsión fulminante antes de que el furgón cruce el control de acceso del penal.",
+      "evidenceDocument": "Auto de prisión provisional comunicada y sin fianza del Juzgado Central de Instrucción.",
       "choices": [
         {
           "id": "c_restart",
           "label": "Comenzar nueva legislatura con otro personaje",
+          "flavorQuote": "Ahora sí que es champán.",
+          "mechanicId": 8,
+          "modifiers": {},
+          "nextNodeId": "nodo_inicio_proconsul"
+        },
+        {
+          "id": "c_restart_custodio",
+          "label": "Reencarnarse en el Custodio de la Libreta en la sede nacional",
+          "flavorQuote": "Introduciendo en la máquina trituradora los documentos de la contabilidad B.",
+          "mechanicId": 2,
+          "modifiers": {},
+          "nextNodeId": "custodio_inicio_reparto"
+        },
+        {
+          "id": "c_restart_archivador",
+          "label": "Descender a las cloacas policiales como el Comisario Archivador",
+          "flavorQuote": "El célebre borrador ficticio para frenar al rival político: el cañón Bertha.",
+          "mechanicId": 28,
+          "modifiers": {},
+          "nextNodeId": "archivador_inicio_encargo"
+        }
+      ],
+      "ending": "PRISION_INCONDICIONAL"
+    },
+    "proconsul_fin_ibex": {
+      "id": "proconsul_fin_ibex",
+      "archetypeId": "PROCONSUL_HORMIGON",
+      "sphere": "POLITICA",
+      "headline": "FICHAJE ESTRELLA EN EL CONSEJO DE ADMINISTRACIÓN DEL IBEX",
+      "context": "Dimites alegando motivos de salud y descanso familiar. A las 48 horas, la CNMV comunica tu nombramiento como consejero independiente de la multinacional energética con dietas de 800.000 € y chófer blindado. La causa judicial se archiva discretamente.",
+      "evidenceDocument": "Hecho relevante publicado en la CNMV con nombramiento de consejero independiente.",
+      "choices": [
+        {
+          "id": "c_p_ibex_restart",
+          "label": "Celebrar el sillón corporativo e iniciar nueva partida como Procónsul",
+          "flavorQuote": "¿Por qué no podía un ministro hacerse rico? El Estado lo crea y el IBEX se lo lleva.",
+          "mechanicId": 20,
+          "modifiers": {},
+          "nextNodeId": "nodo_inicio_proconsul"
+        },
+        {
+          "id": "c_p_ibex_custodio",
+          "label": "Canalizar fondos de la corporación hacia la libreta del tesorero",
+          "flavorQuote": "ACS se compromete a 1M€, ha dado 30.000; FCC daba 50.000 al mes.",
+          "mechanicId": 1,
+          "modifiers": {},
+          "nextNodeId": "custodio_inicio_reparto"
+        }
+      ],
+      "ending": "CONSEJO_IBEX"
+    },
+    "proconsul_fin_sobreseimiento": {
+      "id": "proconsul_fin_sobreseimiento",
+      "archetypeId": "PROCONSUL_HORMIGON",
+      "sphere": "POLITICA",
+      "headline": "SOBRESEIMIENTO LIBRE POR DOCTRINA BOTÍN",
+      "context": "La Audiencia Provincial estima tu recurso de apelación: al no formular acusación la Fiscalía ni la Abogacía Pública, la acusación popular decae automáticamente. El auto decreta el sobreseimiento libre. Compras un ático en la Milla de Oro libre de cargos.",
+      "evidenceDocument": "Auto de sobreseimiento libre y archivo definitivo de diligencias previas.",
+      "choices": [
+        {
+          "id": "c_p_botin_restart",
+          "label": "Reanudar la carrera municipal como Procónsul del Hormigón",
+          "flavorQuote": "Fue él quien consiguió librar a Botín pidiendo que no se cursara acción penal alguna.",
+          "mechanicId": 35,
+          "modifiers": {},
+          "nextNodeId": "nodo_inicio_proconsul"
+        },
+        {
+          "id": "c_p_botin_archivador",
+          "label": "Agradecer los servicios al Comisario con un contrato de asesoría",
+          "flavorQuote": "Isidro te quiere mucho y César también.",
+          "mechanicId": 27,
+          "modifiers": {},
+          "nextNodeId": "archivador_inicio_encargo"
+        }
+      ],
+      "ending": "SOBRESEIMIENTO_BOTIN"
+    },
+    "custodio_inicio_reparto": {
+      "id": "custodio_inicio_reparto",
+      "archetypeId": "CUSTODIO_LIBRETA",
+      "sphere": "POLITICA",
+      "headline": "EL REPARTO MENSUAL EN LA PLANTA SÉPTIMA DE GÉNOVA",
+      "context": "Primer lunes de mes en la sede nacional. Los maletines de piel de las grandes constructoras descansan junto a la caja fuerte oculta tras el retrato oficial. Ministros y secretarios generales esperan en el pasillo. Tu dietario manuscrito en cuero negro aguarda las anotaciones con estilográfica.",
+      "evidenceDocument": "Cuaderno manuscrito Moleskine con apuntes contables a lápiz: 'J.M. 50.000 €', 'M.R. 25.000 €'.",
+      "choices": [
+        {
+          "id": "c_c_donacion",
+          "label": "Recepcionar donación millonaria de la constructora en maletín de campaña",
+          "flavorQuote": "ACS se compromete a 1M€, ha dado 30.000; FCC daba 50.000 al mes; va a dar 12.000 al mes + ayuda campaña.",
+          "mechanicId": 1,
+          "modifiers": { "pastaEnB": 30, "presionJudicial": 15, "impunidad": 10 },
+          "nextNodeId": "custodio_desvio_suiza"
+        },
+        {
+          "id": "c_c_sobresueldo",
+          "label": "Distribuir sobres manila con billetes de 500 € a la cúpula directiva",
+          "flavorQuote": "Introduciendo en la máquina trituradora de papel de su despacho los documentos con el pago de los sobresueldos.",
+          "mechanicId": 2,
+          "modifiers": { "pastaEnB": -15, "impunidad": 25, "reputacionMediatica": -10 },
+          "nextNodeId": "custodio_alerta_filtracion"
+        },
+        {
+          "id": "c_c_proconsul",
+          "label": "Financiar la precampaña del Procónsul del Hormigón con fondos opacos",
+          "flavorQuote": "Ahora sí que es champán.",
+          "mechanicId": 9,
+          "modifiers": { "pastaEnB": -20, "impunidad": 20, "presionJudicial": 10 },
+          "nextNodeId": "nodo_inicio_proconsul"
+        }
+      ]
+    },
+    "custodio_desvio_suiza": {
+      "id": "custodio_desvio_suiza",
+      "archetypeId": "CUSTODIO_LIBRETA",
+      "sphere": "POLITICA",
+      "headline": "TRANSFERENCIA URGENTE AL BANCO MIRABAUD DE GINEBRA",
+      "context": "El saldo en billetes de 500 € desborda el doble fondo del armario blindado. Tu gestor fiduciario en Zúrich te avisa por télex encriptado de que la Agencia Tributaria estrecha el cerco. Hay que transferir 22 millones de euros hacia una fundación pantalla en Panamá.",
+      "evidenceDocument": "Extracto de la cuenta cifrada 700356ZNM en Ginebra a nombre de la fundación instrumental Tesedul.",
+      "choices": [
+        {
+          "id": "c_c_ginebra",
+          "label": "Transferir 22 millones a la cuenta cifrada en Ginebra a través de fiduciarios",
+          "flavorQuote": "Desde las cuentas 701262BR de la Union Bancaire Privée el dinero se transfería a nombre de sociedades de las islas Vírgenes.",
+          "mechanicId": 6,
+          "modifiers": { "pastaEnB": 25, "presionJudicial": 20, "impunidad": -15 },
+          "nextNodeId": "custodio_chantaje_manta"
+        },
+        {
+          "id": "c_c_banca",
+          "label": "Negociar la condonación de la deuda electoral con la presidencia de la caja amiga",
+          "flavorQuote": "Llamaban a Génova para trivializar la dimensión de la crisis y aclarar que estaban en la caja por y para el partido.",
+          "mechanicId": 5,
+          "modifiers": { "pastaEnB": 15, "impunidad": 20, "reputacionMediatica": -15 },
+          "nextNodeId": "custodio_alerta_filtracion"
+        }
+      ]
+    },
+    "custodio_alerta_filtracion": {
+      "id": "custodio_alerta_filtracion",
+      "archetypeId": "CUSTODIO_LIBRETA",
+      "sphere": "POLITICA",
+      "headline": "FILTRACIÓN DE LOS PAPELES A LA PRENSA MATINAL",
+      "context": "El diario de mayor tirada abre su portada dominical con reproducciones facsímiles de tus notas manuscritas. Los nombres de secretarios generales y ministros aparecen en primera plana. Moncloa convoca una rueda de prensa en plasma y activa un cortafuegos para convertirte en chivo expiatorio.",
+      "evidenceDocument": "Portadas de diarios nacionales con facsímiles de la contabilidad opaca del partido.",
+      "choices": [
+        {
+          "id": "c_c_notario",
+          "label": "Protocolizar ante notario las copias de seguridad y los mensajes del ministro",
+          "flavorQuote": "Paco Martínez había registrado en un notario los mensajes que intercambió con su superior sobre la Operación Kitchen.",
+          "mechanicId": 4,
+          "modifiers": { "presionJudicial": 15, "impunidad": 30, "reputacionMediatica": -20 },
+          "nextNodeId": "custodio_chantaje_manta"
+        },
+        {
+          "id": "c_c_martillazos",
+          "label": "Destruir a martillazos los discos duros con 35 pasadas en el taller del sótano",
+          "flavorQuote": "Sobrescritura de datos treinta y cinco veces, formateo de bajo nivel y aplastamiento físico a martillazos en los sótanos.",
+          "mechanicId": 7,
+          "modifiers": { "presionJudicial": 35, "impunidad": -20, "reputacionMediatica": -25 },
+          "nextNodeId": "custodio_fin_prision"
+        }
+      ]
+    },
+    "custodio_chantaje_manta": {
+      "id": "custodio_chantaje_manta",
+      "archetypeId": "CUSTODIO_LIBRETA",
+      "sphere": "POLITICA",
+      "headline": "EL DILEMA DE LA MANTA: AUDIENCIA NACIONAL O INDULTO",
+      "context": "La Fiscalía Anticorrupción te cita para declaración indagatoria. En el aparcamiento subterráneo de la Audiencia Nacional, un emisario de la Moncloa se acerca a tu coche: 'Si tiras de la manta, tu familia dormirá en Soto del Real; si aguantas el tirón, el Consejo de Ministros firmará tu indulto por razones humanitarias'.",
+      "evidenceDocument": "Borrador de acuerdo de conformidad penal con membrete de la Fiscalía Anticorrupción.",
+      "choices": [
+        {
+          "id": "c_c_peaje",
+          "label": "Exigir el cobro del 3% y amenazar con desvelar la lista completa de perceptores",
+          "flavorQuote": "Ustedes tienen un problema, y ese problema se llama 3%... inundó el país y se extendió como una práctica generalizada.",
+          "mechanicId": 3,
+          "modifiers": { "pastaEnB": 20, "presionJudicial": -25, "impunidad": 35 },
+          "nextNodeId": "custodio_fin_indulto"
+        },
+        {
+          "id": "c_c_fuga",
+          "label": "Fugarte hacia los Alpes suizos activando tus fondos en paraísos fiscales",
+          "flavorQuote": "El peligro no está en los billetes sino en su valor traducido en cuenta bancaria a la que pueden llegar los jueces.",
+          "mechanicId": 6,
+          "modifiers": { "pastaEnB": 40, "presionJudicial": 10, "impunidad": 20 },
+          "nextNodeId": "custodio_fin_fuga"
+        },
+        {
+          "id": "c_c_aguantar",
+          "label": "Rechazar el pacto y jugártela en juicio con la nulidad de las pruebas intervenidas",
+          "flavorQuote": "La ofensiva política contra la juez que confirmó el procesamiento por la destrucción de los ordenadores.",
+          "mechanicId": 7,
+          "modifiers": { "presionJudicial": 50, "impunidad": -40 },
+          "nextNodeId": "custodio_fin_prision"
+        }
+      ]
+    },
+    "custodio_fin_prision": {
+      "id": "custodio_fin_prision",
+      "archetypeId": "CUSTODIO_LIBRETA",
+      "sphere": "POLITICA",
+      "headline": "AUTO DE PRISIÓN INCONDICIONAL EN SOTO DEL REAL",
+      "context": "El juez de la Audiencia Nacional decreta tu ingreso inmediato en el módulo 4 de Soto del Real. Tus antiguos jefes emiten un comunicado calificando tus notas como burda fotocopia manipulada. El banco en Ginebra bloquea el acceso a tus fondos.",
+      "evidenceDocument": "Auto de prisión provisional comunicada y sin fianza dictado por el Juzgado Central de Instrucción.",
+      "choices": [
+        {
+          "id": "c_c_prision_restart",
+          "label": "Reescribir las libretas contables e iniciar nueva legislatura como Custodio",
+          "flavorQuote": "Paco Martínez había registrado en un notario los mensajes que intercambió con su superior sobre la Operación Kitchen.",
+          "mechanicId": 4,
+          "modifiers": {},
+          "nextNodeId": "custodio_inicio_reparto"
+        },
+        {
+          "id": "c_c_prision_archivador",
+          "label": "Contactar con el Comisario Villarejo para comercializar los dosieres desde prisión",
+          "flavorQuote": "El excomisario estaba montando desde la prisión una red de venta de informes y material clasificado.",
+          "mechanicId": 30,
+          "modifiers": {},
+          "nextNodeId": "archivador_inicio_encargo"
+        }
+      ],
+      "ending": "PRISION_INCONDICIONAL"
+    },
+    "custodio_fin_indulto": {
+      "id": "custodio_fin_indulto",
+      "archetypeId": "CUSTODIO_LIBRETA",
+      "sphere": "POLITICA",
+      "headline": "INDULTO EXPRÉS EN EL BOLETÍN OFICIAL DEL ESTADO",
+      "context": "En el último Consejo de Ministros del año, en vísperas de Nochevieja, el Ejecutivo publica tu indulto parcial por razones de equidad y utilidad pública. Sales discretamente de prisión por la puerta trasera con tus finanzas en Suiza prácticamente intactas.",
+      "evidenceDocument": "Ejemplar del BOE con el Real Decreto de concesión de indulto parcial y conmutación de penas.",
+      "choices": [
+        {
+          "id": "c_c_indulto_restart",
+          "label": "Disfrutar del indulto e iniciar nueva partida como Custodio de la Libreta",
+          "flavorQuote": "Ustedes tienen un problema, y ese problema se llama 3%.",
+          "mechanicId": 3,
+          "modifiers": {},
+          "nextNodeId": "custodio_inicio_reparto"
+        },
+        {
+          "id": "c_c_indulto_proconsul",
+          "label": "Asociarte con el Procónsul del Hormigón para recalificar terrenos litorales",
+          "flavorQuote": "Ahora sí que es champán.",
+          "mechanicId": 8,
           "modifiers": {},
           "nextNodeId": "nodo_inicio_proconsul"
         }
       ],
+      "ending": "INDULTO_EXPRES"
+    },
+    "custodio_fin_fuga": {
+      "id": "custodio_fin_fuga",
+      "archetypeId": "CUSTODIO_LIBRETA",
+      "sphere": "POLITICA",
+      "headline": "FUGA LIMPIA Y PRESCRIPCIÓN PENAL EN GINEBRA",
+      "context": "A bordo de un vehículo con matrícula consular cruzas la frontera suiza horas antes de activarse la orden europea de detención. Quince años más tarde, el tribunal declara extinta la responsabilidad penal por prescripción procesal. Brindas con champán en un ático de Ginebra.",
+      "evidenceDocument": "Auto judicial de sobreseimiento libre por prescripción de los delitos fiscales.",
+      "choices": [
+        {
+          "id": "c_c_fuga_restart",
+          "label": "Gestionar los fondos offshore e iniciar nueva legislatura como Custodio",
+          "flavorQuote": "Desde las cuentas cifradas en Ginebra el dinero se transfería a las islas Vírgenes.",
+          "mechanicId": 6,
+          "modifiers": {},
+          "nextNodeId": "custodio_inicio_reparto"
+        },
+        {
+          "id": "c_c_fuga_archivador",
+          "label": "Comprar información confidencial al Comisario para blindar el patrimonio",
+          "flavorQuote": "El excomisario estaba montando desde prisión una red de venta de informes.",
+          "mechanicId": 30,
+          "modifiers": {},
+          "nextNodeId": "archivador_inicio_encargo"
+        }
+      ],
+      "ending": "FUGA_Y_PRESCRIPCION"
+    },
+    "archivador_inicio_encargo": {
+      "id": "archivador_inicio_encargo",
+      "archetypeId": "ARCHIVADOR_CLOACA",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "REUNIÓN CLANDESTINA EN EL PRIVADO DE LA MARISQUERÍA",
+      "context": "Mesa reservada al fondo del restaurante gallego. Llevas la grabadora digital oculta en el dobladillo de la corbata y un microtransmisor en el gemelo. Frente a ti se sientan el jefe de seguridad de un banco del IBEX y el secretario de Estado: necesitan neutralizar a un fiscal independiente y recuperar audios sensibles.",
+      "evidenceDocument": "Cinta magnetofónica de microcassette rotulada 'Operación Kitchen - Bruto 04'.",
+      "choices": [
+        {
+          "id": "c_a_facturar",
+          "label": "Facturar 2,5 millones a través de tu entramado mercantil de seguridad e inteligencia",
+          "flavorQuote": "La Caixa, dos millones y medio, luego tienes Banco Sabadell... Es que le quieren mucho. Isidro te quiere mucho y César también.",
+          "mechanicId": 27,
+          "modifiers": { "pastaEnB": 35, "impunidad": 15, "reputacionMediatica": -10 },
+          "nextNodeId": "archivador_asalto_kitchen"
+        },
+        {
+          "id": "c_a_bertha",
+          "label": "Disparar el 'cañón Bertha': filtrar borrador apócrifo de inteligencia a directores afines",
+          "flavorQuote": "El célebre borrador ficticio para frenar al rival político publicado por El Mundo al que llamaba su 'cañón Bertha'... era una manipulación deliberada.",
+          "mechanicId": 28,
+          "modifiers": { "presionJudicial": 10, "impunidad": 25, "reputacionMediatica": 30 },
+          "nextNodeId": "archivador_guerra_sucia_stampa"
+        },
+        {
+          "id": "c_a_proconsul",
+          "label": "Ofrecer protección parapolicial al Procónsul del Hormigón ante la UCO",
+          "flavorQuote": "Otra máquina de lavar dolarrublos... lo que le inyectan bajo cuerda Traian y los rusos.",
+          "mechanicId": 10,
+          "modifiers": { "pastaEnB": 20, "impunidad": 15, "presionJudicial": 10 },
+          "nextNodeId": "nodo_inicio_proconsul"
+        }
+      ]
+    },
+    "archivador_asalto_kitchen": {
+      "id": "archivador_asalto_kitchen",
+      "archetypeId": "ARCHIVADOR_CLOACA",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "ASALTO PARAESTATAL Y ROBO DE DISPOSITIVOS ('EL FALSO CURA')",
+      "context": "Tu red de confidentes y policías de segunda actividad localiza el domicilio del extesorero. Para sustraer los pendrives con grabaciones que comprometen al presidente del Gobierno sin orden judicial, reclutas a un sicario disfrazado de cura y pagas 2.000 € mensuales de fondos reservados al chófer de la familia.",
+      "evidenceDocument": "Revólver simulado del calibre 38 y bridas plásticas empleadas en el asalto domiciliario.",
+      "choices": [
+        {
+          "id": "c_a_falsocura",
+          "label": "Desplegar la operación del falso sacerdote para secuestrar los dispositivos",
+          "flavorQuote": "Enrique Olivares, el falso cura, que el 23 de octubre de 2013 asaltó el domicilio de Luis Bárcenas en busca de los pendrives que podían tumbar al Gobierno.",
+          "mechanicId": 16,
+          "modifiers": { "pastaEnB": -10, "presionJudicial": 30, "impunidad": 20 },
+          "nextNodeId": "archivador_kompromat_chantaje"
+        },
+        {
+          "id": "c_a_mercenarios",
+          "label": "Contratar pistoleros y mercenarios extranjeros con cargo a los fondos reservados",
+          "flavorQuote": "Disponían de dinero de sobra para financiar sus actividades secretas... distribuido por Amedo para pistoleros y mercenarios.",
+          "mechanicId": 17,
+          "modifiers": { "pastaEnB": -20, "presionJudicial": 25, "impunidad": 30 },
+          "nextNodeId": "archivador_guerra_sucia_stampa"
+        }
+      ]
+    },
+    "archivador_guerra_sucia_stampa": {
+      "id": "archivador_guerra_sucia_stampa",
+      "archetypeId": "ARCHIVADOR_CLOACA",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "MONTAJE DISCIPLINARIO CONTRA EL FISCAL ANTICORRUPCIÓN",
+      "context": "El fiscal anticorrupción independiente no cede a las presiones y ultima un escrito acusatorio contra la cúpula policial. Te reúnes de urgencia con periodistas a sueldo: 'Con decir que son notas internas de la Policía y que el fiscal las filtró... ¡yo ahí ya me los cargo, bueno!'.",
+      "evidenceDocument": "Borrador de denuncia anónima remitida a la Fiscalía General para abrir expediente disciplinario.",
+      "choices": [
+        {
+          "id": "c_a_difamacion",
+          "label": "Activar el montaje mediático para forzar la purga y expulsión del fiscal",
+          "flavorQuote": "¡Entonces facilísimo! Con decir que son notas informativas de los archivos de la Policía y que no las han contado... Yo ahí ya me los cargo, ¡bueno!",
+          "mechanicId": 29,
+          "modifiers": { "presionJudicial": -25, "impunidad": 35, "reputacionMediatica": 20 },
+          "nextNodeId": "archivador_fin_purga"
+        },
+        {
+          "id": "c_a_kompromat",
+          "label": "Fabricar un dosier 'Kompromat' con grabaciones clandestinas para neutralizar al juez instructor",
+          "flavorQuote": "En algunas situaciones superaron a los métodos estalinistas con sus demoledores Kompromat: el informe Veritas y la manipulación del vídeo sexual.",
+          "mechanicId": 19,
+          "modifiers": { "pastaEnB": 20, "presionJudicial": 20, "impunidad": 25 },
+          "nextNodeId": "archivador_kompromat_chantaje"
+        }
+      ]
+    },
+    "archivador_kompromat_chantaje": {
+      "id": "archivador_kompromat_chantaje",
+      "archetypeId": "ARCHIVADOR_CLOACA",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "EL CHANTAJE DE LOS 32 TERABYTES EN LA AUDIENCIA NACIONAL",
+      "context": "La Fiscalía cerca tu chalé con agentes de Asuntos Internos. En el búnker subterráneo guardas los servidores con 32 terabytes de audios: amantes reales, ministros en saunas y presidentes del IBEX encargando espionajes clandestinos. Avisas a Moncloa: o paran la causa o la manta cae sobre el Estado.",
+      "evidenceDocument": "Disco duro encriptado con el archivo sonoro clasificado de las cloacas del Estado.",
+      "choices": [
+        {
+          "id": "c_a_subasta",
+          "label": "Subastar los informes clasificados desde la celda a los investigados del poder",
+          "flavorQuote": "El excomisario estaba montando desde la prisión de Estremera una red de venta de informes y material probatorio clasificado para investigados judiciales.",
+          "mechanicId": 30,
+          "modifiers": { "pastaEnB": 45, "presionJudicial": 40, "impunidad": 15 },
+          "nextNodeId": "archivador_fin_prision"
+        },
+        {
+          "id": "c_a_chantaje_real",
+          "label": "Amenazar con filtrar las grabaciones sobre las comisiones del Rey y la Corona",
+          "flavorQuote": "Avisó de que si intentaban encarcelarlo, filtraría las grabaciones sobre las comisiones saudíes del Rey y los audios de los presidentes del IBEX 35.",
+          "mechanicId": 19,
+          "modifiers": { "pastaEnB": 10, "presionJudicial": -35, "impunidad": 50, "reputacionMediatica": -20 },
+          "nextNodeId": "archivador_fin_sobreseimiento"
+        },
+        {
+          "id": "c_a_cobro_ibex",
+          "label": "Cobrar el cheque de blindaje del banquero y pactar la purga del fiscal investigador",
+          "flavorQuote": "Isidro te quiere mucho y César también.",
+          "mechanicId": 27,
+          "modifiers": { "pastaEnB": 30, "presionJudicial": 15, "impunidad": 25 },
+          "nextNodeId": "archivador_fin_purga"
+        }
+      ]
+    },
+    "archivador_fin_prision": {
+      "id": "archivador_fin_prision",
+      "archetypeId": "ARCHIVADOR_CLOACA",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "PRISIÓN PREVENTIVA EN ESTREMERA Y AISLAMIENTO FÍSICO",
+      "context": "Asuntos Internos revienta la puerta blindada de tu búnker. El juez decreta tu ingreso en la prisión de Estremera. Pese a los muros y el aislamiento, conviertes tu celda en una central clandestina de dosieres que desestabiliza a gobiernos y corporaciones.",
+      "evidenceDocument": "Auto judicial de ingreso en centro penitenciario bajo régimen FIES.",
+      "choices": [
+        {
+          "id": "c_a_prision_restart",
+          "label": "Reorganizar el archivo de audios e iniciar nueva partida como Comisario",
+          "flavorQuote": "El excomisario estaba montando desde la prisión una red de venta de informes clasificados.",
+          "mechanicId": 30,
+          "modifiers": {},
+          "nextNodeId": "archivador_inicio_encargo"
+        },
+        {
+          "id": "c_a_prision_custodio",
+          "label": "Aliarse en el patio carcelario con el Custodio de la Libreta",
+          "flavorQuote": "Paco Martínez había registrado en un notario los mensajes que intercambió con su superior.",
+          "mechanicId": 4,
+          "modifiers": {},
+          "nextNodeId": "custodio_inicio_reparto"
+        }
+      ],
       "ending": "PRISION_INCONDICIONAL"
+    },
+    "archivador_fin_purga": {
+      "id": "archivador_fin_purga",
+      "archetypeId": "ARCHIVADOR_CLOACA",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "PURGA DE OFICIO DEL FISCAL Y CONTROL DE LA INSTRUCCIÓN",
+      "context": "La Fiscalía General deniega la plaza fija a Ignacio Stampa y lo aparta definitivamente de la macrocausa. El nuevo fiscal dócil pide archivar tus piezas principales por falta de conexidad delictiva. Sales del tribunal fumando un puro ante los micrófonos.",
+      "evidenceDocument": "Resolución administrativa de cese en comisión de servicios del fiscal anticorrupción.",
+      "choices": [
+        {
+          "id": "c_a_purga_restart",
+          "label": "Celebrar el triunfo de la fontanería judicial como Comisario Archivador",
+          "flavorQuote": "¡Entonces facilísimo! Con decir que son notas informativas de los archivos... Yo ahí ya me los cargo.",
+          "mechanicId": 29,
+          "modifiers": {},
+          "nextNodeId": "archivador_inicio_encargo"
+        },
+        {
+          "id": "c_a_purga_proconsul",
+          "label": "Asesorar al Procónsul del Hormigón en el fraccionamiento de contratos",
+          "flavorQuote": "Todo dentro de la ley, que para eso redactamos el pliego.",
+          "mechanicId": 11,
+          "modifiers": {},
+          "nextNodeId": "nodo_inicio_proconsul"
+        }
+      ],
+      "ending": "PURGA_DE_OFICIO"
+    },
+    "archivador_fin_sobreseimiento": {
+      "id": "archivador_fin_sobreseimiento",
+      "archetypeId": "ARCHIVADOR_CLOACA",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "SOBRESEIMIENTO LIBRE POR SECRETO DE ESTADO Y COMPLIANCE",
+      "context": "El juez decreta el sobreseimiento de las corporaciones y de tus mercantiles para evitar daños reputacionales a empresas estratégicas nacionales. El Ministerio de Interior clasifica tus audios como Secreto de Estado bajo la ley de 1968. Tu archivo queda blindado para siempre.",
+      "evidenceDocument": "Auto de sobreseimiento libre por aplicación de protocolos de compliance y exención de responsabilidad.",
+      "choices": [
+        {
+          "id": "c_a_sobreseimiento_restart",
+          "label": "Reabrir la consultoría de inteligencia privada como Comisario Archivador",
+          "flavorQuote": "Isidro te quiere mucho y César también.",
+          "mechanicId": 27,
+          "modifiers": {},
+          "nextNodeId": "archivador_inicio_encargo"
+        },
+        {
+          "id": "c_a_sobreseimiento_custodio",
+          "label": "Coordinar transferencias fiduciarias conjuntas con el Custodio de la Libreta",
+          "flavorQuote": "Desde las cuentas cifradas en Ginebra el dinero se transfería a las islas Vírgenes.",
+          "mechanicId": 6,
+          "modifiers": {},
+          "nextNodeId": "custodio_inicio_reparto"
+        }
+      ],
+      "ending": "SOBRESEIMIENTO_BOTIN"
     }
   }
 }
