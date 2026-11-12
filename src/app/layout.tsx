@@ -13,17 +13,32 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "IBEX-35 & Púnica: Fanzine Edition",
-  description: "Simulador satírico y fanzine brutalista de cleptocracia, sumarios de la UCO y puertas giratorias.",
+  title: 'IBEX-35 & Púnica: Fanzine Edition | Juego Narrativo Punk',
+  description: 'Simulador satírico y ácido de toma de decisiones sobre la corrupción y las cloacas del poder en España.',
+  openGraph: {
+    title: 'IBEX-35 & Púnica: Fanzine Edition',
+    description: '¿Acabarás en el consejo de administración o en Soto del Real? Toma decisiones en el sumario judicial más turbio.',
+    type: 'website',
+    locale: 'es_ES',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'IBEX-35 & Púnica: Fanzine Edition',
+    description: 'Juego de decisiones ácidas y cloacas del Estado.',
+  },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html
-      lang="en"
+      lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col bg-[#f5f3ef] text-black">{children}</body>
     </html>
   );
 }
