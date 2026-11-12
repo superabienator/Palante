@@ -5,8 +5,30 @@ import { ReignsCardSchema } from '@/types/story';
 
 const DECK_PATH = path.join(process.cwd(), 'src', 'content', 'reignsDeck.json');
 const PENDING_PATH = path.join(process.cwd(), 'src', 'content', 'pendingNewsCards.json');
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'palante2026';
 
-export async function GET() {
+function isAuthorized(request: Request): boolean {
+  const authHeader = request.headers.get('authorization');
+  const customHeader = request.headers.get('x-admin-key');
+
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    const token = authHeader.substring(7);
+    if (token === ADMIN_PASSWORD) return true;
+  }
+  if (customHeader === ADMIN_PASSWORD) {
+    return true;
+  }
+  return false;
+}
+
+export async function GET(request: Request) {
+  if (!isAuthorized(request)) {
+    return NextResponse.json(
+      { success: false, error: 'Acceso no autorizado al sumario judicial' },
+      { status: 401 }
+    );
+  }
+
   try {
     const deckRaw = await fs.readFile(DECK_PATH, 'utf-8');
     const deckData = JSON.parse(deckRaw);
@@ -38,6 +60,27 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const action = body.action || 'add';
+
+    // Verificación de contraseña inicial (para el formulario de login)
+    if (action === 'verify_password') {
+      const { password } = body;
+      if (password === ADMIN_PASSWORD) {
+        return NextResponse.json({ success: true, message: 'Autorización judicial concedida' });
+      } else {
+        return NextResponse.json(
+          { success: false, error: 'Clave de autorización incorrecta' },
+          { status: 401 }
+        );
+      }
+    }
+
+    // Para el resto de acciones de edición/aprobación se exige autorización
+    if (!isAuthorized(request)) {
+      return NextResponse.json(
+        { success: false, error: 'Acceso no autorizado al sumario judicial' },
+        { status: 401 }
+      );
+    }
 
     const deckRaw = await fs.readFile(DECK_PATH, 'utf-8');
     const deckData = JSON.parse(deckRaw);

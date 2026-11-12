@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, useMotionValue, useTransform, PanInfo } from 'framer-motion';
 import { useGameStore } from '../store/gameStore';
 import { ReignsCard as ReignsCardType } from '../types/story';
+import { CharacterAvatar } from './avatars/CharacterAvatar';
 
 export interface ReignsCardProps {
   card?: ReignsCardType | null;
@@ -89,6 +90,22 @@ export function ReignsCard({
     );
   }
 
+  // Detección de cartas de crisis o alerta procesal
+  const isCrisis =
+    card.id.toLowerCase().includes('crisis') ||
+    card.headline.toLowerCase().includes('registro') ||
+    card.headline.toLowerCase().includes('bancarrota') ||
+    card.headline.toLowerCase().includes('suplicatorio') ||
+    card.headline.toLowerCase().includes('portada dominical');
+
+  let crisisType: 'judicial' | 'pasta' | 'impunidad' | 'prensa' | undefined;
+  if (isCrisis) {
+    if (card.headline.toLowerCase().includes('registro')) crisisType = 'judicial';
+    else if (card.headline.toLowerCase().includes('bancarrota')) crisisType = 'pasta';
+    else if (card.headline.toLowerCase().includes('suplicatorio')) crisisType = 'impunidad';
+    else crisisType = 'prensa';
+  }
+
   return (
     <div className={`w-full max-w-xl mx-auto flex flex-col items-center ${className}`}>
       {/* Contenedor Draggable con Framer Motion */}
@@ -103,8 +120,20 @@ export function ReignsCard({
           onDragEnd={handleDragEnd}
           animate={exitX !== null ? { x: exitX, opacity: 0 } : { x: 0, opacity: 1 }}
           transition={{ type: 'spring', stiffness: 350, damping: 25 }}
-          className="w-full relative cursor-grab active:cursor-grabbing select-none border-4 border-black bg-[#faf8f4] p-5 sm:p-7 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] -rotate-1"
+          className={`w-full relative cursor-grab active:cursor-grabbing select-none border-4 ${
+            isCrisis
+              ? 'border-red-700 bg-red-50/30 shadow-[6px_6px_0px_0px_rgba(185,28,28,1)]'
+              : 'border-black bg-[#faf8f4] shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]'
+          } p-5 sm:p-7 -rotate-1`}
         >
+          {/* Alerta de Crisis Procesal en Cabecera de la Tarjeta */}
+          {isCrisis && (
+            <div className="border-2 border-red-700 bg-red-700 text-white font-mono font-black text-[10px] sm:text-xs uppercase px-2.5 py-1 tracking-widest flex items-center justify-between mb-4 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] animate-pulse">
+              <span>🚨 ALERTA PROCESAL // PIEZA SEPARADA URGENTE</span>
+              <span className="bg-black text-white px-1.5 py-0.2">ART. 384 BIS</span>
+            </div>
+          )}
+
           {/* Sellos de Caucho Flotantes con Opacidad Proporcional al Desplazamiento */}
           <motion.div
             style={{ opacity: leftStampOpacity }}
@@ -130,21 +159,30 @@ export function ReignsCard({
             </div>
           </motion.div>
 
-          {/* Membrete Oficial y Emisor */}
-          <header className="border-b-2 border-black pb-3 mb-4 flex flex-wrap items-center justify-between gap-2">
-            <div>
-              <div className="text-[10px] font-mono font-black uppercase tracking-widest text-zinc-600">
-                AUDIENCIA NACIONAL // SUMARIO
-              </div>
-              <h3 className="text-base sm:text-lg font-mono font-black uppercase text-black">
-                {card.speaker}
-              </h3>
-              <div className="text-xs font-mono text-zinc-700 font-bold uppercase">
-                {card.speakerRole}
+          {/* Membrete Oficial, Avatar Satírico y Emisor */}
+          <header className="border-b-2 border-black pb-3 mb-4 flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <CharacterAvatar
+                speaker={card.speaker}
+                speakerRole={card.speakerRole}
+                isCrisis={isCrisis}
+                crisisType={crisisType}
+                className="shrink-0"
+              />
+              <div>
+                <div className="text-[10px] font-mono font-black uppercase tracking-widest text-zinc-600">
+                  AUDIENCIA NACIONAL // SUMARIO
+                </div>
+                <h3 className="text-base sm:text-lg font-mono font-black uppercase text-black leading-tight">
+                  {card.speaker}
+                </h3>
+                <div className="text-xs font-mono text-zinc-700 font-bold uppercase">
+                  {card.speakerRole}
+                </div>
               </div>
             </div>
 
-            <div className="border border-black bg-stone-200 px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider">
+            <div className="border border-black bg-stone-200 px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider self-start shrink-0">
               {card.sphere}
             </div>
           </header>

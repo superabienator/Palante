@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { StatsBar } from '../components/StatsBar';
 import { ReignsCard } from '../components/ReignsCard';
 import { CharacterSelector } from '../components/CharacterSelector';
@@ -50,18 +49,9 @@ export default function HomePage() {
             <span className="bg-black text-white px-2 py-0.5 text-xs font-black uppercase tracking-widest">
               FANZINE DE LA CLEPTOCRACIA // REIGNS EDITION
             </span>
-            <div className="flex items-center gap-2">
-              <span className="text-[11px] font-bold text-zinc-600 uppercase tracking-widest hidden sm:inline">
-                AUDIENCIA NACIONAL // SUMARIO EN TIEMPO REAL
-              </span>
-              <Link
-                href="/admin"
-                className="text-[10px] font-bold uppercase tracking-wider border border-black bg-stone-100 hover:bg-black hover:text-white px-2 py-0.5 transition-colors shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]"
-                title="Panel de redacción y mazo para usuarios no técnicos"
-              >
-                Acceso Sumario / Panel de Redacción ➔
-              </Link>
-            </div>
+            <span className="text-[11px] font-bold text-zinc-600 uppercase tracking-widest">
+              AUDIENCIA NACIONAL // SUMARIO EN TIEMPO REAL
+            </span>
           </div>
 
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -221,14 +211,6 @@ export default function HomePage() {
           </div>
           <div className="text-[10px] uppercase">
             Desliza hacia los lados o utiliza las teclas [ ← ] y [ → ] para sobrevivir al sumario judicial.
-          </div>
-          <div className="mt-1">
-            <Link
-              href="/admin"
-              className="text-[11px] font-black uppercase tracking-wider underline hover:text-black transition-colors"
-            >
-              [ Acceso Sumario / Panel de Redacción ]
-            </Link>
           </div>
         </footer>
 

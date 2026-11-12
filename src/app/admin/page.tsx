@@ -61,6 +61,11 @@ const INITIAL_FORM: NewCardFormState = {
 
 export default function AdminPage() {
   const [mounted, setMounted] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [passwordInput, setPasswordInput] = useState('');
+  const [authError, setAuthError] = useState<string | null>(null);
+  const [authLoading, setAuthLoading] = useState(false);
+
   const [activeTab, setActiveTab] = useState<TabType>('active');
 
   // Listas de cartas
@@ -83,61 +88,120 @@ export default function AdminPage() {
     }, 4000);
   };
 
-  // Carga inicial (intenta API server y sincroniza con localStorage)
+  const getAdminHeaders = () => {
+    const token = typeof window !== 'undefined' ? sessionStorage.getItem('ibex35_admin_token') || '' : '';
+    return {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    };
+  };
+
+  const loadData = async (token?: string) => {
+    const activeToken = token || (typeof window !== 'undefined' ? sessionStorage.getItem('ibex35_admin_token') || '' : '');
+    const baseCards = (reignsDeckData.cards ?? []) as ReignsCard[];
+    let savedActive: ReignsCard[] = baseCards;
+    let savedPending: ReignsCard[] = initialPendingCards as unknown as ReignsCard[];
+
+    // 1. Intentar cargar desde el backend API
+    try {
+      const res = await fetch('/api/admin/cards', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${activeToken}`,
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && Array.isArray(data.activeCards)) {
+          savedActive = data.activeCards;
+          if (Array.isArray(data.pendingCards)) {
+            savedPending = data.pendingCards;
+          }
+          setActiveCards(savedActive);
+          setPendingCards(savedPending);
+          return;
+        }
+      }
+    } catch (err) {
+      console.warn('Backend API no disponible en este entorno, recurriendo a localStorage', err);
+    }
+
+    // 2. Fallback de localStorage
+    try {
+      const activeRaw = localStorage.getItem(STORAGE_ACTIVE_KEY);
+      if (activeRaw) {
+        const parsed = JSON.parse(activeRaw);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          savedActive = parsed;
+        }
+      }
+
+      const pendingRaw = localStorage.getItem(STORAGE_PENDING_KEY);
+      if (pendingRaw) {
+        const parsed = JSON.parse(pendingRaw);
+        if (Array.isArray(parsed)) {
+          savedPending = parsed;
+        }
+      }
+    } catch (e) {
+      console.error('Error leyendo mazo de localStorage', e);
+    }
+
+    setActiveCards(savedActive);
+    setPendingCards(savedPending);
+  };
+
+  // Carga inicial y chequeo de sesión
   useEffect(() => {
     setMounted(true);
-
-    const loadData = async () => {
-      const baseCards = (reignsDeckData.cards ?? []) as ReignsCard[];
-      let savedActive: ReignsCard[] = baseCards;
-      let savedPending: ReignsCard[] = initialPendingCards as unknown as ReignsCard[];
-
-      // 1. Intentar cargar desde el backend API
-      try {
-        const res = await fetch('/api/admin/cards');
-        if (res.ok) {
-          const data = await res.json();
-          if (data.success && Array.isArray(data.activeCards)) {
-            savedActive = data.activeCards;
-            if (Array.isArray(data.pendingCards)) {
-              savedPending = data.pendingCards;
-            }
-            setActiveCards(savedActive);
-            setPendingCards(savedPending);
-            return;
-          }
-        }
-      } catch (err) {
-        console.warn('Backend API no disponible en este entorno, recurriendo a localStorage', err);
-      }
-
-      // 2. Fallback de localStorage
-      try {
-        const activeRaw = localStorage.getItem(STORAGE_ACTIVE_KEY);
-        if (activeRaw) {
-          const parsed = JSON.parse(activeRaw);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            savedActive = parsed;
-          }
-        }
-
-        const pendingRaw = localStorage.getItem(STORAGE_PENDING_KEY);
-        if (pendingRaw) {
-          const parsed = JSON.parse(pendingRaw);
-          if (Array.isArray(parsed)) {
-            savedPending = parsed;
-          }
-        }
-      } catch (e) {
-        console.error('Error leyendo mazo de localStorage', e);
-      }
-
-      setActiveCards(savedActive);
-      setPendingCards(savedPending);
-    };
-
-    loadData();
+    const savedToken = sessionStorage.getItem('ibex35_admin_token');
+    if (savedToken) {
+      setIsAuthenticated(true);
+      loadData(savedToken);
+    }
   }, []);
+
+  const handleLoginSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthError(null);
+    setAuthLoading(true);
+
+    try {
+      const res = await fetch('/api/admin/cards', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'verify_password', password: passwordInput }),
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        sessionStorage.setItem('ibex35_admin_token', passwordInput);
+        setIsAuthenticated(true);
+        loadData(passwordInput);
+        showToast('✓ Autorización judicial concedida. Sumario desclasificado.');
+      } else {
+        setAuthError(data.error || 'Clave de autorización judicial incorrecta.');
+      }
+    } catch {
+      // Fallback local en caso de desconexión si la clave es palante2026
+      if (passwordInput === 'palante2026') {
+        sessionStorage.setItem('ibex35_admin_token', passwordInput);
+        setIsAuthenticated(true);
+        loadData(passwordInput);
+      } else {
+        setAuthError('Error de conexión o clave judicial denegada.');
+      }
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('ibex35_admin_token');
+    setIsAuthenticated(false);
+    setPasswordInput('');
+    showToast('🔒 Sesión cerrada. Sumario bloqueado.');
+  };
 
   const saveActiveCards = (updated: ReignsCard[]) => {
     setActiveCards(updated);
@@ -163,7 +227,7 @@ export default function AdminPage() {
     try {
       await fetch('/api/admin/cards', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getAdminHeaders(),
         body: JSON.stringify({ action: 'approve_pending', cardId: cardToApprove.id }),
       });
     } catch (err) {
@@ -186,7 +250,7 @@ export default function AdminPage() {
     try {
       await fetch('/api/admin/cards', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getAdminHeaders(),
         body: JSON.stringify({ action: 'discard_pending', cardId }),
       });
     } catch (err) {
@@ -278,7 +342,7 @@ export default function AdminPage() {
     try {
       await fetch('/api/admin/cards', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getAdminHeaders(),
         body: JSON.stringify({ action: 'create_card', card: newCard }),
       });
     } catch (err) {
@@ -319,6 +383,66 @@ export default function AdminPage() {
     );
   }
 
+  // Pantalla de Bloqueo Judicial (Gatekeeper) para usuarios no autenticados
+  if (!isAuthenticated) {
+    return (
+      <main className="min-h-screen bg-[#1c1917] text-stone-100 font-mono flex items-center justify-center p-4 selection:bg-red-700 selection:text-white">
+        <div className="w-full max-w-md border-4 border-red-700 bg-black p-6 sm:p-8 shadow-[8px_8px_0px_0px_rgba(185,28,28,1)] -rotate-1">
+          <div className="border-b-2 border-red-700 pb-3 mb-5">
+            <div className="text-[10px] font-black uppercase tracking-widest text-red-500 mb-1">
+              AUDIENCIA NACIONAL // JUZGADO CENTRAL
+            </div>
+            <h1 className="text-xl sm:text-2xl font-black uppercase text-white tracking-tight">
+              🔒 EXPEDIENTE CLASIFICADO
+            </h1>
+            <p className="text-xs text-zinc-400 mt-1">
+              Pieza de redacción bajo secreto de sumario. Se requiere autorización judicial para acceder.
+            </p>
+          </div>
+
+          <form onSubmit={handleLoginSubmit} className="flex flex-col gap-4">
+            <div>
+              <label className="block text-xs font-black uppercase text-zinc-300 mb-1.5">
+                CLAVE DE AUTORIZACIÓN JUDICIAL:
+              </label>
+              <input
+                type="password"
+                value={passwordInput}
+                onChange={(e) => setPasswordInput(e.target.value)}
+                placeholder="Introduce la clave secreta..."
+                className="w-full border-2 border-zinc-600 bg-stone-900 px-3 py-2 text-sm text-white font-mono focus:border-red-600 focus:outline-none"
+                autoFocus
+              />
+            </div>
+
+            {authError && (
+              <div className="border-2 border-red-700 bg-red-950/80 p-2.5 text-xs text-red-300 font-bold">
+                ⚠️ {authError}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={authLoading || !passwordInput.trim()}
+              className="w-full border-2 border-red-700 bg-red-700 hover:bg-red-600 active:translate-x-0.5 active:translate-y-0.5 disabled:opacity-50 text-white font-black uppercase text-xs sm:text-sm py-2.5 tracking-wider transition-all shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] cursor-pointer"
+            >
+              {authLoading ? 'VERIFICANDO CREDENCIALES...' : '[ DESCLASIFICAR Y ACCEDER AL PANEL ]'}
+            </button>
+          </form>
+
+          <div className="mt-6 pt-4 border-t border-zinc-800 text-center">
+            <Link
+              href="/"
+              className="text-xs text-zinc-400 hover:text-white underline font-bold uppercase transition-colors"
+            >
+              ← Volver al Juego Principal
+            </Link>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-[#f4f1ea] text-black font-mono selection:bg-black selection:text-white p-3 sm:p-6 md:p-8">
       <div className="max-w-6xl mx-auto flex flex-col gap-6">
@@ -337,12 +461,22 @@ export default function AdminPage() {
               </span>
             </div>
 
-            <Link
-              href="/"
-              className="border-2 border-black bg-stone-100 hover:bg-black hover:text-white px-3 py-1 text-xs font-black uppercase tracking-wider transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-0.5 active:translate-y-0.5"
-            >
-              ➔ Volver a la Poltrona (Jugar)
-            </Link>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="border-2 border-red-700 bg-red-50 hover:bg-red-700 hover:text-white text-red-800 px-3 py-1 text-xs font-black uppercase tracking-wider transition-colors shadow-[2px_2px_0px_0px_rgba(185,28,28,1)] cursor-pointer"
+              >
+                🔒 Cerrar Sesión
+              </button>
+
+              <Link
+                href="/"
+                className="border-2 border-black bg-stone-100 hover:bg-black hover:text-white px-3 py-1 text-xs font-black uppercase tracking-wider transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-0.5 active:translate-y-0.5"
+              >
+                ➔ Volver al Juego
+              </Link>
+            </div>
           </div>
 
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
