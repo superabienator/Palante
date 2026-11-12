@@ -1159,6 +1159,76 @@
         }
       ],
       "ending": "FUGA_Y_PRESCRIPCION"
+    },
+    "nodo_jaquemate_purga_stampa": {
+      "id": "nodo_jaquemate_purga_stampa",
+      "archetypeId": "ARQUITECTO_SOBRESEIMIENTO",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "LA PURGA DEL FISCAL INCÓMODO: EL CONSEJO FISCAL DE LAS CLOACAS",
+      "context": "El fiscal que investiga el sumario Tándem ha rechazado todas las ofertas de pacto de las defensas bancarias y policiales. La cúpula de la Fiscalía General te convoca a un almuerzo discreto para pedirte que apoyes apartarlo de la plaza fija en Anticorrupción a cambio de un ascenso de carrera.",
+      "evidenceDocument": "Acta de votación del Consejo Fiscal con las plazas asignadas por afinidad política y el informe de archivo ocultado en un cajón.",
+      "choices": [
+        {
+          "id": "c_stampa_node_1",
+          "label": "Votar la exclusión del fiscal y consumar la purga para frenar las imputaciones del IBEX",
+          "flavorQuote": "En la carrera fiscal quien no rema a favor de la cúpula acaba redactando multas en un juzgado de pueblo.",
+          "mechanicId": 19,
+          "modifiers": {
+            "pastaEnB": 20,
+            "presionJudicial": -25,
+            "impunidad": 30
+          },
+          "nextNodeId": "nodo_jaquemate_operacion_kitchen"
+        },
+        {
+          "id": "c_stampa_node_2",
+          "label": "Respaldar la independencia de Stampa y denunciar la injerencia política ante el Supremo",
+          "flavorQuote": "No seremos cómplices del atropello a un compañero por hacer su trabajo contra los poderosos.",
+          "mechanicId": 38,
+          "modifiers": {
+            "pastaEnB": -15,
+            "presionJudicial": 20,
+            "impunidad": -20
+          },
+          "nextNodeId": "proconsul_fin_sobreseimiento"
+        }
+      ],
+      "ending": "SOBRESEIMIENTO_BOTIN"
+    },
+    "nodo_jaquemate_operacion_kitchen": {
+      "id": "nodo_jaquemate_operacion_kitchen",
+      "archetypeId": "FONTANERO_INTERIOR",
+      "sphere": "POLITICA",
+      "headline": "OPERACIÓN KITCHEN: FONDOS RESERVADOS PARA ASALTAR AL TESORERO",
+      "context": "En el búnker de la Secretaría de Estado de Seguridad se coordinan las entregas mensuales de billetes de la serie W al chófer del extesorero y el envío de un sicario con sotana para arrebatar los pendrives que comprometen al presidente del Gobierno.",
+      "evidenceDocument": "Vaciado pericial de mensajes de WhatsApp entre el ministro y el secretario de Estado protocolizados ante notario.",
+      "choices": [
+        {
+          "id": "c_kitch_node_1",
+          "label": "Autorizar el asalto con el falso cura y pagar el silencio de los mandos policiales",
+          "flavorQuote": "Si caen las libretas del tesorero en el juzgado no queda en pie ni la sede de la calle Génova.",
+          "mechanicId": 33,
+          "modifiers": {
+            "pastaEnB": -20,
+            "presionJudicial": -20,
+            "impunidad": 35
+          },
+          "nextNodeId": "nodo_inicio_proconsul"
+        },
+        {
+          "id": "c_kitch_node_2",
+          "label": "Protocolizar todos los mensajes ante notario y colaborar plenamente con la Audiencia Nacional",
+          "flavorQuote": "El ministro dio las órdenes y yo guardo las escrituras con fe pública: no seré el chivo expiatorio de nadie.",
+          "mechanicId": 38,
+          "modifiers": {
+            "pastaEnB": 10,
+            "presionJudicial": -30,
+            "impunidad": 40
+          },
+          "nextNodeId": "proconsul_fin_sobreseimiento"
+        }
+      ],
+      "ending": "CONSEJO_IBEX"
     }
   }
 }
