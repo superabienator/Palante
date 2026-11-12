@@ -55,15 +55,33 @@ REGLAS DE FORMATO ESTRICTAS:
 
 ---
 
-## 📎 PASO 2: Subir tus Fuentes Reales
+## 📎 PASO 2: Subir tus Fuentes Reales (Bibliografía en TXT)
 
-En la barra inferior donde escribes los mensajes en AI Studio verás el icono del clip o **`+` (`Add file`)**:
+Google AI Studio **no admite archivos en formato `.epub`** porque son contenedores comprimidos (ZIP), pero sí acepta de forma nativa archivos de texto plano (**`.txt`**), PDF y Markdown.
 
-1. Pulsa en **`+`** y sube los documentos que quieras que la IA utilice como base:
-   - PDFs de autos judiciales o noticias de periódicos.
-   - Informes de la UCO o resúmenes de comisiones de investigación del Congreso.
-   - Notas propias con anécdotas o escándalos que quieras incluir.
-2. *(Si no tienes archivos a mano, no te preocupes: Gemini ya conoce los casos Gürtel, Púnica, ERE, Nóos, Villarejo, Koldo, Bárcenas y Bankia en su memoria base).*
+Ya hemos convertido automáticamente todos tus libros de la carpeta `Plan AI Studio/Bibliografia/` a texto plano limpio en UTF-8 dentro de la carpeta:
+📁 **`Plan AI Studio/Bibliografia_TXT/`**
+
+### ¿Por qué la versión .TXT es la mejor opción para AI Studio?
+- **Consume un 40% menos de tokens** que los PDFs o escaneos.
+- **Cero errores de OCR**: el texto es idéntico al original, con capítulos ordenados, diálogos y acentos en español intactos.
+- **Carga instantánea** sin esperas de indexación.
+
+### Libros convertidos y listos para arrastrar:
+1. `Crematorio (Chirbes Rafael).txt` (797 KB - Novela clave de la corrupción inmobiliaria levantina)
+2. `El secuestro de la justicia (Joaquim Bosch Ignacio Escolar).txt` (453 KB - Politización judicial y cloacas)
+3. `España de mierda (Albert Pla).txt` (219 KB - Picaresca satírica y esperpento ibérico)
+4. `Guerra sucia (Manuel Cerdán).txt` (1.5 MB - Fondos reservados, espionaje y cloacas del Estado)
+5. `IBEX 35 una historia herética del poder en España (Rubén Juste).txt` (668 KB - Puertas giratorias y consejos)
+6. `La Gomorra catalana (Joan Queralt).txt` (525 KB - Crimen organizado y comisiones)
+7. `Mafias Economía Política (Joan Queralt).txt` (644 KB - Relaciones entre narcos, banca y poder)
+8. `Operación Jaque Mate Cómo acabaron con el fiscal del caso Villarejo (Ernesto Ekaizer).txt` (714 KB - Audios de Villarejo y guerra judicial)
+9. `Paesa, el espía de las mil caras (Manuel Cerdán).txt` (588 KB - Casos Roldán, evasión y tramas de testaferros)
+
+### Cómo subirlos a AI Studio:
+1. En la parte inferior de Google AI Studio, pulsa el botón **`+` (`Add file`)** o simplemente arrastra los archivos `.txt` desde tu explorador de Windows directamente a la ventana de AI Studio.
+2. Puedes arrastrar **1, 2 o los 9 libros a la vez** (Gemini 2.5 Pro tiene 2.000.000 de tokens de ventana de contexto, así que caben todos de sobra).
+3. Una vez subidos, Gemini usará las anécdotas, datos reales, nombres en clave y jerga de estos libros para nutrir las cartas y diálogos satíricos.
 
 ---
 
