@@ -18,6 +18,12 @@
   - Panel administrativo visual `/admin` en `src/app/admin/page.tsx` para usuarios no técnicos (gestión de mazo, bandeja de virales y formulario interactivo con deslizadores de estadísticas).
   - Backend API persistente en `src/app/api/admin/cards/route.ts` con lectura y escritura de tarjetas en disco.
   - Pipeline de actualidad asistida (`scripts/suggestNewsCard.mjs` / `npm run news:suggest`) con 3 cartas de actualidad precargadas (Plantón de Abascal a Évole, Mascarillas en Pandemia, Comisión de Investigación).
+- [x] Hito 9 (Dirección de Arte con Nano Banana & Blindaje de Seguridad):
+  - Registro de `Visual-Punk-Agent` en `AGENTS.md`.
+  - Generación de biblioteca de ilustraciones satíricas estilo linograbado/fanzine con el motor Nano Banana (Google AI image generation) en `public/art/` (arquetipos, personajes recurrentes, crisis procesales y virales).
+  - Creación del componente `<CharacterPortrait />` con soporte WebP y sistema de fallback SVG de alta resiliencia.
+  - Integración de retratos en el selector de personajes (`CharacterSelector`), cartas (`ReignsCard`), poltrona activa y consola `/admin`.
+  - Blindaje con contraseña y ocultación completa de `/admin` en la página principal.
 
 ---
 
