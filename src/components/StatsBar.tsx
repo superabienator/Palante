@@ -59,9 +59,14 @@ export function StatsBar({
 }: StatsBarProps) {
   const storeStats = useGameStore((state) => state.stats);
   const storeProfile = useGameStore((state) => state.characterProfile);
+  const getPreviewModifiers = useGameStore((state) => state.getPreviewModifiers);
+  const previewDirection = useGameStore((state) => state.previewDirection);
+  const daysInPower = useGameStore((state) => state.daysInPower);
+  const cardsSurvived = useGameStore((state) => state.cardsSurvived);
 
   const stats = propStats ?? storeStats;
   const profile = propProfile ?? storeProfile;
+  const previewModifiers = getPreviewModifiers();
 
   return (
     <section
@@ -75,21 +80,25 @@ export function StatsBar({
             TELEMETRÍA // DILIGENCIAS
           </span>
           <span className="text-[11px] font-mono text-black font-semibold uppercase tracking-wider hidden sm:inline">
-            Pieza Separada de Situación Patrimonial
+            Pieza de Situación Patrimonial
           </span>
         </div>
 
-        {showCharacterBadge && profile && (
-          <div className="flex items-center gap-2 text-xs font-mono">
-            <span className="text-zinc-600 font-bold uppercase">Imputado:</span>
-            <span className="border border-black px-1.5 py-0.5 bg-stone-100 font-black uppercase">
+        <div className="flex items-center gap-2 text-xs font-mono">
+          {daysInPower > 0 && (
+            <span className="border border-black bg-yellow-200 px-2 py-0.5 font-bold uppercase tracking-wider">
+              {daysInPower} DÍAS ({cardsSurvived} DILEMAS)
+            </span>
+          )}
+          {showCharacterBadge && profile && (
+            <span className="border border-black px-1.5 py-0.5 bg-stone-100 font-black uppercase hidden sm:inline">
               {profile.name}
             </span>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
-      {/* Grid de 4 Indicadores Brutalistas */}
+      {/* Grid de 4 Indicadores Brutalistas con Feedback Predictivo */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
         {STAT_CONFIGS.map((config) => {
           const value = Math.max(0, Math.min(100, stats[config.key] ?? 0));
@@ -97,23 +106,54 @@ export function StatsBar({
           const isCriticalLow = config.dangerLow && value <= 20;
           const isAlarm = isCriticalHigh || isCriticalLow;
 
+          // Indicador predictivo tipo Reigns (cuando el jugador desliza hacia izq o der)
+          const delta = previewModifiers?.[config.key];
+          const hasDelta = delta !== undefined && delta !== 0;
+          const isPositive = (delta ?? 0) > 0;
+
           return (
             <div
               key={config.key}
-              className={`border-2 border-black p-2.5 transition-colors ${
-                isAlarm
+              className={`border-2 border-black p-2.5 transition-all duration-150 ${
+                hasDelta
+                  ? 'bg-amber-50 ring-2 ring-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]'
+                  : isAlarm
                   ? 'bg-zinc-100 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
                   : 'bg-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
               }`}
             >
-              {/* Título y porcentaje numérico */}
+              {/* Título, predicción y porcentaje numérico */}
               <div className="flex items-center justify-between mb-1 gap-1">
-                <span className="text-xs font-mono font-black tracking-tight uppercase text-black">
-                  {config.label}
-                </span>
-                <span className="text-xs font-mono font-bold bg-black text-white px-1.5 py-0.2">
-                  {value}%
-                </span>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-xs font-mono font-black tracking-tight uppercase text-black">
+                    {config.label}
+                  </span>
+                  {/* Punto titilante tipo Reigns */}
+                  {hasDelta && (
+                    <span
+                      aria-label="Impacto inminente"
+                      className={`inline-block w-2.5 h-2.5 rounded-full border border-black animate-ping ${
+                        isPositive ? 'bg-black' : 'bg-red-600'
+                      }`}
+                      title={isPositive ? 'Aumentará' : 'Disminuirá'}
+                    />
+                  )}
+                </div>
+
+                <div className="flex items-center gap-1">
+                  {hasDelta && (
+                    <span
+                      className={`text-[10px] font-mono font-black px-1 border border-black ${
+                        isPositive ? 'bg-black text-white' : 'bg-red-600 text-white'
+                      }`}
+                    >
+                      {isPositive ? '▲' : '▼'}
+                    </span>
+                  )}
+                  <span className="text-xs font-mono font-bold bg-black text-white px-1.5 py-0.2">
+                    {value}%
+                  </span>
+                </div>
               </div>
 
               {/* Subtítulo técnico sumario */}

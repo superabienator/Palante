@@ -94,3 +94,43 @@ export const StoryGraphSchema = z.object({
   nodes: z.record(z.string(), StoryNodeSchema),
 });
 export type StoryGraph = z.infer<typeof StoryGraphSchema>;
+
+// === Esquemas de Extensión para el Modo Reigns ===
+
+export const ReignsCardChoiceSchema = z.object({
+  label: z.string().describe('Texto descriptivo de la acción elegida'),
+  stampText: z.string().describe('Texto del sello de caucho emergente (ej. TRINCAR, RECHAZAR)'),
+  flavorQuote: z.string().optional().describe('Cita real de sumario o pinchazo'),
+  mechanicId: z.number().int().min(1).max(40).optional(),
+  modifiers: StatModifiersSchema,
+});
+export type ReignsCardChoice = z.infer<typeof ReignsCardChoiceSchema>;
+
+export const ReignsCardSchema = z.object({
+  id: z.string(),
+  speaker: z.string().describe('Nombre del interlocutor'),
+  speakerRole: z.string().describe('Cargo o papel en la trama (ej. Constructor, Fiscal, Ministro)'),
+  speakerAvatar: z.string().optional().describe('Icono o código de recorte fanzine'),
+  sphere: SphereTypeSchema,
+  headline: z.string().describe('Titular del dilema'),
+  context: z.string().describe('Narración fanzine del dilema'),
+  evidenceDocument: z.string().optional().describe('Pieza de convicción incautada si aplica'),
+  leftChoice: ReignsCardChoiceSchema,
+  rightChoice: ReignsCardChoiceSchema,
+  weight: z.number().int().min(1).max(10).optional().default(1),
+  archetypeAffinity: z.array(ArchetypeIdSchema).optional(),
+});
+export type ReignsCard = z.infer<typeof ReignsCardSchema>;
+
+export const GameOverReasonSchema = z.enum([
+  'PASTA_MINIMA', // Bancarrota
+  'PASTA_MAXIMA', // Alerta Europol / Suiza
+  'PRESION_MAXIMA', // Soto del Real
+  'PRESION_MINIMA', // Sospecha de topo
+  'IMPUNIDAD_MINIMA', // Pérdida de aforamiento
+  'IMPUNIDAD_MAXIMA', // Traición interna
+  'REPUTACION_MINIMA', // Linchamiento de prensa
+  'REPUTACION_MAXIMA', // Eclipsar al líder
+  'VICTORIA_LEGISLATURA', // Retiro dorado
+]);
+export type GameOverReason = z.infer<typeof GameOverReasonSchema>;
