@@ -370,5 +370,113 @@
       "grantedFlags": ["VIRAL_BALONES_FUERA"]
     },
     "requiredFlags": []
+  },
+  {
+    "id": "VIRAL_JUSTICIA_WHATSAPP_SALA_SEGUNDA",
+    "speaker": "El Cronista Parlamentario de Tribunales",
+    "speakerRole": "Voz de la Información Judicial",
+    "sphere": "POLITICA",
+    "headline": "¿CONTROLAR LA SALA SEGUNDA POR DETRÁS? ESCÁNDALO POR EL WHATSAPP DEL SENADOR",
+    "context": "Se filtra a toda la prensa nacional el mensaje del portavoz del grupo mayoritario felicitándose por el acuerdo de renovación del CGPJ: «Controlaremos la Sala Segunda desde detrás». El magistrado propuesto para presidir el Consejo renuncia entre protestas de jueces decanos.",
+    "evidenceDocument": "Pantallazo reproducido en televisión mostrando la conversación íntegra del grupo parlamentario de mensajería.",
+    "leftChoice": {
+      "id": "c_wh_v1_1",
+      "label": "Culpar a un hackeo externo de servicios de inteligencia extranjeros",
+      "stampText": "HACKEO",
+      "flavorQuote": "Decimos que fue una intrusión de espías rusos para desestabilizar la judicatura española.",
+      "modifiers": {
+        "pastaEnB": 0,
+        "presionJudicial": -5,
+        "impunidad": 15,
+        "reputacionMediatica": -20
+      },
+      "grantedFlags": ["VIRAL_WHATSAPP_HACKEO"]
+    },
+    "rightChoice": {
+      "id": "c_wh_v1_2",
+      "label": "Ratificar que el pacto garantiza estabilidad y paz social en las altas instancias",
+      "stampText": "ESTABILIDAD",
+      "flavorQuote": "Lo que importa es que el Consejo funcione; los debates de pasillo no frenan la maquinaria del Estado.",
+      "modifiers": {
+        "pastaEnB": 5,
+        "presionJudicial": 10,
+        "impunidad": 20,
+        "reputacionMediatica": 10
+      },
+      "grantedFlags": ["VIRAL_WHATSAPP_DEFENDIDO"]
+    },
+    "requiredFlags": []
+  },
+  {
+    "id": "VIRAL_GUERRA_SUCIA_SERIE_W",
+    "speaker": "El Joyero de la Milla de Oro",
+    "speakerRole": "Comerciante de Alta Gama de Serrano",
+    "sphere": "EMPRESARIAL",
+    "headline": "PAGO EN METÁLICO CON BILLETES DE LA SERIE W EN UNA JOYERÍA DE MADRID",
+    "context": "Un alto cargo de Interior compra dos relojes de oro de veinticuatro mil euros pagando en efectivo con billetes de diez mil pesetas con la letra W. El Banco de España avisa a la Policía Judicial de que esa serie estaba reservada para operaciones antiterroristas clandestinas.",
+    "evidenceDocument": "Extracto de la máquina contadora del Banco de España detectando números de serie correlativos de la serie W.",
+    "leftChoice": {
+      "id": "c_w_v2_1",
+      "label": "Asegurar que los relojes eran un regalo oficial para un emisario diplomático de Oriente Medio",
+      "stampText": "REGALO ESTADO",
+      "flavorQuote": "En las relaciones diplomáticas de alto nivel no se puede regalar bisutería barata; todo dentro de la ley.",
+      "modifiers": {
+        "pastaEnB": -10,
+        "presionJudicial": -10,
+        "impunidad": 20,
+        "reputacionMediatica": -15
+      },
+      "grantedFlags": ["VIRAL_SERIE_W_JUSTIFICADA"]
+    },
+    "rightChoice": {
+      "id": "c_w_v2_2",
+      "label": "Ordenar la retirada inmediata de la denuncia policial mediante llamada directa al comisario",
+      "stampText": "ARCHIVAR ATIESTO",
+      "flavorQuote": "Una llamada del subsecretario al jefe de la brigada y el atestado se traspapela en el sótano de la comisaría.",
+      "modifiers": {
+        "pastaEnB": 5,
+        "presionJudicial": 15,
+        "impunidad": 25,
+        "reputacionMediatica": -20
+      },
+      "grantedFlags": ["VIRAL_SERIE_W_TAPADA"]
+    },
+    "requiredFlags": []
+  },
+  {
+    "id": "VIRAL_JUSTICIA_DOCTRINA_BOTIN_INDULTO",
+    "speaker": "El Tertuliano del Programa Nocturno",
+    "speakerRole": "Analista del Esperpento Político",
+    "sphere": "ORDEN_JUSTICIA",
+    "headline": "DOCTRINA BOTÍN EN NOCHEBUENA: SALVADOS DEL BANQUILLO ANTES DE LAS CAMPANADAS",
+    "context": "La Sala de lo Penal confirma que la acusación popular no puede llevar a juicio a la cúpula financiera si la fiscalía no acusa. Los sindicatos y asociaciones convocan concentraciones frente al Tribunal Supremo con caretas del banquero.",
+    "evidenceDocument": "Manifiesto de la plataforma ciudadana por la regeneración de la justicia con trescientas mil firmas.",
+    "leftChoice": {
+      "id": "c_botin_v3_1",
+      "label": "Alegar que la jurisprudencia del Supremo es vinculante y celebrar el fallo en Sotogrande",
+      "stampText": "JURISPRUDENCIA",
+      "flavorQuote": "El Tribunal Supremo es el máximo intérprete de la ley; quien no le guste la doctrina Botín que gane las elecciones.",
+      "modifiers": {
+        "pastaEnB": 15,
+        "presionJudicial": -25,
+        "impunidad": 35,
+        "reputacionMediatica": -15
+      },
+      "grantedFlags": ["VIRAL_DOCTRINA_BOTIN_FIRME"]
+    },
+    "rightChoice": {
+      "id": "c_botin_v3_2",
+      "label": "Prometer una reforma procesal cosmética que nunca llegará a votarse en el pleno",
+      "stampText": "PROMESA HUECA",
+      "flavorQuote": "Creamos una subcomisión de estudio en el Congreso que durará dos legislaturas hasta que todos se hayan olvidado.",
+      "modifiers": {
+        "pastaEnB": -5,
+        "presionJudicial": -10,
+        "impunidad": 20,
+        "reputacionMediatica": 15
+      },
+      "grantedFlags": ["VIRAL_REFORMA_PROCESAL_HUECA"]
+    },
+    "requiredFlags": []
   }
 ]

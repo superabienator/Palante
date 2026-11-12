@@ -797,6 +797,60 @@
         }
       ],
       "ending": "FUGA_Y_PRESCRIPCION"
+    },
+    "nodo_justicia_whatsapp_cgpj": {
+      "id": "nodo_justicia_whatsapp_cgpj",
+      "archetypeId": "ARQUITECTO_SOBRESEIMIENTO",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "EL PACTO DEL CGPJ: CONTROLAR LA SALA SEGUNDA POR DETRÁS",
+      "context": "El portavoz parlamentario te cita en el reservado del restaurante Jai Alai. Hay un acuerdo bipartidista para repartirse los veinte vocales del Consejo General del Poder Judicial y colocar a un presidente de la Sala de lo Penal que frene las querellas de corrupción.",
+      "evidenceDocument": "Mensaje de WhatsApp reenviado con la instrucción expresa: «Controlando la Sala Segunda desde detrás».",
+      "choices": [
+        {
+          "id": "c_just_1",
+          "label": "Aceptar la presidencia de Sala y aplicar la doctrina Botín a los banqueros y políticos",
+          "flavorQuote": "Si el fiscal general no acusa, las acusaciones populares se van a la calle; la doctrina Botín es sagrada.",
+          "mechanicId": 17,
+          "modifiers": { "pastaEnB": 20, "presionJudicial": -30, "impunidad": 40 },
+          "nextNodeId": "proconsul_fin_sobreseimiento"
+        },
+        {
+          "id": "c_just_2",
+          "label": "Trocear la macrocausa en veinticinco piezas separadas para forzar dilaciones indebidas",
+          "flavorQuote": "Un sumario de doscientos tomos troceado no lo sienta en el banquillo nadie antes de quince años.",
+          "mechanicId": 15,
+          "modifiers": { "pastaEnB": 15, "presionJudicial": -25, "impunidad": 35 },
+          "nextNodeId": "nodo_inicio_proconsul"
+        }
+      ],
+      "ending": "SOBRESEIMIENTO_BOTIN"
+    },
+    "nodo_guerra_sucia_fondos_w": {
+      "id": "nodo_guerra_sucia_fondos_w",
+      "archetypeId": "FONTANERO_INTERIOR",
+      "sphere": "POLITICA",
+      "headline": "DESPACHO DE LA TERCERA PLANTA: EL REPARTO DE LA SERIE W",
+      "context": "Abres la caja fuerte del ministerio. Tienes trescientos millones en billetes de la serie W del Banco de España. O compras el silencio de los expolicías presos con pensiones en Suiza o el exsecretario de Estado desvela ante el juez instructor quién es la 'X'.",
+      "evidenceDocument": "Libro de registro de fondos reservados clasificado bajo la Ley de Secretos Oficiales de 1968.",
+      "choices": [
+        {
+          "id": "c_gs_1",
+          "label": "Transferir las pensiones a Zúrich y ordenar a Paesa la compra de silencios",
+          "flavorQuote": "Los fondos reservados son el lubricante del Reino; quien pisa el barro cobra en Ginebra.",
+          "mechanicId": 12,
+          "modifiers": { "pastaEnB": 30, "presionJudicial": -25, "impunidad": 40 },
+          "nextNodeId": "proconsul_fin_sobreseimiento"
+        },
+        {
+          "id": "c_gs_2",
+          "label": "Negarse a pagar y arriesgarse a que la 'X' sea llamada a declarar en el Tribunal Supremo",
+          "flavorQuote": "Si el reo quiere cantar, que cante; la maquinaria del Estado declarará su testimonio nulo.",
+          "mechanicId": 27,
+          "modifiers": { "pastaEnB": -20, "presionJudicial": 30, "impunidad": -20 },
+          "nextNodeId": "nodo_registro_uco"
+        }
+      ],
+      "ending": "PURGA_DE_OFICIO"
     }
   }
 }

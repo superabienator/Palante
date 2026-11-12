@@ -5865,6 +5865,862 @@
       "requiredFlags": [
         "PAESA_PRESCRIPCION_ALEGADA"
       ]
+    },
+    {
+      "id": "saga_justicia_01_reparto_cgpj_cromos",
+      "speaker": "El Negociador de la Comisión de Justicia",
+      "speakerRole": "El Fontanero Parlamentario de Togas",
+      "sphere": "POLITICA",
+      "headline": "MERCADEO EN EL CONGRESO: VEINTE VOCALES DEL CGPJ REPARTIDOS POR CUOTAS",
+      "context": "Te sientas en un despacho del Congreso con el portavoz de la oposición. Sobre la mesa hay una lista de magistrados con cruces rojas y azules: diez para tu partido y diez para el suyo, asegurándote de que el presidente del Consejo sea un perfil sumiso que no abra expedientes a los tuyos.",
+      "evidenceDocument": "Borrador de acuerdo político con el intercambio de nombres de magistrados tachados y asignados por siglas partidistas.",
+      "leftChoice": {
+        "label": "Cerrar el reparto 10-10 y vetar a cualquier juez independiente incómodo",
+        "stampText": "REPARTO CROMOS",
+        "flavorQuote": "A los jueces que investigan la caja B se les manda a juzgados de lo contencioso en provincias y aquí paz y después gloria.",
+        "mechanicId": 16,
+        "modifiers": {
+          "pastaEnB": 10,
+          "presionJudicial": -20,
+          "impunidad": 25,
+          "reputacionMediatica": -15
+        },
+        "grantedFlags": [
+          "JUSTICIA_CGPJ_REPARTIDO"
+        ]
+      },
+      "rightChoice": {
+        "label": "Bloquear la renovación indefinidamente alegando falta de consenso constitucional",
+        "stampText": "BLOQUEO CGPJ",
+        "flavorQuote": "En funciones se vive muy bien: mantenemos a la mayoría conservadora de por vida y no se nombra ni una sola plaza nueva.",
+        "mechanicId": 19,
+        "modifiers": {
+          "pastaEnB": 0,
+          "presionJudicial": -15,
+          "impunidad": 30,
+          "reputacionMediatica": -20
+        },
+        "grantedFlags": [
+          "JUSTICIA_BLOQUEO_TOTAL"
+        ]
+      },
+      "weight": 3,
+      "requiredFlags": []
+    },
+    {
+      "id": "saga_justicia_02_whatsapp_sala_segunda",
+      "speaker": "El Portavoz del Grupo Parlamentario",
+      "speakerRole": "El Enlace con las Altas Togas",
+      "sphere": "POLITICA",
+      "headline": "EL WHATSAPP DE LA VERGÜENZA: 'CONTROLAMOS LA SALA SEGUNDA POR DETRÁS'",
+      "context": "Envías un mensaje de WhatsApp a los senadores de tu bancada felicitándoles por el pacto judicial: «Con este acuerdo controlamos la Sala Segunda del Tribunal Supremo desde detrás y presidiremos la Sala del 61». Uno de tus compañeros hace una captura de pantalla y se la filtra a la prensa.",
+      "evidenceDocument": "Captura de pantalla de chat de WhatsApp con el mensaje literal filtrado y publicado en la portada de eldiario.es.",
+      "leftChoice": {
+        "label": "Asegurar que fue un exceso de lenguaje coloquial y forzar la renuncia del candidato a presidente",
+        "stampText": "SACRIFICIO",
+        "flavorQuote": "Sacrificamos al magistrado que iba a presidir y decimos que el mensaje era una bravuconada sin trascendencia jurídica.",
+        "mechanicId": 25,
+        "modifiers": {
+          "pastaEnB": 0,
+          "presionJudicial": 10,
+          "impunidad": 15,
+          "reputacionMediatica": -25
+        },
+        "grantedFlags": [
+          "JUSTICIA_ESCANDALO_WHATSAPP"
+        ]
+      },
+      "rightChoice": {
+        "label": "Atrincherarse en el escaño y acusar a la oposición de espionaje ilegal de comunicaciones",
+        "stampText": "ATAQUE POLÍTICO",
+        "flavorQuote": "La culpa no es del mensaje, sino del traidor que lo filtra; quien se mete en nuestros teléfonos comete delito.",
+        "mechanicId": 35,
+        "modifiers": {
+          "pastaEnB": 5,
+          "presionJudicial": 15,
+          "impunidad": 20,
+          "reputacionMediatica": -15
+        },
+        "grantedFlags": [
+          "JUSTICIA_GUERRA_TELEFONICA"
+        ]
+      },
+      "weight": 3,
+      "requiredFlags": [
+        "JUSTICIA_CGPJ_REPARTIDO"
+      ]
+    },
+    {
+      "id": "saga_justicia_03_doctrina_botin_salvadora",
+      "speaker": "El Abogado Defensor del Gran Banquero",
+      "speakerRole": "El Catedrático Penalista de la Castellana",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "APLICAR LA DOCTRINA BOTÍN: EXPULSAR A LA ACUSACIÓN POPULAR DEL BANQUILLO",
+      "context": "Ni la Fiscalía ni la Abogacía del Estado acusan al presidente del banco por el fraude de las cesiones de crédito; solo las asociaciones ciudadanas personadas como acusación popular piden cárcel. Tu abogado invoca la doctrina Botín para archivar la causa antes de abrir el juicio oral.",
+      "evidenceDocument": "Escrito de previo y especial pronunciamiento invocando el artículo 782.1 de la Ley de Enjuiciamiento Criminal y la doctrina Botín.",
+      "leftChoice": {
+        "label": "Dictar el auto aplicando la doctrina Botín y archivar la causa penal en el acto",
+        "stampText": "DOCTRINA BOTÍN",
+        "flavorQuote": "Si el fiscal no acusa, las acusaciones populares se van a la calle; los banqueros no se sientan en el banquillo con el pueblo.",
+        "mechanicId": 17,
+        "modifiers": {
+          "pastaEnB": 25,
+          "presionJudicial": -25,
+          "impunidad": 30,
+          "reputacionMediatica": -20
+        },
+        "grantedFlags": [
+          "JUSTICIA_DOCTRINA_BOTIN_APLICADA"
+        ]
+      },
+      "rightChoice": {
+        "label": "Cambiar a la 'Doctrina Atutxa' y permitir que la acusación popular mantenga el banquillo",
+        "stampText": "DOCTRINA ATUTXA",
+        "flavorQuote": "Cambiamos el criterio cuando nos conviene: si el acusado es un político incómodo, la acción popular vale oro.",
+        "mechanicId": 16,
+        "modifiers": {
+          "pastaEnB": -10,
+          "presionJudicial": 20,
+          "impunidad": -15,
+          "reputacionMediatica": 15
+        },
+        "grantedFlags": [
+          "JUSTICIA_DOCTRINA_ATUTXA_APLICADA"
+        ]
+      },
+      "weight": 2,
+      "requiredFlags": [
+        "JUSTICIA_ESCANDALO_WHATSAPP"
+      ]
+    },
+    {
+      "id": "saga_justicia_04_troceo_piezas_separadas",
+      "speaker": "El Juez Instructor Específico",
+      "speakerRole": "El Maestro de los Tiempos Procesales",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "TROCEAR LA MACROCAUSA: VEINTICINCO PIEZAS SEPARADAS PARA GANAR QUINCE AÑOS",
+      "context": "La causa principal de corrupción amenaza a media cúpula del partido. El juez instructor redacta un auto de división de la causa en veinticinco piezas separadas con la excusa de 'agilizar el proceso', asegurando que los juicios se celebren cuando los delitos ya hayan prescrito.",
+      "evidenceDocument": "Auto de división en piezas separadas del sumario principal con índice de más de trescientos tomos dispersos.",
+      "leftChoice": {
+        "label": "Firmar la división en veinticinco piezas y empantanar a la UCO en un laberinto documental",
+        "stampText": "TROCEAR",
+        "flavorQuote": "Divide y vencerás: un sumario de doscientos mil folios troceado no lo sienta en el banquillo ni el Espíritu Santo.",
+        "mechanicId": 15,
+        "modifiers": {
+          "pastaEnB": 15,
+          "presionJudicial": -20,
+          "impunidad": 25,
+          "reputacionMediatica": -10
+        },
+        "grantedFlags": [
+          "JUSTICIA_CAUSA_TROCEADA"
+        ]
+      },
+      "rightChoice": {
+        "label": "Mantener la pieza única y concentrar la acusación solo en los mandos intermedios",
+        "stampText": "CORTAFUEGOS",
+        "flavorQuote": "Entregamos a dos secretarios generales de segundo nivel y dejamos la cúpula libre de polvo y paja.",
+        "mechanicId": 25,
+        "modifiers": {
+          "pastaEnB": 5,
+          "presionJudicial": -10,
+          "impunidad": 20,
+          "reputacionMediatica": 10
+        },
+        "grantedFlags": [
+          "JUSTICIA_CORTAFUEGOS_PUESTO"
+        ]
+      },
+      "weight": 3,
+      "requiredFlags": [
+        "JUSTICIA_DOCTRINA_BOTIN_APLICADA"
+      ]
+    },
+    {
+      "id": "saga_justicia_05_purga_fiscal_stampa",
+      "speaker": "El Fiscal General Sumiso",
+      "speakerRole": "El Protector del Gobierno de Turno",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "PURGA EN LA FISCALÍA ANTICORRUPCIÓN: NO RENOVAR LA PLAZA AL FISCAL INCÓMODO",
+      "context": "El fiscal anticorrupción asignado a la macrocausa no se doblega: insiste en investigar las cuentas en el extranjero de la cúpula empresarial. En la Junta de Fiscales se decide no renovarle la comisión de servicio y destinarlo forzosamente a un juzgado de menores.",
+      "evidenceDocument": "Resolución de la Fiscalía General del Estado apartando al fiscal de la causa y negándole la plaza en propiedad.",
+      "leftChoice": {
+        "label": "Consumar la purga del fiscal incómodo y nombrar a un fiscal afín de máxima confianza",
+        "stampText": "PURGAR FISCAL",
+        "flavorQuote": "A quien no entienda que la jerarquía de la Fiscalía es piramidal se le quita el sumario de las manos en dos minutos.",
+        "mechanicId": 29,
+        "modifiers": {
+          "pastaEnB": 10,
+          "presionJudicial": -25,
+          "impunidad": 30,
+          "reputacionMediatica": -20
+        },
+        "grantedFlags": [
+          "JUSTICIA_FISCAL_PURGADO"
+        ]
+      },
+      "rightChoice": {
+        "label": "Mantener al fiscal pero asfixiarlo retirándole los peritos informáticos y los inspectores fiscales",
+        "stampText": "ASFIXIA TÉCNICA",
+        "flavorQuote": "Que siga en el despacho con una carretilla de folios y sin ordenador; tardará cinco años en emitir el informe.",
+        "mechanicId": 14,
+        "modifiers": {
+          "pastaEnB": -5,
+          "presionJudicial": -15,
+          "impunidad": 20,
+          "reputacionMediatica": 5
+        },
+        "grantedFlags": [
+          "JUSTICIA_ASFIXIA_PERITOS"
+        ]
+      },
+      "weight": 2,
+      "requiredFlags": [
+        "JUSTICIA_CAUSA_TROCEADA"
+      ]
+    },
+    {
+      "id": "saga_justicia_06_dilaciones_indebidas_atenuante",
+      "speaker": "El Abogado Defensor del Partido",
+      "speakerRole": "El Maestro de los Recursos y la Prescripción",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "EL JUICIO LLEGA CATORCE AÑOS TARDE: ATENUANTE MUY CUALIFICADA DE DILACIONES",
+      "context": "Por fin se abre el juicio oral, pero han transcurrido catorce años desde la primera denuncia. Tu abogado solicita la aplicación de la atenuante muy cualificada de dilaciones indebidas: la pena de seis años de cárcel se reduce automáticamente a dieciocho meses.",
+      "evidenceDocument": "Memoria cronológica de las actuaciones procesales demostrando ocho años de paralización imputable a la administración de justicia.",
+      "leftChoice": {
+        "label": "Aceptar una pena de dieciocho meses conmutada por multa y eludir la prisión",
+        "stampText": "DILACIONES INDEBIDAS",
+        "flavorQuote": "El tiempo en la justicia no pasa en vano: catorce años de retraso te garantizan no pisar la cárcel en tu vida.",
+        "mechanicId": 14,
+        "modifiers": {
+          "pastaEnB": -10,
+          "presionJudicial": -30,
+          "impunidad": 35,
+          "reputacionMediatica": -10
+        },
+        "grantedFlags": [
+          "JUSTICIA_DILACIONES_PREMIADAS"
+        ]
+      },
+      "rightChoice": {
+        "label": "Exigir la prescripción penal total del delito fiscal alegando caducidad de plazos",
+        "stampText": "PRESCRIPCIÓN TOTAL",
+        "flavorQuote": "El delito contra la Hacienda pública prescribe a los cinco años; aquí se han dormido diez y nos vamos de rositas.",
+        "mechanicId": 18,
+        "modifiers": {
+          "pastaEnB": 20,
+          "presionJudicial": -35,
+          "impunidad": 40,
+          "reputacionMediatica": 15
+        },
+        "grantedFlags": [
+          "JUSTICIA_PRESCRIPCION_TOTAL"
+        ]
+      },
+      "weight": 3,
+      "requiredFlags": [
+        "JUSTICIA_FISCAL_PURGADO"
+      ]
+    },
+    {
+      "id": "saga_justicia_07_aforamiento_senado_blindado",
+      "speaker": "El Presidente del Comité Electoral",
+      "speakerRole": "El Distribuidor de Escaños Protectores",
+      "sphere": "POLITICA",
+      "headline": "OPERACIÓN AFORAMIENTO: INCLUIR AL ALCALDE EN EL SENADO POR DESIGNACIÓN",
+      "context": "El juez de instrucción comarcal tiene redactado el auto de procesamiento contra el exalcalde. Para arrebatarle la causa y enviarla a la Sala Segunda del Tribunal Supremo, el partido lo nombra de urgencia senador por designación autonómica.",
+      "evidenceDocument": "Acta del Parlamento autonómico proclamando al investigado como senador electo para gozar de aforamiento judicial.",
+      "leftChoice": {
+        "label": "Aforar al investigado en el Senado y obligar al juez comarcal a inhibirse ante el Supremo",
+        "stampText": "AFORAMIENTO",
+        "flavorQuote": "Con credencial de senador en el bolsillo el juez de pueblo tiene que empaquetar el sumario y mandarlo a Madrid con escolta.",
+        "mechanicId": 19,
+        "modifiers": {
+          "pastaEnB": 10,
+          "presionJudicial": -20,
+          "impunidad": 35,
+          "reputacionMediatica": -20
+        },
+        "grantedFlags": [
+          "JUSTICIA_AFORAMIENTO_LOGRADO"
+        ]
+      },
+      "rightChoice": {
+        "label": "Renunciar al aforamiento para no dar titulares de prensa y pactar un sobreseimiento discreto",
+        "stampText": "BAJO PERFIL",
+        "flavorQuote": "El aforamiento huele a trampa en los telediarios; mejor un sobreseimiento provisional silencioso en la audiencia provincial.",
+        "mechanicId": 17,
+        "modifiers": {
+          "pastaEnB": -5,
+          "presionJudicial": -15,
+          "impunidad": 20,
+          "reputacionMediatica": 15
+        },
+        "grantedFlags": [
+          "JUSTICIA_SOBRESEIMIENTO_DISCRETO"
+        ]
+      },
+      "weight": 2,
+      "requiredFlags": [
+        "JUSTICIA_DILACIONES_PREMIADAS"
+      ]
+    },
+    {
+      "id": "saga_justicia_08_peritos_hacienda_asfixia",
+      "speaker": "El Delegado de la Agencia Tributaria",
+      "speakerRole": "El Enlace de Hacienda con los Juzgados",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "DESMANTELAR LA UNIDAD DE APOYO: RETIRADA DE LOS INSPECTORES DE LA CAUSA",
+      "context": "La investigación judicial sobre las cuentas en Suiza depende de dos inspectores de Hacienda adscritos a la Audiencia Nacional. El ministerio ordena su traslado inmediato a la sede central para tareas de 'recaudación ordinaria', dejando al juez sin peritajes.",
+      "evidenceDocument": "Orden ministerial de traslado forzoso de los inspectores de auxilio judicial con alegación de necesidades del servicio.",
+      "leftChoice": {
+        "label": "Ejecutar la orden de traslado y congelar los informes periciales durante tres años",
+        "stampText": "RETIRAR PERITOS",
+        "flavorQuote": "Sin informe de los peritos de la Agencia Tributaria no hay delito fiscal que se sostenga en sala.",
+        "mechanicId": 14,
+        "modifiers": {
+          "pastaEnB": 15,
+          "presionJudicial": -25,
+          "impunidad": 30,
+          "reputacionMediatica": -15
+        },
+        "grantedFlags": [
+          "JUSTICIA_PERITOS_DESMANTELADOS"
+        ]
+      },
+      "rightChoice": {
+        "label": "Filtrar a la prensa que el juez es un incompetente que abusa de los funcionarios del Estado",
+        "stampText": "CAMPAÑA PRENSA",
+        "flavorQuote": "Llenamos las tertulias diciendo que el juez gasta millones de dinero público en peritajes inútiles para ganar notoriedad.",
+        "mechanicId": 27,
+        "modifiers": {
+          "pastaEnB": 0,
+          "presionJudicial": 10,
+          "impunidad": 15,
+          "reputacionMediatica": 10
+        },
+        "grantedFlags": [
+          "JUSTICIA_CAMPAÑA_CONTRA_JUEZ"
+        ]
+      },
+      "weight": 2,
+      "requiredFlags": [
+        "JUSTICIA_AFORAMIENTO_LOGRADO"
+      ]
+    },
+    {
+      "id": "saga_justicia_09_indulto_medico_navidad",
+      "speaker": "El Subsecretario del Ministerio de Justicia",
+      "speakerRole": "El Redactor de la Gracia Real",
+      "sphere": "POLITICA",
+      "headline": "BOLETÍN OFICIAL DE NOCHEBUENA: INDULTO POR RAZONES HUMANITARIAS",
+      "context": "Llega el 24 de diciembre. Mientras el país ve el discurso navideño, se publica en el BOE el Real Decreto de indulto parcial que conmuta la pena de prisión de los condenados de la trama alegando 'motivos de equidad, arrepentimiento e informes médicos confidenciales'.",
+      "evidenceDocument": "Ejemplar del Boletín Oficial del Estado del 24 de diciembre con el Real Decreto de concesión de indulto parcial.",
+      "leftChoice": {
+        "label": "Firmar el indulto en el Consejo de Ministros y asegurar la impunidad definitiva",
+        "stampText": "INDULTO REAL",
+        "flavorQuote": "En Nochebuena todo el mundo come turrón y nadie lee el BOE; el lunes los condenados están en la calle con su patrimonio intacto.",
+        "mechanicId": 36,
+        "modifiers": {
+          "pastaEnB": 20,
+          "presionJudicial": -35,
+          "impunidad": 40,
+          "reputacionMediatica": -30
+        },
+        "grantedFlags": [
+          "JUSTICIA_INDULTO_PUBLICADO"
+        ]
+      },
+      "rightChoice": {
+        "label": "Concederles el tercer grado penitenciario directo sin esperar al indulto para dormir en casa",
+        "stampText": "TERCER GRADO",
+        "flavorQuote": "Un contrato de trabajo en la fundación de un amigo y a los tres días salen a dormir a su chalet con pulsera telemática.",
+        "mechanicId": 36,
+        "modifiers": {
+          "pastaEnB": 10,
+          "presionJudicial": -20,
+          "impunidad": 30,
+          "reputacionMediatica": -10
+        },
+        "grantedFlags": [
+          "JUSTICIA_TERCER_GRADO_LOGRADO"
+        ]
+      },
+      "weight": 2,
+      "requiredFlags": [
+        "JUSTICIA_PERITOS_DESMANTELADOS"
+      ]
+    },
+    {
+      "id": "saga_justicia_10_climax_la_justicia_secuestrada",
+      "speaker": "El Magistrado Emérito de la Judicatura",
+      "speakerRole": "La Conciencia Crítica de la Toga",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "CLÍMAX DEL SECUESTRO: SENTENCIA FIRME DE SOBRESEIMIENTO O REBELIÓN DE TOGAS",
+      "context": "La Sala Segunda del Tribunal Supremo dicta el auto definitivo de sobreseimiento libre: no hay delito, las pruebas de las escuchas se declaran nulas y el Estado es condenado al pago de las costas procesales. El secuestro de la justicia ha concluido con éxito.",
+      "evidenceDocument": "Auto de sobreseimiento libre y archivo definitivo de la Sala Segunda del Tribunal Supremo con costas al erario público.",
+      "leftChoice": {
+        "label": "Celebrar el triunfo total de la arquitectura jurídica en el reservado del club financiero",
+        "stampText": "SOBRESEIMIENTO",
+        "flavorQuote": "La ley es como una telaraña: atrapa a las moscas pequeñas y se rompe cuando se estrella el abejorro poderoso.",
+        "mechanicId": 17,
+        "modifiers": {
+          "pastaEnB": 30,
+          "presionJudicial": -40,
+          "impunidad": 45,
+          "reputacionMediatica": 10
+        },
+        "grantedFlags": [
+          "JUSTICIA_TRIUNFO_TOTAL"
+        ]
+      },
+      "rightChoice": {
+        "label": "Publicar un libro de memorias confesando cómo se amañaron las togas durante treinta años",
+        "stampText": "MEMORIAS BOMBA",
+        "flavorQuote": "Los delitos ya están prescritos y la pasta en Suiza; que toda España sepa cómo compramos la justicia y los silencios.",
+        "mechanicId": 30,
+        "modifiers": {
+          "pastaEnB": 15,
+          "presionJudicial": 10,
+          "impunidad": 35,
+          "reputacionMediatica": 35
+        },
+        "grantedFlags": [
+          "JUSTICIA_LIBRO_BOMBA"
+        ]
+      },
+      "weight": 1,
+      "requiredFlags": [
+        "JUSTICIA_INDULTO_PUBLICADO"
+      ]
+    },
+    {
+      "id": "saga_guerra_sucia_01_maletines_serie_w",
+      "speaker": "Don Julián",
+      "speakerRole": "El Fontanero Mayor de Interior",
+      "sphere": "POLITICA",
+      "headline": "FONDOS RESERVADOS: MALETINES CON BILLETES DE LA SERIE W EN EL MINISTERIO",
+      "context": "En el despacho de la tercera planta del Paseo de la Castellana abres la caja fuerte. Sacas doscientos millones de pesetas en billetes de diez mil de la serie W del Banco de España, destinados a operaciones antiterroristas encubiertas y gratificaciones en mano.",
+      "evidenceDocument": "Libro de registro interno de fondos reservados con firmas ilegibles y sellos de 'Materia Reservada - Ley de 1968'.",
+      "leftChoice": {
+        "label": "Repartir los sobresueldos mensuales en mano a los altos cargos de seguridad",
+        "stampText": "SOBRES SERIE W",
+        "flavorQuote": "Los fondos reservados son el lubricante del Estado; quien pisa el fango de la fontanería merece su gratificación en mano.",
+        "mechanicId": 12,
+        "modifiers": {
+          "pastaEnB": 25,
+          "presionJudicial": 10,
+          "impunidad": 20,
+          "reputacionMediatica": -15
+        },
+        "grantedFlags": [
+          "GUERRA_FONDOS_W_REPARTIDOS"
+        ]
+      },
+      "rightChoice": {
+        "label": "Desviar la mitad de la partida a cuentas fiduciarias en Suiza a través de un testaferro",
+        "stampText": "DESVÍO SUIZO",
+        "flavorQuote": "Por si cambian las tornas políticas, un remanente en Zúrich nos garantiza una jubilación tranquila.",
+        "mechanicId": 33,
+        "modifiers": {
+          "pastaEnB": 30,
+          "presionJudicial": 15,
+          "impunidad": 15,
+          "reputacionMediatica": -20
+        },
+        "grantedFlags": [
+          "GUERRA_CUENTA_SUIZA_ABIERTA"
+        ]
+      },
+      "weight": 3,
+      "requiredFlags": []
+    },
+    {
+      "id": "saga_guerra_sucia_02_cuenta_suiza_amedo",
+      "speaker": "El Subcomisario Procesado",
+      "speakerRole": "El Agente Encubierto en el Banquillo",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "COMPRA DE SILENCIOS: PENSIONES MENSUALES EN GINEBRA PARA LOS POLICÍAS PRESOS",
+      "context": "Los dos policías ejecutores de la guerra sucia ingresan en prisión preventiva. Te exigen una renta mensual vitalicia de doscientas mil pesetas en Suiza para sus familias y el compromiso de indulto; si no cobran el día uno de cada mes, tirarán de la manta ante el juez instructor.",
+      "evidenceDocument": "Ficha bancaria de la Unión de Bancos Suizos (UBS) con abonos periódicos procedentes del fiduciario de Interior.",
+      "leftChoice": {
+        "label": "Abonar puntualmente la pensión en Suiza a través de Francisco Paesa",
+        "stampText": "PAGAR POLICÍAS",
+        "flavorQuote": "A los chicos del barro se les paga religiosamente en francos suizos para que el silencio no se rompa jamás.",
+        "mechanicId": 7,
+        "modifiers": {
+          "pastaEnB": -15,
+          "presionJudicial": -15,
+          "impunidad": 25,
+          "reputacionMediatica": 5
+        },
+        "grantedFlags": [
+          "GUERRA_PENSIONES_SUIZAS_PAGADAS"
+        ]
+      },
+      "rightChoice": {
+        "label": "Amenazarles con trasladarlos a módulos conflictivos si abren la boca",
+        "stampText": "APRETÓN",
+        "flavorQuote": "Que no se olviden de que en prisión los accidentes ocurren con mucha facilidad; que se coman su condena en silencio.",
+        "mechanicId": 8,
+        "modifiers": {
+          "pastaEnB": 10,
+          "presionJudicial": 20,
+          "impunidad": -10,
+          "reputacionMediatica": -25
+        },
+        "grantedFlags": [
+          "GUERRA_POLICIAS_AMENAZADOS"
+        ]
+      },
+      "weight": 3,
+      "requiredFlags": [
+        "GUERRA_FONDOS_W_REPARTIDOS"
+      ]
+    },
+    {
+      "id": "saga_guerra_sucia_03_chofers_y_fontaneros",
+      "speaker": "El Comisario del Grupo Especial",
+      "speakerRole": "El Fontanero de las Cloacas Operativas",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "OPERACIÓN KITCHEN: CAPTAR AL CHÓFER CON 2.000 EUROS AL MES Y PLAZA DE POLICÍA",
+      "context": "El extesorero tiene en su poder documentos que dinamitan la cúpula del partido. Ordenas a un comisario de confianza captar al chófer de la familia pagándole dos mil euros al mes de fondos reservados y prometiéndole el ingreso directo en el Cuerpo Nacional de Policía.",
+      "evidenceDocument": "Recibí manuscrito por 2.000 euros en concepto de 'colaboración informativa especial' firmado con seudónimo.",
+      "leftChoice": {
+        "label": "Pagar al chófer con fondos reservados y clonar los teléfonos y agendas de la familia",
+        "stampText": "CHÓFER TOPO",
+        "flavorQuote": "El chófer abre los maleteros y nos da las llaves del piso; dos mil euros al mes es calderilla para salvar a la cúpula.",
+        "mechanicId": 8,
+        "modifiers": {
+          "pastaEnB": -10,
+          "presionJudicial": -20,
+          "impunidad": 30,
+          "reputacionMediatica": -10
+        },
+        "grantedFlags": [
+          "GUERRA_CHOF_CAPTURO_PAPELES"
+        ]
+      },
+      "rightChoice": {
+        "label": "Registrar el despacho del tesorero mediante orden judicial oficial sin operaciones parapoliciales",
+        "stampText": "VÍA JUDICIAL",
+        "flavorQuote": "Las operaciones clandestinas siempre acaban en la Audiencia Nacional; que el juez pida los papeles por burofax.",
+        "mechanicId": 14,
+        "modifiers": {
+          "pastaEnB": 0,
+          "presionJudicial": 15,
+          "impunidad": -10,
+          "reputacionMediatica": 10
+        },
+        "grantedFlags": [
+          "GUERRA_VIA_OFICIAL"
+        ]
+      },
+      "weight": 3,
+      "requiredFlags": [
+        "GUERRA_PENSIONES_SUIZAS_PAGADAS"
+      ]
+    },
+    {
+      "id": "saga_guerra_sucia_04_recibo_en_servilleta",
+      "speaker": "El Pagador de la Casa",
+      "speakerRole": "El Custodio de los Recibís Ocultos",
+      "sphere": "POLITICA",
+      "headline": "EL RECIBÍ EN LA SERVILLETA: CIEN MILLONES FIRMADOS EN UN BAR DE MADRID",
+      "context": "Te reúnes en un bar frente a la Dirección General de la Seguridad con el comisionista. Le entregas cien millones de pesetas en billetes morados para comprar material confidencial y le obligas a firmar el recibí con bolígrafo en una servilleta de papel con la grasa del café.",
+      "evidenceDocument": "Servilleta de papel doblada con la inscripción: «Recibí cien millones para atenciones especiales del servicio».",
+      "leftChoice": {
+        "label": "Guardar la servilleta en la caja fuerte personal como salvoconducto de chantaje futuro",
+        "stampText": "GUARDAR PRUEBA",
+        "flavorQuote": "Esta servilleta manchada de café vale más que diez reales decretos; es mi seguro de vida contra el ministro.",
+        "mechanicId": 30,
+        "modifiers": {
+          "pastaEnB": 10,
+          "presionJudicial": 5,
+          "impunidad": 25,
+          "reputacionMediatica": 10
+        },
+        "grantedFlags": [
+          "GUERRA_SERVILLETA_GUARDADA"
+        ]
+      },
+      "rightChoice": {
+        "label": "Quemar la servilleta en el cenicero de inmediato para no dejar ni rastro documental",
+        "stampText": "QUEMAR",
+        "flavorQuote": "El papel es el enemigo del fontanero de Interior; lo que se quema en el cenicero no lo lee ningún juez de instrucción.",
+        "mechanicId": 28,
+        "modifiers": {
+          "pastaEnB": -5,
+          "presionJudicial": -15,
+          "impunidad": 15,
+          "reputacionMediatica": 5
+        },
+        "grantedFlags": [
+          "GUERRA_SERVILLETA_QUEMADA"
+        ]
+      },
+      "weight": 2,
+      "requiredFlags": [
+        "GUERRA_CHOF_CAPTURO_PAPELES"
+      ]
+    },
+    {
+      "id": "saga_guerra_sucia_05_orden_borrado_cintas",
+      "speaker": "El Técnico de Escuchas Telefónicas",
+      "speakerRole": "El Operador de las Cintas Magnéticas",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "BORRADO DE CINTAS: LA DESTRUCCIÓN DE LAS GRABACIONES DEL MONARCA Y MINISTROS",
+      "context": "El servicio de escuchas clandestinas ha grabado durante una década las conversaciones de palacio, ministros y jueces. El juez instructor exige la entrega inmediata de los másteres magnéticos antes de que termine la jornada.",
+      "evidenceDocument": "Desmagnetizador de cintas magnéticas de alta potencia y restos de bobinas desmagnetizadas en el vertedero.",
+      "leftChoice": {
+        "label": "Aplicar el desmagnetizador a las bobinas y declarar que las cintas se destruyeron por protocolo",
+        "stampText": "DESMAGNETIZAR",
+        "flavorQuote": "Las cintas eran reciclables y se borraron para ahorrar gasto público; que el juez escuche el soplido del vacío.",
+        "mechanicId": 28,
+        "modifiers": {
+          "pastaEnB": 0,
+          "presionJudicial": 10,
+          "impunidad": 25,
+          "reputacionMediatica": -20
+        },
+        "grantedFlags": [
+          "GUERRA_CINTAS_BORRADAS"
+        ]
+      },
+      "rightChoice": {
+        "label": "Copiar los 32 terabytes en discos duros cifrados y trasladarlos a un zulo privado",
+        "stampText": "COPIA SECRETA",
+        "flavorQuote": "Quien destruye información es un suicida; quien la custodia en un zulo manda sobre el Reino entero.",
+        "mechanicId": 30,
+        "modifiers": {
+          "pastaEnB": 20,
+          "presionJudicial": 15,
+          "impunidad": 30,
+          "reputacionMediatica": 15
+        },
+        "grantedFlags": [
+          "GUERRA_COPIA_ZULO_CREADA"
+        ]
+      },
+      "weight": 2,
+      "requiredFlags": [
+        "GUERRA_SERVILLETA_GUARDADA"
+      ]
+    },
+    {
+      "id": "saga_guerra_sucia_06_secreto_oficial_1968",
+      "speaker": "El Ministro del Interior",
+      "speakerRole": "El Custodio de los Secretos del Reino",
+      "sphere": "POLITICA",
+      "headline": "COMPARECENCIA EN EL CONGRESO: 'ES SECRETO DE ESTADO BAJO LA LEY DE 1968'",
+      "context": "La comisión de investigación parlamentaria te exige mostrar los libros de contabilidad de los fondos reservados y los nombres de los confidentes. Te subes a la tribuna y blindas los documentos invocando la Ley de Secretos Oficiales aprobada durante el franquismo.",
+      "evidenceDocument": "Acuerdo del Consejo de Ministros clasificando los expedientes de fondos reservados con el sello de Secreto de Estado.",
+      "leftChoice": {
+        "label": "Negarse a declarar en la comisión y ordenar a los diputados del partido votar en contra de desclasificar",
+        "stampText": "SECRETO TOTAL",
+        "flavorQuote": "La seguridad nacional no se somete al escrutinio de los diputados; lo que pasó en las cloacas muere en las cloacas.",
+        "mechanicId": 19,
+        "modifiers": {
+          "pastaEnB": 10,
+          "presionJudicial": -20,
+          "impunidad": 35,
+          "reputacionMediatica": -25
+        },
+        "grantedFlags": [
+          "GUERRA_SECRETO_ESTADO_BLINDADO"
+        ]
+      },
+      "rightChoice": {
+        "label": "Entregar un resumen censurado con tachones negros en el 90% de las páginas",
+        "stampText": "PÁGINAS NEGRAS",
+        "flavorQuote": "Les entregamos cincuenta tomos pintados de negro con rotulador permanente; que busquen nombres entre las manchas.",
+        "mechanicId": 27,
+        "modifiers": {
+          "pastaEnB": -5,
+          "presionJudicial": -10,
+          "impunidad": 25,
+          "reputacionMediatica": 10
+        },
+        "grantedFlags": [
+          "GUERRA_DOSIERES_TACHADOS"
+        ]
+      },
+      "weight": 3,
+      "requiredFlags": [
+        "GUERRA_COPIA_ZULO_CREADA"
+      ]
+    },
+    {
+      "id": "saga_guerra_sucia_07_amenaza_la_x",
+      "speaker": "El Exsecretario de Estado Encarcelado",
+      "speakerRole": "El Preso Político de Guadalajara",
+      "sphere": "POLITICA",
+      "headline": "¿QUIÉN ES LA 'X'?: EL CHANTAJE DESDE EL LOCUTORIO DE LA PRISIÓN",
+      "context": "El tribunal condena a diez años de cárcel a los máximos mandos de Interior por el secuestro de Segundo Marey. El exsecretario de Estado te envía un emisario desde el patio de la prisión: o Moncloa tramita el indulto antes de seis meses o desvela quién ordenó la creación de la trama.",
+      "evidenceDocument": "Carta manuscrita del preso advirtiendo de que desvelará la identidad de la 'X' en la cabecera de la trama.",
+      "leftChoice": {
+        "label": "Tramitar el indulto parcial exprés en el Consejo de Ministros alegando razones de Estado",
+        "stampText": "INDULTAR X",
+        "flavorQuote": "La 'X' no se toca jamás; el Estado paga el indulto a sus soldados para que la corona y el presidente sigan intactos.",
+        "mechanicId": 36,
+        "modifiers": {
+          "pastaEnB": -10,
+          "presionJudicial": -25,
+          "impunidad": 40,
+          "reputacionMediatica": -30
+        },
+        "grantedFlags": [
+          "GUERRA_INDULTO_X_TRAMITADO"
+        ]
+      },
+      "rightChoice": {
+        "label": "Aislar al reo en un módulo de máxima seguridad y prohibirle las visitas de periodistas",
+        "stampText": "AISLAMIENTO",
+        "flavorQuote": "En régimen de aislamiento severo no hay entrevistas con periódicos ni declaraciones bomba ante las cámaras.",
+        "mechanicId": 25,
+        "modifiers": {
+          "pastaEnB": 15,
+          "presionJudicial": 10,
+          "impunidad": 20,
+          "reputacionMediatica": -15
+        },
+        "grantedFlags": [
+          "GUERRA_REO_AISLADO"
+        ]
+      },
+      "weight": 2,
+      "requiredFlags": [
+        "GUERRA_SECRETO_ESTADO_BLINDADO"
+      ]
+    },
+    {
+      "id": "saga_guerra_sucia_08_asalto_piso_franco",
+      "speaker": "El Jefe del Operativo Clandestino",
+      "speakerRole": "El Mando de la Brigada Operativa",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "ASALTO NOCTURNO AL PISO FRANCO: RECUPERAR LOS DISCOS ANTES DE LA UCO",
+      "context": "La policía judicial tiene la orden judicial de entrada y registro para las ocho de la mañana. A las cuatro de la madrugada, un equipo de agentes de la brigada de información revienta la cerradura del piso franco para llevarse los archivadores de la serie W.",
+      "evidenceDocument": "Atestado policial de allanamiento con cerradura forzada y armarios vaciados antes de la comisión judicial.",
+      "leftChoice": {
+        "label": "Llevarse los archivadores en furgonetas camufladas y culpar a un robo común de delincuencia urbana",
+        "stampText": "ROBO COMÚN",
+        "flavorQuote": "Cuando llegue el juez solo encontrará pelusas y polvo; en el atestado ponemos 'robo de toxicómanos' y caso cerrado.",
+        "mechanicId": 28,
+        "modifiers": {
+          "pastaEnB": 15,
+          "presionJudicial": 15,
+          "impunidad": 30,
+          "reputacionMediatica": -20
+        },
+        "grantedFlags": [
+          "GUERRA_ARCHIVADORES_SALVADOS"
+        ]
+      },
+      "rightChoice": {
+        "label": "Dejar que el juez registre pero haber sustituido previamente los discos por copias defectuosas",
+        "stampText": "CAMBIAZO",
+        "flavorQuote": "El cambiazo de los discos duros es un clásico: que los peritos informáticos se pasen dos años analizando archivos vacíos.",
+        "mechanicId": 27,
+        "modifiers": {
+          "pastaEnB": -5,
+          "presionJudicial": -15,
+          "impunidad": 25,
+          "reputacionMediatica": 10
+        },
+        "grantedFlags": [
+          "GUERRA_CAMBIAZO_DISCOS"
+        ]
+      },
+      "weight": 2,
+      "requiredFlags": [
+        "GUERRA_INDULTO_X_TRAMITADO"
+      ]
+    },
+    {
+      "id": "saga_guerra_sucia_09_puerta_furgon_soto",
+      "speaker": "El Secretario General del Partido",
+      "speakerRole": "El Organizador de los Desfiles de Solidaridad",
+      "sphere": "POLITICA",
+      "headline": "EL DESFILE DE GUADALAJARA: CIENTOS DE MILITANTES ARROPAN A LOS CONDENADOS",
+      "context": "Llega el día del ingreso en prisión de la cúpula de Interior. El partido organiza una manifestación a las puertas del presidio con expresidentes del Gobierno, ministros y autobuses de simpatizantes aplaudiendo y vitoreando a los condenados.",
+      "evidenceDocument": "Fotografía histórica en la puerta de la prisión con abrazos entre expresidentes y condenados por malversación.",
+      "leftChoice": {
+        "label": "Acompañar a los condenados hasta la misma puerta de la cárcel arropados por la plana mayor",
+        "stampText": "DESFILE LEAL",
+        "flavorQuote": "Aquí no se abandona a los nuestros; el partido acompaña a sus héroes hasta la puerta del penal con la cabeza alta.",
+        "mechanicId": 40,
+        "modifiers": {
+          "pastaEnB": 10,
+          "presionJudicial": -10,
+          "impunidad": 35,
+          "reputacionMediatica": -20
+        },
+        "grantedFlags": [
+          "GUERRA_DESFILE_LEALTAD"
+        ]
+      },
+      "rightChoice": {
+        "label": "Distanciarse en los medios y asegurar que 'la época de las sombras ha quedado atrás'",
+        "stampText": "CORDÓN SANITARIO",
+        "flavorQuote": "Que entren de noche por el garaje sin cámaras; no podemos perder las elecciones generales por dos exministros.",
+        "mechanicId": 25,
+        "modifiers": {
+          "pastaEnB": -5,
+          "presionJudicial": -5,
+          "impunidad": 15,
+          "reputacionMediatica": 20
+        },
+        "grantedFlags": [
+          "GUERRA_CORDON_SANITARIO"
+        ]
+      },
+      "weight": 2,
+      "requiredFlags": [
+        "GUERRA_ARCHIVADORES_SALVADOS"
+      ]
+    },
+    {
+      "id": "saga_guerra_sucia_10_climax_el_indulto_de_estado",
+      "speaker": "El Presidente del Gobierno Saliente",
+      "speakerRole": "La Suprema Autoridad del Estado",
+      "sphere": "POLITICA",
+      "headline": "CLÍMAX DE LAS CLOACAS: EL INDULTO HISTÓRICO Y EL SILENCIO ETERNO",
+      "context": "El Consejo de Ministros aprueba el indulto definitivo para todos los condenados de la fontanería de Interior antes del relevo en el poder. Los condenados salen en libertad tras cumplir una fracción mínima de condena y los fondos reservados quedan sellados para la historia.",
+      "evidenceDocument": "Decreto de indulto total conmutando las penas de inhabilitación y prisión con el refrendo del monarca.",
+      "leftChoice": {
+        "label": "Firmar el indulto y asegurar el pacto de silencio de Estado entre los dos grandes partidos",
+        "stampText": "PACTO DE ESTADO",
+        "flavorQuote": "Los dos partidos alternantes sabemos que la cloaca se tapa entre los dos; hoy por ti, mañana por mí.",
+        "mechanicId": 36,
+        "modifiers": {
+          "pastaEnB": 25,
+          "presionJudicial": -40,
+          "impunidad": 45,
+          "reputacionMediatica": 10
+        },
+        "grantedFlags": [
+          "GUERRA_PACTO_ESTADO_CERRADO"
+        ]
+      },
+      "rightChoice": {
+        "label": "Cobrar un fideicomiso vitalicio en Ginebra y retirarse a una fundación de relaciones internacionales",
+        "stampText": "FUNDACIÓN INTER",
+        "flavorQuote": "Con el honor salvado y la pensión en Suiza, pasamos a dar conferencias sobre resolución de conflictos en América Latina.",
+        "mechanicId": 40,
+        "modifiers": {
+          "pastaEnB": 30,
+          "presionJudicial": -35,
+          "impunidad": 40,
+          "reputacionMediatica": 25
+        },
+        "grantedFlags": [
+          "GUERRA_RETIRO_FUNDACION"
+        ]
+      },
+      "weight": 1,
+      "requiredFlags": [
+        "GUERRA_DESFILE_LEALTAD"
+      ]
     }
   ]
 }
