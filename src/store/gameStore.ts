@@ -38,7 +38,7 @@ export interface GameState {
   stats: CharacterStats;
   ending: EndingType | null;
 
-  // Estado Modo Reigns
+  // Estado Modo Reigns 2.0 con Banderas / Questlines
   currentReignsCard: ReignsCard | null;
   reignsDeck: ReignsCard[];
   reignsCardIndex: number;
@@ -47,6 +47,7 @@ export interface GameState {
   previewDirection: 'left' | 'right' | null;
   gameOverReason: GameOverReason | null;
   gameOverDescription: string | null;
+  activeFlags: Record<string, boolean>;
 
   // Estado Modo Clásico
   currentNodeId: string;
@@ -92,6 +93,15 @@ export const applyModifiers = (
     reputacionMediatica: clampStat(current.reputacionMediatica, modifiers.reputacionMediatica),
   };
 };
+
+function getEligibleCards(allCards: ReignsCard[], activeFlags: Record<string, boolean>): ReignsCard[] {
+  return allCards.filter((card) => {
+    if (!card.requiredFlags || card.requiredFlags.length === 0) {
+      return true;
+    }
+    return card.requiredFlags.every((flag) => !!activeFlags[flag]);
+  });
+}
 
 function shuffleCards(cards: ReignsCard[]): ReignsCard[] {
   const copy = [...cards];
@@ -203,6 +213,7 @@ export const useGameStore = create<GameState>()(
       previewDirection: null,
       gameOverReason: null,
       gameOverDescription: null,
+      activeFlags: {},
 
       currentNodeId: '',
       currentNode: null,
@@ -221,8 +232,10 @@ export const useGameStore = create<GameState>()(
           return false;
         }
 
-        const cards = reignsDeckData.cards as ReignsCard[];
-        const shuffled = shuffleCards(cards);
+        const rawCards = reignsDeckData.cards as ReignsCard[];
+        const initialFlags: Record<string, boolean> = {};
+        const eligible = getEligibleCards(rawCards, initialFlags);
+        const shuffled = shuffleCards(eligible);
         const firstCard = shuffled[0] ?? null;
 
         set({
@@ -235,11 +248,12 @@ export const useGameStore = create<GameState>()(
           reignsDeck: shuffled,
           currentReignsCard: firstCard,
           reignsCardIndex: 0,
-          daysInPower: 90, // Primer trimestre
+          daysInPower: 90,
           cardsSurvived: 0,
           previewDirection: null,
           gameOverReason: null,
           gameOverDescription: null,
+          activeFlags: initialFlags,
           ending: null,
           unlockedMechanics: [...character.unlockedMechanics],
           evidenceDocuments: firstCard?.evidenceDocument ? [firstCard.evidenceDocument] : [],
@@ -267,12 +281,11 @@ export const useGameStore = create<GameState>()(
           status,
           currentReignsCard,
           stats,
-          reignsDeck,
-          reignsCardIndex,
           daysInPower,
           cardsSurvived,
           unlockedMechanics,
           evidenceDocuments,
+          activeFlags,
         } = get();
 
         if (status !== 'PLAYING' || !currentReignsCard) {
@@ -284,9 +297,17 @@ export const useGameStore = create<GameState>()(
 
         const nextStats = applyModifiers(stats, choice.modifiers);
         const nextCardsSurvived = cardsSurvived + 1;
-        const nextDays = daysInPower + 90; // +1 trimestre
+        const nextDays = daysInPower + 90;
 
-        // Desbloqueo de mecánicas y acumulación de pruebas
+        // Actualización de banderas activas (flags)
+        const updatedFlags = { ...activeFlags };
+        if (choice.grantedFlags && choice.grantedFlags.length > 0) {
+          for (const flag of choice.grantedFlags) {
+            updatedFlags[flag] = true;
+          }
+        }
+
+        // Nuevas mecánicas y pruebas
         const nextUnlockedMechanics =
           choice.mechanicId !== undefined && !unlockedMechanics.includes(choice.mechanicId)
             ? [...unlockedMechanics, choice.mechanicId]
@@ -298,7 +319,7 @@ export const useGameStore = create<GameState>()(
             ? [...evidenceDocuments, currentReignsCard.evidenceDocument]
             : evidenceDocuments;
 
-        // Evaluación de fin de partida estilo Reigns
+        // Fin de partida
         const verdict = checkReignsGameOver(nextStats, nextCardsSurvived);
 
         if (verdict.isGameOver) {
@@ -311,23 +332,30 @@ export const useGameStore = create<GameState>()(
             previewDirection: null,
             cardsSurvived: nextCardsSurvived,
             daysInPower: nextDays,
+            activeFlags: updatedFlags,
             unlockedMechanics: nextUnlockedMechanics,
             evidenceDocuments: nextEvidences,
           });
           return true;
         }
 
-        // Selección de la siguiente carta
-        const nextIndex = (reignsCardIndex + 1) % reignsDeck.length;
-        const nextCard = reignsDeck[nextIndex];
+        // Obtener pool elegible con las nuevas banderas
+        const allCards = reignsDeckData.cards as ReignsCard[];
+        const eligible = getEligibleCards(allCards, updatedFlags);
+        // Descartar la carta actual si hay alternativas
+        const candidates = eligible.filter((c) => c.id !== currentReignsCard.id);
+        const nextDeck = candidates.length > 0 ? candidates : eligible;
+        const randomIndex = Math.floor(Math.random() * nextDeck.length);
+        const nextCard = nextDeck[randomIndex] ?? currentReignsCard;
 
         set({
           stats: nextStats,
           currentReignsCard: nextCard,
-          reignsCardIndex: nextIndex,
+          reignsDeck: nextDeck,
           daysInPower: nextDays,
           cardsSurvived: nextCardsSurvived,
           previewDirection: null,
+          activeFlags: updatedFlags,
           unlockedMechanics: nextUnlockedMechanics,
           evidenceDocuments: nextEvidences,
         });
@@ -464,6 +492,7 @@ export const useGameStore = create<GameState>()(
           previewDirection: null,
           gameOverReason: null,
           gameOverDescription: null,
+          activeFlags: {},
           history: [],
           unlockedMechanics: [],
           evidenceDocuments: [],
@@ -485,6 +514,7 @@ export const useGameStore = create<GameState>()(
         stats: state.stats,
         daysInPower: state.daysInPower,
         cardsSurvived: state.cardsSurvived,
+        activeFlags: state.activeFlags,
         unlockedMechanics: state.unlockedMechanics,
         evidenceDocuments: state.evidenceDocuments,
         ending: state.ending,

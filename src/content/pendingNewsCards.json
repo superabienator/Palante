@@ -1,0 +1,122 @@
+[
+  {
+    "id": "VIRAL_PLANTÓN_EVOLE",
+    "speaker": "El Director de Comunicación del Partido",
+    "speakerRole": "Asesor de Campaña en Búnker Electoral",
+    "sphere": "POLITICA",
+    "headline": "¿PLANTAR AL ENTREVISTADOR DE LA TELEVISIÓN O IR AL MATADERO?",
+    "context": "Te han convocado al programa de Jordi Évole en máxima audiencia a dos semanas de las urnas. Tus asesores se dividen: si vas, te van a sacar todas las contradicciones de tu programa; si das el plantón, los sondeos vaticinan una pérdida espectacular de votos moderados.",
+    "evidenceDocument": "Burofax de la productora con acuse de recibo y mensaje urgente de WhatsApp: «¿Vienes o ponemos la silla vacía con focos rojos?»",
+    "leftChoice": {
+      "id": "c_planton_1",
+      "label": "Plantar al programa y atrincherarse en mítines cerrados con himnos a todo volumen",
+      "stampText": "BÚNKER",
+      "flavorQuote": "A esos progres ni agua. Que enfoquen la silla vacía mientras nosotros llenamos el polideportivo con banderas de dos metros.",
+      "modifiers": {
+        "pastaEnB": 0,
+        "presionJudicial": 0,
+        "impunidad": 15,
+        "reputacionMediatica": -25
+      },
+      "grantedFlags": [
+        "PLANTON_TELEVISIVO"
+      ]
+    },
+    "rightChoice": {
+      "id": "c_planton_2",
+      "label": "Ir al plató en directo y acusar al presentador de ser un comisario político",
+      "stampText": "AL RUEDO",
+      "flavorQuote": "Me van a interrumpir cada veinte segundos, pero el corte de vídeo de 30 segundos en redes sociales va a ser apoteósico.",
+      "modifiers": {
+        "pastaEnB": 0,
+        "presionJudicial": 0,
+        "impunidad": -10,
+        "reputacionMediatica": 15
+      },
+      "grantedFlags": [
+        "CARA_A_CARA_VIRAL"
+      ]
+    },
+    "requiredFlags": []
+  },
+  {
+    "id": "VIRAL_MASCARILLAS_PANDEMIA",
+    "speaker": "El Conseguidor de la Gasolinera",
+    "speakerRole": "Asesor de Confianza con Piso en Benidorm",
+    "sphere": "EMPRESARIAL",
+    "headline": "CONTRATO DE EMERGENCIA SANITARIA: 4 MILLONES EN COMISIONES",
+    "context": "En pleno confinamiento, una empresa de pizarras de Zaragoza te ofrece 5 millones de mascarillas FFP2 con un recargo del 400%. El hermano del consejero y dos intermediarios de confianza esperan su comisión en un asador de la autovía.",
+    "evidenceDocument": "Factura proforma con membrete de importación exprés y un pagaré firmado en el capó de un todoterreno.",
+    "leftChoice": {
+      "id": "c_masc_1",
+      "label": "Adjudicar por tramitación de urgencia sin pedir certificados de homologación",
+      "stampText": "ADJUDICAR",
+      "flavorQuote": "En estado de alarma nadie mira los albaranes. Pon la pasta en la cuenta y que las mascarillas vengan como vengan.",
+      "modifiers": {
+        "pastaEnB": 35,
+        "presionJudicial": 25,
+        "impunidad": -10,
+        "reputacionMediatica": -15
+      },
+      "grantedFlags": [
+        "COMISION_PANDEMIA_COBRADA"
+      ]
+    },
+    "rightChoice": {
+      "id": "c_masc_2",
+      "label": "Exigir auditoría del Tribunal de Cuentas antes de liberar el pago",
+      "stampText": "AUDITORÍA",
+      "flavorQuote": "Aquí o vienen con el sello de la Unión Europea o los intermediarios se quedan con las cajas en la aduana de Barajas.",
+      "modifiers": {
+        "pastaEnB": -10,
+        "presionJudicial": -15,
+        "impunidad": 5,
+        "reputacionMediatica": 10
+      },
+      "grantedFlags": [
+        "AUDITORIA_SANIDAD_ORDENADA"
+      ]
+    },
+    "requiredFlags": []
+  },
+  {
+    "id": "VIRAL_COMISION_INVESTIGACION_CONGRESO",
+    "speaker": "El Letrado Mayor de las Cortes",
+    "speakerRole": "Burócrata del Congreso de los Diputados",
+    "sphere": "ORDEN_JUSTICIA",
+    "headline": "CITACIÓN OBLIGATORIA A LA COMISIÓN DE INVESTIGACIÓN",
+    "context": "La oposición ha pactado tu comparecencia en directo por televisión. Tienes delante a quince diputados con carpetas rojas y preguntas preparadas para destruir tu carrera en horario de máxima audiencia.",
+    "evidenceDocument": "Notificación certificada del Congreso con sello de la Mesa y advertencia de delito de desobediencia.",
+    "leftChoice": {
+      "id": "c_com_1",
+      "label": "Acogerte al derecho a no declarar y mirar al techo con cara de aburrimiento",
+      "stampText": "MUTISMO",
+      "flavorQuote": "Por consejo de mi letrado y estando la causa judicializada, no voy a responder a ninguna de sus insidias políticas.",
+      "modifiers": {
+        "pastaEnB": 0,
+        "presionJudicial": 10,
+        "impunidad": 15,
+        "reputacionMediatica": -20
+      },
+      "grantedFlags": [
+        "SILENCIO_EN_EL_CONGRESO"
+      ]
+    },
+    "rightChoice": {
+      "id": "c_com_2",
+      "label": "Montar un espectáculo insultando a la bancada rival y golpeando el estrado",
+      "stampText": "ATAQUE",
+      "flavorQuote": "¡Ustedes son los menos indicados para dar lecciones morales en esta sede parlamentaria! ¡Miren sus propias sedes!",
+      "modifiers": {
+        "pastaEnB": 0,
+        "presionJudicial": 15,
+        "impunidad": -10,
+        "reputacionMediatica": 15
+      },
+      "grantedFlags": [
+        "BRONCA_PARLAMENTARIA_TOTAL"
+      ]
+    },
+    "requiredFlags": []
+  }
+]

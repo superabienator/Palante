@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "verify": "tsc --noEmit && vitest run"
+    "verify": "tsc --noEmit && vitest run",
+    "news:suggest": "node scripts/suggestNewsCard.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",

@@ -95,7 +95,7 @@ export const StoryGraphSchema = z.object({
 });
 export type StoryGraph = z.infer<typeof StoryGraphSchema>;
 
-// === Esquemas de Extensión para el Modo Reigns ===
+// === Esquemas de Extensión para el Modo Reigns 2.0 (Cadenas y Banderas) ===
 
 export const ReignsCardChoiceSchema = z.object({
   label: z.string().describe('Texto descriptivo de la acción elegida'),
@@ -103,6 +103,7 @@ export const ReignsCardChoiceSchema = z.object({
   flavorQuote: z.string().optional().describe('Cita real de sumario o pinchazo'),
   mechanicId: z.number().int().min(1).max(40).optional(),
   modifiers: StatModifiersSchema,
+  grantedFlags: z.array(z.string()).optional().describe('Banderas/flags que activa esta elección'),
 });
 export type ReignsCardChoice = z.infer<typeof ReignsCardChoiceSchema>;
 
@@ -119,6 +120,7 @@ export const ReignsCardSchema = z.object({
   rightChoice: ReignsCardChoiceSchema,
   weight: z.number().int().min(1).max(10).optional().default(1),
   archetypeAffinity: z.array(ArchetypeIdSchema).optional(),
+  requiredFlags: z.array(z.string()).optional().describe('Banderas requeridas para que esta carta aparezca'),
 });
 export type ReignsCard = z.infer<typeof ReignsCardSchema>;
 

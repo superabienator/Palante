@@ -108,16 +108,26 @@ export function ReignsCard({
           {/* Sellos de Caucho Flotantes con Opacidad Proporcional al Desplazamiento */}
           <motion.div
             style={{ opacity: leftStampOpacity }}
-            className="pointer-events-none absolute top-6 left-6 z-20 border-4 border-red-700 bg-red-100/90 text-red-800 px-3 py-1 font-mono font-black text-xl sm:text-2xl uppercase tracking-widest -rotate-12 shadow-[3px_3px_0px_0px_rgba(185,28,28,1)]"
+            className="pointer-events-none absolute top-4 left-4 right-4 z-20 flex flex-col items-start gap-1"
           >
-            {card.leftChoice.stampText || 'ACEPTAR'}
+            <div className="border-4 border-red-700 bg-red-100/95 text-red-800 px-3 py-1 font-mono font-black text-lg sm:text-2xl uppercase tracking-widest -rotate-6 shadow-[3px_3px_0px_0px_rgba(185,28,28,1)]">
+              {card.leftChoice.stampText || 'ACEPTAR'}
+            </div>
+            <div className="border-2 border-black bg-white text-black p-2 font-mono text-xs sm:text-sm font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] max-w-md">
+              {card.leftChoice.label}
+            </div>
           </motion.div>
 
           <motion.div
             style={{ opacity: rightStampOpacity }}
-            className="pointer-events-none absolute top-6 right-6 z-20 border-4 border-black bg-yellow-200/90 text-black px-3 py-1 font-mono font-black text-xl sm:text-2xl uppercase tracking-widest rotate-12 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]"
+            className="pointer-events-none absolute top-4 right-4 left-4 z-20 flex flex-col items-end gap-1"
           >
-            {card.rightChoice.stampText || 'RECHAZAR'}
+            <div className="border-4 border-black bg-yellow-200/95 text-black px-3 py-1 font-mono font-black text-lg sm:text-2xl uppercase tracking-widest rotate-6 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
+              {card.rightChoice.stampText || 'RECHAZAR'}
+            </div>
+            <div className="border-2 border-black bg-white text-black p-2 font-mono text-xs sm:text-sm font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] max-w-md text-right">
+              {card.rightChoice.label}
+            </div>
           </motion.div>
 
           {/* Membrete Oficial y Emisor */}
@@ -175,13 +185,13 @@ export function ReignsCard({
           onMouseEnter={() => setPreviewDirection('left')}
           onMouseLeave={() => setPreviewDirection(null)}
           disabled={disabled}
-          className="group border-3 border-black bg-white hover:bg-stone-100 active:translate-x-0.5 active:translate-y-0.5 p-3.5 text-left font-mono shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
+          className="group border-3 border-black bg-white hover:bg-stone-50 active:translate-x-0.5 active:translate-y-0.5 p-3.5 text-left font-mono shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer"
         >
-          <div className="flex items-center justify-between mb-1">
+          <div className="flex items-center justify-between mb-1.5">
             <span className="text-xs font-black uppercase text-red-700 tracking-wider">
               ← [ {card.leftChoice.stampText} ]
             </span>
-            <span className="text-[10px] border border-black px-1 bg-stone-100 font-bold uppercase hidden sm:inline">
+            <span className="text-[10px] border border-black px-1.5 py-0.5 bg-stone-100 font-bold uppercase hidden sm:inline">
               Tecla: ← / A
             </span>
           </div>
@@ -189,9 +199,14 @@ export function ReignsCard({
             {card.leftChoice.label}
           </p>
           {card.leftChoice.flavorQuote && (
-            <p className="text-[11px] text-zinc-600 italic mt-1 line-clamp-2">
-              "{card.leftChoice.flavorQuote}"
-            </p>
+            <div className="mt-2 border-l-3 border-red-700 bg-red-50/40 pl-2 py-1">
+              <span className="text-[9px] font-black uppercase tracking-wider text-red-800 block mb-0.5">
+                🎙️ AUDIO UCO INTERVENIDO:
+              </span>
+              <p className="text-xs text-zinc-800 italic leading-snug">
+                "{card.leftChoice.flavorQuote}"
+              </p>
+            </div>
           )}
         </button>
 
@@ -202,13 +217,13 @@ export function ReignsCard({
           onMouseEnter={() => setPreviewDirection('right')}
           onMouseLeave={() => setPreviewDirection(null)}
           disabled={disabled}
-          className="group border-3 border-black bg-white hover:bg-stone-100 active:translate-x-0.5 active:translate-y-0.5 p-3.5 text-left font-mono shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
+          className="group border-3 border-black bg-white hover:bg-stone-50 active:translate-x-0.5 active:translate-y-0.5 p-3.5 text-left font-mono shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer"
         >
-          <div className="flex items-center justify-between mb-1">
+          <div className="flex items-center justify-between mb-1.5">
             <span className="text-xs font-black uppercase text-black tracking-wider">
               [ {card.rightChoice.stampText} ] →
             </span>
-            <span className="text-[10px] border border-black px-1 bg-stone-100 font-bold uppercase hidden sm:inline">
+            <span className="text-[10px] border border-black px-1.5 py-0.5 bg-stone-100 font-bold uppercase hidden sm:inline">
               Tecla: → / D
             </span>
           </div>
@@ -216,9 +231,14 @@ export function ReignsCard({
             {card.rightChoice.label}
           </p>
           {card.rightChoice.flavorQuote && (
-            <p className="text-[11px] text-zinc-600 italic mt-1 line-clamp-2">
-              "{card.rightChoice.flavorQuote}"
-            </p>
+            <div className="mt-2 border-l-3 border-black bg-stone-100/70 pl-2 py-1">
+              <span className="text-[9px] font-black uppercase tracking-wider text-zinc-800 block mb-0.5">
+                🎙️ AUDIO UCO INTERVENIDO:
+              </span>
+              <p className="text-xs text-zinc-800 italic leading-snug">
+                "{card.rightChoice.flavorQuote}"
+              </p>
+            </div>
           )}
         </button>
       </div>
