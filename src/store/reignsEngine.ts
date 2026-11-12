@@ -3,6 +3,8 @@ import {
   CharacterStats,
   EndingType,
   GameOverReason,
+  InExtremisCriticalStat,
+  InExtremisStatus,
   LegislativeStageInfo,
   LegislativeYear,
   ReignsCard,
@@ -12,6 +14,8 @@ import {
   CLIMAX_CARD_ID,
 } from '../types/story';
 import { calculateAggregatedPerks } from '../config/privileges';
+
+export type { InExtremisCriticalStat, InExtremisStatus };
 
 export interface StatVariance {
   base: number;
@@ -329,14 +333,96 @@ export function isCardAffiliated(
 }
 
 /**
+ * Evalúa si el personaje se encuentra en estado de "Rata Acorralada" (In Extremis).
+ * Se activa si:
+ * - pastaEnB <= 15 (bancarrota) o >= 85 (alerta antiblanqueo)
+ * - presionJudicial >= 80 (UCO en la puerta)
+ * - impunidad <= 15 (pérdida de aforamiento)
+ * - reputacionMediatica <= 15 (linchamiento editorial)
+ */
+export function getInExtremisStatus(stats: CharacterStats): InExtremisStatus {
+  const criticalStats: InExtremisCriticalStat[] = [];
+
+  if (stats.pastaEnB <= 15) {
+    criticalStats.push({
+      key: 'pastaEnB',
+      label: STAT_LABELS.pastaEnB,
+      value: stats.pastaEnB,
+      dangerType: 'MIN_DANGER',
+    });
+  } else if (stats.pastaEnB >= 85) {
+    criticalStats.push({
+      key: 'pastaEnB',
+      label: STAT_LABELS.pastaEnB,
+      value: stats.pastaEnB,
+      dangerType: 'MAX_DANGER',
+    });
+  }
+
+  if (stats.presionJudicial >= 80) {
+    criticalStats.push({
+      key: 'presionJudicial',
+      label: STAT_LABELS.presionJudicial,
+      value: stats.presionJudicial,
+      dangerType: 'MAX_DANGER',
+    });
+  }
+
+  if (stats.impunidad <= 15) {
+    criticalStats.push({
+      key: 'impunidad',
+      label: STAT_LABELS.impunidad,
+      value: stats.impunidad,
+      dangerType: 'MIN_DANGER',
+    });
+  }
+
+  if (stats.reputacionMediatica <= 15) {
+    criticalStats.push({
+      key: 'reputacionMediatica',
+      label: STAT_LABELS.reputacionMediatica,
+      value: stats.reputacionMediatica,
+      dangerType: 'MIN_DANGER',
+    });
+  }
+
+  return {
+    active: criticalStats.length > 0,
+    criticalStats,
+  };
+}
+
+/**
  * Calcula el peso efectivo de una carta.
- * Si alguno de sus requiredFlags coincide con las banderas recientemente otorgadas
- * en los últimos 3 turnos (recentlyGrantedFlags), su peso se multiplica x5.
+ * Reglas:
+ * 1. Cartas In Extremis (isInExtremis === true):
+ *    - Si inExtremisStatus.active === false: peso 0 (reservadas exclusivamente para acorralados).
+ *    - Si inExtremisStatus.active === true: peso x10 base.
+ *    - Si además targetDangerStat coincide con alguna estadística crítica actual: peso x20.
+ * 2. Cartas normales / sagas:
+ *    - Si requiredFlags coincide con recentlyGrantedFlags (últimos 3 turnos): peso x5.
  */
 export function calculateCardWeight(
   card: ReignsCard,
-  recentlyGrantedFlags: string[] = []
+  recentlyGrantedFlags: string[] = [],
+  inExtremisStatus?: InExtremisStatus
 ): number {
+  if (card.isInExtremis) {
+    if (!inExtremisStatus || !inExtremisStatus.active) {
+      return 0; // Reservada exclusivamente para momentos acorralados
+    }
+
+    let multiplier = 10;
+    if (
+      card.targetDangerStat &&
+      inExtremisStatus.criticalStats.some((s) => s.key === card.targetDangerStat)
+    ) {
+      multiplier = 20; // 20x si rescata específicamente la estadística en peligro
+    }
+
+    return (card.weight ?? 1) * multiplier;
+  }
+
   let baseWeight = card.weight ?? 1;
   if (
     card.requiredFlags &&
@@ -354,28 +440,36 @@ export function calculateCardWeight(
 export function weightedRandomSelect(
   cards: ReignsCard[],
   recentlyGrantedFlags: string[] = [],
+  inExtremisStatus?: InExtremisStatus,
   rng: () => number = Math.random
 ): ReignsCard | null {
   if (cards.length === 0) return null;
-  if (cards.length === 1) return cards[0];
 
-  const weights = cards.map((c) => calculateCardWeight(c, recentlyGrantedFlags));
+  const validCards = cards.filter(
+    (c) => calculateCardWeight(c, recentlyGrantedFlags, inExtremisStatus) > 0
+  );
+  if (validCards.length === 0) return null;
+  if (validCards.length === 1) return validCards[0];
+
+  const weights = validCards.map((c) =>
+    calculateCardWeight(c, recentlyGrantedFlags, inExtremisStatus)
+  );
   const totalWeight = weights.reduce((sum, w) => sum + w, 0);
 
   if (totalWeight <= 0) {
-    const idx = Math.floor(rng() * cards.length);
-    return cards[idx];
+    const idx = Math.floor(rng() * validCards.length);
+    return validCards[idx];
   }
 
   let roll = rng() * totalWeight;
-  for (let i = 0; i < cards.length; i++) {
+  for (let i = 0; i < validCards.length; i++) {
     roll -= weights[i];
     if (roll <= 0) {
-      return cards[i];
+      return validCards[i];
     }
   }
 
-  return cards[cards.length - 1];
+  return validCards[validCards.length - 1];
 }
 
 export interface SelectNextCardParams {
@@ -385,16 +479,19 @@ export interface SelectNextCardParams {
   cardsSurvived: number;
   characterProfile?: CharacterProfile | null;
   recentlyGrantedFlags?: string[];
+  inExtremisStatus?: InExtremisStatus;
+  currentStats?: CharacterStats;
   rng?: () => number;
 }
 
 /**
  * Motor central de selección procedural de cartas:
  * 1. Inyección obligatoria de la carta de clímax (CLIMAX_CARD_ID) en trimestre 24 (cardsSurvived === 23).
- * 2. Filtrado de cartas elegibles según banderas activas (excluyendo la de clímax antes de tiempo).
+ * 2. Filtrado de cartas elegibles según banderas activas y estado in extremis.
  * 3. Descarte de la carta actual si hay alternativas disponibles.
  * 4. Ponderación por esferas y afinidad (65% de probabilidad de seleccionar del pool afín).
  * 5. Encadenamiento de sagas: peso x5 para cartas con requiredFlags en recentlyGrantedFlags.
+ * 6. Rata acorralada: cartas isInExtremis con peso 10x/20x en estado crítico, peso 0 en estado normal.
  */
 export function selectNextReignsCard({
   allCards,
@@ -403,8 +500,14 @@ export function selectNextReignsCard({
   cardsSurvived,
   characterProfile,
   recentlyGrantedFlags = [],
+  inExtremisStatus,
+  currentStats,
   rng = Math.random,
 }: SelectNextCardParams): ReignsCard | null {
+  const inExtremis =
+    inExtremisStatus ??
+    (currentStats ? getInExtremisStatus(currentStats) : { active: false, criticalStats: [] });
+
   // 1. Inyección obligatoria de clímax en el trimestre 24 (cardsSurvived === 23)
   if (cardsSurvived === 23) {
     const climaxCard = allCards.find((c) => c.id === CLIMAX_CARD_ID);
@@ -413,10 +516,13 @@ export function selectNextReignsCard({
     }
   }
 
-  // 2. Elegibilidad por banderas (la carta de clímax no debe salir antes del trimestre 24)
+  // 2. Elegibilidad por banderas (la carta de clímax no debe salir antes del trimestre 24, y las de in extremis solo si acorralado)
   const eligible = allCards.filter((card) => {
     if (card.id === CLIMAX_CARD_ID && cardsSurvived !== 23) {
       return false;
+    }
+    if (card.isInExtremis && !inExtremis.active) {
+      return false; // Reservada exclusivamente para momentos in extremis
     }
     if (!card.requiredFlags || card.requiredFlags.length === 0) {
       return true;
@@ -432,21 +538,25 @@ export function selectNextReignsCard({
   const candidates = eligible.filter((c) => c.id !== currentCardId);
   const pool = candidates.length > 0 ? candidates : eligible;
 
-  // 4. Separación por afinidad
-  const affiliated = pool.filter((c) => isCardAffiliated(c, characterProfile));
-  const nonAffiliated = pool.filter((c) => !isCardAffiliated(c, characterProfile));
+  // 4. Separación por afinidad (si in extremis está activo, las cartas de salvación están en ambos pools para no quedar bloqueadas por la esfera)
+  const affiliated = pool.filter(
+    (c) => isCardAffiliated(c, characterProfile) || (inExtremis.active && c.isInExtremis)
+  );
+  const nonAffiliated = pool.filter(
+    (c) => !isCardAffiliated(c, characterProfile) || (inExtremis.active && c.isInExtremis)
+  );
 
   // 5. Ponderación 65% afín
   const roll = rng();
   const chooseAffiliated = roll < 0.65;
 
   if (chooseAffiliated && affiliated.length > 0) {
-    return weightedRandomSelect(affiliated, recentlyGrantedFlags, rng);
+    return weightedRandomSelect(affiliated, recentlyGrantedFlags, inExtremis, rng);
   } else if (!chooseAffiliated && nonAffiliated.length > 0) {
-    return weightedRandomSelect(nonAffiliated, recentlyGrantedFlags, rng);
+    return weightedRandomSelect(nonAffiliated, recentlyGrantedFlags, inExtremis, rng);
   } else {
     // Si la cubeta elegida está vacía, recurrir al pool disponible
-    return weightedRandomSelect(pool, recentlyGrantedFlags, rng);
+    return weightedRandomSelect(pool, recentlyGrantedFlags, inExtremis, rng);
   }
 }
 

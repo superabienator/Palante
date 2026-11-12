@@ -200,7 +200,8 @@ export function ReignsCard({
   // Detección de cartas de crisis o alerta procesal
   const isCrisis = Boolean(
     card &&
-      (card.id.toLowerCase().includes('crisis') ||
+      (Boolean(card.isInExtremis) ||
+        card.id.toLowerCase().includes('crisis') ||
         card.headline.toLowerCase().includes('registro') ||
         card.headline.toLowerCase().includes('bancarrota') ||
         card.headline.toLowerCase().includes('suplicatorio') ||
@@ -218,12 +219,12 @@ export function ReignsCard({
     }
   }, [lastDiceRoll]);
 
-  // Efecto de sonido cuando entra una carta de crisis
+  // Efecto de sonido cuando entra una carta de crisis o in extremis
   useEffect(() => {
-    if (isCrisis) {
+    if (isCrisis || card?.isInExtremis) {
       soundManager.playCrisisAlert();
     }
-  }, [card?.id, isCrisis]);
+  }, [card?.id, isCrisis, card?.isInExtremis]);
 
   // Atajos de teclado:
   // - Si la ventana emergente de dados está abierta: Enter, Espacio o Escape la cierran ("Siguiente").
@@ -660,7 +661,9 @@ export function ReignsCard({
           animate={exitX !== null ? { x: exitX, opacity: 0 } : { x: 0, opacity: 1 }}
           transition={{ type: 'spring', stiffness: 350, damping: 25 }}
           className={`w-full relative cursor-grab active:cursor-grabbing select-none border-4 ${
-            isCrisis
+            card.isInExtremis
+              ? 'border-red-900 bg-[#fff5f5] ring-4 ring-yellow-400 ring-offset-2 shadow-[8px_8px_0px_0px_#900]'
+              : isCrisis
               ? 'border-red-800 bg-[#fcedec] shadow-[6px_6px_0px_0px_#822222]'
               : 'border-[#121a12] bg-[#f5efdc] shadow-[6px_6px_0px_0px_#121a12]'
           } p-5 sm:p-7 -rotate-1`}
@@ -669,13 +672,21 @@ export function ReignsCard({
           <div className="pointer-events-none absolute inset-0 moho-corner" />
           <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-12 moho-bottom" />
 
-          {/* Alerta de Crisis Procesal en Cabecera de la Tarjeta */}
-          {isCrisis && (
+          {/* Precinto Policial / Cinta de Peligro: Rata Acorralada */}
+          {card.isInExtremis ? (
+            <div className="border-3 border-black bg-yellow-400 text-black font-mono font-black text-xs sm:text-sm uppercase py-2 px-3 tracking-widest flex items-center justify-center gap-2 mb-4 shadow-[4px_4px_0px_0px_#000] rotate-[-1deg] animate-pulse select-none">
+              <span className="text-base">🚨</span>
+              <span className="bg-black text-yellow-300 px-2 py-0.5 border-2 border-yellow-300 shadow-[2px_2px_0px_0px_#000]">
+                ¡ESTADO DE RATA ACORRALADA: BALA DE PLATA!
+              </span>
+              <span className="text-base">🚨</span>
+            </div>
+          ) : isCrisis ? (
             <div className="border-2 border-red-900 bg-red-700 text-white font-mono font-black text-[10px] sm:text-xs uppercase px-2.5 py-1 tracking-widest flex items-center justify-between mb-4 shadow-[2px_2px_0px_0px_#121a12] animate-pulse">
               <span>🚨 ALERTA PROCESAL // PIEZA SEPARADA URGENTE</span>
               <span className="bg-black text-white px-1.5 py-0.2">ART. 384 BIS</span>
             </div>
-          )}
+          ) : null}
 
           {/* Sellos de Caucho Flotantes con Opacidad Proporcional al Desplazamiento */}
           <motion.div

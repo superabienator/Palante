@@ -20,6 +20,8 @@ import reignsDeckData from '../content/reignsDeck.json';
 
 import {
   ActivatedPrivilegeInfo,
+  InExtremisCriticalStat,
+  InExtremisStatus,
   LastDiceRollSummary,
   ProjectedStatsRange,
   SingleStatRollResult,
@@ -32,6 +34,7 @@ import {
   calculateStatVariance,
   checkReignsGameOver,
   clampStat,
+  getInExtremisStatus,
   getLegislativeStageInfo,
   isCardAffiliated,
   rollModifiersWithDice,
@@ -42,6 +45,8 @@ import {
 // Re-exportar funciones y tipos del motor para compatibilidad y uso modular
 export type {
   ActivatedPrivilegeInfo,
+  InExtremisCriticalStat,
+  InExtremisStatus,
   LastDiceRollSummary,
   ProjectedStatsRange,
   SingleStatRollResult,
@@ -56,6 +61,7 @@ export {
   calculateStatVariance,
   checkReignsGameOver,
   clampStat,
+  getInExtremisStatus,
   getLegislativeStageInfo,
   isCardAffiliated,
   rollModifiersWithDice,
@@ -117,6 +123,7 @@ export interface GameState {
   getPreviewModifiers: () => StatModifiers | null;
   getProjectedStatsRange: () => ProjectedStatsRange | null;
   getActiveRiskAssessment: () => RiskAssessment | null;
+  getInExtremisStatus: () => InExtremisStatus;
   clearLastDiceRoll: () => void;
   clearLastActivatedPrivilege: () => void;
   getStageInfo: () => LegislativeStageInfo;
@@ -186,6 +193,8 @@ export const useGameStore = create<GameState>()(
 
         const rawCards = reignsDeckData.cards as ReignsCard[];
         const initialFlags: Record<string, boolean> = {};
+        const initialStats = { ...character.initialStats };
+        const inExtremisStatus = getInExtremisStatus(initialStats);
 
         const firstCard = selectNextReignsCard({
           allCards: rawCards,
@@ -193,6 +202,8 @@ export const useGameStore = create<GameState>()(
           cardsSurvived: 0,
           characterProfile: character,
           recentlyGrantedFlags: [],
+          inExtremisStatus,
+          currentStats: initialStats,
         });
 
         set({
@@ -201,7 +212,7 @@ export const useGameStore = create<GameState>()(
           selectedSphere: character.sphere,
           selectedArchetypeId: archetypeId,
           characterProfile: { ...character },
-          stats: { ...character.initialStats },
+          stats: initialStats,
           reignsDeck: rawCards,
           currentReignsCard: firstCard,
           reignsCardIndex: 0,
@@ -256,6 +267,10 @@ export const useGameStore = create<GameState>()(
         }
         const projectedRange = get().getProjectedStatsRange();
         return calculateRiskAssessment(stats, projectedRange);
+      },
+
+      getInExtremisStatus: (): InExtremisStatus => {
+        return getInExtremisStatus(get().stats);
       },
 
       clearLastDiceRoll: () => {
@@ -388,7 +403,8 @@ export const useGameStore = create<GameState>()(
           return true;
         }
 
-        // Selección ponderada del siguiente dilema según esferas (65%), sagas (peso 5x) y clímax (trimestre 24)
+        // Selección ponderada del siguiente dilema según esferas (65%), sagas (peso 5x), in extremis (10x/20x) y clímax (trimestre 24)
+        const inExtremisStatus = getInExtremisStatus(nextStats);
         const allCards = reignsDeckData.cards as ReignsCard[];
         const nextCard =
           selectNextReignsCard({
@@ -398,6 +414,8 @@ export const useGameStore = create<GameState>()(
             cardsSurvived: nextCardsSurvived,
             characterProfile,
             recentlyGrantedFlags: updatedRecentlyGrantedFlags,
+            inExtremisStatus,
+            currentStats: nextStats,
           }) ?? currentReignsCard;
 
         set({

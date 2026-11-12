@@ -134,9 +134,10 @@ export function StatsBar({
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
         {STAT_CONFIGS.map((config) => {
           const value = Math.max(0, Math.min(100, stats[config.key] ?? 0));
+          const isInRedZone = value < 15 || value > 85;
           const isCriticalHigh = config.dangerHigh && value >= 80;
           const isCriticalLow = config.dangerLow && value <= 20;
-          const isAlarm = isCriticalHigh || isCriticalLow;
+          const isAlarm = isCriticalHigh || isCriticalLow || isInRedZone;
 
           // Indicador predictivo de impacto y margen de dados (cuando el jugador desliza o apunta a izq/der)
           const delta = previewModifiers?.[config.key];
@@ -178,7 +179,9 @@ export function StatsBar({
             <div
               key={config.key}
               className={`border-2 border-black p-2.5 transition-all duration-150 flex flex-col justify-between ${
-                hasDelta
+                isInRedZone
+                  ? 'bg-red-50/70 ring-2 ring-red-600 shadow-[3px_3px_0px_0px_#990000] -translate-y-0.5'
+                  : hasDelta
                   ? 'bg-amber-50 ring-2 ring-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] -translate-y-0.5'
                   : isAlarm
                   ? 'bg-zinc-100 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
@@ -214,7 +217,13 @@ export function StatsBar({
                         {isPositive ? '▲' : '▼'}
                       </span>
                     )}
-                    <span className="text-xs font-mono font-bold bg-black text-white px-1.5 py-0.2">
+                    <span
+                      className={`text-xs font-mono font-bold px-1.5 py-0.2 ${
+                        isInRedZone
+                          ? 'bg-red-600 text-white font-black animate-pulse ring-2 ring-red-700 shadow-[0_0_8px_rgba(220,38,38,0.7)]'
+                          : 'bg-black text-white'
+                      }`}
+                    >
                       {value}%
                     </span>
                   </div>
@@ -263,11 +272,21 @@ export function StatsBar({
 
               <div>
                 {/* Barra de Progreso Brutalista con Zona de Incertidumbre */}
-                <div className="w-full h-4 border-2 border-black bg-stone-100 p-0.5 relative overflow-hidden">
+                <div
+                  className={`w-full h-4 border-2 p-0.5 relative overflow-hidden transition-colors ${
+                    isInRedZone
+                      ? 'border-red-700 bg-red-100 ring-2 ring-red-600 shadow-[0_0_10px_rgba(220,38,38,0.5)] animate-pulse'
+                      : 'border-black bg-stone-100'
+                  }`}
+                >
                   {/* Barra actual */}
                   <div
                     className={`h-full transition-all duration-300 ${
-                      isCriticalHigh ? 'bg-black animate-pulse' : 'bg-black'
+                      isInRedZone
+                        ? 'bg-red-700 animate-pulse'
+                        : isCriticalHigh
+                        ? 'bg-black animate-pulse'
+                        : 'bg-black'
                     }`}
                     style={{ width: `${value}%` }}
                   />
@@ -288,16 +307,19 @@ export function StatsBar({
                 </div>
 
                 {/* Indicador de Alerta de Alto Contraste */}
-                {isCriticalHigh && (
+                {isInRedZone ? (
+                  <div className="mt-1.5 border border-red-700 bg-red-600 text-white px-1 py-0.5 text-[9px] font-mono font-black uppercase text-center tracking-wider animate-pulse shadow-[2px_2px_0px_0px_#000]">
+                    🚨 ZONA ROJA ({value < 15 ? '< 15%' : '> 85%'}): RATA ACORRALADA
+                  </div>
+                ) : isCriticalHigh ? (
                   <div className="mt-1.5 border border-black bg-black text-white px-1 py-0.5 text-[9px] font-mono font-black uppercase text-center tracking-wider">
                     ⚠️ {config.key === 'pastaEnB' ? 'ALERTA: EUROPOL AL ACECHO' : 'ALERTA: PRISIÓN INMINENTE'}
                   </div>
-                )}
-                {isCriticalLow && (
+                ) : isCriticalLow ? (
                   <div className="mt-1.5 border border-black bg-white text-black px-1 py-0.5 text-[9px] font-mono font-black uppercase text-center tracking-wider">
                     ⚠️ NIVEL CRÍTICO BAJO
                   </div>
-                )}
+                ) : null}
               </div>
             </div>
           );

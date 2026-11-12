@@ -12797,6 +12797,174 @@
       },
       "weight": 10,
       "requiredFlags": []
+    },
+    {
+      "id": "inextremis_incendio_windsor",
+      "speaker": "El Técnico de Extinción de Sombras",
+      "speakerRole": "Perito Forense de Urgencia",
+      "speakerAvatar": "icon_bombero",
+      "sphere": "EMPRESARIAL",
+      "headline": "EL INCENDIO PROVIDENCIAL DEL ARCHIVO CONTABLE",
+      "context": "La UCO y los inspectores de Hacienda están a cuarenta y ocho horas de incautar las auditorías originales de la torre financiera. En plena noche de fin de semana, un misterioso cortocircuito en la planta 21 desata un infierno que calcina la estructura metálica y todos los archivadores del banco.",
+      "evidenceDocument": "Informe pericial de bomberos señalando sombras humanas en las ventanas de la planta incendiada antes del colapso.",
+      "isInExtremis": true,
+      "targetDangerStat": "presionJudicial",
+      "leftChoice": {
+        "label": "Contratar a los pirómanos de la cloaca para quemar las 3 plantas de auditoría",
+        "stampText": "CALCINAR ARCHIVO",
+        "flavorQuote": "El acero se dobla a mil grados y las auditorías de Francisco González y los balances del banco se vuelven humo sagrado.",
+        "mechanicId": 7,
+        "modifiers": {
+          "presionJudicial": -50,
+          "pastaEnB": -35,
+          "reputacionMediatica": -20
+        },
+        "grantedFlags": [
+          "WINDSOR_CALCINADO_TOTAL"
+        ]
+      },
+      "rightChoice": {
+        "label": "Simular avería de tuberías fecales que inunden el sótano de los servidores de la UCO",
+        "stampText": "INUNDACIÓN FECAL",
+        "flavorQuote": "Cuatro mil litros de aguas fecales sobre los discos duros de la pieza separada número 4; ningún perito judicial se va a meter en esa fosa.",
+        "mechanicId": 7,
+        "modifiers": {
+          "presionJudicial": -45,
+          "pastaEnB": -25,
+          "reputacionMediatica": -30
+        },
+        "grantedFlags": [
+          "ARCHIVOS_INUNDADOS_CLOACA"
+        ]
+      },
+      "weight": 1,
+      "requiredFlags": []
+    },
+    {
+      "id": "inextremis_tamayazo_soborno",
+      "speaker": "El Conseguidor de la Tránsfuga",
+      "speakerRole": "Promotor del Ladrillo Sur",
+      "speakerAvatar": "icon_constructor",
+      "sphere": "POLITICA",
+      "headline": "COMPRA EXPRÉS DE DIPUTADOS TRÁNSFUGAS: EL TAMAYAZO",
+      "context": "Has perdido la mayoría parlamentaria y la comisión de investigación va a votar por unanimidad remitir tu expediente a la fiscalía del Tribunal Supremo para quitarte el aforamiento. En una cafetería cercana, dos diputados de la oposición piden maletines con fajos de quinientos para desaparecer en la votación decisiva.",
+      "evidenceDocument": "Llamadas intervenidas desde cabinas públicas a empresarios del ladrillo en el minuto previo a la investidura fallida.",
+      "isInExtremis": true,
+      "targetDangerStat": "impunidad",
+      "leftChoice": {
+        "label": "Comprar a dos diputados electos por 2 millones en maletines para reventar la votación",
+        "stampText": "EL TAMAYAZO",
+        "flavorQuote": "Dos millones en billetes de quinientos y un ático en Benidorm: los diputados no aparecen en la votación y aquí gobernamos nosotros hasta el fin del mundo.",
+        "mechanicId": 2,
+        "modifiers": {
+          "impunidad": 45,
+          "pastaEnB": -40,
+          "presionJudicial": 25
+        },
+        "grantedFlags": [
+          "TAMAYAZO_CONSUMADO"
+        ]
+      },
+      "rightChoice": {
+        "label": "Amenazar a la presidencia de la cámara con dosieres íntimos grabados en reservado",
+        "stampText": "EXTORSIÓN EN CÁMARA",
+        "flavorQuote": "Le enseñas las fotos del reservado de la sauna al presidente de la mesa y suspende el suplicatorio por defecto de forma en dos minutos.",
+        "mechanicId": 19,
+        "modifiers": {
+          "impunidad": 40,
+          "pastaEnB": -20,
+          "presionJudicial": 30
+        },
+        "grantedFlags": [
+          "MESA_PARLAMENTO_AMORDAZADA"
+        ]
+      },
+      "weight": 1,
+      "requiredFlags": []
+    },
+    {
+      "id": "inextremis_rescate_singapur",
+      "speaker": "El Banquero Fiduciario de Singapur",
+      "speakerRole": "Gestor de Cuentas Numéricas",
+      "speakerAvatar": "icon_ilusionista",
+      "sphere": "EMPRESARIAL",
+      "headline": "RESCATE DE URGENCIA DE LAS CUENTAS CIEGAS DE SINGAPUR",
+      "context": "La caja B está completamente en bancarrota: los intermediarios reclaman sus mordidas y los alcaldes amenazan con acudir al juzgado de guardia si no cobran este mediodía. Un fiduciario asiático te ofrece una inyección inmediata de fondos opacos sin rastro informático.",
+      "evidenceDocument": "Télex cifrado con confirmación de transferencia opaca desde un banco mercantil de Singapur a una sociedad de Belice.",
+      "isInExtremis": true,
+      "targetDangerStat": "pastaEnB",
+      "leftChoice": {
+        "label": "Forzar una inyección de emergencia por ventanilla ciega mediante fiduciarios panameños",
+        "stampText": "INYECCIÓN CIEGA",
+        "flavorQuote": "Los dólares no tienen código genético en Singapur: inyectamos cinco millones en efectivo en maletines diplomáticos y la caja B vuelve a respirar.",
+        "mechanicId": 38,
+        "modifiers": {
+          "pastaEnB": 45,
+          "presionJudicial": 30,
+          "impunidad": -25
+        },
+        "grantedFlags": [
+          "FONDOS_SINGAPUR_INJECTADOS"
+        ]
+      },
+      "rightChoice": {
+        "label": "Liquidar el fondo de diamantes brutos en Amberes y traer el metálico en el maletero del cónsul",
+        "stampText": "DIAMANTES AMBERES",
+        "flavorQuote": "Vendemos las piedras sin certificado en Amberes; perdemos el cincuenta por ciento en el cambio pero llenamos los sobres de los alcaldes esta misma tarde.",
+        "mechanicId": 6,
+        "modifiers": {
+          "pastaEnB": 50,
+          "presionJudicial": 35,
+          "impunidad": -30
+        },
+        "grantedFlags": [
+          "DIAMANTES_LIQUIDADOS_CLOACA"
+        ]
+      },
+      "weight": 1,
+      "requiredFlags": []
+    },
+    {
+      "id": "inextremis_chantaje_nuclear",
+      "speaker": "El Comisario de las Cloacas Centrales",
+      "speakerRole": "El Señor de los 32 Terabytes",
+      "speakerAvatar": "icon_comisario",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "EL CHANTAJE NUCLEAR: FILTRAR LAS CINTAS DEL JEFE DEL ESTADO",
+      "context": "La prensa nacional abre al unísono con tus grabaciones en el restaurante gallego insultando a los votantes y repartiendo billetes. La dirección del partido te exige la dimisión en dos horas. En tu búnker guardas el último cartucho: las grabaciones que demolerían la estabilidad de la Corona y los pactos de Estado.",
+      "evidenceDocument": "Disco duro de 4 terabytes lacrado con cinta policial y rotulado 'Pieza Zagatka - Secreto Máximo'.",
+      "isInExtremis": true,
+      "targetDangerStat": "reputacionMediatica",
+      "leftChoice": {
+        "label": "Soltar a todos los telediarios los audios de las comisiones saudíes del Rey Emérito",
+        "stampText": "BOMBA MONÁRQUICA",
+        "flavorQuote": "Filtras al monarca contando fajos del sultán de Baréin y tu escándalo de las mordidas pasa a la página cuarenta de todos los periódicos del planeta.",
+        "mechanicId": 19,
+        "modifiers": {
+          "reputacionMediatica": 40,
+          "impunidad": -30,
+          "pastaEnB": -20
+        },
+        "grantedFlags": [
+          "ESCANDALO_CORONA_DETONADO"
+        ]
+      },
+      "rightChoice": {
+        "label": "Filtrar el vídeo sexual del director del diario que lidera la cacería mediática",
+        "stampText": "VÍDEO DEL DIRECTOR",
+        "flavorQuote": "El montaje del vídeo íntimo en la habitación del hotel: a las doce de la noche el director retira la portada dominical y nos dedica un editorial laudatorio.",
+        "mechanicId": 19,
+        "modifiers": {
+          "reputacionMediatica": 45,
+          "impunidad": -25,
+          "pastaEnB": -25
+        },
+        "grantedFlags": [
+          "DIRECTOR_DIARIO_AMORDAZADO"
+        ]
+      },
+      "weight": 1,
+      "requiredFlags": []
     }
   ]
 }

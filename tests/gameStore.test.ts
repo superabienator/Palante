@@ -264,4 +264,27 @@ describe('Game Engine & Zustand Store (Hito 3)', () => {
       expect(state.getStageInfo().quarterLabel).toContain('Trimestre 24');
     });
   });
+
+  describe('Detección y Respuesta In Extremis en el Store', () => {
+    it('expone getInExtremisStatus reactivamente según las estadísticas del jugador', () => {
+      useGameStore.getState().startReignsGame('CUSTODIO_LIBRETA');
+
+      // Estado inicial sano
+      const initialExtremis = useGameStore.getState().getInExtremisStatus();
+      expect(initialExtremis.active).toBe(false);
+
+      // Modificamos manualmente la presión judicial al 88 (> 80)
+      useGameStore.setState({
+        stats: {
+          ...useGameStore.getState().stats,
+          presionJudicial: 88,
+        },
+      });
+
+      const dangerExtremis = useGameStore.getState().getInExtremisStatus();
+      expect(dangerExtremis.active).toBe(true);
+      expect(dangerExtremis.criticalStats[0].key).toBe('presionJudicial');
+      expect(dangerExtremis.criticalStats[0].dangerType).toBe('MAX_DANGER');
+    });
+  });
 });

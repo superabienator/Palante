@@ -8,6 +8,7 @@ import {
   selectNextReignsCard,
   calculateRiskAssessment,
   getLegislativeStageInfo,
+  getInExtremisStatus,
 } from '../src/store/gameStore';
 import {
   CharacterProfile,
@@ -416,6 +417,146 @@ describe('Reigns Engine & Game Loop (Modo Supervivencia)', () => {
       expect(climaxStage.year).toBe(4);
       expect(climaxStage.isClimax).toBe(true);
       expect(climaxStage.quarterLabel).toContain('Trimestre 24');
+    });
+  });
+
+  describe('Motor de Rata Acorralada (In Extremis Status & Milagros Desesperados)', () => {
+    it('detecta estado in extremis cuando las estadísticas tocan umbrales críticos', () => {
+      // Estado normal: no activo
+      const normalStats: CharacterStats = {
+        pastaEnB: 50,
+        presionJudicial: 30,
+        impunidad: 50,
+        reputacionMediatica: 50,
+      };
+      const normalStatus = getInExtremisStatus(normalStats);
+      expect(normalStatus.active).toBe(false);
+      expect(normalStatus.criticalStats).toHaveLength(0);
+
+      // Presión judicial >= 80 (UCO en la puerta)
+      const ucoStats: CharacterStats = { ...normalStats, presionJudicial: 82 };
+      const ucoStatus = getInExtremisStatus(ucoStats);
+      expect(ucoStatus.active).toBe(true);
+      expect(ucoStatus.criticalStats[0].key).toBe('presionJudicial');
+      expect(ucoStatus.criticalStats[0].dangerType).toBe('MAX_DANGER');
+
+      // Impunidad <= 15 (pérdida de aforamiento)
+      const aforamientoStats: CharacterStats = { ...normalStats, impunidad: 12 };
+      const aforamientoStatus = getInExtremisStatus(aforamientoStats);
+      expect(aforamientoStatus.active).toBe(true);
+      expect(aforamientoStatus.criticalStats[0].key).toBe('impunidad');
+      expect(aforamientoStatus.criticalStats[0].dangerType).toBe('MIN_DANGER');
+
+      // Pasta en B <= 15 y Pasta en B >= 85
+      const bancarrotaStatus = getInExtremisStatus({ ...normalStats, pastaEnB: 10 });
+      expect(bancarrotaStatus.active).toBe(true);
+      expect(bancarrotaStatus.criticalStats[0].dangerType).toBe('MIN_DANGER');
+
+      const europolStatus = getInExtremisStatus({ ...normalStats, pastaEnB: 90 });
+      expect(europolStatus.active).toBe(true);
+      expect(europolStatus.criticalStats[0].dangerType).toBe('MAX_DANGER');
+
+      // Reputación mediática <= 15
+      const linchamientoStatus = getInExtremisStatus({ ...normalStats, reputacionMediatica: 5 });
+      expect(linchamientoStatus.active).toBe(true);
+      expect(linchamientoStatus.criticalStats[0].key).toBe('reputacionMediatica');
+    });
+
+    it('calcula pesos especiales para cartas isInExtremis (peso 0 normal, 10x acorralado, 20x target específico)', () => {
+      const miracleCard: ReignsCard = {
+        id: 'inextremis_incendio_windsor',
+        speaker: 'Bombero Amigo',
+        speakerRole: 'Operaciones Especiales',
+        sphere: 'ORDEN_JUSTICIA',
+        headline: 'INCENDIO PROVIDENCIAL',
+        context: 'Fuego en el archivo...',
+        weight: 1,
+        isInExtremis: true,
+        targetDangerStat: 'presionJudicial',
+        leftChoice: { label: 'A', stampText: 'A', modifiers: {} },
+        rightChoice: { label: 'B', stampText: 'B', modifiers: {} },
+      };
+
+      // Si no está acorralado -> peso 0 (no debe salir)
+      const inactiveStatus = { active: false, criticalStats: [] };
+      expect(calculateCardWeight(miracleCard, [], inactiveStatus)).toBe(0);
+
+      // Si está acorralado pero por otra estadística (ej. impunidad) -> peso x10
+      const impunidadDangerStatus = {
+        active: true,
+        criticalStats: [
+          { key: 'impunidad' as const, label: 'Impunidad', value: 10, dangerType: 'MIN_DANGER' as const },
+        ],
+      };
+      expect(calculateCardWeight(miracleCard, [], impunidadDangerStatus)).toBe(10);
+
+      // Si está acorralado por presionJudicial (coincide con targetDangerStat) -> peso x20
+      const ucoDangerStatus = {
+        active: true,
+        criticalStats: [
+          { key: 'presionJudicial' as const, label: 'Presión Judicial', value: 85, dangerType: 'MAX_DANGER' as const },
+        ],
+      };
+      expect(calculateCardWeight(miracleCard, [], ucoDangerStatus)).toBe(20);
+    });
+
+    it('no extrae cartas in extremis si el personaje está a salvo y las prioriza masivamente al estar acorralado', () => {
+      const normalCard: ReignsCard = {
+        id: 'card_normal_1',
+        speaker: 'Alcalde',
+        speakerRole: 'Edil',
+        sphere: 'POLITICA',
+        headline: 'Dilema Común',
+        context: '...',
+        weight: 1,
+        leftChoice: { label: 'A', stampText: 'A', modifiers: {} },
+        rightChoice: { label: 'B', stampText: 'B', modifiers: {} },
+      };
+
+      const miracleCard: ReignsCard = {
+        id: 'inextremis_tamayazo_soborno',
+        speaker: 'Conseguidor',
+        speakerRole: 'Operador',
+        sphere: 'POLITICA',
+        headline: 'TAMAYAZO RELÁMPAGO',
+        context: '...',
+        weight: 1,
+        isInExtremis: true,
+        targetDangerStat: 'impunidad',
+        leftChoice: { label: 'A', stampText: 'A', modifiers: {} },
+        rightChoice: { label: 'B', stampText: 'B', modifiers: {} },
+      };
+
+      const deck = [normalCard, miracleCard];
+
+      // Caso 1: Personaje sano (impunidad 50) -> selectNextReignsCard nunca saca miracleCard
+      for (let i = 0; i < 20; i++) {
+        const drawn = selectNextReignsCard({
+          allCards: deck,
+          activeFlags: {},
+          cardsSurvived: 3,
+          currentStats: { pastaEnB: 50, presionJudicial: 30, impunidad: 50, reputacionMediatica: 50 },
+        });
+        expect(drawn?.id).toBe('card_normal_1');
+      }
+
+      // Caso 2: Personaje en peligro crítico (impunidad 10) -> miracleCard tiene peso 20x vs peso 1 normal
+      let miracleCount = 0;
+      const runs = 500;
+      for (let i = 0; i < runs; i++) {
+        const drawn = selectNextReignsCard({
+          allCards: deck,
+          activeFlags: {},
+          cardsSurvived: 3,
+          currentStats: { pastaEnB: 50, presionJudicial: 30, impunidad: 10, reputacionMediatica: 50 },
+        });
+        if (drawn?.id === 'inextremis_tamayazo_soborno') {
+          miracleCount++;
+        }
+      }
+
+      // Con peso 20 vs 1, ratio teórico ~ 95%
+      expect(miracleCount / runs).toBeGreaterThan(0.85);
     });
   });
 });

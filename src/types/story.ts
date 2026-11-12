@@ -123,6 +123,8 @@ export const ReignsCardSchema = z.object({
   weight: z.number().int().min(1).max(10).optional().default(1),
   archetypeAffinity: z.array(ArchetypeIdSchema).optional(),
   requiredFlags: z.array(z.string()).optional().describe('Banderas requeridas para que esta carta aparezca'),
+  isInExtremis: z.boolean().optional().describe('Carta de salvación desesperada cuando el personaje está acorralado'),
+  targetDangerStat: z.enum(['pastaEnB', 'presionJudicial', 'impunidad', 'reputacionMediatica']).optional().describe('Estadística crítica que rescata in extremis'),
 });
 export type ReignsCard = z.infer<typeof ReignsCardSchema>;
 
@@ -166,3 +168,17 @@ export interface LegislativeStageInfo {
 }
 
 export const CLIMAX_CARD_ID = 'climax_tribunal_supremo_pacto_toja';
+
+// === Contratos para la Mecánica de "Rata Acorralada" (In Extremis) ===
+
+export interface InExtremisCriticalStat {
+  key: keyof CharacterStats;
+  label: string;
+  value: number;
+  dangerType: 'MIN_DANGER' | 'MAX_DANGER';
+}
+
+export interface InExtremisStatus {
+  active: boolean;
+  criticalStats: InExtremisCriticalStat[];
+}
