@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, useTransform, PanInfo } from 'framer-motion';
 import { useGameStore } from '../store/gameStore';
 import { ReignsCard as ReignsCardType } from '../types/story';
 import { CharacterPortrait } from './CharacterPortrait';
 import { PRIVILEGES_REGISTRY } from '../config/privileges';
+import { soundManager } from '../utils/soundEffects';
 
 export interface ReignsCardProps {
   card?: ReignsCardType | null;
@@ -58,7 +59,7 @@ export function FanzineDieFace({ face, size = 32 }: { face: number; size?: numbe
       width={size}
       height={size}
       viewBox="0 0 100 100"
-      className="inline-block shrink-0 border-2 border-black bg-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+      className="inline-block shrink-0 border-2 border-black bg-white shadow-[2px_2px_0px_0px_#121a12]"
       aria-label={`Dado cara ${face}`}
     >
       <rect x="2" y="2" width="96" height="96" fill="#ffffff" stroke="#000000" strokeWidth="6" />
@@ -76,6 +77,7 @@ export function ReignsCard({
 }: ReignsCardProps) {
   const storeCard = useGameStore((state) => state.currentReignsCard);
   const makeReignsChoice = useGameStore((state) => state.makeReignsChoice);
+  const previewDirection = useGameStore((state) => state.previewDirection);
   const setPreviewDirection = useGameStore((state) => state.setPreviewDirection);
   const lastDiceRoll = useGameStore((state) => state.lastDiceRoll);
   const clearLastDiceRoll = useGameStore((state) => state.clearLastDiceRoll);
@@ -83,13 +85,49 @@ export function ReignsCard({
   const card = propCard ?? storeCard;
 
   const x = useMotionValue(0);
-  const rotate = useTransform(x, [-200, 0, 200], [-12, 0, 12]);
-  const leftStampOpacity = useTransform(x, [-120, -30, 0], [1, 0.4, 0]);
-  const rightStampOpacity = useTransform(x, [0, 30, 120], [0, 0.4, 1]);
+  const rotate = useTransform(x, [-180, 0, 180], [-10, 0, 10]);
+
+  // Umbral mucho más sensible y nítido para móvil:
+  // A solo 8-10px ya empieza a revelarse el sello, y a 40px ya es 100% visible
+  const leftStampOpacity = useTransform(x, [-45, -8, 0], [1, 0.6, 0]);
+  const rightStampOpacity = useTransform(x, [0, 8, 45], [0, 0.6, 1]);
+
+  // Contrarrestar sutilmente la salida de pantalla en móvil
+  const leftStampX = useTransform(x, [-150, 0], [20, 0]);
+  const rightStampX = useTransform(x, [0, 150], [0, -20]);
 
   const [exitX, setExitX] = useState<number | null>(null);
+  const swipeSoundPlayedRef = useRef(false);
 
   const isDiceModalOpen = Boolean(lastDiceRoll);
+
+  // Detección de cartas de crisis o alerta procesal
+  const isCrisis = Boolean(
+    card &&
+      (card.id.toLowerCase().includes('crisis') ||
+        card.headline.toLowerCase().includes('registro') ||
+        card.headline.toLowerCase().includes('bancarrota') ||
+        card.headline.toLowerCase().includes('suplicatorio') ||
+        card.headline.toLowerCase().includes('portada dominical'))
+  );
+
+  // Efecto de sonido al saltar tirada de dados
+  useEffect(() => {
+    if (lastDiceRoll) {
+      soundManager.playDiceRoll();
+      if (lastDiceRoll.unlockedPrivilegeId) {
+        const timer = setTimeout(() => soundManager.playCashChime(), 320);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [lastDiceRoll]);
+
+  // Efecto de sonido cuando entra una carta de crisis
+  useEffect(() => {
+    if (isCrisis) {
+      soundManager.playCrisisAlert();
+    }
+  }, [card?.id, isCrisis]);
 
   // Atajos de teclado:
   // - Si la ventana emergente de dados está abierta: Enter, Espacio o Escape la cierran ("Siguiente").
@@ -101,6 +139,7 @@ export function ReignsCard({
       if (isDiceModalOpen) {
         if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') {
           e.preventDefault();
+          soundManager.playPaperSwipe();
           clearLastDiceRoll();
         }
         return;
@@ -123,29 +162,44 @@ export function ReignsCard({
 
   const triggerChoice = (direction: 'left' | 'right') => {
     if (disabled || !card || isDiceModalOpen) return;
+    soundManager.playStampImpact(direction === 'left');
     setExitX(direction === 'left' ? -350 : 350);
     setTimeout(() => {
       makeReignsChoice(direction);
       setExitX(null);
       x.set(0);
       setPreviewDirection(null);
+      swipeSoundPlayedRef.current = false;
     }, 180);
   };
 
   const handleDrag = (_: unknown, info: PanInfo) => {
     if (isDiceModalOpen) return;
-    if (info.offset.x < -25) {
+
+    if (info.offset.x < -12) {
+      if (!swipeSoundPlayedRef.current) {
+        soundManager.playPaperSwipe();
+        swipeSoundPlayedRef.current = true;
+      }
       setPreviewDirection('left');
-    } else if (info.offset.x > 25) {
+    } else if (info.offset.x > 12) {
+      if (!swipeSoundPlayedRef.current) {
+        soundManager.playPaperSwipe();
+        swipeSoundPlayedRef.current = true;
+      }
       setPreviewDirection('right');
     } else {
       setPreviewDirection(null);
+      swipeSoundPlayedRef.current = false;
     }
   };
 
   const handleDragEnd = (_: unknown, info: PanInfo) => {
+    swipeSoundPlayedRef.current = false;
     if (isDiceModalOpen) return;
-    const threshold = 90;
+
+    // Umbral rebajado a 70px para mayor agilidad en móvil
+    const threshold = 70;
     if (info.offset.x < -threshold) {
       triggerChoice('left');
     } else if (info.offset.x > threshold) {
@@ -157,21 +211,13 @@ export function ReignsCard({
 
   if (!card) {
     return (
-      <div className="border-4 border-black bg-stone-100 p-8 font-mono text-center shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] -rotate-1">
-        <p className="font-bold uppercase tracking-wider text-base">
+      <div className="border-4 border-[#121a12] bg-[#f4efdc] p-8 font-mono text-center shadow-[6px_6px_0px_0px_#121a12] -rotate-1">
+        <p className="font-bold uppercase tracking-wider text-base text-zinc-900">
           [ NO QUEDAN CAUSAS PENDIENTES EN EL SUMARIO ]
         </p>
       </div>
     );
   }
-
-  // Detección de cartas de crisis o alerta procesal
-  const isCrisis =
-    card.id.toLowerCase().includes('crisis') ||
-    card.headline.toLowerCase().includes('registro') ||
-    card.headline.toLowerCase().includes('bancarrota') ||
-    card.headline.toLowerCase().includes('suplicatorio') ||
-    card.headline.toLowerCase().includes('portada dominical');
 
   let crisisType: 'judicial' | 'pasta' | 'impunidad' | 'prensa' | undefined;
   if (isCrisis) {
@@ -206,7 +252,7 @@ export function ReignsCard({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-xs font-mono"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs font-mono"
             role="dialog"
             aria-modal="true"
             aria-labelledby="dice-roll-modal-title"
@@ -216,10 +262,10 @@ export function ReignsCard({
               animate={{ scale: 1, y: 0, rotate: 0 }}
               exit={{ scale: 0.92, y: 12, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 300, damping: 24 }}
-              className="w-full max-w-lg border-4 border-black bg-[#faf8f4] p-5 sm:p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] max-h-[90vh] overflow-y-auto"
+              className="w-full max-w-lg border-4 border-[#121a12] bg-[#f5efdc] p-5 sm:p-6 shadow-[8px_8px_0px_0px_#121a12] max-h-[90vh] overflow-y-auto"
             >
               {/* Cabecera de la Ventana Emergente con Botón Cerrar */}
-              <div className="flex items-center justify-between gap-2 border-b-3 border-black pb-3 mb-4">
+              <div className="flex items-center justify-between gap-2 border-b-3 border-[#121a12] pb-3 mb-4">
                 <div className="flex items-center gap-2.5">
                   <motion.div
                     initial={{ rotate: -540, scale: 0.3 }}
@@ -232,7 +278,7 @@ export function ReignsCard({
                     />
                   </motion.div>
                   <div>
-                    <span className="text-[10px] font-black uppercase tracking-widest text-zinc-600 block">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-zinc-700 block">
                       ACTA DE FORTUNA // RESOLUCIÓN DE DADOS
                     </span>
                     <h3
@@ -246,9 +292,12 @@ export function ReignsCard({
 
                 <button
                   type="button"
-                  onClick={clearLastDiceRoll}
+                  onClick={() => {
+                    soundManager.playPaperSwipe();
+                    clearLastDiceRoll();
+                  }}
                   aria-label="Cerrar ventana de tirada de dados"
-                  className="border-2 border-black bg-white hover:bg-black hover:text-white px-2.5 py-1 text-xs font-black uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] cursor-pointer transition-colors"
+                  className="border-2 border-black bg-white hover:bg-black hover:text-white px-2.5 py-1 text-xs font-black uppercase shadow-[2px_2px_0px_0px_#121a12] cursor-pointer transition-colors"
                 >
                   ✕ CERRAR
                 </button>
@@ -256,9 +305,9 @@ export function ReignsCard({
 
               {/* Resumen de la Decisión Ejecutada */}
               {lastDiceRoll.choiceLabel && (
-                <div className="border-2 border-black bg-stone-100 p-3 mb-4 text-xs">
+                <div className="border-2 border-[#121a12] bg-[#ebe4ce] p-3 mb-4 text-xs">
                   {lastDiceRoll.cardHeadline && (
-                    <div className="text-[10px] font-black uppercase text-zinc-600 mb-0.5">
+                    <div className="text-[10px] font-black uppercase text-zinc-700 mb-0.5">
                       CAUSA: {lastDiceRoll.cardHeadline}
                     </div>
                   )}
@@ -266,7 +315,7 @@ export function ReignsCard({
                     «{lastDiceRoll.choiceLabel}»
                   </div>
                   {lastDiceRoll.flavorQuote && (
-                    <div className="mt-1.5 pt-1.5 border-t border-dashed border-black/40 italic text-zinc-700 text-[11px]">
+                    <div className="mt-1.5 pt-1.5 border-t border-dashed border-black/40 italic text-zinc-800 text-[11px]">
                       🎙️ "{lastDiceRoll.flavorQuote}"
                     </div>
                   )}
@@ -297,7 +346,7 @@ export function ReignsCard({
                     return (
                       <div
                         key={roll.statKey}
-                        className="border-2 border-black bg-white p-3 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]"
+                        className="border-2 border-[#121a12] bg-[#fbf9f0] p-3 shadow-[3px_3px_0px_0px_#121a12]"
                       >
                         <div className="flex items-center justify-between gap-2 mb-1.5">
                           <div className="flex items-center gap-2">
@@ -327,8 +376,8 @@ export function ReignsCard({
                             <span
                               className={`inline-block border-2 border-black px-2 py-0.5 text-sm font-black ${
                                 isDanger
-                                  ? 'bg-red-100 text-red-800'
-                                  : 'bg-emerald-100 text-emerald-900'
+                                  ? 'bg-red-200 text-red-950'
+                                  : 'bg-emerald-200 text-emerald-950'
                               }`}
                             >
                               {sign}%
@@ -342,12 +391,12 @@ export function ReignsCard({
                         </div>
 
                         {/* Explicación Matemática y Narrativa de la Tirada */}
-                        <div className="text-[11px] text-zinc-700 bg-stone-50 border-t border-dashed border-black/30 pt-1.5 mt-1 flex flex-col gap-0.5">
+                        <div className="text-[11px] text-zinc-800 bg-[#ede6cf] border-t border-dashed border-black/30 pt-1.5 mt-1 flex flex-col gap-0.5 p-1.5">
                           <div>
                             • Impacto base de la decisión: <strong>{baseSign}%</strong> | Tirada obtenida en el margen [{minSign}%, {maxSign}%]: <strong>{sign}%</strong>.
                           </div>
                           {roll.privilegeApplied && (
-                            <div className="font-bold text-emerald-900">
+                            <div className="font-bold text-emerald-950">
                               ⚡ Tu privilegio «{roll.privilegeApplied.name}» modificó la horquilla en{' '}
                               {roll.privilegeApplied.amount > 0
                                 ? `+${roll.privilegeApplied.amount}%`
@@ -364,33 +413,39 @@ export function ReignsCard({
 
               {/* Aviso si se ha desbloqueado un nuevo Privilegio de Poltrona */}
               {newlyUnlockedPrivilege && (
-                <div className="border-2 border-black bg-emerald-50 p-3 mb-4 text-xs shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                  <div className="font-black uppercase text-emerald-900 mb-0.5">
+                <div className="border-2 border-emerald-900 bg-emerald-100 p-3 mb-4 text-xs shadow-[2px_2px_0px_0px_#121a12]">
+                  <div className="font-black uppercase text-emerald-950 mb-0.5">
                     🔓 ¡NUEVO PRIVILEGIO DE POLTRONA INCORPORADO AL EXPEDIENTE!
                   </div>
                   <div className="font-bold text-black">
                     {newlyUnlockedPrivilege.name} ({newlyUnlockedPrivilege.shortTag})
                   </div>
-                  <div className="text-[11px] text-emerald-800 mt-0.5">
+                  <div className="text-[11px] text-emerald-900 mt-0.5">
                     Efecto permanente: {newlyUnlockedPrivilege.inGameEffect}
                   </div>
                 </div>
               )}
 
               {/* Botones de Acción para Cerrar o Avanzar al Siguiente Dilema */}
-              <div className="flex flex-col sm:flex-row gap-2.5 pt-2 border-t-2 border-black">
+              <div className="flex flex-col sm:flex-row gap-2.5 pt-2 border-t-2 border-[#121a12]">
                 <button
                   type="button"
-                  onClick={clearLastDiceRoll}
-                  className="sm:w-1/3 border-3 border-black bg-white hover:bg-stone-100 active:translate-x-0.5 active:translate-y-0.5 py-2.5 px-3 font-black uppercase text-xs tracking-wider shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] cursor-pointer transition-all"
+                  onClick={() => {
+                    soundManager.playPaperSwipe();
+                    clearLastDiceRoll();
+                  }}
+                  className="sm:w-1/3 border-3 border-black bg-white hover:bg-stone-200 active:translate-x-0.5 active:translate-y-0.5 py-2.5 px-3 font-black uppercase text-xs tracking-wider shadow-[3px_3px_0px_0px_#121a12] cursor-pointer transition-all"
                 >
                   CERRAR
                 </button>
                 <button
                   type="button"
-                  onClick={clearLastDiceRoll}
+                  onClick={() => {
+                    soundManager.playPaperSwipe();
+                    clearLastDiceRoll();
+                  }}
                   autoFocus
-                  className="sm:w-2/3 border-3 border-black bg-black text-white hover:bg-zinc-800 active:translate-x-0.5 active:translate-y-0.5 py-2.5 px-4 font-black uppercase text-xs sm:text-sm tracking-wider shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] cursor-pointer transition-all"
+                  className="sm:w-2/3 border-3 border-black bg-black text-white hover:bg-zinc-800 active:translate-x-0.5 active:translate-y-0.5 py-2.5 px-4 font-black uppercase text-xs sm:text-sm tracking-wider shadow-[3px_3px_0px_0px_#121a12] cursor-pointer transition-all"
                 >
                   SIGUIENTE DILEMA → [ENTER]
                 </button>
@@ -400,6 +455,62 @@ export function ReignsCard({
         )}
       </AnimatePresence>
 
+      {/* =====================================================================
+          HUD DINÁMICO SUPERIOR: PREVIEW DE DECISIÓN EN TIEMPO REAL (MÓVIL & ESCRITORIO)
+          Permanece centrado e inmóvil para que NUNCA se salga de la pantalla al inclinar.
+         ===================================================================== */}
+      <div className="w-full mb-2 px-1">
+        <div
+          className={`w-full min-h-[58px] border-3 border-[#121a12] p-2 sm:p-2.5 font-mono text-center shadow-[4px_4px_0px_0px_#121a12] transition-all duration-150 flex flex-col justify-center items-center ${
+            previewDirection === 'left'
+              ? 'bg-red-800 text-white border-red-950 scale-[1.01]'
+              : previewDirection === 'right'
+              ? 'bg-amber-300 text-black border-amber-950 scale-[1.01]'
+              : 'bg-[#ede6cf]/90 text-zinc-800 border-black/70'
+          }`}
+        >
+          {previewDirection === 'left' ? (
+            <div className="flex flex-col items-center w-full animate-in fade-in duration-100">
+              <div className="flex items-center gap-2 flex-wrap justify-center">
+                <span className="bg-black text-white px-2 py-0.5 text-xs font-black uppercase tracking-wider shrink-0 border border-white">
+                  ← [ {card.leftChoice.stampText || 'ACEPTAR'} ]
+                </span>
+                <span className="text-xs sm:text-sm font-black uppercase text-white leading-tight">
+                  {card.leftChoice.label}
+                </span>
+              </div>
+              {card.leftChoice.flavorQuote && (
+                <div className="text-[11px] text-red-100 italic truncate max-w-full mt-1">
+                  🎙️ "{card.leftChoice.flavorQuote}"
+                </div>
+              )}
+            </div>
+          ) : previewDirection === 'right' ? (
+            <div className="flex flex-col items-center w-full animate-in fade-in duration-100">
+              <div className="flex items-center gap-2 flex-wrap justify-center">
+                <span className="text-xs sm:text-sm font-black uppercase text-black leading-tight">
+                  {card.rightChoice.label}
+                </span>
+                <span className="bg-black text-amber-300 px-2 py-0.5 text-xs font-black uppercase tracking-wider shrink-0 border border-black">
+                  [ {card.rightChoice.stampText || 'RECHAZAR'} ] →
+                </span>
+              </div>
+              {card.rightChoice.flavorQuote && (
+                <div className="text-[11px] text-zinc-900 italic truncate max-w-full mt-1">
+                  🎙️ "{card.rightChoice.flavorQuote}"
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="flex items-center justify-between w-full px-2 text-[10px] sm:text-xs font-bold text-zinc-700 uppercase tracking-wider">
+              <span className="text-red-800 font-black">← Desliza Izquierda</span>
+              <span className="text-zinc-500 font-normal">| [O usa las teclas ← / →] |</span>
+              <span className="text-amber-900 font-black">Desliza Derecha →</span>
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* Contenedor Draggable con Framer Motion */}
       <div className="relative w-full min-h-[420px] flex items-center justify-center p-2">
         <motion.article
@@ -407,20 +518,24 @@ export function ReignsCard({
           style={{ x, rotate }}
           drag={disabled || isDiceModalOpen ? false : 'x'}
           dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.7}
+          dragElastic={0.65}
           onDrag={handleDrag}
           onDragEnd={handleDragEnd}
           animate={exitX !== null ? { x: exitX, opacity: 0 } : { x: 0, opacity: 1 }}
           transition={{ type: 'spring', stiffness: 350, damping: 25 }}
           className={`w-full relative cursor-grab active:cursor-grabbing select-none border-4 ${
             isCrisis
-              ? 'border-red-700 bg-red-50/30 shadow-[6px_6px_0px_0px_rgba(185,28,28,1)]'
-              : 'border-black bg-[#faf8f4] shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]'
+              ? 'border-red-800 bg-[#fcedec] shadow-[6px_6px_0px_0px_#822222]'
+              : 'border-[#121a12] bg-[#f5efdc] shadow-[6px_6px_0px_0px_#121a12]'
           } p-5 sm:p-7 -rotate-1`}
         >
+          {/* Mancha sutil de humedad/moho de cloaca en esquinas de la carta */}
+          <div className="pointer-events-none absolute inset-0 moho-corner" />
+          <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-12 moho-bottom" />
+
           {/* Alerta de Crisis Procesal en Cabecera de la Tarjeta */}
           {isCrisis && (
-            <div className="border-2 border-red-700 bg-red-700 text-white font-mono font-black text-[10px] sm:text-xs uppercase px-2.5 py-1 tracking-widest flex items-center justify-between mb-4 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] animate-pulse">
+            <div className="border-2 border-red-900 bg-red-700 text-white font-mono font-black text-[10px] sm:text-xs uppercase px-2.5 py-1 tracking-widest flex items-center justify-between mb-4 shadow-[2px_2px_0px_0px_#121a12] animate-pulse">
               <span>🚨 ALERTA PROCESAL // PIEZA SEPARADA URGENTE</span>
               <span className="bg-black text-white px-1.5 py-0.2">ART. 384 BIS</span>
             </div>
@@ -428,31 +543,31 @@ export function ReignsCard({
 
           {/* Sellos de Caucho Flotantes con Opacidad Proporcional al Desplazamiento */}
           <motion.div
-            style={{ opacity: leftStampOpacity }}
-            className="pointer-events-none absolute top-4 left-4 right-4 z-20 flex flex-col items-start gap-1"
+            style={{ opacity: leftStampOpacity, x: leftStampX }}
+            className="pointer-events-none absolute top-3 left-3 z-30 flex flex-col items-start gap-1 max-w-[85%]"
           >
-            <div className="border-4 border-red-700 bg-red-100/95 text-red-800 px-3 py-1 font-mono font-black text-lg sm:text-2xl uppercase tracking-widest -rotate-6 shadow-[3px_3px_0px_0px_rgba(185,28,28,1)]">
+            <div className="border-4 border-red-800 bg-red-600/95 text-white px-3 py-1 font-mono font-black text-base sm:text-xl uppercase tracking-widest -rotate-6 shadow-[4px_4px_0px_0px_#121a12]">
               {card.leftChoice.stampText || 'ACEPTAR'}
             </div>
-            <div className="border-2 border-black bg-white text-black p-2 font-mono text-xs sm:text-sm font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] max-w-md">
+            <div className="border-2 border-black bg-white/95 text-black p-2 font-mono text-xs sm:text-sm font-bold shadow-[2px_2px_0px_0px_#121a12] line-clamp-2">
               {card.leftChoice.label}
             </div>
           </motion.div>
 
           <motion.div
-            style={{ opacity: rightStampOpacity }}
-            className="pointer-events-none absolute top-4 right-4 left-4 z-20 flex flex-col items-end gap-1"
+            style={{ opacity: rightStampOpacity, x: rightStampX }}
+            className="pointer-events-none absolute top-3 right-3 z-30 flex flex-col items-end gap-1 max-w-[85%]"
           >
-            <div className="border-4 border-black bg-yellow-200/95 text-black px-3 py-1 font-mono font-black text-lg sm:text-2xl uppercase tracking-widest rotate-6 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
+            <div className="border-4 border-amber-950 bg-amber-400/95 text-black px-3 py-1 font-mono font-black text-base sm:text-xl uppercase tracking-widest rotate-6 shadow-[4px_4px_0px_0px_#121a12]">
               {card.rightChoice.stampText || 'RECHAZAR'}
             </div>
-            <div className="border-2 border-black bg-white text-black p-2 font-mono text-xs sm:text-sm font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] max-w-md text-right">
+            <div className="border-2 border-black bg-white/95 text-black p-2 font-mono text-xs sm:text-sm font-bold shadow-[2px_2px_0px_0px_#121a12] text-right line-clamp-2">
               {card.rightChoice.label}
             </div>
           </motion.div>
 
           {/* Membrete Oficial, Retrato Satírico y Emisor */}
-          <header className="border-b-2 border-black pb-3 mb-4 flex items-center justify-between gap-3">
+          <header className="border-b-2 border-[#121a12] pb-3 mb-4 flex items-center justify-between gap-3 relative z-10">
             <div className="flex items-center gap-3">
               <CharacterPortrait
                 src={card.portraitUrl}
@@ -465,47 +580,47 @@ export function ReignsCard({
                 className="shrink-0"
               />
               <div>
-                <div className="text-[10px] font-mono font-black uppercase tracking-widest text-zinc-600">
+                <div className="text-[10px] font-mono font-black uppercase tracking-widest text-zinc-700">
                   AUDIENCIA NACIONAL // SUMARIO
                 </div>
                 <h3 className="text-base sm:text-lg font-mono font-black uppercase text-black leading-tight">
                   {card.speaker}
                 </h3>
-                <div className="text-xs font-mono text-zinc-700 font-bold uppercase">
+                <div className="text-xs font-mono text-zinc-800 font-bold uppercase">
                   {card.speakerRole}
                 </div>
               </div>
             </div>
 
-            <div className="border border-black bg-stone-200 px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider self-start shrink-0">
+            <div className="border border-black bg-[#ede6cf] px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider self-start shrink-0">
               {card.sphere}
             </div>
           </header>
 
           {/* Titular del Dilema */}
-          <h2 className="text-lg sm:text-xl font-mono font-black uppercase text-black leading-tight mb-3">
+          <h2 className="text-lg sm:text-xl font-mono font-black uppercase text-black leading-tight mb-3 relative z-10">
             {card.headline}
           </h2>
 
           {/* Narración Fanzine del Hecho */}
-          <div className="font-mono text-sm leading-relaxed text-black/90 mb-4 bg-white/70 p-3.5 border-l-4 border-black">
+          <div className="font-mono text-sm leading-relaxed text-black/90 mb-4 bg-white/80 p-3.5 border-l-4 border-[#121a12] relative z-10 shadow-xs">
             {card.context}
           </div>
 
           {/* Pieza de Convicción Intervenida */}
           {card.evidenceDocument && (
-            <div className="border-2 border-dashed border-black bg-amber-50 p-2.5 mb-4 text-xs font-mono">
-              <span className="font-black uppercase tracking-wider block text-[10px] text-zinc-600 mb-0.5">
+            <div className="border-2 border-dashed border-[#121a12] bg-[#f8f3e0] p-2.5 mb-4 text-xs font-mono relative z-10">
+              <span className="font-black uppercase tracking-wider block text-[10px] text-zinc-700 mb-0.5">
                 📎 PIEZA DE CONVICCIÓN INCAUTADA:
               </span>
-              <p className="italic text-zinc-800">"{card.evidenceDocument}"</p>
+              <p className="italic text-zinc-900">"{card.evidenceDocument}"</p>
             </div>
           )}
 
           {/* Indicación ágil de interacción */}
-          <footer className="border-t-2 border-black pt-2 text-[11px] font-mono text-zinc-600 italic flex items-center justify-between">
-            <span>💡 Apunta o desliza para ver los márgenes de dados en la telemetría</span>
-            <span className="font-bold not-italic text-[10px] bg-stone-200 px-1.5 py-0.5 border border-black">
+          <footer className="border-t-2 border-[#121a12] pt-2 text-[11px] font-mono text-zinc-700 italic flex items-center justify-between relative z-10">
+            <span>💡 Desliza o usa teclas para ver las tiradas de dados</span>
+            <span className="font-bold not-italic text-[10px] bg-[#ede6cf] px-1.5 py-0.5 border border-black">
               🎲 RIESGO VARIABLE
             </span>
           </footer>
@@ -513,7 +628,7 @@ export function ReignsCard({
       </div>
 
       {/* Botones Físicos y Accesibles para Móvil y Teclado */}
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
         {/* Opción Izquierda */}
         <button
           type="button"
@@ -523,14 +638,18 @@ export function ReignsCard({
           onFocus={() => !isDiceModalOpen && setPreviewDirection('left')}
           onBlur={() => setPreviewDirection(null)}
           disabled={disabled || isDiceModalOpen}
-          className="group border-3 border-black bg-white hover:bg-amber-50 active:translate-x-0.5 active:translate-y-0.5 p-3.5 text-left font-mono shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer flex flex-col justify-between disabled:opacity-50"
+          className={`group border-3 p-3.5 text-left font-mono transition-all cursor-pointer flex flex-col justify-between disabled:opacity-50 ${
+            previewDirection === 'left'
+              ? 'border-red-800 bg-red-100 shadow-[6px_6px_0px_0px_#822222] translate-x-0.5 translate-y-0.5'
+              : 'border-[#121a12] bg-[#fbf9f0] hover:bg-red-50/50 shadow-[4px_4px_0px_0px_#121a12]'
+          }`}
         >
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <span className="text-xs font-black uppercase text-red-700 tracking-wider">
+              <span className="text-xs font-black uppercase text-red-800 tracking-wider">
                 ← [ {card.leftChoice.stampText} ]
               </span>
-              <span className="text-[10px] border border-black px-1.5 py-0.5 bg-stone-100 font-bold uppercase hidden sm:inline">
+              <span className="text-[10px] border border-black px-1.5 py-0.5 bg-[#ede6cf] font-bold uppercase hidden sm:inline">
                 🎲 Tecla: ← / A
               </span>
             </div>
@@ -538,11 +657,11 @@ export function ReignsCard({
               {card.leftChoice.label}
             </p>
             {card.leftChoice.flavorQuote && (
-              <div className="mt-2 border-l-3 border-red-700 bg-red-50/40 pl-2 py-1">
-                <span className="text-[9px] font-black uppercase tracking-wider text-red-800 block mb-0.5">
+              <div className="mt-2 border-l-3 border-red-700 bg-red-100/60 pl-2 py-1">
+                <span className="text-[9px] font-black uppercase tracking-wider text-red-900 block mb-0.5">
                   🎙️ AUDIO UCO INTERVENIDO:
                 </span>
-                <p className="text-xs text-zinc-800 italic leading-snug">
+                <p className="text-xs text-zinc-900 italic leading-snug">
                   "{card.leftChoice.flavorQuote}"
                 </p>
               </div>
@@ -550,7 +669,7 @@ export function ReignsCard({
           </div>
 
           {leftPrivilegeUnlock && (
-            <div className="mt-2 pt-1.5 border-t border-dashed border-black text-[10px] font-black text-emerald-900 flex items-center gap-1">
+            <div className="mt-2 pt-1.5 border-t border-dashed border-black text-[10px] font-black text-emerald-950 flex items-center gap-1">
               <span>⚡ SUMA PRIVILEGIO:</span>
               <span className="underline">{leftPrivilegeUnlock.name}</span>
             </div>
@@ -566,14 +685,18 @@ export function ReignsCard({
           onFocus={() => !isDiceModalOpen && setPreviewDirection('right')}
           onBlur={() => setPreviewDirection(null)}
           disabled={disabled || isDiceModalOpen}
-          className="group border-3 border-black bg-white hover:bg-amber-50 active:translate-x-0.5 active:translate-y-0.5 p-3.5 text-left font-mono shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer flex flex-col justify-between disabled:opacity-50"
+          className={`group border-3 p-3.5 text-left font-mono transition-all cursor-pointer flex flex-col justify-between disabled:opacity-50 ${
+            previewDirection === 'right'
+              ? 'border-amber-950 bg-amber-100 shadow-[6px_6px_0px_0px_#121a12] translate-x-0.5 translate-y-0.5'
+              : 'border-[#121a12] bg-[#fbf9f0] hover:bg-amber-50/50 shadow-[4px_4px_0px_0px_#121a12]'
+          }`}
         >
           <div>
             <div className="flex items-center justify-between mb-1.5">
               <span className="text-xs font-black uppercase text-black tracking-wider">
                 [ {card.rightChoice.stampText} ] →
               </span>
-              <span className="text-[10px] border border-black px-1.5 py-0.5 bg-stone-100 font-bold uppercase hidden sm:inline">
+              <span className="text-[10px] border border-black px-1.5 py-0.5 bg-[#ede6cf] font-bold uppercase hidden sm:inline">
                 🎲 Tecla: → / D
               </span>
             </div>
@@ -581,11 +704,11 @@ export function ReignsCard({
               {card.rightChoice.label}
             </p>
             {card.rightChoice.flavorQuote && (
-              <div className="mt-2 border-l-3 border-black bg-stone-100/70 pl-2 py-1">
-                <span className="text-[9px] font-black uppercase tracking-wider text-zinc-800 block mb-0.5">
+              <div className="mt-2 border-l-3 border-[#121a12] bg-[#ede6cf]/80 pl-2 py-1">
+                <span className="text-[9px] font-black uppercase tracking-wider text-zinc-900 block mb-0.5">
                   🎙️ AUDIO UCO INTERVENIDO:
                 </span>
-                <p className="text-xs text-zinc-800 italic leading-snug">
+                <p className="text-xs text-zinc-900 italic leading-snug">
                   "{card.rightChoice.flavorQuote}"
                 </p>
               </div>
@@ -593,7 +716,7 @@ export function ReignsCard({
           </div>
 
           {rightPrivilegeUnlock && (
-            <div className="mt-2 pt-1.5 border-t border-dashed border-black text-[10px] font-black text-emerald-900 flex items-center gap-1">
+            <div className="mt-2 pt-1.5 border-t border-dashed border-black text-[10px] font-black text-emerald-950 flex items-center gap-1">
               <span>⚡ SUMA PRIVILEGIO:</span>
               <span className="underline">{rightPrivilegeUnlock.name}</span>
             </div>

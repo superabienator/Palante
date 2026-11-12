@@ -8,10 +8,12 @@ import { VerdictModal } from '../components/VerdictModal';
 import { CharacterPortrait } from '../components/CharacterPortrait';
 import { useGameStore } from '../store/gameStore';
 import { PRIVILEGES_REGISTRY } from '../config/privileges';
+import { soundManager } from '../utils/soundEffects';
 
 export default function HomePage() {
   const [mounted, setMounted] = useState(false);
   const [showDossier, setShowDossier] = useState(false);
+  const [muted, setMuted] = useState(false);
 
   const status = useGameStore((state) => state.status);
   const characterProfile = useGameStore((state) => state.characterProfile);
@@ -23,6 +25,9 @@ export default function HomePage() {
 
   useEffect(() => {
     setMounted(true);
+    setMuted(soundManager.isMuted());
+    const unsub = soundManager.onMuteChange((m) => setMuted(m));
+    return unsub;
   }, []);
 
   if (!mounted) {
@@ -48,9 +53,20 @@ export default function HomePage() {
         {/* Encabezado Principal Fanzine */}
         <header className="border-3 md:border-4 border-black bg-white p-4 sm:p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
           <div className="flex flex-wrap items-center justify-between gap-2 border-b-2 border-black pb-2 mb-3">
-            <span className="bg-black text-white px-2 py-0.5 text-xs font-black uppercase tracking-widest">
-              FANZINE DE LA CLEPTOCRACIA // ¡PALANTE!
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="bg-black text-white px-2 py-0.5 text-xs font-black uppercase tracking-widest">
+                FANZINE DE LA CLEPTOCRACIA // ¡PALANTE!
+              </span>
+              <button
+                type="button"
+                onClick={() => soundManager.toggleMute()}
+                className="border border-black bg-stone-100 hover:bg-black hover:text-white px-2 py-0.5 text-[10px] font-black uppercase tracking-wider cursor-pointer transition-colors flex items-center gap-1 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]"
+                title={muted ? 'Activar efectos sonoros analógicos' : 'Silenciar efectos'}
+              >
+                <span>{muted ? '🔇' : '🔊'}</span>
+                <span>{muted ? 'SONIDO: OFF' : 'SONIDO: ON'}</span>
+              </button>
+            </div>
             <span className="text-[11px] font-bold text-zinc-600 uppercase tracking-widest">
               AUDIENCIA NACIONAL // SUMARIO EN TIEMPO REAL
             </span>

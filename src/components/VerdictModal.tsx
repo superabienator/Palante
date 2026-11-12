@@ -1,8 +1,9 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useGameStore } from '../store/gameStore';
 import { FanzineDieFace } from './ReignsCard';
+import { soundManager } from '../utils/soundEffects';
 
 export function VerdictModal() {
   const status = useGameStore((state) => state.status);
@@ -16,6 +17,12 @@ export function VerdictModal() {
   const restartGame = useGameStore((state) => state.restartGame);
   const resetToCharacterSelect = useGameStore((state) => state.resetToCharacterSelect);
   const stats = useGameStore((state) => state.stats);
+
+  useEffect(() => {
+    if (status === 'GAME_OVER') {
+      soundManager.playGavel();
+    }
+  }, [status]);
 
   if (status !== 'GAME_OVER') return null;
 

@@ -3,6 +3,7 @@
 import React from 'react';
 import { StoryNode, Choice, StatModifiers } from '../types/story';
 import { useGameStore } from '../store/gameStore';
+import { soundManager } from '../utils/soundEffects';
 
 export interface DecisionCardProps {
   node?: StoryNode | null;
@@ -40,6 +41,7 @@ export function DecisionCard({
 
   const handleChoice = (choiceId: string) => {
     if (disabled) return;
+    soundManager.playStampImpact(true);
     if (onSelectChoice) {
       onSelectChoice(choiceId);
     } else {
