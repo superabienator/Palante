@@ -138,7 +138,9 @@
         "impunidad": 15,
         "reputacionMediatica": -10
       },
-      "grantedFlags": ["VIRAL_TOYOTA_SILENCIADO"]
+      "grantedFlags": [
+        "VIRAL_TOYOTA_SILENCIADO"
+      ]
     },
     "rightChoice": {
       "id": "c_toyota_2",
@@ -151,7 +153,9 @@
         "impunidad": -5,
         "reputacionMediatica": 10
       },
-      "grantedFlags": ["VIRAL_TOYOTA_RUMANO"]
+      "grantedFlags": [
+        "VIRAL_TOYOTA_RUMANO"
+      ]
     },
     "requiredFlags": []
   },
@@ -174,7 +178,9 @@
         "impunidad": 15,
         "reputacionMediatica": -15
       },
-      "grantedFlags": ["VIRAL_POSIDONIA_MULTADA"]
+      "grantedFlags": [
+        "VIRAL_POSIDONIA_MULTADA"
+      ]
     },
     "rightChoice": {
       "id": "c_posidonia_2",
@@ -187,7 +193,9 @@
         "impunidad": 10,
         "reputacionMediatica": 15
       },
-      "grantedFlags": ["VIRAL_ACTIVISTAS_ACUSADOS"]
+      "grantedFlags": [
+        "VIRAL_ACTIVISTAS_ACUSADOS"
+      ]
     },
     "requiredFlags": []
   },
@@ -210,7 +218,9 @@
         "impunidad": 15,
         "reputacionMediatica": -15
       },
-      "grantedFlags": ["VIRAL_BIDONES_REPARTIDOS"]
+      "grantedFlags": [
+        "VIRAL_BIDONES_REPARTIDOS"
+      ]
     },
     "rightChoice": {
       "id": "c_rotonda_2",
@@ -223,7 +233,9 @@
         "impunidad": 20,
         "reputacionMediatica": 15
       },
-      "grantedFlags": ["VIRAL_MINISTRO_ROTONDA"]
+      "grantedFlags": [
+        "VIRAL_MINISTRO_ROTONDA"
+      ]
     },
     "requiredFlags": []
   },
@@ -246,7 +258,9 @@
         "impunidad": 15,
         "reputacionMediatica": -15
       },
-      "grantedFlags": ["VIRAL_PUERTA_DEFENDIDA"]
+      "grantedFlags": [
+        "VIRAL_PUERTA_DEFENDIDA"
+      ]
     },
     "rightChoice": {
       "id": "c_ibex_v1_2",
@@ -259,7 +273,9 @@
         "impunidad": 10,
         "reputacionMediatica": 10
       },
-      "grantedFlags": ["VIRAL_FILANTROPIA_CAMUFLADA"]
+      "grantedFlags": [
+        "VIRAL_FILANTROPIA_CAMUFLADA"
+      ]
     },
     "requiredFlags": []
   },
@@ -282,7 +298,9 @@
         "impunidad": 15,
         "reputacionMediatica": 15
       },
-      "grantedFlags": ["VIRAL_CAMPANITA_EUFORICA"]
+      "grantedFlags": [
+        "VIRAL_CAMPANITA_EUFORICA"
+      ]
     },
     "rightChoice": {
       "id": "c_campanita_2",
@@ -295,7 +313,9 @@
         "impunidad": 10,
         "reputacionMediatica": -10
       },
-      "grantedFlags": ["VIRAL_SALIDA_DISCRETA"]
+      "grantedFlags": [
+        "VIRAL_SALIDA_DISCRETA"
+      ]
     },
     "requiredFlags": []
   },
@@ -318,7 +338,9 @@
         "impunidad": 30,
         "reputacionMediatica": 25
       },
-      "grantedFlags": ["VIRAL_PAESA_CONFIRMADO"]
+      "grantedFlags": [
+        "VIRAL_PAESA_CONFIRMADO"
+      ]
     },
     "rightChoice": {
       "id": "c_paesa_v1_2",
@@ -331,7 +353,9 @@
         "impunidad": 15,
         "reputacionMediatica": -15
       },
-      "grantedFlags": ["VIRAL_PAESA_GEMELO"]
+      "grantedFlags": [
+        "VIRAL_PAESA_GEMELO"
+      ]
     },
     "requiredFlags": []
   },
@@ -354,7 +378,9 @@
         "impunidad": 25,
         "reputacionMediatica": -20
       },
-      "grantedFlags": ["VIRAL_LAOS_SECRETO_ESTADO"]
+      "grantedFlags": [
+        "VIRAL_LAOS_SECRETO_ESTADO"
+      ]
     },
     "rightChoice": {
       "id": "c_paesa_v2_2",
@@ -367,7 +393,9 @@
         "impunidad": -10,
         "reputacionMediatica": 10
       },
-      "grantedFlags": ["VIRAL_BALONES_FUERA"]
+      "grantedFlags": [
+        "VIRAL_BALONES_FUERA"
+      ]
     },
     "requiredFlags": []
   },
@@ -390,7 +418,9 @@
         "impunidad": 15,
         "reputacionMediatica": -20
       },
-      "grantedFlags": ["VIRAL_WHATSAPP_HACKEO"]
+      "grantedFlags": [
+        "VIRAL_WHATSAPP_HACKEO"
+      ]
     },
     "rightChoice": {
       "id": "c_wh_v1_2",
@@ -403,7 +433,9 @@
         "impunidad": 20,
         "reputacionMediatica": 10
       },
-      "grantedFlags": ["VIRAL_WHATSAPP_DEFENDIDO"]
+      "grantedFlags": [
+        "VIRAL_WHATSAPP_DEFENDIDO"
+      ]
     },
     "requiredFlags": []
   },
@@ -426,7 +458,9 @@
         "impunidad": 20,
         "reputacionMediatica": -15
       },
-      "grantedFlags": ["VIRAL_SERIE_W_JUSTIFICADA"]
+      "grantedFlags": [
+        "VIRAL_SERIE_W_JUSTIFICADA"
+      ]
     },
     "rightChoice": {
       "id": "c_w_v2_2",
@@ -439,7 +473,9 @@
         "impunidad": 25,
         "reputacionMediatica": -20
       },
-      "grantedFlags": ["VIRAL_SERIE_W_TAPADA"]
+      "grantedFlags": [
+        "VIRAL_SERIE_W_TAPADA"
+      ]
     },
     "requiredFlags": []
   },
@@ -462,7 +498,9 @@
         "impunidad": 35,
         "reputacionMediatica": -15
       },
-      "grantedFlags": ["VIRAL_DOCTRINA_BOTIN_FIRME"]
+      "grantedFlags": [
+        "VIRAL_DOCTRINA_BOTIN_FIRME"
+      ]
     },
     "rightChoice": {
       "id": "c_botin_v3_2",
@@ -475,7 +513,169 @@
         "impunidad": 20,
         "reputacionMediatica": 15
       },
-      "grantedFlags": ["VIRAL_REFORMA_PROCESAL_HUECA"]
+      "grantedFlags": [
+        "VIRAL_REFORMA_PROCESAL_HUECA"
+      ]
+    },
+    "requiredFlags": []
+  },
+  {
+    "id": "VIRAL_GOMORRA_CONTAINER_BARCELONETA",
+    "speaker": "El Reportero de Sucesos de Barcelona",
+    "speakerRole": "Cronista de la Noche Portuaria",
+    "sphere": "EMPRESARIAL",
+    "headline": "ESCÁNDALO EN EL MUELLE: OCHOCIENTOS KILOS DE COCAÍNA Y UN CAPO EN LA BARCELONETA",
+    "context": "Las imágenes de la Udyco abriendo contenedores de pescado congelado en el puerto de Barcelona se filtran a los telediarios. La oposición exige la comparecencia urgente de la Autoridad Portuaria.",
+    "evidenceDocument": "Vídeo en primicia emitido en el informativo de las 21:00 con furgones policiales precintando el muelle.",
+    "leftChoice": {
+      "id": "c_vir_gom_1",
+      "label": "Desviar la atención acusando a mafias internacionales ajenas a la ciudad",
+      "stampText": "BALONES FUERA",
+      "flavorQuote": "Barcelona es solo un punto de paso logístico global: esto ocurre en Rotterdam, en Amberes y en cualquier gran puerto.",
+      "modifiers": {
+        "pastaEnB": 10,
+        "presionJudicial": -10,
+        "impunidad": 15,
+        "reputacionMediatica": -18
+      },
+      "grantedFlags": [
+        "VIRAL_GOMORRA_DESVIADA"
+      ]
+    },
+    "rightChoice": {
+      "id": "c_vir_gom_2",
+      "label": "Cesar al director de aduanas y anunciar una auditoría integral de muelles",
+      "stampText": "PURGA ADUANERA",
+      "flavorQuote": "Caiga quien caiga en los muelles: ni un contenedor entra sin inspección escáner de rayos X.",
+      "modifiers": {
+        "pastaEnB": -12,
+        "presionJudicial": -20,
+        "impunidad": -10,
+        "reputacionMediatica": 20
+      },
+      "grantedFlags": [
+        "VIRAL_AUDITORIA_PORTUARIA"
+      ]
+    },
+    "requiredFlags": []
+  },
+  {
+    "id": "VIRAL_DELAWARE_BUZON_POSTAL",
+    "speaker": "La Corresponsal de Economía en Washington",
+    "speakerRole": "Investigadora de Paraísos Fiscales",
+    "sphere": "EMPRESARIAL",
+    "headline": "LA DIRECCIÓN DE ORO: DESCUBREN EL BUZÓN DE DELAWARE DE LA CÚPULA POLÍTICA",
+    "context": "Un consorcio periodístico internacional publica una fotografía del portal de Wilmington donde tributan cuarenta empresas pantalla controladas por consejeros autonómicos y banqueros rescatados.",
+    "evidenceDocument": "Registro mercantil de Delaware con el listado de filiales y beneficiarios finales con pasaporte español.",
+    "leftChoice": {
+      "id": "c_vir_del_1",
+      "label": "Defender la absoluta legalidad de la optimización fiscal corporativa internacional",
+      "stampText": "LIBRE MERCADO",
+      "flavorQuote": "Estar en Delaware es un derecho societario dentro de la economía globalizada; todo está declarado en modelos tributarios.",
+      "modifiers": {
+        "pastaEnB": 18,
+        "presionJudicial": 12,
+        "impunidad": 14,
+        "reputacionMediatica": -20
+      },
+      "grantedFlags": [
+        "VIRAL_DEFENSA_DELAWARE"
+      ]
+    },
+    "rightChoice": {
+      "id": "c_vir_del_2",
+      "label": "Anunciar el cierre voluntario de las filiales offshore y repatriar los fondos",
+      "stampText": "REPATRIACIÓN",
+      "flavorQuote": "Traemos hasta el último céntimo de vuelta a la banca nacional antes de que el Congreso abra una comisión de investigación.",
+      "modifiers": {
+        "pastaEnB": -18,
+        "presionJudicial": -18,
+        "impunidad": 10,
+        "reputacionMediatica": 18
+      },
+      "grantedFlags": [
+        "VIRAL_REPATRIACION_DELAWARE"
+      ]
+    },
+    "requiredFlags": []
+  },
+  {
+    "id": "VIRAL_FURGONETA_PEAJE_FANTASMA",
+    "speaker": "El Youtuber de Rutas Ibéricas",
+    "speakerRole": "Documentalista del Despilfarro Rural",
+    "sphere": "POLITICA",
+    "headline": "VÍDEO VIRAL: LA AUTOPISTA DE PEAJE VACÍA DE LA MANCHA SUPERA EL MILLÓN DE VISITAS",
+    "context": "Un vídeo grabado desde una furgoneta recorriendo 30 kilómetros de autopista sin un solo coche mientras el narrador come panceta se hace trending topic mundial, denunciando el rescate millonario pagado por el Estado.",
+    "evidenceDocument": "Captura del clip de vídeo con un millón doscientas mil reproducciones y etiqueta #RadialFantasma.",
+    "leftChoice": {
+      "id": "c_vir_rad_1",
+      "label": "Minimizar el vídeo calificándolo de bulo de redes sociales orquestado por la oposición",
+      "stampText": "BULO REDES",
+      "flavorQuote": "Ese vídeo está grabado a las cuatro de la madrugada; en horas punta la intensidad de tráfico es modélica.",
+      "modifiers": {
+        "pastaEnB": 8,
+        "presionJudicial": 6,
+        "impunidad": 12,
+        "reputacionMediatica": -16
+      },
+      "grantedFlags": [
+        "VIRAL_RADIAL_DESMENTIDA"
+      ]
+    },
+    "rightChoice": {
+      "id": "c_vir_rad_2",
+      "label": "Rebajar el peaje un 80% y convertir la radial en corredor logístico comarcal",
+      "stampText": "TARIFA PLANA",
+      "flavorQuote": "Si el asfalto ya está pagado por el erario, que lo usen los transportistas y no los buitres de la concesión.",
+      "modifiers": {
+        "pastaEnB": -10,
+        "presionJudicial": -10,
+        "impunidad": 8,
+        "reputacionMediatica": 16
+      },
+      "grantedFlags": [
+        "VIRAL_TARIFA_POPULAR"
+      ]
+    },
+    "requiredFlags": []
+  },
+  {
+    "id": "VIRAL_FESTIVAL_RECALIFICACION",
+    "speaker": "La Portavoz de la Plataforma Vecinal",
+    "speakerRole": "Luchadora contra la Especulación Cultural",
+    "sphere": "POLITICA",
+    "headline": "LA FIESTA DEL LADRILLO: DENUNCIAN QUE EL FESTIVAL ERA UNA COARTADA PARA EL POLÍGONO",
+    "context": "Los vecinos del municipio descubren en el boletín provincial que el terreno inundable del macrofestival indie ha sido reclasificado como suelo industrial y terciario para un centro comercial de la familia del alcalde.",
+    "evidenceDocument": "BOP con la modificación puntual del plan general aprobada tres días después de finalizar los conciertos.",
+    "leftChoice": {
+      "id": "c_vir_fest_1",
+      "label": "Defender la recalificación como motor ineludible de atracción de empleo y ocio",
+      "stampText": "EMPLEO Y OCIO",
+      "flavorQuote": "Los festivales ponen el municipio en el mapa: quien se oponga al centro comercial se opone al progreso del pueblo.",
+      "modifiers": {
+        "pastaEnB": 18,
+        "presionJudicial": 12,
+        "impunidad": 14,
+        "reputacionMediatica": -18
+      },
+      "grantedFlags": [
+        "VIRAL_DEFENSA_POLIGONO"
+      ]
+    },
+    "rightChoice": {
+      "id": "c_vir_fest_2",
+      "label": "Suspender cautelarmente la aprobación del plan general ante la movilización ciudadana",
+      "stampText": "SUSPENSIÓN CAUTELAR",
+      "flavorQuote": "No habrá centros comerciales sobre el lodazal de las verbenas: protegemos el suelo comarcal.",
+      "modifiers": {
+        "pastaEnB": -16,
+        "presionJudicial": -14,
+        "impunidad": -10,
+        "reputacionMediatica": 18
+      },
+      "grantedFlags": [
+        "VIRAL_PLAN_SUSPENDIDO"
+      ]
     },
     "requiredFlags": []
   }

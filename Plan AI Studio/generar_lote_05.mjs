@@ -1,0 +1,1212 @@
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const OUTPUT_PATH = path.join(__dirname, 'lotes_generados', 'lote_05_mafias_y_esperpento.json');
+
+const lote05Data = {
+  sagaName: "Gomorra Catalana, Cleptocracia Global y el Asfalto Ibérico",
+  description: "Macro-sagas extraídas directamente de las obras 'La Gomorra catalana' y 'Mafias, Economía & Política' de Joan Queralt, y 'España de mierda' de Albert Pla. Abarca el desembarco del clan Amato de la Camorra en el Port de Barcelona y la Barceloneta, el entramado global de LLCs de Delaware, fondos buitre y rescates bancarios, y la picaresca surrealista y caciquil de la furgoneta de rock por carreteras secundarias, rotondas inútiles y fiestas patronales con sobrecoste.",
+  cards: [
+    // === SAGA 1: LA GOMORRA CATALANA Y EL PORT DE BARCELONA (12 Cartas) ===
+    {
+      id: "saga_gomorra_01_lo_spagnolo_sitges",
+      speaker: "Raffaele Amato 'Lo Spagnolo'",
+      speakerRole: "Capo del Clan Amato-Pagano",
+      sphere: "EMPRESARIAL",
+      headline: "EL OASIS DE SITGES: EL CAPO DE SCAMPIA COORDINA EL CLAN DESDE LA COSTA",
+      context: "Raffaele Amato se instala en un chalet de lujo en Sitges con vistas al mar. Desde allí coordina los envíos de los Scissionisti y canaliza millones de euros mientras la policía italiana lo busca por decenas de homicidios en Nápoles.",
+      evidenceDocument: "Informe de la Direzione Investigativa Antimafia (DIA) con vigilancias fotográficas de vehículos de gran cilindrada en Sitges.",
+      weight: 3,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Permitir que el capo opere con discreción a cambio de inversiones inmobiliarias",
+        stampText: "OASIS COSTA",
+        flavorQuote: "Mientras no disparen en nuestras calles ni hagan ruido, que traigan su dinero fresco a las promotoras locales.",
+        mechanicId: 5,
+        modifiers: { pastaEnB: 18, presionJudicial: 10, impunidad: -10, reputacionMediatica: -15 },
+        grantedFlags: ["GOMORRA_AMATO_INSTALADO"]
+      },
+      rightChoice: {
+        label: "Abrir diligencias reservadas conjuntas con los Carabinieri y la Udyco",
+        stampText: "VIGILANCIA DIA",
+        flavorQuote: "Los capos de Secondigliano no pueden convertir Cataluña en su retiro dorado de blanqueo sin respuesta judicial.",
+        mechanicId: 13,
+        modifiers: { pastaEnB: -10, presionJudicial: -15, impunidad: 12, reputacionMediatica: 14 },
+        grantedFlags: ["GOMORRA_INVESTIGACION_ABIERTA"]
+      }
+    },
+    {
+      id: "saga_gomorra_02_contenedor_pescado_congelado",
+      speaker: "El Inspector de Aduanas de El Prat",
+      speakerRole: "Jefe de Inspección Portuaria",
+      sphere: "ORDEN_JUSTICIA",
+      headline: "TERMINAL PORTUARIA: 800 KILOS DE COCAÍNA EN UN CARGAMENTO DE MERLUZA",
+      context: "Un contenedor procedente de Sudamérica llega al muelle de inflamables con pescado congelado y 800 kilos de cocaína pura con el sello del clan napolitano. Un intermediario ofrece una maleta para que el escáner sufra una avería técnica fortuita.",
+      evidenceDocument: "Conocimiento de embarque marítimo y acta de inspección aduanera con discrepancia de peso de 900 kilogramos.",
+      weight: 3,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Declarar avería en el arco de rayos X y autorizar el despacho exprés",
+        stampText: "DESPACHO CIEGO",
+        flavorQuote: "El contenedor sale por la puerta 4 en un camión frigorífico y aquí nadie ha visto ni una raspa de pescado.",
+        mechanicId: 19,
+        modifiers: { pastaEnB: 18, presionJudicial: 15, impunidad: -14, reputacionMediatica: -16 },
+        grantedFlags: ["GOMORRA_ADUANAS_PAGADAS"]
+      },
+      rightChoice: {
+        label: "Rajar los bloques de hielo, precintar el contenedor y llamar a los medios",
+        stampText: "INCAUTACIÓN",
+        flavorQuote: "Golpe histórico al narcotráfico internacional en el muelle de Barcelona. Conferencia de prensa con mesa llena de ladrillos blancos.",
+        mechanicId: 12,
+        modifiers: { pastaEnB: -12, presionJudicial: -18, impunidad: 10, reputacionMediatica: 18 },
+        grantedFlags: ["GOMORRA_GOLPE_PORTUARIO"]
+      }
+    },
+    {
+      id: "saga_gomorra_03_marisqueria_barceloneta",
+      speaker: "El 'Maitre' de la Barceloneta",
+      speakerRole: "Restaurador de Confianza",
+      sphere: "EMPRESARIAL",
+      headline: "CENA DE NEGOCIOS EN EL RESERVADO: GAMBAS ROJAS, CHAMPÁN Y COMISIONES",
+      context: "En el reservado de una marisquería del Port Vell, lugartenientes de Paolo Di Mauro cenan con abogados del Eixample y comisionistas de suelo. La cuenta de 4.000 euros se abona en billetes de 500 mientras se reparten licencias de apertura.",
+      evidenceDocument: "Factura manuscrita con desglose de marisco y apunte en servilleta de códigos de cuentas corrientes suizas.",
+      weight: 3,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Brindar con los inversores y garantizar que Urbanismo no inspeccione sus locales",
+        stampText: "SOBREMESA VIP",
+        flavorQuote: "En la mesa de los señores de Nápoles nunca falta bogavante ni comprensión municipal.",
+        mechanicId: 23,
+        modifiers: { pastaEnB: 14, presionJudicial: 8, impunidad: 12, reputacionMediatica: -12 },
+        grantedFlags: ["GOMORRA_RESERVADO_VIP"]
+      },
+      rightChoice: {
+        label: "Enviar a la Guardia Urbana a revisar extintores, basuras y licencias de terraza",
+        stampText: "INSPECCIÓN LOCAL",
+        flavorQuote: "Que sientan el aliento administrativo en el cogote: ni una mesa fuera de ordenanza en el paseo marítimo.",
+        mechanicId: 3,
+        modifiers: { pastaEnB: -8, presionJudicial: -10, impunidad: -6, reputacionMediatica: 10 },
+        grantedFlags: ["GOMORRA_HOSTELERIA_VIGILADA"]
+      }
+    },
+    {
+      id: "saga_gomorra_04_puente_aereo_el_prat_capodichino",
+      speaker: "El 'Corriere' del Clan",
+      speakerRole: "Transportista de Efectivo",
+      sphere: "EMPRESARIAL",
+      headline: "PUENTE AÉREO EL PRAT-CAPODICHINO: FAJOS EN EL DOBLE FONDO DE LA MALETA",
+      context: "Correos humanos viajan dos veces por semana entre Barcelona y Nápoles con 300.000 euros en cinturones térmicos y maletas con doble fondo. Si la policía aeroportuaria intensifica los controles con perros detectores, la ruta peligra.",
+      evidenceDocument: "Faja elástica incautada en la terminal 1 con fajos de billetes termosellados al vacío.",
+      weight: 2,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Relajar el filtro aduanero de vuelos comunitarios intra-Schengen",
+        stampText: "FILTRO SCHENGEN",
+        flavorQuote: "Dentro de la Unión Europea hay libre circulación de personas, mercancías y billetes de alta denominación.",
+        mechanicId: 36,
+        modifiers: { pastaEnB: 16, presionJudicial: 12, impunidad: -8, reputacionMediatica: -14 },
+        grantedFlags: ["GOMORRA_PUENTE_EFECTIVO"]
+      },
+      rightChoice: {
+        label: "Desplegar agentes con escáner corporal en la puerta de embarque a Nápoles",
+        stampText: "CERROJO AÉREO",
+        flavorQuote: "Tres correos interceptados en una semana: la conexión financiera Nápoles-Cataluña queda cortocircuitada.",
+        mechanicId: 39,
+        modifiers: { pastaEnB: -14, presionJudicial: -16, impunidad: 10, reputacionMediatica: 14 },
+        grantedFlags: ["GOMORRA_CORREOS_DETENIDOS"]
+      }
+    },
+    {
+      id: "saga_gomorra_05_inmobiliaria_diagonal",
+      speaker: "El Agente Inmobiliario del Passeig de Gràcia",
+      speakerRole: "Broker de Fincas de Lujo",
+      sphere: "EMPRESARIAL",
+      headline: "BLANQUEO DE ÉLITE: CATORCE ÁTICOS COMPRADOS POR SOCIEDADES DE PANAMÁ",
+      context: "Un grupo fiduciario vinculado a los clanes napolitanos presenta una oferta en metálico para adquirir un edificio señorial entero en l'Eixample. Proponen abonar un 40% en escritura notarial y el 60% restante mediante compensación fiduciaria en Lugano.",
+      evidenceDocument: "Escritura notarial de compraventa con precio manifiestamente inferior al valor catastral y poderes notariales en blanco.",
+      weight: 2,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Firmar la venta ante notario complaciente y cobrar la comisión del 5%",
+        stampText: "ESCRITURA BLANCA",
+        flavorQuote: "El ladrillo barcelonés no hace preguntas sobre el origen del árbol del que cayeron los billetes.",
+        mechanicId: 1,
+        modifiers: { pastaEnB: 18, presionJudicial: 12, impunidad: 10, reputacionMediatica: -16 },
+        grantedFlags: ["GOMORRA_LADRILLO_LAVADO"]
+      },
+      rightChoice: {
+        label: "Remitir el expediente al Servicio de Prevención de Blanqueo (SEPBLAC)",
+        stampText: "ALERTA SEPBLAC",
+        flavorQuote: "Cuando un comprador de áticos no tiene NIF ni oficio conocido, se enciende la luz roja de la fiscalía.",
+        mechanicId: 14,
+        modifiers: { pastaEnB: -12, presionJudicial: -14, impunidad: 8, reputacionMediatica: 16 },
+        grantedFlags: ["GOMORRA_ALERTA_BLANQUEO"]
+      }
+    },
+    {
+      id: "saga_gomorra_06_sicarios_en_scampia_y_la_mina",
+      speaker: "El Enlace de Sant Adrià",
+      speakerRole: "Custodio de Pisos Francos",
+      sphere: "ORDEN_JUSTICIA",
+      headline: "PISOS FRANCOS EN LA PERIFERIA: COMBATIENTES DE SCAMPIA EN REPOSO",
+      context: "Jóvenes pistoleros napolitanos recién salidos de la guerra de clanes son alojados en bloques discretos de la periferia metropolitana. Pasan desapercibidos fingiendo ser turistas de discoteca en Lloret de Mar antes de ser reubicados.",
+      evidenceDocument: "Pasaportes falsificados a nombre de ciudadanos belgas y llaves de pisos de alquiler temporal en Santa Coloma.",
+      weight: 2,
+      requiredFlags: ["GOMORRA_AMATO_INSTALADO"],
+      leftChoice: {
+        label: "Mirar para otro lado mientras no causen incidentes de orden público local",
+        stampText: "TURISMO DISCRETO",
+        flavorQuote: "Mientras no se líen a tiros en las Ramblas, que hagan turismo de playa y gasten en los chiringuitos.",
+        mechanicId: 27,
+        modifiers: { pastaEnB: 10, presionJudicial: 14, impunidad: -12, reputacionMediatica: -18 },
+        grantedFlags: ["GOMORRA_PISOS_PROTEGIDOS"]
+      },
+      rightChoice: {
+        label: "Montar operativo especial de GEOs y asaltar los pisos de madrugada",
+        stampText: "REDADA GEO",
+        flavorQuote: "Seis sicaris detenidos con subfusiles en el armario. Titulares en toda la prensa europea.",
+        mechanicId: 12,
+        modifiers: { pastaEnB: -10, presionJudicial: -18, impunidad: 14, reputacionMediatica: 18 },
+        grantedFlags: ["GOMORRA_SICARIOS_CAIDOS"]
+      }
+    },
+    {
+      id: "saga_gomorra_07_comisaria_desprevenida",
+      speaker: "El Comisario Provincial de Información",
+      speakerRole: "Alto Mando Policial",
+      sphere: "ORDEN_JUSTICIA",
+      headline: "INFORME CONFIDENCIAL DIA: 'HAY UNA SUCURSAL DE LA CAMORRA EN CATALUÑA'",
+      context: "Llega un informe de 200 páginas de la Fiscalía de Nápoles detallando nombres, alias y matrículas de vehículos del clan Amato que circulan a diario por Barcelona. El documento lleva tres meses acumulando polvo en la bandeja de entrada.",
+      evidenceDocument: "Oficio sellado por la magistratura italiana con petición de intervención telefónica urgente sin tramitar.",
+      weight: 2,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Archivar el informe alegando saturación de plantilla y falta de traductores",
+        stampText: "BAJONAZO",
+        flavorQuote: "Si en Nápoles se matan entre ellos, no vamos a gastar horas extras traduciendo dialecto campano.",
+        mechanicId: 18,
+        modifiers: { pastaEnB: 8, presionJudicial: -12, impunidad: 16, reputacionMediatica: -14 },
+        grantedFlags: ["GOMORRA_INFORME_ARCHIVADO"]
+      },
+      rightChoice: {
+        label: "Tramitar comisiones rogatorias urgentes y activar escuchas telefónicas",
+        stampText: "PINCHAZO URGENTE",
+        flavorQuote: "Activamos escuchas en siete móviles de prepago: sabemos dónde comen y a qué hora van al gimnasio.",
+        mechanicId: 21,
+        modifiers: { pastaEnB: -8, presionJudicial: 14, impunidad: -10, reputacionMediatica: 12 },
+        grantedFlags: ["GOMORRA_ESCUCHAS_ACTIVAS"]
+      }
+    },
+    {
+      id: "saga_gomorra_08_captura_en_el_casino",
+      speaker: "El Jefe del Grupo de Fugitivos",
+      speakerRole: "Inspector Jefe de Operaciones",
+      sphere: "ORDEN_JUSTICIA",
+      headline: "GOLPE DE MANO EN EL CASINO: CAPTURADO EL CAPO CON 40.000 EUROS EN FICHAS",
+      context: "Raffaele Amato sale del Casino de Barcelona acompañado de sus guardaespaldas. Un equipo de asalto de la Policía lo rodea en el parking. El capo no opone resistencia y pregunta con una sonrisa si puede terminar su puro habano.",
+      evidenceDocument: "Acta de detención internacional en el Puerto Olímpico con incautación de reloj de 80.000 € y fichas de tapete.",
+      weight: 3,
+      requiredFlags: ["GOMORRA_INVESTIGACION_ABIERTA"],
+      leftChoice: {
+        label: "Trasladarlo a la Audiencia Nacional en furgón blindado con máxima discreción",
+        stampText: "EXPEDICIÓN BLINDADA",
+        flavorQuote: "Ni fotos ni espectáculo: entrega inmediata a Madrid para evitar filtraciones a sus abogados.",
+        mechanicId: 38,
+        modifiers: { pastaEnB: -10, presionJudicial: -18, impunidad: 12, reputacionMediatica: 16 },
+        grantedFlags: ["GOMORRA_AMATO_PRESO"]
+      },
+      rightChoice: {
+        label: "Convocar una macro-rueda de prensa con focos de televisión y el botín expuesto",
+        stampText: "ESPECTÁCULO POLICIAL",
+        flavorQuote: "Las cámaras de televisión adoran una mesa llena de fajos morados y pasaportes con nombres falsos.",
+        mechanicId: 10,
+        modifiers: { pastaEnB: -6, presionJudicial: -10, impunidad: -8, reputacionMediatica: 20 },
+        grantedFlags: ["GOMORRA_TRIUNFO_MEDIATICO"]
+      }
+    },
+    {
+      id: "saga_gomorra_09_bloqueo_extradicion_napoles",
+      speaker: "El Penalista del Bufete Internacional",
+      speakerRole: "Abogado Defensor del Capo",
+      sphere: "ORDEN_JUSTICIA",
+      headline: "BATALLA PROCESAL: RECURSOS Y TRABAJAS CONTRA LA EUROORDEN ITALIANA",
+      context: "El equipo jurídico de los capos presenta incidentes de nulidad procesal alegando riesgo para la integridad física del detenido en prisiones de máxima seguridad italianas bajo el régimen 41-bis.",
+      evidenceDocument: "Escrito de oposición a la entrega internacional con dictámenes médicos de dolencias coronarias simuladas.",
+      weight: 2,
+      requiredFlags: ["GOMORRA_AMATO_PRESO"],
+      leftChoice: {
+        label: "Aceptar el recurso y conceder prisión atenuada en fianza millonaria",
+        stampText: "LIBERTAD FIANZA",
+        flavorQuote: "Paga tres millones de fianza en un aval bancario y firma cada quince días mientras cena en la Barceloneta.",
+        mechanicId: 17,
+        modifiers: { pastaEnB: 18, presionJudicial: 16, impunidad: -18, reputacionMediatica: -20 },
+        grantedFlags: ["GOMORRA_FIANZA_CONCEDIDA"]
+      },
+      rightChoice: {
+        label: "Rechazar de plano las dilaciones y autorizar la extradición militar inmediata",
+        stampText: "EXTRADICIÓN FULMINANTE",
+        flavorQuote: "Subido al avión de la Guardia di Finanza en la base aérea: asunto zanjado para la justicia española.",
+        mechanicId: 38,
+        modifiers: { pastaEnB: -12, presionJudicial: -20, impunidad: 14, reputacionMediatica: 18 },
+        grantedFlags: ["GOMORRA_EXTRADICION_EJECUTADA"]
+      }
+    },
+    {
+      id: "saga_gomorra_10_embargo_patrimonial_bloqueado",
+      speaker: "El Registrador de la Propiedad de Sitges",
+      speakerRole: "Funcionario Registral",
+      sphere: "ORDEN_JUSTICIA",
+      headline: "LABERINTO FIDUCIARIO: IMPOSIBLE EMBARGAR CHALETS A NOMBRE DE FONDOS OPACOS",
+      context: "El juzgado ordena el embargo cautelar de 25 fincas urbanas y amarres deportivos en Sitges y Castelldefels. Al acudir al Registro, todas las propiedades figuran a nombre de corporaciones radicadas en Delaware, Chipre y las Antillas Neerlandesas.",
+      evidenceDocument: "Certificación registral negativa con titularidades cruzadas en trust anglosajones.",
+      weight: 2,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Levantar las notas de embargo y dejar que las sociedades vendan los inmuebles",
+        stampText: "DESEMBARGO",
+        flavorQuote: "Sin sentencia firme en Nápoles, no podemos mantener congelado el mercado inmobiliario de la comarca.",
+        mechanicId: 14,
+        modifiers: { pastaEnB: 16, presionJudicial: 10, impunidad: 12, reputacionMediatica: -16 },
+        grantedFlags: ["GOMORRA_PATRIMONIO_SALVADO"]
+      },
+      rightChoice: {
+        label: "Aplicar la doctrina del levantamiento del velo societario con apoyo fiscal",
+        stampText: "VELO ROTO",
+        flavorQuote: "Rompemos la cáscara de Delaware: detrás del fondo fantasma está la firma del cuñado del capo.",
+        mechanicId: 3,
+        modifiers: { pastaEnB: -14, presionJudicial: -16, impunidad: 8, reputacionMediatica: 16 },
+        grantedFlags: ["GOMORRA_INMUEBLES_DECOMISADOS"]
+      }
+    },
+    {
+      id: "saga_gomorra_11_restaurantes_cadena_blanqueo",
+      speaker: "El Gestor de Franquicias de Hostelería",
+      speakerRole: "Especialista en Flujo de Caja",
+      sphere: "EMPRESARIAL",
+      headline: "PIZZERÍAS Y HELADERÍAS: LAVADO CONTINUO DE EFECTIVO TICKET A TICKET",
+      context: "Una red de 30 locales de comida italiana factura supuestamente cientos de miles de euros en pizzas y cafés nunca consumidos. Las cajas registradoras emiten tickets simulados a ritmo continuo para ingresar billetes en cuentas bancarias legales.",
+      evidenceDocument: "Libro de contabilidad diario con ingresos en metálico uniformes de 2.900 euros exactos por sucursal.",
+      weight: 2,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Cobrar la cuota mensual de asesoría y dar por buenas las liquidaciones de IVA",
+        stampText: "CAJA FANTASMA",
+        flavorQuote: "Cada pizza margarita imaginaria convierte 10 euros de polvo blanco en 10 euros de dividendo declarado.",
+        mechanicId: 5,
+        modifiers: { pastaEnB: 16, presionJudicial: 8, impunidad: 10, reputacionMediatica: -12 },
+        grantedFlags: ["GOMORRA_FRANQUICIAS_LAVANDO"]
+      },
+      rightChoice: {
+        label: "Enviar a inspectores de Hacienda de incógnito a contar clientes y consumiciones reales",
+        stampText: "RECUENTO REAL",
+        flavorQuote: "Ocho clientes en toda la tarde pero la caja dice que vendieron 400 calzones: acta de infracción muy grave.",
+        mechanicId: 14,
+        modifiers: { pastaEnB: -12, presionJudicial: -14, impunidad: -8, reputacionMediatica: 14 },
+        grantedFlags: ["GOMORRA_HOSTELERIA_CAZADA"]
+      }
+    },
+    {
+      id: "saga_gomorra_12_pacto_omerta_mediterraneo",
+      speaker: "El Mediador de la 'Paz Catalana'",
+      speakerRole: "Facilitador de Negocios Oscuros",
+      sphere: "EMPRESARIAL",
+      headline: "LA PAZ DE BARCELONA: NINGÚN DISPARO EN LA CIUDAD A CAMBIO DE IMPUNIDAD",
+      context: "Los clanes rivales pactan una tregua sagrada en territorio catalán: la sangre se derrama en Nápoles, pero en la Rambla de Catalunya todos visten traje caro, invierten juntos y respetan los turnos de desembarco en el puerto.",
+      evidenceDocument: "Pacto manuscrito interceptado en una suite del Hotel Arts con sellos de tres 'famiglie' napolitanas.",
+      weight: 3,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Consolidar el pacto de no agresión y garantizar tranquilidad ciudadana",
+        stampText: "PAZ SUCIA",
+        flavorQuote: "Mientras no haya sangre en la portada de los periódicos, la ciudad sigue siendo la meca del turismo y los negocios.",
+        mechanicId: 27,
+        modifiers: { pastaEnB: 18, presionJudicial: 12, impunidad: 14, reputacionMediatica: -16 },
+        grantedFlags: ["GOMORRA_PAZ_MEDITERRANEA"]
+      },
+      rightChoice: {
+        label: "Rechazar cualquier componenda y lanzar redadas sistemáticas contra los clanes",
+        stampText: "TOLERANCIA CERO",
+        flavorQuote: "Ni treguas ni zonas francas para la mafia: los mandamos a prisión o de vuelta en furgones de la Interpol.",
+        mechanicId: 38,
+        modifiers: { pastaEnB: -16, presionJudicial: -18, impunidad: 12, reputacionMediatica: 20 },
+        grantedFlags: ["GOMORRA_EXPULSION_TOTAL"]
+      }
+    },
+
+    // === SAGA 2: DELAWARE, FONDOS FIDUCIARIOS Y CLEPTOCRACIA GLOBAL (12 Cartas) ===
+    {
+      id: "saga_cleptocracia_01_buzon_postal_delaware",
+      speaker: "El Agente Registrado de Wilmington",
+      speakerRole: "Proveedor de Sociedades Pantalla",
+      sphere: "EMPRESARIAL",
+      headline: "WILMINGTON, DELAWARE: UN EDIFICIO DE DOS PLANTAS CON 285.000 EMPRESAS",
+      context: "En el 1209 de North Orange Street, un modesto edificio de ladrillo aloja la sede social de cientos de miles de corporaciones globales, bancos de inversión y sociedades de comisionistas patrios que eluden el fisco español.",
+      evidenceDocument: "Certificado de constitución de Delaware LLC con administrador fiduciario domiciliado en las Bahamas.",
+      weight: 3,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Domiciliar allí todas las plusvalías inmobiliarias y pagar cero euros en tributos",
+        stampText: "DELAWARE DIRECTO",
+        flavorQuote: "En Wilmington la ley ampara el secreto societario total: ni el inspector más sabueso sabrá quién es el dueño.",
+        mechanicId: 14,
+        modifiers: { pastaEnB: 18, presionJudicial: 8, impunidad: 14, reputacionMediatica: -12 },
+        grantedFlags: ["CLEPTO_DELAWARE_OPERATIVO"]
+      },
+      rightChoice: {
+        label: "Tributar en territorio nacional para evitar investigaciones de Hacienda y la prensa",
+        stampText: "FISCALIDAD LOCAL",
+        flavorQuote: "Pagamos sociedades al tipo general y nos ahorramos un expediente con multa y escarnio en prensa económica.",
+        mechanicId: 8,
+        modifiers: { pastaEnB: -14, presionJudicial: -12, impunidad: 8, reputacionMediatica: 14 },
+        grantedFlags: ["CLEPTO_TRIBUTACION_LOCAL"]
+      }
+    },
+    {
+      id: "saga_cleptocracia_02_venta_vivienda_emvs",
+      speaker: "El Gestor del Fondo Buitre",
+      speakerRole: "Managing Director de Capital Riesgo",
+      sphere: "EMPRESARIAL",
+      headline: "PELOTAZO DE FONDOS: 1.860 PISOS PÚBLICOS VENDIDOS A PRECIO DE SALDO",
+      context: "El ayuntamiento en quiebra enajena paquetes enteros de vivienda de protección oficial a un fondo buitre internacional por la mitad de su coste de construcción. A los tres meses, las cartas de desahucio llegan a las familias con rentas bajas.",
+      evidenceDocument: "Contrato de venta de activos públicos residenciales sin concurso público previo y con comisiones de intermediación.",
+      weight: 3,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Firmar la cesión al fondo y cobrar 2 millones de éxito a través de una consultora",
+        stampText: "LIQUIDACIÓN SOCIAL",
+        flavorQuote: "El mercado inmobiliario manda: la vivienda protegida es un lastre contable que no genera dividendos.",
+        mechanicId: 29,
+        modifiers: { pastaEnB: 18, presionJudicial: 14, impunidad: -12, reputacionMediatica: -20 },
+        grantedFlags: ["CLEPTO_PISOS_VENDIDOS"]
+      },
+      rightChoice: {
+        label: "Paralizar la subasta y mantener el parque de vivienda bajo titularidad municipal",
+        stampText: "PARQUE PÚBLICO",
+        flavorQuote: "No se vende ni un ladrillo social a especuladores extranjeros mientras haya vecinos en la calle.",
+        mechanicId: 32,
+        modifiers: { pastaEnB: -16, presionJudicial: -10, impunidad: 10, reputacionMediatica: 18 },
+        grantedFlags: ["CLEPTO_VIVIENDA_DEFENDIDA"]
+      }
+    },
+    {
+      id: "saga_cleptocracia_03_master_expres_convalidado",
+      speaker: "El Catedrático Director del Instituto",
+      speakerRole: "Fabricante de Títulos para la Élite",
+      sphere: "POLITICA",
+      headline: "UNIVERSIDAD CLIENTELAR: MÁSTER CONVALIDADO EN UN ALMUERZO SIN ASISTIR",
+      context: "Un alto cargo de tu partido necesita un título de postgrado para completar su currículum de ministro. El decano falsifica firmas de tres actas de examen y convalida 40 créditos por 'experiencia política asimilada'.",
+      evidenceDocument: "Acta de convalidación académica con firmas de profesores simuladas con tipografía de ordenador.",
+      weight: 3,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Aceptar el título con honores y nombrar al catedrático consejero de Educación",
+        stampText: "CUM LAUDE",
+        flavorQuote: "En la academia manda el poder político: los exámenes son para los que no tienen coche oficial.",
+        mechanicId: 22,
+        modifiers: { pastaEnB: 6, presionJudicial: 12, impunidad: 14, reputacionMediatica: -18 },
+        grantedFlags: ["CLEPTO_MASTER_FALSO"]
+      },
+      rightChoice: {
+        label: "Renunciar al título ficticio y matricularse en cursos reglados presenciales",
+        stampText: "HUMILDAD REAL",
+        flavorQuote: "Mejor no ostentar títulos inflados que terminar acorralado por los periodistas en la puerta de la facultad.",
+        mechanicId: 30,
+        modifiers: { pastaEnB: -4, presionJudicial: -10, impunidad: 6, reputacionMediatica: 12 },
+        grantedFlags: ["CLEPTO_MASTER_DESESTIMADO"]
+      }
+    },
+    {
+      id: "saga_cleptocracia_04_rescate_bancario_sin_retorno",
+      speaker: "El Presidente de la Caja Quebrada",
+      speakerRole: "Banquero Político en Retiro",
+      sphere: "EMPRESARIAL",
+      headline: "EL AGUJERO DE 60.000 MILLONES: 'ESTE RESCATE NO LE COSTARÁ UN EURO AL CIUDADANO'",
+      context: "Las inversiones en campos de golf y créditos a promotores amigos dejan a la caja de ahorros con un balance insostenible. El gobierno diseña un fondo público de rescate que asume los activos tóxicos mientras los directivos blindan sus indemnizaciones millonarias.",
+      evidenceDocument: "Folleto de emisión de participaciones preferentes comercializadas a jubilados sin explicar el riesgo de quiebra.",
+      weight: 3,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Inyectar el dinero público sin exigir responsabilidades y traspasar la ruina a la Sareb",
+        stampText: "RESCATE TOTAL",
+        flavorQuote: "Las pérdidas se socializan entre los contribuyentes y los bonus de salida se ingresan en cuentas privadas.",
+        mechanicId: 29,
+        modifiers: { pastaEnB: 18, presionJudicial: 12, impunidad: 16, reputacionMediatica: -20 },
+        grantedFlags: ["CLEPTO_BANCA_RESCATADA"]
+      },
+      rightChoice: {
+        label: "Exigir devolución íntegra a los patrimonios personales del consejo de administración",
+        stampText: "EMBARGO DIRECTIVO",
+        flavorQuote: "Quien rompió la caja que pague el agujero con su mansión, sus cuadros de arte y su yate.",
+        mechanicId: 14,
+        modifiers: { pastaEnB: -16, presionJudicial: -16, impunidad: -14, reputacionMediatica: 20 },
+        grantedFlags: ["CLEPTO_BANQUEROS_EMBARGADOS"]
+      }
+    },
+    {
+      id: "saga_cleptocracia_05_sociedad_pantalla_panama",
+      speaker: "El Notario de Balboa",
+      speakerRole: "Especialista en Sociedades Offshore",
+      sphere: "EMPRESARIAL",
+      headline: "PAPELES DE PANAMÁ: UN JUBILADO LOCAL FIGURA COMO DUEÑO DE 500 YATES",
+      context: "Un bufete internacional tramita la creación de una sociedad instrumental con acciones al portador para ocultar el cobro de comisiones de obra pública. Como testaferro se utiliza a un anciano que cobra 50 dólares al mes por firmar documentos notariales.",
+      evidenceDocument: "Poder general notarial con firma autógrafa del testaferro otorgando plenos derechos a un despacho suizo.",
+      weight: 2,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Firmar el poder opaco y canalizar las comisiones del AVE hacia la cuenta panameña",
+        stampText: "OFFSHORE TOTAL",
+        flavorQuote: "Un jubilado centroamericano responde ante el fisco internacional: nosotros solo disfrutamos del barco.",
+        mechanicId: 14,
+        modifiers: { pastaEnB: 18, presionJudicial: 14, impunidad: 12, reputacionMediatica: -16 },
+        grantedFlags: ["CLEPTO_PANAMA_ACTIVO"]
+      },
+      rightChoice: {
+        label: "Rechazar la operativa fiduciaria y exigir transferencias bancarias trazables",
+        stampText: "TRAZABILIDAD",
+        flavorQuote: "Las cuentas en el Caribe son una bomba de relojería cuando estallan las filtraciones periodísticas.",
+        mechanicId: 13,
+        modifiers: { pastaEnB: -14, presionJudicial: -14, impunidad: 8, reputacionMediatica: 16 },
+        grantedFlags: ["CLEPTO_PANAMA_RECHAZADO"]
+      }
+    },
+    {
+      id: "saga_cleptocracia_06_puertas_giratorias_energetica",
+      speaker: "El Presidente de la Eléctrica del IBEX",
+      speakerRole: "Gran Elector de Consejeros",
+      sphere: "EMPRESARIAL",
+      headline: "PUERTAS GIRATORIAS DE LUJO: FICHAJE DE UN EXMINISTRO POR 350.000 EUROS AL AÑO",
+      context: "Apenas seis meses después de cesar en el cargo tras redactar la ley del sector eléctrico, el exministro recibe una oferta para integrarse en el consejo de administración con despacho en la planta 22 y chófer privado.",
+      evidenceDocument: "Acta de la junta general de accionistas con la designación del consejero independiente y su retribución fija.",
+      weight: 2,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Aceptar el sillón de consejero y asegurar la influencia en la redacción del BOE",
+        stampText: "CONSEJERO VIP",
+        flavorQuote: "La puerta giratoria no hace ruido: entras como servidor público y sales como prócer del consejo.",
+        mechanicId: 8,
+        modifiers: { pastaEnB: 16, presionJudicial: 6, impunidad: 18, reputacionMediatica: -16 },
+        grantedFlags: ["CLEPTO_PUERTA_GIRATORIA_FICHAJE"]
+      },
+      rightChoice: {
+        label: "Vetar el nombramiento por incompatibilidad ética manifiesta y conflicto de interés",
+        stampText: "VETO ÉTICO",
+        flavorQuote: "Quien legisló las tarifas de la luz no puede cobrar del oligopolio al día siguiente de dejar el ministerio.",
+        mechanicId: 40,
+        modifiers: { pastaEnB: -10, presionJudicial: -8, impunidad: -10, reputacionMediatica: 18 },
+        grantedFlags: ["CLEPTO_PUERTA_FRENADA"]
+      }
+    },
+    {
+      id: "saga_cleptocracia_07_desvio_fondos_feder",
+      speaker: "El Coordinador de Cursos de Formación",
+      speakerRole: "Intermediario de Subvenciones de Empleo",
+      sphere: "POLITICA",
+      headline: "FONDOS EUROPEOS FANTASMA: CURSOS DE SOLDADURA PARA ALUMNOS INEXISTENTES",
+      context: "Se conceden 12 millones de euros de fondos europeos para reciclaje laboral de desempleados. Los centros de formación emiten listas con DNI de personas fallecidas o que jamás pisaron un aula, mientras el dinero financia comidas y actos de partido.",
+      evidenceDocument: "Hojas de firmas de asistencia con tipografías idénticas y facturas infladas de fotocopias a 50 euros la unidad.",
+      weight: 2,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Validar las memorias de justificación falsas y cobrar el 15% de comisión técnica",
+        stampText: "MEMORIA VISADA",
+        flavorQuote: "Europa manda los millones y nadie baja a contar si en el taller de soldadura hay alumnos o telarañas.",
+        mechanicId: 24,
+        modifiers: { pastaEnB: 18, presionJudicial: 16, impunidad: -10, reputacionMediatica: -18 },
+        grantedFlags: ["CLEPTO_FONDOS_DESVIADOS"]
+      },
+      rightChoice: {
+        label: "Ordenar una inspección presencial por sorpresa y congelar los pagos pendientes",
+        stampText: "CORTE SUBVENCIÓN",
+        flavorQuote: "Se acabaron los cursos fantasma: ni un euro comunitario sin control biométrico de los asistentes.",
+        mechanicId: 13,
+        modifiers: { pastaEnB: -14, presionJudicial: -16, impunidad: 8, reputacionMediatica: 16 },
+        grantedFlags: ["CLEPTO_FONDOS_AUDITADOS"]
+      }
+    },
+    {
+      id: "saga_cleptocracia_08_auditoria_kpmg_complaciente",
+      speaker: "El Socio Senior de la Auditora",
+      speakerRole: "Auditor de Cuentas Corporativas",
+      sphere: "EMPRESARIAL",
+      headline: "INFORME 'BIG FOUR': SALVEDADES EN LETRA MINÚSCULA PARA TAPAR EL DÉFICIT",
+      context: "El banco cotizado presenta un desbalance patrimonial de 4.000 millones. La auditora redacta una opinión limpia con una pequeña nota técnica al pie en página 340 que pasa desapercibida para los inversores minoristas.",
+      evidenceDocument: "Dictamen de auditoría de cuentas anuales sellado y registrado en la CNMV sin advertencias destacadas.",
+      weight: 2,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Firmar la auditoría favorable a cambio del contrato de consultoría informática de 10 millones",
+        stampText: "VISTO BUENO",
+        flavorQuote: "Si las cuentas son feas, se maquillan con lenguaje contable anglosajón y todo el mundo contento.",
+        mechanicId: 31,
+        modifiers: { pastaEnB: 16, presionJudicial: 12, impunidad: 14, reputacionMediatica: -14 },
+        grantedFlags: ["CLEPTO_AUDITORIA_TAPADA"]
+      },
+      rightChoice: {
+        label: "Emitir una opinión denegada por insolvencia y comunicarlo inmediatamente al Banco de España",
+        stampText: "QUIEBRA OFICIAL",
+        flavorQuote: "La verdad contable no se negocia: la entidad está en quiebra técnica y debe intervenirse ya.",
+        mechanicId: 14,
+        modifiers: { pastaEnB: -18, presionJudicial: -14, impunidad: -16, reputacionMediatica: 18 },
+        grantedFlags: ["CLEPTO_BANCO_INTERVENIDO"]
+      }
+    },
+    {
+      id: "saga_cleptocracia_09_fondo_fiduciario_liechtenstein",
+      speaker: "El Gestor del Trust de Vaduz",
+      speakerRole: "Fiduciario en los Alpes",
+      sphere: "EMPRESARIAL",
+      headline: "TRUST EN LIECHTENSTEIN: FONDOS IRREVOCABLES SIN NOMBRE NI ROSTRO",
+      context: "Para blindar la fortuna acumulada en comisiones de suelo ante un eventual proceso penal, se constituye un trust en Vaduz. El beneficiario figura con un alias poético y los activos se invierten en deuda pública alemana.",
+      evidenceDocument: "Estatutos del trust irrevocable con cláusula de confidencialidad reforzada y veto a magistraturas extranjeras.",
+      weight: 2,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Transferir los fondos al trust alpino y dejar la cuenta nacional a cero",
+        stampText: "REFUGIO ALPÍNO",
+        flavorQuote: "El juez puede dictar los embargos que quiera: el dinero duerme plácidamente entre las montañas de Vaduz.",
+        mechanicId: 36,
+        modifiers: { pastaEnB: 18, presionJudicial: 8, impunidad: 16, reputacionMediatica: -12 },
+        grantedFlags: ["CLEPTO_TRUST_VADUZ"]
+      },
+      rightChoice: {
+        label: "Desistir de la maniobra opaca ante el riesgo de que la OLAF rastree la divisa",
+        stampText: "REPLIEGUE BANCARIO",
+        flavorQuote: "Liechtenstein ya no es el búnker de antes: los acuerdos de intercambio de información son un riesgo real.",
+        mechanicId: 13,
+        modifiers: { pastaEnB: -12, presionJudicial: -10, impunidad: 6, reputacionMediatica: 10 },
+        grantedFlags: ["CLEPTO_REPLIEGUE_FONDOS"]
+      }
+    },
+    {
+      id: "saga_cleptocracia_10_lobby_en_bruselas_agroquimico",
+      speaker: "El Lobista de la Rue de la Loi",
+      speakerRole: "Consultor de Asuntos Europeos",
+      sphere: "POLITICA",
+      headline: "PASILLOS DE BRUSELAS: ENMIENDAS REDACTADAS POR EL LOBBY DE PESTICIDAS",
+      context: "El Parlamento Europeo tramita una directiva para prohibir un fertilizante cancerígeno fabricado por una química nacional. Un despacho de lobby redacta 40 enmiendas técnicas con tecnicismos que aplazan la prohibición durante 15 años.",
+      evidenceDocument: "Metadatos del archivo Word de la enmienda parlamentaria donde consta como autor el director del lobby químico.",
+      weight: 2,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Registrar las enmiendas en nombre del grupo parlamentario tras un viaje a Estrasburgo con todos los gastos pagados",
+        stampText: "ENMIENDA LOBBY",
+        flavorQuote: "Los diputados leemos lo que redactan los expertos del sector: para eso están los cócteles diplomáticos.",
+        mechanicId: 40,
+        modifiers: { pastaEnB: 14, presionJudicial: 6, impunidad: 16, reputacionMediatica: -16 },
+        grantedFlags: ["CLEPTO_LOBBY_TRIUNFANTE"]
+      },
+      rightChoice: {
+        label: "Denunciar la intromisión en el pleno y respaldar el informe científico de la OMS",
+        stampText: "INFORME OMS",
+        flavorQuote: "La salud pública no se vende a los fabricantes de sulfatos por una suite en la plaza de Luxemburgo.",
+        mechanicId: 10,
+        modifiers: { pastaEnB: -12, presionJudicial: -8, impunidad: -10, reputacionMediatica: 18 },
+        grantedFlags: ["CLEPTO_LOBBY_EXPULSADO"]
+      }
+    },
+    {
+      id: "saga_cleptocracia_11_amnistia_fiscal_montoro",
+      speaker: "El Inspector Jefe de la Agencia Tributaria",
+      speakerRole: "Especialista en Regularizaciones",
+      sphere: "POLITICA",
+      headline: "AMNISTÍA FISCAL HISTÓRICA: LAVADO DEL 10% SIN PREGUNTAR DE DÓNDE VINO LA PASTA",
+      context: "El ministerio de Hacienda aprueba un real decreto que permite aflorar fondos opacos en Suiza abonando solo un 10% (o un 3% real según las triquiñuelas) y borrando de un plumazo todo rastro de delito fiscal precedente.",
+      evidenceDocument: "Modelo 750 de declaración tributaria especial sellado por la delegación especial de Hacienda con nombre tachado.",
+      weight: 3,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Aflorar 20 millones de cuentas helvéticas pagando una propina y quedar limpio de polvo y paja",
+        stampText: "BLANQUEO ESTATAL",
+        flavorQuote: "El Estado nos bendice con sello de goma oficial: dinero negro transformado en patrimonio inmaculado.",
+        mechanicId: 34,
+        modifiers: { pastaEnB: 18, presionJudicial: -18, impunidad: 20, reputacionMediatica: -20 },
+        grantedFlags: ["CLEPTO_AMNISTIA_REGULARIZADA"]
+      },
+      rightChoice: {
+        label: "Impugnar la legalidad de la amnistía ante el Tribunal Constitucional y abrir inspección",
+        stampText: "RECURSO TC",
+        flavorQuote: "Una amnistía a los defraudadores quiebra el principio de justicia fiscal de la Constitución.",
+        mechanicId: 16,
+        modifiers: { pastaEnB: -16, presionJudicial: 14, impunidad: -16, reputacionMediatica: 20 },
+        grantedFlags: ["CLEPTO_AMNISTIA_ANULADA"]
+      }
+    },
+    {
+      id: "saga_cleptocracia_12_pago_asesoria_verbal_sin_papel",
+      speaker: "El Consejero Delegado de la Constructora",
+      speakerRole: "Financiador de Altos Cargos",
+      sphere: "EMPRESARIAL",
+      headline: "CONTRATO DE HUMO: 600.000 EUROS POR 'ASESORAMIENTO ESTRATÉGICO VERBAL'",
+      context: "Se descubre una transferencia de 600.000 euros desde una constructora a la sociedad unipersonal de un expresidente autonómico. Preguntado por la UCO sobre los informes entregados, el empresario responde que la asesoría fue 'oral y durante almuerzos de trabajo'.",
+      evidenceDocument: "Factura única por importe de 605.000 € con el concepto escueto: 'Análisis cualitativo del mercado global de infraestructuras'.",
+      weight: 3,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Mantener que los consejos de pasillo valen cada céntimo pagado y rechazar aportar papeles",
+        stampText: "CONSEJO ORAL",
+        flavorQuote: "La sabiduría de un prócer de la política no se pesa en folios mecanografiados, se disfruta en confidencia.",
+        mechanicId: 26,
+        modifiers: { pastaEnB: 16, presionJudicial: 14, impunidad: 12, reputacionMediatica: -18 },
+        grantedFlags: ["CLEPTO_CONSEJO_ORAL_MANTENIDO"]
+      },
+      rightChoice: {
+        label: "Admitir la simulación contractual y consignar el dinero en la cuenta del juzgado",
+        stampText: "DEVOLUCIÓN JUZGADO",
+        flavorQuote: "Consignamos el importe antes de que el juez califique la operación como cohecho impropio continuado.",
+        mechanicId: 38,
+        modifiers: { pastaEnB: -18, presionJudicial: -18, impunidad: -12, reputacionMediatica: 14 },
+        grantedFlags: ["CLEPTO_CONSIGNACION_EFECTUADA"]
+      }
+    },
+
+    // === SAGA 3: ESPAÑA DE MIERDA: LA FURGONETA Y EL ASFALTO (Albert Pla) - 10 Cartas ===
+    {
+      id: "saga_esperpento_01_resacon_lavapies",
+      speaker: "Tito de Lavapiés",
+      speakerRole: "Representante Resacoso de Músicos",
+      sphere: "POLITICA",
+      headline: "LA GIRA DEL DESCONCIERTO: 'EN CUATRO HORITAS DE FURGÓN ESTAMOS EN MADRID'",
+      context: "Tito arranca la furgoneta abollada tras perder media fianza de los bolos en las máquinas tragaperras de Lavapiés. Con una dignity envidiable y resacón de ginebra barata, jura que cruzarán la península en un suspiro sin pisar un control.",
+      evidenceDocument: "Contrato de actuaciones en garitos arrugado y manchado de café con tachones de fechas canceladas.",
+      weight: 2,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Pisar el acelerador de la furgoneta y esquivar los peajes por carreteras comarcales",
+        stampText: "POR LA COMARCAL",
+        flavorQuote: "Cuatro horas en España por carretera comarcal pueden durar tres inviernos y media vida, pero no pagamos peaje.",
+        mechanicId: 25,
+        modifiers: { pastaEnB: 8, presionJudicial: 6, impunidad: 6, reputacionMediatica: -8 },
+        grantedFlags: ["ESPERPENTO_FURGONETA_EN_RUTA"]
+      },
+      rightChoice: {
+        label: "Pagar el billete de tren de alta velocidad con fondos de la subvención provincial",
+        stampText: "AVE OFICIAL",
+        flavorQuote: "Los artistas van en preferente con café de máquina mientras la furgoneta transporta los amplis viejos.",
+        mechanicId: 25,
+        modifiers: { pastaEnB: -8, presionJudicial: -6, impunidad: 10, reputacionMediatica: 10 },
+        grantedFlags: ["ESPERPENTO_VIAJE_AVE"]
+      }
+    },
+    {
+      id: "saga_esperpento_02_peaje_quebrado_la_mancha",
+      speaker: "El Cobrador del Peaje Fantasma",
+      speakerRole: "Operario de la Radial en Quiebra",
+      sphere: "EMPRESARIAL",
+      headline: "RADIAL DESIERTA: QUINCE KILÓMETROS DE ASFALTO NUEVO Y CERO COCHES",
+      context: "La autopista de peaje radial construida en medio del secano manchego no tiene ni un solo vehículo circulando. En la cabina de cobro, el empleado lee la prensa deportiva mientras el Estado abona la Responsabilidad Patrimonial del rescate.",
+      evidenceDocument: "Ticket de peaje de importe 12,80 € emitido a las 14:00 horas con número de serie 0000001 del día.",
+      weight: 2,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Exigir al gobierno el pago íntegro de la compensación por tráfico garantizado",
+        stampText: "RESCATE RADIAL",
+        flavorQuote: "Si los coches no pasan por la autopista, que pague el erario público cada metro de asfalto vacío.",
+        mechanicId: 4,
+        modifiers: { pastaEnB: 18, presionJudicial: 8, impunidad: 14, reputacionMediatica: -18 },
+        grantedFlags: ["ESPERPENTO_RADIAL_COBRADA"]
+      },
+      rightChoice: {
+        label: "Abrir las barreras de peaje gratis y asumir el fracaso de la concesionaria",
+        stampText: "PEAJE LIBRE",
+        flavorQuote: "Levantamos las barreras: mejor coches pasando que un monumento al despilfarro con cabinas mudas.",
+        mechanicId: 32,
+        modifiers: { pastaEnB: -14, presionJudicial: -10, impunidad: -8, reputacionMediatica: 16 },
+        grantedFlags: ["ESPERPENTO_PEAJE_ABIERTO"]
+      }
+    },
+    {
+      id: "saga_esperpento_03_control_alcoholemia_albacete",
+      speaker: "El Sargento de Tráfico de Hellín",
+      speakerRole: "Mando del Control de Carretera",
+      sphere: "ORDEN_JUSTICIA",
+      headline: "CONTROL EN LA SIERRA DE LAS CABRAS: TRES FURGONES Y LINTERNA EN EL OJO",
+      context: "En una curva cerrada bajando de Pozo-Cañada en plena noche de niebla, una patrulla de la Guardia Civil despliega conos fluorescentes. Tito baja la ventanilla con aliento a coñac y muestra una acreditación de 'asesor de cultura'.",
+      evidenceDocument: "Boletín de denuncia por tasa de alcoholemia positiva y seguro obligatorio vencido hace tres semanas.",
+      weight: 2,
+      requiredFlags: ["ESPERPENTO_FURGONETA_EN_RUTA"],
+      leftChoice: {
+        label: "Enseñar la tarjeta de visita del delegado del gobierno y exigir paso inmediato",
+        stampText: "AFORAMIENTO CUTRE",
+        flavorQuote: "Agente, llame a capitanía antes de soplar: llevamos material urgente para la gala del presidente provincial.",
+        mechanicId: 32,
+        modifiers: { pastaEnB: 4, presionJudicial: 10, impunidad: 12, reputacionMediatica: -12 },
+        grantedFlags: ["ESPERPENTO_CONTROL_ESQUIVADO"]
+      },
+      rightChoice: {
+        label: "Soplar en el alcoholímetro, abonar la multa con descuento del 50% y cambiar de conductor",
+        stampText: "MULTA PAGADA",
+        flavorQuote: "Doscientos euros de vellón pagados con datáfono en mitad del monte y Raúl toma el volante.",
+        mechanicId: 18,
+        modifiers: { pastaEnB: -6, presionJudicial: -12, impunidad: -6, reputacionMediatica: 10 },
+        grantedFlags: ["ESPERPENTO_MULTA_ASUMIDA"]
+      }
+    },
+    {
+      id: "saga_esperpento_04_gasolinera_bocadillo_panceta",
+      speaker: "El Tabernero de la Nacional III",
+      speakerRole: "Regente de Hostal y Chapa",
+      sphere: "EMPRESARIAL",
+      headline: "HOSTAL DE CARRETERA: BOCADILLO DE PANCETA A PRECIO DE SOLOMILLO Y SIN TICKET",
+      context: "Parada obligada bajo un cartel descolorido de toros y lotería. El camarero sirve una tortilla de patatas correosa, cobra 30 euros en metálico y apunta los números de matrícula de los clientes para la mafia del gasóleo bonificado.",
+      evidenceDocument: "Servilleta de papel con la cuenta escrita a bolígrafo azul: '2 cafés, 2 pancetas, 1 orujo: 32 pavos'.",
+      weight: 2,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Pagar sin rechistar y cargar el gasto como 'prospección de mercado territorial'",
+        stampText: "DIETA INFLADA",
+        flavorQuote: "En la España de la carretera todo se cobra en mano y todo se desgrava como representación institucional.",
+        mechanicId: 25,
+        modifiers: { pastaEnB: 8, presionJudicial: 4, impunidad: 6, reputacionMediatica: -6 },
+        grantedFlags: ["ESPERPENTO_GASOLINERA_DIETA"]
+      },
+      rightChoice: {
+        label: "Exigir factura con CIF desglosado y amenazar con llamar a Sanidad por la mayonesa",
+        stampText: "HOJA RECLAMACIONES",
+        flavorQuote: "O me saca el CIF o le cierro el chiringuito por riesgo biológico de la tortilla fría.",
+        mechanicId: 13,
+        modifiers: { pastaEnB: -4, presionJudicial: -6, impunidad: 4, reputacionMediatica: 8 },
+        grantedFlags: ["ESPERPENTO_HOSTAL_DENUNCIADO"]
+      }
+    },
+    {
+      id: "saga_esperpento_05_alcalde_inaugura_rotonda_jamon",
+      speaker: "El Alcalde de Pozo-Cañada",
+      speakerRole: "Cacique Municipal Incombustible",
+      sphere: "POLITICA",
+      headline: "FIESTA DEL HORMIGÓN: INAUGURACIÓN DE UNA ROTONDA CON ESCULTURA DE ALAMBRE",
+      context: "El alcalde convoca a todo el pueblo para cortar la cinta tricolor de una rotonda que ha costado 450.000 euros de fondos de convergencia. En el centro se erige un amasijo de chatarra oxidada que el regidor define como 'homenaje al porcino'.",
+      evidenceDocument: "Certificación de fin de obra con liquidación de honorarios a la constructora del teniente de alcalde.",
+      weight: 3,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Aplaudir el discurso del alcalde, comer jamón del catering y firmar el finiquito de obra",
+        stampText: "CINTA CORTADA",
+        flavorQuote: "En este pueblo no hay médicos de guardia pero tenemos la rotonda más cara de toda la comarca.",
+        mechanicId: 1,
+        modifiers: { pastaEnB: 14, presionJudicial: 10, impunidad: 14, reputacionMediatica: -14 },
+        grantedFlags: ["ESPERPENTO_ROTONDA_INAUGURADA"]
+      },
+      rightChoice: {
+        label: "Filtrar el desglose presupuestario a los medios provinciales denunciando el desvío",
+        stampText: "DENUNCIA ROTONDA",
+        flavorQuote: "Cuatrocientos mil euros en cuatro farolas y dos chapas: el escándalo municipal salta a la portada regional.",
+        mechanicId: 10,
+        modifiers: { pastaEnB: -10, presionJudicial: -14, impunidad: -10, reputacionMediatica: 16 },
+        grantedFlags: ["ESPERPENTO_ESCANDALO_ROTONDA"]
+      }
+    },
+    {
+      id: "saga_esperpento_06_multa_por_tenencia_rock",
+      speaker: "El Cabo Primero de la Intervención",
+      speakerRole: "Guardia Custodio del Orden Local",
+      sphere: "ORDEN_JUSTICIA",
+      headline: "REGISTRO DE LA FURGONETA: CONFISCACIÓN DE CASSETTES Y LETRAS SOSPECHOSAS",
+      context: "En el arcén de la N-301, la patrulla vacía el maletero de la banda. Revisan los estuches de guitarra y encuentran una libreta con letras satíricas dedicadas a los banqueros y al delegado provincial. Amenazan con ley mordaza por falta de respeto.",
+      evidenceDocument: "Acta de incautación de material gráfico y letras manuscritas con propuesta de sanción administrativa.",
+      weight: 2,
+      requiredFlags: ["ESPERPENTO_FURGONETA_EN_RUTA"],
+      leftChoice: {
+        label: "Entregar dos entradas VIP para el festival y afirmar que las letras son parodia folclórica",
+        stampText: "PASE VIP",
+        flavorQuote: "Guardia, guarde el boli: esto no es subversión, es arte costumbrista subvencionado por la consejería.",
+        mechanicId: 23,
+        modifiers: { pastaEnB: 6, presionJudicial: 8, impunidad: 8, reputacionMediatica: -8 },
+        grantedFlags: ["ESPERPENTO_REGISTRO_SUPERADO"]
+      },
+      rightChoice: {
+        label: "Negarse a entregar el cuaderno amparándose en la libertad de creación artística",
+        stampText: "LIBERTAD ARTÍSTICA",
+        flavorQuote: "Ni un folio se toca: la poesía no se incauta en el arcén de una carretera nacional de segunda.",
+        mechanicId: 21,
+        modifiers: { pastaEnB: -6, presionJudicial: -10, impunidad: -6, reputacionMediatica: 14 },
+        grantedFlags: ["ESPERPENTO_RESISTENCIA_CIVIL"]
+      }
+    },
+    {
+      id: "saga_esperpento_07_hospital_fantasma_sin_medicos",
+      speaker: "El Guarda del Macrocomplejo Sanitario",
+      speakerRole: "Vigilante del Edificio Vació",
+      sphere: "POLITICA",
+      headline: "EL HOSPITAL DEL DESIERTO: FACHADA DE CRISTAL AZUL, HELIPUERTO Y CERO MÉDICOS",
+      context: "La furgoneta pincha una rueda junto a un hospital comarcal inaugurado hace doce años. El edificio luce cristalería azul reluciente y helipuerto, pero en el interior solo hay pasillos vacíos, camillas envueltas en plástico y ni un solo facultativo.",
+      evidenceDocument: "Presupuesto de mantenimiento anual de 3 millones de euros para vigilancia y climatización de un hospital cerrado.",
+      weight: 2,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Renovar la partida de mantenimiento privado a la empresa del exdiputado comarcal",
+        stampText: "MANTENIMIENTO CIEGO",
+        flavorQuote: "El hospital no cura a nadie pero da empleo al vigilante, a la contrata de limpieza y a nuestros amigos.",
+        mechanicId: 6,
+        modifiers: { pastaEnB: 16, presionJudicial: 12, impunidad: 12, reputacionMediatica: -18 },
+        grantedFlags: ["ESPERPENTO_HOSPITAL_COBRANDO"]
+      },
+      rightChoice: {
+        label: "Dotar al centro de personal médico real o reconvertirlo en escuela pública comarcal",
+        stampText: "APERTURA REAL",
+        flavorQuote: "Basta de pagar seguridad para fantasmas: que entren médicos o devuelvan el dinero del ladrillo.",
+        mechanicId: 32,
+        modifiers: { pastaEnB: -16, presionJudicial: -14, impunidad: -8, reputacionMediatica: 18 },
+        grantedFlags: ["ESPERPENTO_HOSPITAL_RECUPERADO"]
+      }
+    },
+    {
+      id: "saga_esperpento_08_radar_trampa_en_el_secano",
+      speaker: "El Concejal de Seguridad Ciudadana",
+      speakerRole: "Recaudador de Tráfico Municipal",
+      sphere: "POLITICA",
+      headline: "RADAR CAMUFLADO: CINCUENTA MULTAS POR HORA TRAS EL CARTEL DEL ASADOR",
+      context: "El ayuntamiento alquila un cinemómetro láser oculto tras una furgoneta desvencijada en una bajada donde el límite cae bruscamente de 90 a 40 km/h sin preaviso. El consistorio recauda 800.000 euros al mes para pagar la nómina municipal.",
+      evidenceDocument: "Contrato con empresa privada de radar con cláusula de comisión del 30% por cada sanción cobrada.",
+      weight: 2,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Mantener el radar trampa a pleno rendimiento para cuadrar el presupuesto municipal",
+        stampText: "RECAUDACIÓN LÁSER",
+        flavorQuote: "Cada conductor despistado nos paga las luces de Navidad y la carpa de la feria de septiembre.",
+        mechanicId: 5,
+        modifiers: { pastaEnB: 16, presionJudicial: 10, impunidad: 8, reputacionMediatica: -16 },
+        grantedFlags: ["ESPERPENTO_RADAR_ACTIVO"]
+      },
+      rightChoice: {
+        label: "Retirar el radar por abusivo y revisar los límites de velocidad según criterios técnicos",
+        stampText: "RADAR RETIRADO",
+        flavorQuote: "La seguridad vial no puede ser una emboscada con afán recaudatorio en mitad de una recta comarcal.",
+        mechanicId: 18,
+        modifiers: { pastaEnB: -12, presionJudicial: -12, impunidad: 6, reputacionMediatica: 16 },
+        grantedFlags: ["ESPERPENTO_RADAR_DESMONTADO"]
+      }
+    },
+    {
+      id: "saga_esperpento_09_motel_de_carretera_con_luces_neon",
+      speaker: "La Recepcionista del Hostal Paraíso",
+      speakerRole: "Testigo de Escapadas Discretas",
+      sphere: "POLITICA",
+      headline: "NEÓN EN LA NACIONAL: NOCHE DE ALTO STANDING EN EL HOSTAL DE LAS DISCRECIONES",
+      context: "A las dos de la madrugada aparcan en el motel berlinas oficiales de dos consejerías y furgonetas de transporte de material. En las habitaciones se cierran tratos de suministro de asfaltado entre copa y copa de coñac.",
+      evidenceDocument: "Libro de registro de huéspedes con nombres de pila falsos y cobros con tarjetas visa corporativas.",
+      weight: 2,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Guardar el secreto de las matrículas oficiales y cobrar triple tarifa por silencio",
+        stampText: "SILENCIO DE NEÓN",
+        flavorQuote: "Lo que pasa en el kilómetro 120 de la nacional se queda para siempre enterrado bajo las luces rojas.",
+        mechanicId: 27,
+        modifiers: { pastaEnB: 12, presionJudicial: 8, impunidad: 14, reputacionMediatica: -12 },
+        grantedFlags: ["ESPERPENTO_MOTEL_DISCRETO"]
+      },
+      rightChoice: {
+        label: "Entregar el libro de huéspedes con los pagos corporativos a la fiscalía anticorrupción",
+        stampText: "LISTA AL FISCAL",
+        flavorQuote: "Tarjetas de crédito de empresas públicas pagando suites de carretera: el sumario será sonado.",
+        mechanicId: 28,
+        modifiers: { pastaEnB: -14, presionJudicial: -18, impunidad: -14, reputacionMediatica: 18 },
+        grantedFlags: ["ESPERPENTO_LISTA_MOTEL_FILTRADA"]
+      }
+    },
+    {
+      id: "saga_esperpento_10_llegada_a_madrid_km_cero",
+      speaker: "Tito de Lavapiés",
+      speakerRole: "Superviviente de la Gira Ibérica",
+      sphere: "POLITICA",
+      headline: "KILÓMETRO CERO: ENTRADA EN LA M-30 BAJO LA BOINA NEGRA DE POLUCIÓN",
+      context: "La furgoneta llega por fin a la Puerta del Sol con el radiador echando humo blanco. Tito salta al asfalto entre palomas y coches de policía, abraza a Raúl y grita: '¡Chaval, ya estamos en la capital del pelotazo! ¡A cobrar los favores!'.",
+      evidenceDocument: "Ticket de aparcamiento subterráneo de la plaza Mayor con la furgoneta cargada de deudas y billetes arrugados.",
+      weight: 3,
+      requiredFlags: ["ESPERPENTO_FURGONETA_EN_RUTA"],
+      leftChoice: {
+        label: "Reunirse con los intermediarios del ministerio en el asador de la calle Génova",
+        stampText: "ASADOR Y GÉNOVA",
+        flavorQuote: "Hemos sobrevivido a la España profunda: ahora toca el cordero lechal y el reparto de sobres mayores.",
+        mechanicId: 20,
+        modifiers: { pastaEnB: 18, presionJudicial: 12, impunidad: 14, reputacionMediatica: -14 },
+        grantedFlags: ["ESPERPENTO_LLEGADA_CENTRO_PODER"]
+      },
+      rightChoice: {
+        label: "Aparcar la furgoneta para siempre y escribir una canción contando toda la mugre vista",
+        stampText: "CANCIÓN CANALLA",
+        flavorQuote: "La guitarra es más poderosa que el BOE: soltamos las verdades del asfalto en el fanzine de Lavapiés.",
+        mechanicId: 10,
+        modifiers: { pastaEnB: -12, presionJudicial: -14, impunidad: 10, reputacionMediatica: 20 },
+        grantedFlags: ["ESPERPENTO_FANZINE_PUBLICADO"]
+      }
+    },
+
+    // === SAGA 4: CULTURA CLIENTELAR Y FESTIVALES DEL HORMIGÓN (10 Cartas) ===
+    {
+      id: "saga_cultura_01_concierto_patronal_sobreprecio",
+      speaker: "El Concejal de Fiestas y Festejos",
+      speakerRole: "Contratista de Artistas y Orquestas",
+      sphere: "POLITICA",
+      headline: "VERBENA CON SOBREPRECIO: 180.000 EUROS POR UN CANTANTE EN HORAS BAJAS",
+      context: "El ayuntamiento contrata para las fiestas del patrón a un artista melódico olvidado por 180.000 euros. En el contrato privado firmado en la trastienda de la concejalía, el mánager se compromete a devolver 50.000 en billetes pequeños.",
+      evidenceDocument: "Borrador de contrato con anexo confidencial de 'gastos extraordinarios de producción técnica' sin justificar.",
+      weight: 3,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Firmar la adjudicación directa y recibir la bolsa de deporte con la mordida",
+        stampText: "FIESTA Y MORDIDA",
+        flavorQuote: "El pueblo quiere fiesta y charanga: lo que se quede por el camino paga los gastos electorales.",
+        mechanicId: 24,
+        modifiers: { pastaEnB: 18, presionJudicial: 14, impunidad: -10, reputacionMediatica: -16 },
+        grantedFlags: ["CULTURA_CONCIERTO_ADJUDICADO"]
+      },
+      rightChoice: {
+        label: "Sacar la programación de fiestas a concurso público con límite presupuestario",
+        stampText: "PLIEGO TRANSPARENTE",
+        flavorQuote: "Ni un euro fuera de catálogo oficial: si el artista cobra 30.000, no se paga ni un céntimo más.",
+        mechanicId: 13,
+        modifiers: { pastaEnB: -14, presionJudicial: -14, impunidad: 8, reputacionMediatica: 16 },
+        grantedFlags: ["CULTURA_CONCURSO_TRANSPARENTE"]
+      }
+    },
+    {
+      id: "saga_cultura_02_festival_macro_en_el_barro",
+      speaker: "El Promotor del Macrofestival Indie",
+      speakerRole: "Especulador de Eventos Masivos",
+      sphere: "EMPRESARIAL",
+      headline: "FESTIVAL EN EL LODAZAL: MACROEVENTO PARA RECALIFICAR EL POLÍGONO DE SECANO",
+      context: "Treinta mil jóvenes acampan en un barrizal sin agua corriente ni baños suficientes durante tres días de música. El objetivo real del evento es justificar una inversión millonaria en accesos viarios para recalificar los terrenos colindantes como suelo terciario.",
+      evidenceDocument: "Expediente urbanístico donde el festival consta como 'interés general de dinamización juvenil transitoria'.",
+      weight: 3,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Aprobar la recalificación de urgencia alegando el 'éxito de afluencia' del festival",
+        stampText: "PELOTAZO INDIE",
+        flavorQuote: "La música atrae a los modernos y los modernos traen el hormigón: el polígono ya vale cuatro veces más.",
+        mechanicId: 1,
+        modifiers: { pastaEnB: 18, presionJudicial: 12, impunidad: 12, reputacionMediatica: -16 },
+        grantedFlags: ["CULTURA_FESTIVAL_RECALIFICADO"]
+      },
+      rightChoice: {
+        label: "Sancionar al promotor por infracciones de salubridad y denegar el cambio de uso de suelo",
+        stampText: "MULTA SALUBRIDAD",
+        flavorQuote: "Tener a la gente durmiendo entre aguas fecales no es cultura, es especulación pura y dura.",
+        mechanicId: 18,
+        modifiers: { pastaEnB: -14, presionJudicial: -16, impunidad: -8, reputacionMediatica: 18 },
+        grantedFlags: ["CULTURA_FESTIVAL_SANCIONADO"]
+      }
+    },
+    {
+      id: "saga_cultura_03_sociedad_autores_redada_verbena",
+      speaker: "El Inspector de Derechos de Autor",
+      speakerRole: "Recaudador de la Propiedad Intelectual",
+      sphere: "ORDEN_JUSTICIA",
+      headline: "REDADA EN LA PLAZA: LA SOCIEDAD DE AUTORES PIDE EL DIEZMO DE LA BARRA",
+      context: "Un inspector con maletín y libreta irrumpe en mitad de la verbena amenazando con precintar el escenario si la comisión de fiestas no abona inmediatamente el 10% de todo lo recaudado en venta de bocadillos y cerveza.",
+      evidenceDocument: "Requerimiento de pago extrajudicial por comunicación pública de canciones populares en fiestas locales.",
+      weight: 2,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Pagar el canon con fondos de la peña taurina para evitar la suspensión de la fiesta",
+        stampText: "CANON ABONADO",
+        flavorQuote: "Págale al recaudador antes de que corte el cable del micrófono y los vecinos quemen el ayuntamiento.",
+        mechanicId: 19,
+        modifiers: { pastaEnB: -8, presionJudicial: -6, impunidad: 10, reputacionMediatica: -8 },
+        grantedFlags: ["CULTURA_CANON_PAGADO"]
+      },
+      rightChoice: {
+        label: "Expulsar al inspector de la plaza con apoyo de la banda municipal y denunciar acoso",
+        stampText: "EXPULSIÓN CANON",
+        flavorQuote: "Aquí la orquesta toca pasodobles gratis y ningún señor de corbata viene a cobrar por cantar 'Paquito el Chocolatero'.",
+        mechanicId: 10,
+        modifiers: { pastaEnB: 6, presionJudicial: 10, impunidad: -8, reputacionMediatica: 14 },
+        grantedFlags: ["CULTURA_CANON_RECHAZADO"]
+      }
+    },
+    {
+      id: "saga_cultura_04_orquesta_fantasma_en_factura",
+      speaker: "El Interventor Municipal Accidental",
+      speakerRole: "Fiscalizador de Facturas Locales",
+      sphere: "POLITICA",
+      headline: "BANDA FANTASMA: TRES FACTURAS DE 30.000 EUROS POR CONCIERTOS INEXISTENTES",
+      context: "Aparecen tres facturas a nombre de 'Sinfónica Clásica de la Mancha' por actuaciones en la feria patronal. Los vecinos declaran que esa noche solo actuó un dúo de organillo con dos altavoces de segunda mano.",
+      evidenceDocument: "Facturas mercantiles visadas por la alcaldía sin registro de entrada ni fotos de la actuación.",
+      weight: 2,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Firmar el mandamiento de pago alegando 'error formal de denominación artística'",
+        stampText: "PAGO CIEGO",
+        flavorQuote: "Si el alcalde dice que hubo orquesta sinfónica, es que los vecinos estaban sordos por la traca.",
+        mechanicId: 24,
+        modifiers: { pastaEnB: 16, presionJudicial: 14, impunidad: -12, reputacionMediatica: -16 },
+        grantedFlags: ["CULTURA_ORQUESTA_PAGADA"]
+      },
+      rightChoice: {
+        label: "Bloquear las transferencias y elevar el expediente al Tribunal de Cuentas",
+        stampText: "FRENO TRIBUNAL",
+        flavorQuote: "Ni un euro para fantasmas: quien haya falsificado la factura que responda con su fianza patrimonial.",
+        mechanicId: 13,
+        modifiers: { pastaEnB: -12, presionJudicial: -16, impunidad: 10, reputacionMediatica: 16 },
+        grantedFlags: ["CULTURA_ORQUESTA_BLOQUEADA"]
+      }
+    },
+    {
+      id: "saga_cultura_05_catering_jamon_autoridades",
+      speaker: "El Cortador Oficial de Jamón",
+      speakerRole: "Maestro Jamonero de Protocolo",
+      sphere: "POLITICA",
+      headline: "ZONA VIP MUNICIPAL: 18 JAMONES DE BELLOTA CON CARGO A 'PROMOCIÓN JUVENIL'",
+      context: "En la trastienda de la carpa oficial se sirven botellas de champán francés y platos de jamón pata negra a consejeros, alcaldes y jueces invitados. La factura de 22.000 euros se imputa al programa de fomento de hábitos saludables para jóvenes.",
+      evidenceDocument: "Factura del proveedor cárnico con el concepto camuflado: 'Material fungible para talleres juveniles de nutrición'.",
+      weight: 2,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Aprobar la factura camuflada y brindar con las autoridades comarcales",
+        stampText: "PATA NEGRA VIP",
+        flavorQuote: "El jamón de bellota suaviza las tensiones políticas: un buen plato y todos los contratos se aprueban por unanimidad.",
+        mechanicId: 23,
+        modifiers: { pastaEnB: 10, presionJudicial: 8, impunidad: 14, reputacionMediatica: -14 },
+        grantedFlags: ["CULTURA_JAMON_APROBADO"]
+      },
+      rightChoice: {
+        label: "Exigir que cada autoridad abone su plato de su propio bolsillo y retirar la partida juvenil",
+        stampText: "PAGO INDIVIDUAL",
+        flavorQuote: "Los lujos personales no se pagan con el presupuesto de los centros juveniles de barrio.",
+        mechanicId: 30,
+        modifiers: { pastaEnB: -8, presionJudicial: -10, impunidad: -6, reputacionMediatica: 14 },
+        grantedFlags: ["CULTURA_JAMON_DESESTIMADO"]
+      }
+    },
+    {
+      id: "saga_cultura_06_subvencion_cine_a_fondo_perdido",
+      speaker: "El Productor Cinematográfico Subvencionado",
+      speakerRole: "Especialista en Ayudas Públicas al Séptimo Arte",
+      sphere: "POLITICA",
+      headline: "PELÍCULA FANTASMA: 500.000 EUROS DE AYUDA PARA TRES ESPECTADORES EN SALA",
+      context: "Se conceden 500.000 euros de fondos autonómicos para rodar un drama de época. La cinta solo se proyecta un martes a las doce de la noche en un cine comarcal para cumplir el mínimo de taquilla legal, mientras el equipo directivo adquiere dos todoterrenos de alta gama.",
+      evidenceDocument: "Certificación de taquilla con 24 entradas vendidas en sesión de madrugada y liquidación de ayudas del ICAA.",
+      weight: 2,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Validar la justificación de taquilla y conceder la subvención definitiva complementaria",
+        stampText: "AYUDA CONCEDIDA",
+        flavorQuote: "El cine de autor no se mide por las masas que lo ven, sino por los amigos que viven de producirlo.",
+        mechanicId: 24,
+        modifiers: { pastaEnB: 16, presionJudicial: 12, impunidad: 10, reputacionMediatica: -16 },
+        grantedFlags: ["CULTURA_PELICULA_SUBVENCIONADA"]
+      },
+      rightChoice: {
+        label: "Abrir expediente de reintegro total por fraude de taquilla simulada",
+        stampText: "REINTEGRO TOTAL",
+        flavorQuote: "Se acabó la picaresca de las salas vacías: o devuelven el medio millón o van al juzgado de guardia.",
+        mechanicId: 13,
+        modifiers: { pastaEnB: -14, presionJudicial: -14, impunidad: -8, reputacionMediatica: 16 },
+        grantedFlags: ["CULTURA_PELICULA_SANCIONADA"]
+      }
+    },
+    {
+      id: "saga_cultura_07_premio_literario_amañado",
+      speaker: "El Presidente del Jurado Literario",
+      speakerRole: "Comisario de Premios Provinciales",
+      sphere: "POLITICA",
+      headline: "PREMIO AMAÑADO: 60.000 EUROS PARA LA NOVELA DEL CUÑADO DEL PRESIDENTE",
+      context: "El jurado de las letras comarcales recibe instrucciones telefónicas antes de abrir las plicas: el ganador debe ser el familiar del presidente provincial con una novela mediocre sobre la reconquista.",
+      evidenceDocument: "Acta previa de votación firmada en blanco dos semanas antes de finalizar el plazo de recepción de obras.",
+      weight: 2,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Entregar el galardón al cuñado en la cena de gala con focos y fotos de protocolo",
+        stampText: "PREMIO DEDO",
+        flavorQuote: "En la literatura oficial lo importante no es la métrica ni el argumento, sino la sangre familiar del autor.",
+        mechanicId: 22,
+        modifiers: { pastaEnB: 12, presionJudicial: 8, impunidad: 14, reputacionMediatica: -16 },
+        grantedFlags: ["CULTURA_PREMIO_AMAÑADO"]
+      },
+      rightChoice: {
+        label: "Romper la disciplina y premiar a una joven autora novel independiente por unanimidad",
+        stampText: "PREMIO LIMPIO",
+        flavorQuote: "La literatura gana cuando el tribunal se rebela contra las órdenes del cacique de la diputación.",
+        mechanicId: 10,
+        modifiers: { pastaEnB: -8, presionJudicial: -10, impunidad: -10, reputacionMediatica: 18 },
+        grantedFlags: ["CULTURA_PREMIO_INDEPENDIENTE"]
+      }
+    },
+    {
+      id: "saga_cultura_08_monumento_vanguardista_oxidado",
+      speaker: "El Escultor de Cabecera",
+      speakerRole: "Artista Preferido de la Consejería",
+      sphere: "POLITICA",
+      headline: "CHATARRA MONUMENTAL: 350.000 EUROS POR QUINCE CHAPAS DE HIERRO OXIDADO",
+      context: "El consistorio encarga a dedo una escultura monumental para la entrada de la autovía. La obra consiste en vigas de hierro retorcidas que los vecinos confunden con escombros de un derribo y que ha costado una fortuna de fondos de arte público.",
+      evidenceDocument: "Factura de honorarios artísticos y flete de transporte de maquinaria pesada sin concurso de diseño.",
+      weight: 2,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Defender el valor artístico de vanguardia y pagar los honorarios sin rechistar",
+        stampText: "ARTE PESADO",
+        flavorQuote: "La incomprensión de las masas es el precio que paga la vanguardia: el cheque se cobra puntualmente.",
+        mechanicId: 1,
+        modifiers: { pastaEnB: 14, presionJudicial: 8, impunidad: 12, reputacionMediatica: -14 },
+        grantedFlags: ["CULTURA_ESCULTURA_PAGADA"]
+      },
+      rightChoice: {
+        label: "Cancelar el contrato por sobrecoste desproporcionado y devolver el hierro al desguace",
+        stampText: "DESGUACE",
+        flavorQuote: "No pagamos 350.000 euros por chatarra oxidada mientras las guarderías se caen a pedazos.",
+        mechanicId: 13,
+        modifiers: { pastaEnB: -10, presionJudicial: -12, impunidad: 6, reputacionMediatica: 14 },
+        grantedFlags: ["CULTURA_ESCULTURA_CANCELADA"]
+      }
+    },
+    {
+      id: "saga_cultura_09_television_autonomica_tertulia",
+      speaker: "El Director de la Cadena Pública Autonómica",
+      speakerRole: "Comisario de la Parrilla Televisiva",
+      sphere: "POLITICA",
+      headline: "TERTULIA BLINDADA: 120.000 EUROS AL AÑO A UN COMENTARISTA AFÍN AL GOBIERNO",
+      context: "La dirección del canal autonómico aprueba la contratación estrella de un tertuliano de Madrid para dirigir la mesa de debate político diario. Su única misión es atacar a la oposición y no mencionar jamás los sumarios de corrupción del partido.",
+      evidenceDocument: "Contrato de servicios audiovisuales con cláusula de indemnización millonaria en caso de cambio de gobierno.",
+      weight: 2,
+      requiredFlags: [],
+      leftChoice: {
+        label: "Firmar el contrato blindado para garantizar el control férreo de la opinión pública",
+        stampText: "TERTULIA AFÍN",
+        flavorQuote: "Quien controla la tertulia del mediodía controla el voto de los jubilados en toda la comunidad.",
+        mechanicId: 15,
+        modifiers: { pastaEnB: 8, presionJudicial: 6, impunidad: 18, reputacionMediatica: -16 },
+        grantedFlags: ["CULTURA_TELEVISION_BLINDADA"]
+      },
+      rightChoice: {
+        label: "Abrir las tertulias a la pluralidad de periodistas locales y cancelar los contratos blindados",
+        stampText: "PLURALIDAD REAL",
+        flavorQuote: "La televisión pública pertenece a los ciudadanos, no al aparato de propaganda del gobierno de turno.",
+        mechanicId: 10,
+        modifiers: { pastaEnB: -10, presionJudicial: -8, impunidad: -12, reputacionMediatica: 18 },
+        grantedFlags: ["CULTURA_TELEVISION_PLURAL"]
+      }
+    },
+    {
+      id: "saga_cultura_10_apagon_festivo_y_fuga",
+      speaker: "El Promotor en Fuga",
+      speakerRole: "Especialista en Liquidaciones Nocturnas",
+      sphere: "EMPRESARIAL",
+      headline: "LA ÚLTIMA TRACA: EL CONCEJAL Y EL PROMOTOR HUYEN TRAS LOS FUEGOS ARTIFICIALES",
+      context: "Acaba la última traca de las fiestas mayores. Mientras el humo de la pólvora se disipa y los vecinos aplauden, el promotor y el concejal cargan tres bolsas de deporte en el maletero de un deportivo y arrancan a toda prisa antes de que los proveedores acudan a cobrar.",
+      evidenceDocument: "Libro de caja de la comisión de fiestas completamente vacío y denuncia colectiva de montadores de escenarios.",
+      weight: 3,
+      requiredFlags: ["CULTURA_CONCIERTO_ADJUDICADO"],
+      leftChoice: {
+        label: "Escapar en la noche y justificar el desfalco como 'robo con fuerza de autores desconocidos'",
+        stampText: "FUGA NOCTURNA",
+        flavorQuote: "Decimos que una banda encapuchada reventó la caja fuerte de la caseta municipal y nos vemos en Suiza.",
+        mechanicId: 35,
+        modifiers: { pastaEnB: 18, presionJudicial: 18, impunidad: -14, reputacionMediatica: -20 },
+        grantedFlags: ["CULTURA_DESFALCO_FESTIVO"]
+      },
+      rightChoice: {
+        label: "Interceptar el vehículo en el cruce de la nacional y consignar la recaudación en el banco",
+        stampText: "CORTE EN CRUCE",
+        flavorQuote: "Aquí nadie se va sin pagar los sueldos de los camareros, los técnicos y los músicos de la fiesta.",
+        mechanicId: 38,
+        modifiers: { pastaEnB: -16, presionJudicial: -18, impunidad: 12, reputacionMediatica: 20 },
+        grantedFlags: ["CULTURA_PROVEEDORES_COBRADOS"]
+      }
+    }
+  ]
+};
+
+fs.writeFileSync(OUTPUT_PATH, JSON.stringify(lote05Data, null, 2), 'utf-8');
+console.log(`Lote 05 generado con éxito: ${lote05Data.cards.length} cartas en ${OUTPUT_PATH}`);

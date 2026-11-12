@@ -15,7 +15,15 @@
           "impunidad": 50,
           "reputacionMediatica": 20
         },
-        "unlockedMechanics": [1, 2, 3, 4, 5, 6, 7]
+        "unlockedMechanics": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
       },
       "PROCONSUL_HORMIGON": {
         "id": "PROCONSUL_HORMIGON",
@@ -28,7 +36,15 @@
           "impunidad": 60,
           "reputacionMediatica": 50
         },
-        "unlockedMechanics": [2, 8, 9, 10, 11, 12, 13]
+        "unlockedMechanics": [
+          2,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ]
       },
       "ARCHIVADOR_CLOACA": {
         "id": "ARCHIVADOR_CLOACA",
@@ -41,7 +57,15 @@
           "impunidad": 80,
           "reputacionMediatica": 40
         },
-        "unlockedMechanics": [16, 17, 19, 27, 28, 29, 30]
+        "unlockedMechanics": [
+          16,
+          17,
+          19,
+          27,
+          28,
+          29,
+          30
+        ]
       }
     }
   },
@@ -59,7 +83,11 @@
           "label": "Aprobar la recalificación exprés y pedir la comisión en efectivo",
           "flavorQuote": "Ahora sí que es champán.",
           "mechanicId": 9,
-          "modifiers": { "pastaEnB": 30, "presionJudicial": 20, "impunidad": -10 },
+          "modifiers": {
+            "pastaEnB": 30,
+            "presionJudicial": 20,
+            "impunidad": -10
+          },
           "nextNodeId": "nodo_registro_uco"
         },
         {
@@ -67,7 +95,11 @@
           "label": "Fraccionar los expedientes en contratos menores de 190.000 €",
           "flavorQuote": "Todo dentro de la ley, que para eso redactamos el pliego.",
           "mechanicId": 11,
-          "modifiers": { "pastaEnB": 15, "presionJudicial": 5, "impunidad": 10 },
+          "modifiers": {
+            "pastaEnB": 15,
+            "presionJudicial": 5,
+            "impunidad": 10
+          },
           "nextNodeId": "proconsul_modificado_obra"
         },
         {
@@ -75,7 +107,11 @@
           "label": "Enviar el maletín de campaña a Génova para el Custodio de la Libreta",
           "flavorQuote": "ACS se compromete a 1M€, ha dado 30.000; FCC daba 50.000 al mes.",
           "mechanicId": 1,
-          "modifiers": { "pastaEnB": 10, "presionJudicial": 10, "impunidad": 15 },
+          "modifiers": {
+            "pastaEnB": 10,
+            "presionJudicial": 10,
+            "impunidad": 15
+          },
           "nextNodeId": "custodio_inicio_reparto"
         },
         {
@@ -83,7 +119,11 @@
           "label": "Contratar los servicios de inteligencia del Comisario para blindar el consistorio",
           "flavorQuote": "Isidro te quiere mucho y César también.",
           "mechanicId": 27,
-          "modifiers": { "pastaEnB": -15, "impunidad": 20, "reputacionMediatica": 10 },
+          "modifiers": {
+            "pastaEnB": -15,
+            "impunidad": 20,
+            "reputacionMediatica": 10
+          },
           "nextNodeId": "archivador_inicio_encargo"
         }
       ]
@@ -101,7 +141,10 @@
           "label": "Destruir las agendas y discos duros en el sótano",
           "flavorQuote": "Avería técnica en los servidores del departamento.",
           "mechanicId": 7,
-          "modifiers": { "presionJudicial": 40, "impunidad": -30 },
+          "modifiers": {
+            "presionJudicial": 40,
+            "impunidad": -30
+          },
           "nextNodeId": "nodo_fin_soto"
         },
         {
@@ -109,7 +152,11 @@
           "label": "Invocar la doctrina Botín y exigir al fiscal amigo el archivo por falta de perjudicado directo",
           "flavorQuote": "Fue él quien consiguió librar a Botín de la investigación de catorce años pidiendo que no se cursara acción penal alguna.",
           "mechanicId": 35,
-          "modifiers": { "presionJudicial": -20, "impunidad": 25, "reputacionMediatica": 10 },
+          "modifiers": {
+            "presionJudicial": -20,
+            "impunidad": 25,
+            "reputacionMediatica": 10
+          },
           "nextNodeId": "proconsul_maniobra_judicial"
         }
       ]
@@ -127,7 +174,11 @@
           "label": "Aprobar 'la pizza' técnica inflando el presupuesto sin informe de intervención",
           "flavorQuote": "Introducían modificaciones falsas en el proyecto y, sobre esa modificación, la mordida era hasta del 30%.",
           "mechanicId": 12,
-          "modifiers": { "pastaEnB": 35, "presionJudicial": 20, "impunidad": 10 },
+          "modifiers": {
+            "pastaEnB": 35,
+            "presionJudicial": 20,
+            "impunidad": 10
+          },
           "nextNodeId": "proconsul_blanqueo_litoral"
         },
         {
@@ -135,7 +186,11 @@
           "label": "Blindar la concesión hospitalaria a 30 años a cambio de un asiento futuro en el consejo",
           "flavorQuote": "La gestión del hospital de Son Espases, una concesión por treinta años a la UTE por valor de 1000 millones.",
           "mechanicId": 13,
-          "modifiers": { "pastaEnB": 20, "impunidad": 25, "reputacionMediatica": 15 },
+          "modifiers": {
+            "pastaEnB": 20,
+            "impunidad": 25,
+            "reputacionMediatica": 15
+          },
           "nextNodeId": "proconsul_maniobra_judicial"
         }
       ]
@@ -153,7 +208,11 @@
           "label": "Aceptar los 'dolar-rublos' y dar licencia de obras exprés antes de elecciones",
           "flavorQuote": "Otra máquina de lavar dolarrublos... lo que le inyectan bajo cuerda Traian y los rusos.",
           "mechanicId": 10,
-          "modifiers": { "pastaEnB": 40, "presionJudicial": 30, "reputacionMediatica": -20 },
+          "modifiers": {
+            "pastaEnB": 40,
+            "presionJudicial": 30,
+            "reputacionMediatica": -20
+          },
           "nextNodeId": "nodo_registro_uco"
         },
         {
@@ -161,7 +220,11 @@
           "label": "Alterar el PGOU a medianoche para calificar el monte público como suelo hotelero",
           "flavorQuote": "Le acababa de robar un montón de millones haciéndole creer que eran rústicos cuando él ya tenía pactada la recalificación.",
           "mechanicId": 8,
-          "modifiers": { "pastaEnB": 25, "presionJudicial": 15, "impunidad": 15 },
+          "modifiers": {
+            "pastaEnB": 25,
+            "presionJudicial": 15,
+            "impunidad": 15
+          },
           "nextNodeId": "proconsul_maniobra_judicial"
         }
       ]
@@ -179,7 +242,12 @@
           "label": "Aceptar la puerta giratoria en el consejo de administración del selectivo",
           "flavorQuote": "¿Por qué no podía un ministro hacerse rico? El Estado lo crea y el IBEX se lo lleva.",
           "mechanicId": 20,
-          "modifiers": { "pastaEnB": 20, "presionJudicial": -30, "impunidad": 40, "reputacionMediatica": 30 },
+          "modifiers": {
+            "pastaEnB": 20,
+            "presionJudicial": -30,
+            "impunidad": 40,
+            "reputacionMediatica": 30
+          },
           "nextNodeId": "proconsul_fin_ibex"
         },
         {
@@ -187,7 +255,11 @@
           "label": "Pactar el sobreseimiento con la Fiscalía mediante doctrina Botín",
           "flavorQuote": "Consiguió librar a Botín pidiendo que no se cursara acción penal alguna.",
           "mechanicId": 35,
-          "modifiers": { "presionJudicial": -25, "impunidad": 35, "reputacionMediatica": 10 },
+          "modifiers": {
+            "presionJudicial": -25,
+            "impunidad": 35,
+            "reputacionMediatica": 10
+          },
           "nextNodeId": "proconsul_fin_sobreseimiento"
         },
         {
@@ -195,7 +267,11 @@
           "label": "Cobrar un último sobresueldo en efectivo en sobre manila para los letrados",
           "flavorQuote": "Introduciendo en la máquina trituradora los documentos con el pago de los sobresueldos.",
           "mechanicId": 2,
-          "modifiers": { "pastaEnB": 25, "presionJudicial": 35, "impunidad": -20 },
+          "modifiers": {
+            "pastaEnB": 25,
+            "presionJudicial": 35,
+            "impunidad": -20
+          },
           "nextNodeId": "nodo_fin_soto"
         }
       ]
@@ -302,7 +378,11 @@
           "label": "Recepcionar donación millonaria de la constructora en maletín de campaña",
           "flavorQuote": "ACS se compromete a 1M€, ha dado 30.000; FCC daba 50.000 al mes; va a dar 12.000 al mes + ayuda campaña.",
           "mechanicId": 1,
-          "modifiers": { "pastaEnB": 30, "presionJudicial": 15, "impunidad": 10 },
+          "modifiers": {
+            "pastaEnB": 30,
+            "presionJudicial": 15,
+            "impunidad": 10
+          },
           "nextNodeId": "custodio_desvio_suiza"
         },
         {
@@ -310,7 +390,11 @@
           "label": "Distribuir sobres manila con billetes de 500 € a la cúpula directiva",
           "flavorQuote": "Introduciendo en la máquina trituradora de papel de su despacho los documentos con el pago de los sobresueldos.",
           "mechanicId": 2,
-          "modifiers": { "pastaEnB": -15, "impunidad": 25, "reputacionMediatica": -10 },
+          "modifiers": {
+            "pastaEnB": -15,
+            "impunidad": 25,
+            "reputacionMediatica": -10
+          },
           "nextNodeId": "custodio_alerta_filtracion"
         },
         {
@@ -318,7 +402,11 @@
           "label": "Financiar la precampaña del Procónsul del Hormigón con fondos opacos",
           "flavorQuote": "Ahora sí que es champán.",
           "mechanicId": 9,
-          "modifiers": { "pastaEnB": -20, "impunidad": 20, "presionJudicial": 10 },
+          "modifiers": {
+            "pastaEnB": -20,
+            "impunidad": 20,
+            "presionJudicial": 10
+          },
           "nextNodeId": "nodo_inicio_proconsul"
         }
       ]
@@ -336,7 +424,11 @@
           "label": "Transferir 22 millones a la cuenta cifrada en Ginebra a través de fiduciarios",
           "flavorQuote": "Desde las cuentas 701262BR de la Union Bancaire Privée el dinero se transfería a nombre de sociedades de las islas Vírgenes.",
           "mechanicId": 6,
-          "modifiers": { "pastaEnB": 25, "presionJudicial": 20, "impunidad": -15 },
+          "modifiers": {
+            "pastaEnB": 25,
+            "presionJudicial": 20,
+            "impunidad": -15
+          },
           "nextNodeId": "custodio_chantaje_manta"
         },
         {
@@ -344,7 +436,11 @@
           "label": "Negociar la condonación de la deuda electoral con la presidencia de la caja amiga",
           "flavorQuote": "Llamaban a Génova para trivializar la dimensión de la crisis y aclarar que estaban en la caja por y para el partido.",
           "mechanicId": 5,
-          "modifiers": { "pastaEnB": 15, "impunidad": 20, "reputacionMediatica": -15 },
+          "modifiers": {
+            "pastaEnB": 15,
+            "impunidad": 20,
+            "reputacionMediatica": -15
+          },
           "nextNodeId": "custodio_alerta_filtracion"
         }
       ]
@@ -362,7 +458,11 @@
           "label": "Protocolizar ante notario las copias de seguridad y los mensajes del ministro",
           "flavorQuote": "Paco Martínez había registrado en un notario los mensajes que intercambió con su superior sobre la Operación Kitchen.",
           "mechanicId": 4,
-          "modifiers": { "presionJudicial": 15, "impunidad": 30, "reputacionMediatica": -20 },
+          "modifiers": {
+            "presionJudicial": 15,
+            "impunidad": 30,
+            "reputacionMediatica": -20
+          },
           "nextNodeId": "custodio_chantaje_manta"
         },
         {
@@ -370,7 +470,11 @@
           "label": "Destruir a martillazos los discos duros con 35 pasadas en el taller del sótano",
           "flavorQuote": "Sobrescritura de datos treinta y cinco veces, formateo de bajo nivel y aplastamiento físico a martillazos en los sótanos.",
           "mechanicId": 7,
-          "modifiers": { "presionJudicial": 35, "impunidad": -20, "reputacionMediatica": -25 },
+          "modifiers": {
+            "presionJudicial": 35,
+            "impunidad": -20,
+            "reputacionMediatica": -25
+          },
           "nextNodeId": "custodio_fin_prision"
         }
       ]
@@ -388,7 +492,11 @@
           "label": "Exigir el cobro del 3% y amenazar con desvelar la lista completa de perceptores",
           "flavorQuote": "Ustedes tienen un problema, y ese problema se llama 3%... inundó el país y se extendió como una práctica generalizada.",
           "mechanicId": 3,
-          "modifiers": { "pastaEnB": 20, "presionJudicial": -25, "impunidad": 35 },
+          "modifiers": {
+            "pastaEnB": 20,
+            "presionJudicial": -25,
+            "impunidad": 35
+          },
           "nextNodeId": "custodio_fin_indulto"
         },
         {
@@ -396,7 +504,11 @@
           "label": "Fugarte hacia los Alpes suizos activando tus fondos en paraísos fiscales",
           "flavorQuote": "El peligro no está en los billetes sino en su valor traducido en cuenta bancaria a la que pueden llegar los jueces.",
           "mechanicId": 6,
-          "modifiers": { "pastaEnB": 40, "presionJudicial": 10, "impunidad": 20 },
+          "modifiers": {
+            "pastaEnB": 40,
+            "presionJudicial": 10,
+            "impunidad": 20
+          },
           "nextNodeId": "custodio_fin_fuga"
         },
         {
@@ -404,7 +516,10 @@
           "label": "Rechazar el pacto y jugártela en juicio con la nulidad de las pruebas intervenidas",
           "flavorQuote": "La ofensiva política contra la juez que confirmó el procesamiento por la destrucción de los ordenadores.",
           "mechanicId": 7,
-          "modifiers": { "presionJudicial": 50, "impunidad": -40 },
+          "modifiers": {
+            "presionJudicial": 50,
+            "impunidad": -40
+          },
           "nextNodeId": "custodio_fin_prision"
         }
       ]
@@ -503,7 +618,11 @@
           "label": "Facturar 2,5 millones a través de tu entramado mercantil de seguridad e inteligencia",
           "flavorQuote": "La Caixa, dos millones y medio, luego tienes Banco Sabadell... Es que le quieren mucho. Isidro te quiere mucho y César también.",
           "mechanicId": 27,
-          "modifiers": { "pastaEnB": 35, "impunidad": 15, "reputacionMediatica": -10 },
+          "modifiers": {
+            "pastaEnB": 35,
+            "impunidad": 15,
+            "reputacionMediatica": -10
+          },
           "nextNodeId": "archivador_asalto_kitchen"
         },
         {
@@ -511,7 +630,11 @@
           "label": "Disparar el 'cañón Bertha': filtrar borrador apócrifo de inteligencia a directores afines",
           "flavorQuote": "El célebre borrador ficticio para frenar al rival político publicado por El Mundo al que llamaba su 'cañón Bertha'... era una manipulación deliberada.",
           "mechanicId": 28,
-          "modifiers": { "presionJudicial": 10, "impunidad": 25, "reputacionMediatica": 30 },
+          "modifiers": {
+            "presionJudicial": 10,
+            "impunidad": 25,
+            "reputacionMediatica": 30
+          },
           "nextNodeId": "archivador_guerra_sucia_stampa"
         },
         {
@@ -519,7 +642,11 @@
           "label": "Ofrecer protección parapolicial al Procónsul del Hormigón ante la UCO",
           "flavorQuote": "Otra máquina de lavar dolarrublos... lo que le inyectan bajo cuerda Traian y los rusos.",
           "mechanicId": 10,
-          "modifiers": { "pastaEnB": 20, "impunidad": 15, "presionJudicial": 10 },
+          "modifiers": {
+            "pastaEnB": 20,
+            "impunidad": 15,
+            "presionJudicial": 10
+          },
           "nextNodeId": "nodo_inicio_proconsul"
         }
       ]
@@ -537,7 +664,11 @@
           "label": "Desplegar la operación del falso sacerdote para secuestrar los dispositivos",
           "flavorQuote": "Enrique Olivares, el falso cura, que el 23 de octubre de 2013 asaltó el domicilio de Luis Bárcenas en busca de los pendrives que podían tumbar al Gobierno.",
           "mechanicId": 16,
-          "modifiers": { "pastaEnB": -10, "presionJudicial": 30, "impunidad": 20 },
+          "modifiers": {
+            "pastaEnB": -10,
+            "presionJudicial": 30,
+            "impunidad": 20
+          },
           "nextNodeId": "archivador_kompromat_chantaje"
         },
         {
@@ -545,7 +676,11 @@
           "label": "Contratar pistoleros y mercenarios extranjeros con cargo a los fondos reservados",
           "flavorQuote": "Disponían de dinero de sobra para financiar sus actividades secretas... distribuido por Amedo para pistoleros y mercenarios.",
           "mechanicId": 17,
-          "modifiers": { "pastaEnB": -20, "presionJudicial": 25, "impunidad": 30 },
+          "modifiers": {
+            "pastaEnB": -20,
+            "presionJudicial": 25,
+            "impunidad": 30
+          },
           "nextNodeId": "archivador_guerra_sucia_stampa"
         }
       ]
@@ -563,7 +698,11 @@
           "label": "Activar el montaje mediático para forzar la purga y expulsión del fiscal",
           "flavorQuote": "¡Entonces facilísimo! Con decir que son notas informativas de los archivos de la Policía y que no las han contado... Yo ahí ya me los cargo, ¡bueno!",
           "mechanicId": 29,
-          "modifiers": { "presionJudicial": -25, "impunidad": 35, "reputacionMediatica": 20 },
+          "modifiers": {
+            "presionJudicial": -25,
+            "impunidad": 35,
+            "reputacionMediatica": 20
+          },
           "nextNodeId": "archivador_fin_purga"
         },
         {
@@ -571,7 +710,11 @@
           "label": "Fabricar un dosier 'Kompromat' con grabaciones clandestinas para neutralizar al juez instructor",
           "flavorQuote": "En algunas situaciones superaron a los métodos estalinistas con sus demoledores Kompromat: el informe Veritas y la manipulación del vídeo sexual.",
           "mechanicId": 19,
-          "modifiers": { "pastaEnB": 20, "presionJudicial": 20, "impunidad": 25 },
+          "modifiers": {
+            "pastaEnB": 20,
+            "presionJudicial": 20,
+            "impunidad": 25
+          },
           "nextNodeId": "archivador_kompromat_chantaje"
         }
       ]
@@ -589,7 +732,11 @@
           "label": "Subastar los informes clasificados desde la celda a los investigados del poder",
           "flavorQuote": "El excomisario estaba montando desde la prisión de Estremera una red de venta de informes y material probatorio clasificado para investigados judiciales.",
           "mechanicId": 30,
-          "modifiers": { "pastaEnB": 45, "presionJudicial": 40, "impunidad": 15 },
+          "modifiers": {
+            "pastaEnB": 45,
+            "presionJudicial": 40,
+            "impunidad": 15
+          },
           "nextNodeId": "archivador_fin_prision"
         },
         {
@@ -597,7 +744,12 @@
           "label": "Amenazar con filtrar las grabaciones sobre las comisiones del Rey y la Corona",
           "flavorQuote": "Avisó de que si intentaban encarcelarlo, filtraría las grabaciones sobre las comisiones saudíes del Rey y los audios de los presidentes del IBEX 35.",
           "mechanicId": 19,
-          "modifiers": { "pastaEnB": 10, "presionJudicial": -35, "impunidad": 50, "reputacionMediatica": -20 },
+          "modifiers": {
+            "pastaEnB": 10,
+            "presionJudicial": -35,
+            "impunidad": 50,
+            "reputacionMediatica": -20
+          },
           "nextNodeId": "archivador_fin_sobreseimiento"
         },
         {
@@ -605,7 +757,11 @@
           "label": "Cobrar el cheque de blindaje del banquero y pactar la purga del fiscal investigador",
           "flavorQuote": "Isidro te quiere mucho y César también.",
           "mechanicId": 27,
-          "modifiers": { "pastaEnB": 30, "presionJudicial": 15, "impunidad": 25 },
+          "modifiers": {
+            "pastaEnB": 30,
+            "presionJudicial": 15,
+            "impunidad": 25
+          },
           "nextNodeId": "archivador_fin_purga"
         }
       ]
@@ -704,7 +860,11 @@
           "label": "Entregar la bolsa de deportes y ordenar el vertido de hormigón sobre la necrópolis romana",
           "flavorQuote": "El dinero ni se crea ni se destruye, sólo cambia de manos para que las hormigoneras no paren.",
           "mechanicId": 3,
-          "modifiers": { "pastaEnB": 25, "presionJudicial": 15, "impunidad": 10 },
+          "modifiers": {
+            "pastaEnB": 25,
+            "presionJudicial": 15,
+            "impunidad": 10
+          },
           "nextNodeId": "nodo_crematorio_traian_marina"
         },
         {
@@ -712,7 +872,11 @@
           "label": "Pagar a Eladio Sarcos para que silencie a los ecologistas y a la prensa comarcal",
           "flavorQuote": "Saber estar cada uno en su sitio; si cruzan la línea se les borra del mapa.",
           "mechanicId": 8,
-          "modifiers": { "pastaEnB": -15, "presionJudicial": -10, "impunidad": 20 },
+          "modifiers": {
+            "pastaEnB": -15,
+            "presionJudicial": -10,
+            "impunidad": 20
+          },
           "nextNodeId": "nodo_registro_uco"
         }
       ]
@@ -730,7 +894,11 @@
           "label": "Zarpar a toda máquina rumbo a aguas internacionales antes de que llegue la UCO",
           "flavorQuote": "En aguas internacionales no hay fiscales de costas; que se queden con el hormigón agrietado.",
           "mechanicId": 31,
-          "modifiers": { "pastaEnB": 30, "presionJudicial": -30, "impunidad": 40 },
+          "modifiers": {
+            "pastaEnB": 30,
+            "presionJudicial": -30,
+            "impunidad": 40
+          },
           "nextNodeId": "nodo_inicio_proconsul"
         },
         {
@@ -738,7 +906,11 @@
           "label": "Comprar al presidente de la Audiencia Provincial con un atraque vitalicio para su velero",
           "flavorQuote": "A los magistrados les regalas un amarre y las querellas ecologistas duermen en un cajón.",
           "mechanicId": 34,
-          "modifiers": { "pastaEnB": -20, "presionJudicial": -25, "impunidad": 35 },
+          "modifiers": {
+            "pastaEnB": -20,
+            "presionJudicial": -25,
+            "impunidad": 35
+          },
           "nextNodeId": "proconsul_fin_sobreseimiento"
         }
       ],
@@ -757,7 +929,11 @@
           "label": "Aceptar el sillón de consejero y brindar con champán en el palco de honor",
           "flavorQuote": "Un exministro no hace cola en el paro; el Estado lo forma y el IBEX se lo queda.",
           "mechanicId": 40,
-          "modifiers": { "pastaEnB": 25, "presionJudicial": -15, "impunidad": 30 },
+          "modifiers": {
+            "pastaEnB": 25,
+            "presionJudicial": -15,
+            "impunidad": 30
+          },
           "nextNodeId": "proconsul_fin_ibex"
         },
         {
@@ -765,7 +941,11 @@
           "label": "Rechazar la oferta y fundar una consultora de relaciones institucionales para cobrar en Suiza",
           "flavorQuote": "Desde fuera del consejo se factura el triple por redactar informes de dos folios.",
           "mechanicId": 34,
-          "modifiers": { "pastaEnB": 20, "presionJudicial": -20, "impunidad": 25 },
+          "modifiers": {
+            "pastaEnB": 20,
+            "presionJudicial": -20,
+            "impunidad": 25
+          },
           "nextNodeId": "proconsul_fin_sobreseimiento"
         }
       ],
@@ -784,7 +964,11 @@
           "label": "Celebrar el funeral ficticio y reaparecer con pasaporte diplomático en Ginebra",
           "flavorQuote": "Nadie juzga a un muerto; se publican las misas en Madrid y nos quedamos con el botín de los cuarteles.",
           "mechanicId": 32,
-          "modifiers": { "pastaEnB": 35, "presionJudicial": -40, "impunidad": 45 },
+          "modifiers": {
+            "pastaEnB": 35,
+            "presionJudicial": -40,
+            "impunidad": 45
+          },
           "nextNodeId": "proconsul_fin_sobreseimiento"
         },
         {
@@ -792,7 +976,11 @@
           "label": "Cobrar la prima de indemnización estatal y fugarse a una residencia en París",
           "flavorQuote": "España es un país formidable: te aplauden en el cine y la justicia no puede tocarte.",
           "mechanicId": 18,
-          "modifiers": { "pastaEnB": 30, "presionJudicial": -35, "impunidad": 40 },
+          "modifiers": {
+            "pastaEnB": 30,
+            "presionJudicial": -35,
+            "impunidad": 40
+          },
           "nextNodeId": "nodo_inicio_proconsul"
         }
       ],
@@ -811,7 +999,11 @@
           "label": "Aceptar la presidencia de Sala y aplicar la doctrina Botín a los banqueros y políticos",
           "flavorQuote": "Si el fiscal general no acusa, las acusaciones populares se van a la calle; la doctrina Botín es sagrada.",
           "mechanicId": 17,
-          "modifiers": { "pastaEnB": 20, "presionJudicial": -30, "impunidad": 40 },
+          "modifiers": {
+            "pastaEnB": 20,
+            "presionJudicial": -30,
+            "impunidad": 40
+          },
           "nextNodeId": "proconsul_fin_sobreseimiento"
         },
         {
@@ -819,7 +1011,11 @@
           "label": "Trocear la macrocausa en veinticinco piezas separadas para forzar dilaciones indebidas",
           "flavorQuote": "Un sumario de doscientos tomos troceado no lo sienta en el banquillo nadie antes de quince años.",
           "mechanicId": 15,
-          "modifiers": { "pastaEnB": 15, "presionJudicial": -25, "impunidad": 35 },
+          "modifiers": {
+            "pastaEnB": 15,
+            "presionJudicial": -25,
+            "impunidad": 35
+          },
           "nextNodeId": "nodo_inicio_proconsul"
         }
       ],
@@ -838,7 +1034,11 @@
           "label": "Transferir las pensiones a Zúrich y ordenar a Paesa la compra de silencios",
           "flavorQuote": "Los fondos reservados son el lubricante del Reino; quien pisa el barro cobra en Ginebra.",
           "mechanicId": 12,
-          "modifiers": { "pastaEnB": 30, "presionJudicial": -25, "impunidad": 40 },
+          "modifiers": {
+            "pastaEnB": 30,
+            "presionJudicial": -25,
+            "impunidad": 40
+          },
           "nextNodeId": "proconsul_fin_sobreseimiento"
         },
         {
@@ -846,11 +1046,119 @@
           "label": "Negarse a pagar y arriesgarse a que la 'X' sea llamada a declarar en el Tribunal Supremo",
           "flavorQuote": "Si el reo quiere cantar, que cante; la maquinaria del Estado declarará su testimonio nulo.",
           "mechanicId": 27,
-          "modifiers": { "pastaEnB": -20, "presionJudicial": 30, "impunidad": -20 },
+          "modifiers": {
+            "pastaEnB": -20,
+            "presionJudicial": 30,
+            "impunidad": -20
+          },
           "nextNodeId": "nodo_registro_uco"
         }
       ],
       "ending": "PURGA_DE_OFICIO"
+    },
+    "nodo_gomorra_puerto_barcelona": {
+      "id": "nodo_gomorra_puerto_barcelona",
+      "archetypeId": "LAVANDERO_TRANSNACIONAL",
+      "sphere": "EMPRESARIAL",
+      "headline": "EL DESEMBARCO DE LA CAMORRA: CONTENEDORES Y ÁTICOS EN BARCELONA",
+      "context": "Raffaele Amato 'Lo Spagnolo' y los lugartenientes de los Scissionisti te ofrecen una alianza estratégica en el Port de Barcelona: entrada limpia de mercancía por el muelle de inflamables a cambio de liquidez ilimitada en metálico para tus promociones inmobiliarias en Sitges y Castelldefels.",
+      "evidenceDocument": "Sumario de la Direzione Investigativa Antimafia con escuchas de comisiones y escrituras notariales en blanco.",
+      "choices": [
+        {
+          "id": "c_gom_node_1",
+          "label": "Aceptar la liquidez en fajos y blindar los almacenes portuarios ante aduanas",
+          "flavorQuote": "En la Barceloneta no se hacen preguntas: el dinero fluye y las grúas de obra nunca se paran.",
+          "mechanicId": 5,
+          "modifiers": {
+            "pastaEnB": 25,
+            "presionJudicial": 15,
+            "impunidad": 20
+          },
+          "nextNodeId": "nodo_cleptocracia_fondos_buitre"
+        },
+        {
+          "id": "c_gom_node_2",
+          "label": "Filtrar el albarán del contenedor al Grupo de Fugitivos de la Policía Nacional",
+          "flavorQuote": "Que los geos revienten el muelle: nosotros salimos en la foto como baluartes de la ley.",
+          "mechanicId": 12,
+          "modifiers": {
+            "pastaEnB": -15,
+            "presionJudicial": -25,
+            "impunidad": 25
+          },
+          "nextNodeId": "proconsul_fin_sobreseimiento"
+        }
+      ]
+    },
+    "nodo_cleptocracia_fondos_buitre": {
+      "id": "nodo_cleptocracia_fondos_buitre",
+      "archetypeId": "TAUMATURGO_AGUJERO",
+      "sphere": "EMPRESARIAL",
+      "headline": "LA FÁBRICA DE DELAWARE: RESCATE BANCARIO Y VIVIENDA PÚBLICA EN ALMONEDA",
+      "context": "Los fondos fiduciarios anglosajones y las LLCs de Wilmington exigen la cesión en bloque de miles de viviendas de protección oficial y el traspaso del agujero financiero de 60.000 millones a la Sareb con garantía pública.",
+      "evidenceDocument": "Contrato fiduciario de cesión de activos residenciales y modelo 750 de amnistía fiscal sellado sin inspección.",
+      "choices": [
+        {
+          "id": "c_clepto_node_1",
+          "label": "Vender la vivienda social al fondo buitre y trasladar las plusvalías a Delaware",
+          "flavorQuote": "El mercado inmobiliario manda y en Wilmington no hay inspectores de hacienda ni preguntas morales.",
+          "mechanicId": 14,
+          "modifiers": {
+            "pastaEnB": 30,
+            "presionJudicial": 10,
+            "impunidad": 25
+          },
+          "nextNodeId": "nodo_esperpento_carretera_nacional"
+        },
+        {
+          "id": "c_clepto_node_2",
+          "label": "Acogerse a la amnistía fiscal al tipo del 10% y regularizar todo el capital repatriado",
+          "flavorQuote": "El BOE nos limpia el pecado: de comisionista opaco a respetable patriota fiscal con diploma.",
+          "mechanicId": 34,
+          "modifiers": {
+            "pastaEnB": -10,
+            "presionJudicial": -30,
+            "impunidad": 40
+          },
+          "nextNodeId": "proconsul_fin_sobreseimiento"
+        }
+      ],
+      "ending": "CONSEJO_IBEX"
+    },
+    "nodo_esperpento_carretera_nacional": {
+      "id": "nodo_esperpento_carretera_nacional",
+      "archetypeId": "PASANTE_GIRATORIO",
+      "sphere": "POLITICA",
+      "headline": "EL ASFALTO DEL ESPERPENTO: RADIALES VACÍAS Y EL CONCIERTO PATRONAL",
+      "context": "Cruzas la estepa en una furgoneta abollada sorteando controles de tráfico, peajes quebrados rescatados por el Estado y verbenas municipales donde la mitad de la partida presupuestaria se esfuma en sobres en el camerino.",
+      "evidenceDocument": "Servilleta de papel con la liquidación de la orquesta fantasma y certificación de fin de obra de una rotonda oxidada.",
+      "choices": [
+        {
+          "id": "c_esp_node_1",
+          "label": "Entrar triunfal en Madrid por la M-30 y repartir las mordidas en el asador de Génova",
+          "flavorQuote": "Hemos toreado a la Guardia Civil, a los interventores y a los alcaldes: ¡viva la picaresca nacional!",
+          "mechanicId": 20,
+          "modifiers": {
+            "pastaEnB": 20,
+            "presionJudicial": 10,
+            "impunidad": 30
+          },
+          "nextNodeId": "nodo_inicio_proconsul"
+        },
+        {
+          "id": "c_esp_node_2",
+          "label": "Aparcar la furgoneta en Lavapiés y publicar el fanzine con todas las vergüenzas de la gira",
+          "flavorQuote": "La guitarra y la tinta fanzinera no se compran: que todo el país se entere del gran esperpento.",
+          "mechanicId": 10,
+          "modifiers": {
+            "pastaEnB": -15,
+            "presionJudicial": -20,
+            "impunidad": 25
+          },
+          "nextNodeId": "proconsul_fin_sobreseimiento"
+        }
+      ],
+      "ending": "FUGA_Y_PRESCRIPCION"
     }
   }
 }
