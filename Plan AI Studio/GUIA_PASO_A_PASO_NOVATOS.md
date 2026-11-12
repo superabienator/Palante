@@ -1,181 +1,174 @@
 # 🧭 Guía Definitiva Paso a Paso: Escalado en Google AI Studio (Para Novatos)
 
-> *«Esta es tu guía única. No necesitas consultar nada más. Sigue estos 4 pasos cronológicos para generar cientos de cartas ricas en diálogo, sumarios reales y ramificaciones narrativas, e integrarlas en el juego en segundos.»*
+> *«Deja que la inteligencia artificial se encargue al 100% de la narrativa, la sátira y las historias a partir de los libros reales. Tú solo decides qué saga te gusta más, y el motor técnico del juego se encarga de integrarla sin que toques una sola línea de código.»*
 
 ---
 
-## 📋 Resumen del Proceso en 4 Pasos
+## 📋 El Flujo de Trabajo en 4 Pasos
 
-1. **Paso 1:** Configurar la pantalla de Google AI Studio (2 minutos).
-2. **Paso 2:** Subir tus documentos de consulta (PDFs, noticias o notas).
-3. **Paso 3:** Copiar y pegar los prompts de generación.
-4. **Paso 4:** Guardar el resultado y fusionarlo en el juego con un solo clic.
-
----
-
-## 🛠️ PASO 1: Configurar Google AI Studio (Clic a Clic)
-
-1. Abre tu navegador e inicia sesión en: **[https://aistudio.google.com/](https://aistudio.google.com/)**
-2. Pulsa en el botón superior izquierdo: **`Create New Prompt`** $\rightarrow$ elige **`Chat Prompt`**.
-3. **Configura la columna de la derecha (Panel de Ajustes):**
-   - **Model:** Selecciona **`Gemini 1.5 Pro`** (o *Gemini 2.0 Pro / Flash* si lo tienes disponible). *Tiene 2 millones de tokens de memoria, suficiente para meter libros enteros.*
-   - **Temperature:** Ponla en **`0.8`** (equilibrio ideal entre sátira creativa y precisión en el formato).
-4. **Configura la caja de "System Instructions" (Columna izquierda o arriba):**
-   Copia **todo el texto del siguiente recuadro** y pégalo tal cual en la casilla de *System Instructions*:
-
-```text
-Eres el Guionista Principal y Diseñador Narrativo de "IBEX-35 & Púnica: ¡PALANTE!", un simulador satírico, ácido y despiadado de supervivencia política, judicial y empresarial en España.
-
-ESTILO LITERARIO:
-- Humor negro ibérico, costumbrismo corrupto y esperpento berlanguiano (en la estela de "La Escopeta Nacional", "El Verdugo" y los guiones de Rafael Azcona).
-- Cinismo institucional absoluto: los personajes buscan forrarse, comprar voluntades, esquivar a la UCO y asegurarse un sillón en el consejo del IBEX 35.
-- Utiliza la terminología real de los sumarios de la Audiencia Nacional (visés, comisiones del 3%, mordidas en sobres manila, piezas separadas, recalificaciones del PGOU, fondos reservados, doctrina Botín, tarjetas black y comidas pantagruélicas en asadores con micrófonos ocultos).
-- Cada decisión DEBE incluir un "flavorQuote" que suene a escucha telefónica real de la Guardia Civil o declaración judicial.
-
-REGLAS DE FORMATO ESTRICTAS:
-1. Responde SIEMPRE con un único JSON válido sin texto de introducción ni conclusiones.
-2. Cada carta debe cumplir estrictamente esta estructura:
-   - id: string único descriptivo (ej: "saga_koldo_01_mascarillas").
-   - speaker: nombre del interlocutor (ej: "D. Romualdo", "El Comisario Pepe").
-   - speakerRole: cargo satírico (ej: "El Fontanero de Interior").
-   - sphere: exactamente "POLITICA", "ORDEN_JUSTICIA" o "EMPRESARIAL".
-   - headline: titular en MAYÚSCULAS.
-   - context: narración del dilema (2 a 4 frases mordaces).
-   - evidenceDocument: descripción de la prueba física incautada si aplica.
-   - weight: número entero del 1 al 5.
-   - requiredFlags: lista de banderas necesarias para que la carta aparezca (o [] si puede salir desde el principio).
-   - leftChoice y rightChoice: objetos con:
-     * label: descripción de la acción.
-     * stampText: texto del sello de caucho en MAYÚSCULAS (ej: "TRINCAR", "AFORARSE", "NEGAR").
-     * flavorQuote: transcripción textual o verosímil de audio policial.
-     * mechanicId: número entero del 1 al 40 (si otorga un resorte de corrupción permanente).
-     * modifiers: { pastaEnB, presionJudicial, impunidad, reputacionMediatica } con valores entre -18 y +18.
-     * grantedFlags: lista de banderas que esta decisión activa.
+```mermaid
+flowchart LR
+    A["1. Ajustes y System Prompt"] --> B["2. Arrastrar Libros (.txt)"]
+    B --> C["3. Diálogo con AI Studio<br/>(La IA propone las sagas)"]
+    C --> D["4. Guardar JSON y --merge<br/>(Directo al juego)"]
 ```
 
 ---
 
-## 📎 PASO 2: Subir tus Fuentes Reales (Bibliografía en TXT)
+## 🛠️ PASO 1: Configurar Google AI Studio (2 minutos)
 
-Google AI Studio **no admite archivos en formato `.epub`** porque son contenedores comprimidos (ZIP), pero sí acepta de forma nativa archivos de texto plano (**`.txt`**), PDF y Markdown.
+1. Entra en tu navegador a: **[https://aistudio.google.com/](https://aistudio.google.com/)**
+2. Pulsa en el botón azul superior: **`Create New Prompt`** $\rightarrow$ selecciona **`Chat Prompt`**.
+3. **Columna de la derecha (Ajustes):**
+   - **Model:** Selecciona **`Gemini 1.5 Pro`** (o *Gemini 2.0 Pro / Flash* si te aparece). Tiene 2 millones de tokens de memoria, ideal para leer los 9 libros de golpe.
+   - **Temperature:** Ponla en **`0.8`** (máxima soltura cómica y satírica).
+4. **Casilla de "System Instructions" (Instrucciones del Sistema):**
+   Copia este bloque técnico y pégalo tal cual en la casilla de *System Instructions*. Esto le enseña a Gemini cómo funciona nuestro juego y qué formato informático necesita devolver:
 
-Ya hemos convertido automáticamente todos tus libros de la carpeta `Plan AI Studio/Bibliografia/` a texto plano limpio en UTF-8 dentro de la carpeta:
+```text
+Eres el Guionista Principal y Diseñador de Juego de "IBEX-35 & Púnica: ¡PALANTE!", un simulador satírico de supervivencia política, judicial y empresarial en España.
+
+TONO Y DIRECCIÓN NARRATIVA:
+- Humor negro ibérico, costumbrismo corrupto y esperpento berlanguiano (estilo "La Escopeta Nacional", "Crematorio", "El Verdugo" y crónicas de investigación).
+- Los personajes son cínicos, supervivientes natos y obsesionados con la pasta en B, los sillones del IBEX y evitar la cárcel.
+- Utiliza la jerga real de los sumarios y los libros adjuntos: comisiones del 3%, mordidas, sobresueldos en sobres manila, coches oficiales, aforamientos, fondos reservados, doctrina Botín, tarjetas black y comidas con grabadoras ocultas.
+- Cada opción debe incluir un "flavorQuote" que suene a escucha telefónica real de la UCO o conversación pinchada.
+
+CONTRATO TÉCNICO Y FORMATO (INQUEBRANTABLE):
+1. Cuando se te pida generar cartas, responde SIEMPRE con un único objeto JSON válido sin texto adicional antes ni después:
+   {
+     "sagaName": "Nombre de la Saga",
+     "description": "Sinopsis de la trama",
+     "cards": [ ... ]
+   }
+2. Cada carta del array "cards" debe cumplir exactamente esta estructura:
+   - "id": string único descriptivo (ej: "saga_cloaca_01_comida").
+   - "speaker": nombre o apodo satírico del personaje (ej: "El Comisario Pepe", "El Conseguidor").
+   - "speakerRole": cargo satírico (ej: "Fontanero de Interior", "Consejero del IBEX").
+   - "sphere": exactamente una de estas tres: "POLITICA", "ORDEN_JUSTICIA" o "EMPRESARIAL".
+   - "headline": titular en MAYÚSCULAS con gancho de periódico.
+   - "context": narración del dilema (2 a 4 frases mordaces).
+   - "evidenceDocument": prueba física incautada si aplica (ej: "Fotocopia de libreta suiza con iniciales M.R.").
+   - "weight": número entero del 1 al 5.
+   - "requiredFlags": array de strings con las banderas necesarias para que esta carta aparezca (o [] si puede salir al inicio).
+   - "leftChoice" y "rightChoice": objetos con:
+       * "label": descripción de lo que hace el jugador.
+       * "stampText": texto del sello de caucho en MAYÚSCULAS (ej: "UNTAZO", "TRINCAR", "AFORARSE", "NEGAR").
+       * "flavorQuote": transcripción de audio policial o frase lapidaria.
+       * "modifiers": objeto con { "pastaEnB", "presionJudicial", "impunidad", "reputacionMediatica" } con valores enteros balanceados entre -18 y +18.
+       * "grantedFlags": array de strings con las banderas que esta decisión activa para desatar futuras cartas.
+       * "mechanicId": opcional, número entero del 1 al 40 si concede un privilegio permanente.
+```
+
+---
+
+## 📎 PASO 2: Subir la Bibliografía (Arrastrar y Soltar)
+
+Google AI Studio acepta archivos de texto plano **`.txt`**. Todos los 9 libros ya están convertidos y limpios en tu carpeta:
 📁 **`Plan AI Studio/Bibliografia_TXT/`**
 
-### ¿Por qué la versión .TXT es la mejor opción para AI Studio?
-- **Consume un 40% menos de tokens** que los PDFs o escaneos.
-- **Cero errores de OCR**: el texto es idéntico al original, con capítulos ordenados, diálogos y acentos en español intactos.
-- **Carga instantánea** sin esperas de indexación.
-
-### Libros convertidos y listos para arrastrar:
-1. `Crematorio (Chirbes Rafael).txt` (797 KB - Novela clave de la corrupción inmobiliaria levantina)
-2. `El secuestro de la justicia (Joaquim Bosch Ignacio Escolar).txt` (453 KB - Politización judicial y cloacas)
-3. `España de mierda (Albert Pla).txt` (219 KB - Picaresca satírica y esperpento ibérico)
-4. `Guerra sucia (Manuel Cerdán).txt` (1.5 MB - Fondos reservados, espionaje y cloacas del Estado)
-5. `IBEX 35 una historia herética del poder en España (Rubén Juste).txt` (668 KB - Puertas giratorias y consejos)
-6. `La Gomorra catalana (Joan Queralt).txt` (525 KB - Crimen organizado y comisiones)
-7. `Mafias Economía Política (Joan Queralt).txt` (644 KB - Relaciones entre narcos, banca y poder)
-8. `Operación Jaque Mate Cómo acabaron con el fiscal del caso Villarejo (Ernesto Ekaizer).txt` (714 KB - Audios de Villarejo y guerra judicial)
-9. `Paesa, el espía de las mil caras (Manuel Cerdán).txt` (588 KB - Casos Roldán, evasión y tramas de testaferros)
-
-### Cómo subirlos a AI Studio:
-1. En la parte inferior de Google AI Studio, pulsa el botón **`+` (`Add file`)** o simplemente arrastra los archivos `.txt` desde tu explorador de Windows directamente a la ventana de AI Studio.
-2. Puedes arrastrar **1, 2 o los 9 libros a la vez** (Gemini 2.5 Pro tiene 2.000.000 de tokens de ventana de contexto, así que caben todos de sobra).
-3. Una vez subidos, Gemini usará las anécdotas, datos reales, nombres en clave y jerga de estos libros para nutrir las cartas y diálogos satíricos.
+1. Abre esa carpeta en el explorador de archivos de Windows.
+2. Selecciona los libros que quieras (puedes arrastrar los 9 a la vez, o los 3 que más te apetezcan):
+   - `Crematorio (Chirbes Rafael).txt` *(Ladrillo, mafia costera y recalificaciones)*
+   - `IBEX 35 una historia herética del poder en España (Rubén Juste).txt` *(Puertas giratorias y consejos)*
+   - `Operación Jaque Mate (Ernesto Ekaizer).txt` *(Villarejo, audios y fontanería judicial)*
+   - `Paesa, el espía de las mil caras (Manuel Cerdán).txt` *(Testaferros, fugas y cuentas suizas)*
+   - `El secuestro de la justicia (Joaquim Bosch Ignacio Escolar).txt` *(Politización de togas)*
+   - `Guerra sucia (Manuel Cerdán).txt` *(Fondos reservados y cloacas)*
+   - `La Gomorra catalana` y `Mafias Economía Política` *(Blanqueo y crimen organizado)*
+   - `España de mierda (Albert Pla).txt` *(Picaresca ácida ibérica)*
+3. **Arrastra los archivos `.txt` y suéltalos directamente en la ventana de AI Studio** (o usa el botón `+ Add file`).
+4. Espera unos segundos a que se carguen.
 
 ---
 
-## 💬 PASO 3: Los Prompts de Generación (Copiar y Pegar en el Chat)
+## 💬 PASO 3: Conversar con AI Studio (La IA inventa todo)
 
-No le pidas 300 cartas de golpe. Pídele **Macro-Sagas de 6 a 8 cartas** en cada mensaje. Así la calidad literaria y los diálogos serán oro puro.
+No necesitas inventarte ninguna historia ni escribir tramas. Deja que Gemini explore los libros y te haga las propuestas:
 
-Aquí tienes los 3 prompts listos para usar en orden:
-
----
-
-### PROMPT A: Generar una Macro-Saga de 6 Cartas Encadenadas
-> *Copia el siguiente texto, cambia el título si quieres otro tema, y pégalo en el chat de AI Studio:*
+### 🔸 Mensaje 1: Que AI Studio proponga 6 Macro-Sagas
+*Copia y pega este mensaje en el chat de AI Studio:*
 
 ```text
-Genera una Macro-Saga ramificada de 6 cartas encadenadas titulada "La Trama de las Mascarillas y el Asador".
+He subido a este chat los libros de investigación y crónica sobre corrupción, cloacas policiales, evasión fiscal, espionaje y grandes constructoras en España.
 
-PREMISA:
-En plena crisis sanitaria de urgencia, intermediarios y asesores de ministerios adjudican contratos millonarios de material sanitario defectuoso a una empresa pantalla sin experiencia previa, cobrando comisiones del 25% que se reparten en marisquerías de Madrid y se blanquean en chalets y parcelas rústicas.
+Analiza a fondo toda la bibliografía y proponme 6 Macro-Sagas diferentes para nuestro juego "IBEX-35 & Púnica: ¡PALANTE!".
 
-ARQUITECTURA DE CARTAS:
-- Carta 1 (Apertura): Se ofrece el primer contrato de emergencia sin licitación. La opción izquierda acepta y activa la bandera "contrato_urgencia_firmado"; la derecha lo frena y activa "proveedor_tradicional".
-- Cartas 2, 3 y 4 (Nudo ramificado): Requieren "contrato_urgencia_firmado". Surgen problemas: las mascarillas no filtran, el banco avisa de transferencias sospechosas o la Guardia Civil pincha las llamadas del asesor. Cada decisión añade nuevas banderas.
-- Cartas 5 y 6 (Clímax): Registro sorpresa de la UCO en el asador o comparecencia televisada en la comisión del Congreso.
+Para cada saga dame:
+1. Título satírico y mordaz.
+2. En qué libro(s) o hechos reales se inspira.
+3. Premisa argumental satírica (qué conflicto estalla).
+4. Personajes clave implicados (políticos, jueces, banqueros, comisarios o testaferros).
+5. Posibles desenlaces o clímax dramáticos.
 
-RECUERDA:
-- Incluye citas de escuchas telefónicas reales ("flavorQuote") y piezas de convicción ("evidenceDocument").
-- Formato de respuesta: objeto JSON con las claves "sagaName", "description" y el array "cards".
+(Por ahora NO generes código JSON, solo las 6 propuestas literarias para que yo elija la que más me guste).
 ```
 
 ---
 
-### PROMPT B: Generar la Siguiente Saga sin Repetir
-> *Una vez recibida la primera saga, envía este segundo prompt en la misma conversación:*
+### 🔸 Mensaje 2: Elegir la saga y pedir las cartas
+*Cuando AI Studio te responda con las 6 propuestas, elige la que más te guste (por ejemplo la número 1) y escribe:*
 
 ```text
-Excelente. Ahora genera otra Macro-Saga ramificada diferente de 6 cartas titulada "El Gran Rescate de la Radial Quebrada".
+Me quedo con la Saga número [1]. 
 
-PREMISA:
-Una constructora del IBEX 35 construyó una autopista de peaje sin tráfico. Tras quebrar, exige que el Estado pague la factura mediante la Responsabilidad Patrimonial de la Administración (RPA), mientras la prensa económica destapa que el sobrecoste en el hormigón financió la sede del partido.
+Desarróllala ahora como Guionista redactando el primer lote de 10 a 12 cartas ramificadas en formato JSON estricto, siguiendo al 100% las especificaciones y el contrato de datos de las System Instructions.
 
-Asegúrate de que:
-1. Los "id" de las cartas sean únicos (ej: "saga_radial_01_quiebra", "saga_radial_02_rescate", etc.).
-2. Las banderas ("grantedFlags" y "requiredFlags") sean específicas de esta saga (ej: "radial_rescatada", "auditoria_boe_frenada").
-3. Mantén el formato JSON puro.
+Recuerda:
+- Ponle a cada carta IDs claros que empiecen por el nombre de la saga (ej: "saga_villarejo_01_comida", "saga_villarejo_02_grabacion").
+- Conecta las cartas usando "grantedFlags" en las decisiones y "requiredFlags" en las cartas siguientes para crear bifurcaciones reales (que una decisión te lleve por el camino del chantaje y otra por el camino del sobreseimiento).
+- Modificadores numéricos balanceados entre -18 y +18.
+- Devuelve ÚNICAMENTE el objeto JSON sin texto antes ni después.
+```
+
+> **💡 ¿Por qué en lotes de 10 a 12 cartas?**  
+> AI Studio tiene un límite máximo de salida de 8.192 tokens por respuesta. Pedir 40 cartas de golpe en un solo mensaje haría que la respuesta se cortase a mitad del código y el JSON quedase roto. Pidiéndole tandas de 10 a 12 cartas te aseguras de que el JSON termine perfectamente cerrado.
+
+---
+
+### 🔸 Mensaje 3: Ampliar la saga con más cartas
+*Una vez recibidas las primeras cartas, pídele la siguiente tanda en la misma conversación:*
+
+```text
+Excelente. Ahora genera las siguientes 10 a 12 cartas de esta misma saga para continuar las ramificaciones y llevar la historia hacia sus clímax judiciales, políticos o de fuga a Suiza.
+
+Asegúrate de:
+1. Usar IDs nuevos que no se repitan con la tanda anterior.
+2. Exigir en "requiredFlags" las banderas que quedaron abiertas en la primera tanda.
+3. Devolver ÚNICAMENTE el objeto JSON.
 ```
 
 ---
 
-### PROMPT C: Generar Cartas Virales de Actualidad
-> *Para meter noticias de última hora que conecten con la realidad:*
+## 💾 PASO 4: Guardar y Fusionar en el Juego (En 10 Segundos)
 
-```text
-Genera un paquete de 4 cartas individuales de CUESTIÓN VIRAL / ESCÁNDALO DE PRENSA inspiradas en la actualidad política española reciente:
+Una vez que AI Studio te dé el JSON:
 
-1. El candidato presidencial que cancela a última hora su entrevista en el programa de máxima audiencia ("El Plantón").
-2. Un diputado que se equivoca al pulsar el botón telemático en una votación clave del Congreso.
-3. La filtración de grabaciones de WhatsApp en un grupo de concejales conspirando contra su propio alcalde.
-4. El descubrimiento de un zulo con fajos de billetes en el falso techo de un chalé en la sierra.
-
-Formato: array JSON de cartas con titulares en mayúsculas, sellos tajantes y citas telefónicas ácidas.
-```
-
----
-
-## 💾 PASO 4: Guardar e Integrar en el Juego (En 30 Segundos)
-
-Cuando AI Studio te responda con el bloque de código JSON:
-
-1. **Copia el JSON:**
-   - En la esquina superior derecha del bloque de código en AI Studio verás un icono de **`Copy`** (Copiar). Púlsalo.
-2. **Guárdalo en un archivo:**
-   - En tu editor (Antigravity / VS Code), crea un archivo nuevo dentro de la carpeta `Plan AI Studio/` llamado:
-     **`nuevas_cartas.json`**
-   - Pega dentro el contenido que acabas de copiar y guarda el archivo (`Ctrl + S`).
-3. **Fusiónalo con el juego con este único comando:**
-   - Abre la terminal de la aplicación y ejecuta:
+1. **Copiar el JSON:**
+   - En la esquina superior derecha del bloque de código en AI Studio, haz clic en el icono **`Copy`** (Copiar).
+2. **Pegarlo en un archivo:**
+   - En el explorador de tu proyecto, crea un archivo dentro de `Plan AI Studio/` llamado:
+     📄 **`Plan AI Studio/nuevas_cartas.json`**
+   - Pega dentro lo que acabas de copiar y guarda el archivo (`Ctrl + S`).
+3. **Fusionarlo automáticamente con este comando:**
+   - Abre la terminal en el proyecto y ejecuta:
      ```powershell
      node "Plan AI Studio/validate_ai_studio_output.mjs" "Plan AI Studio/nuevas_cartas.json" --merge
      ```
-   - El script validará que todos los campos sean correctos, comprobará que no haya errores de sintaxis y **añadirá las nuevas cartas a la baraja oficial (`reignsDeck.json`) automáticamente**.
+
+### ¿Qué hace ese comando por ti?
+- ✅ **Comprueba que el JSON no tiene errores** de sintaxis ni faltan comas.
+- ✅ **Valida con Zod** que todas las métricas, esferas y campos cumplen el contrato técnico.
+- ✅ **Detecta IDs repetidos** para no sobreescribir cartas existentes.
+- ✅ **Inyecta las cartas directamente** en `src/content/reignsDeck.json`.
+- ✅ **Actualiza el juego de inmediato:** al abrir la web app en tu navegador, las cartas y las nuevas sagas ya estarán activas en la partida.
 
 ---
 
-## 🗓️ Plan de 5 Sesiones Recomendado (Para alcanzar 200+ Cartas)
+## 🎯 Resumen: Tu Papel vs El Papel de AI Studio vs El Motor
 
-Para construir el juego más completo y divertido sin agobiarte, dedica una sesión de 15 minutos en AI Studio a cada uno de estos 5 pilares:
-
-| Sesión | Temática de las Sagas | Cartas Estimadas |
-|---|---|:---:|
-| **Sesión 1** | **Las Cloacas del Estado:** Comisarios, cintas magnetofónicas, asaltos a casas y dossiers falsos. | +40 cartas |
-| **Sesión 2** | **El Ladrillo y el Hormigón:** Recalificaciones de montes protegidos, aeropuertos fantasma y obras públicas. | +40 cartas |
-| **Sesión 3** | **El Fondo de Reptiles y Clientelismo:** Subvenciones a cursos falsos, chóferes de confianza y prejubilaciones fantasma. | +40 cartas |
-| **Sesión 4** | **La Gran Banca y el IBEX 35:** Tarjetas black, colocación de deuda a jubilados, safaris y rescates fiscales. | +40 cartas |
-| **Sesión 5** | **Campañas Electorales y Virales:** Mítines vacíos, plantones en TV, comisiones parlamentarias y mociones de censura. | +40 cartas |
-
-**Resultado final:** Una baraja de más de **240 cartas interconectadas**, donde cada legislatura de 25 trimestres tomará derroteros completamente distintos y nunca jugarás dos partidas iguales.
+| Quién | De qué se encarga |
+|---|---|
+| **AI Studio (Gemini)** | Lee los 9 libros, inventa las tramas, bautiza a los personajes, escribe los diálogos ácidos, redacta las pruebas de convicción y los titulares de prensa. |
+| **Tú (El Director)** | Eliges qué saga quieres jugar y le pides tandas de cartas a AI Studio con un par de frases. |
+| **El Motor (`validate_ai_studio_output.mjs`)** | Verifica que no haya fallos técnicos, fusiona el contenido en el mazo y lo deja listo para jugar en la web. |
