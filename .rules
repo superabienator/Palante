@@ -1,0 +1,12 @@
+# Antigravity Rules: IBEX-35 & Púnica (Fanzine Edition)
+
+## Estándares de Código
+- Tipado Estricto: Prohibido 'any'. Todo payload narrativo o de estado debe validarse contra esquemas Zod en TypeScript.
+- Next.js 15: Server Components por defecto. Solo usar 'use client' en hojas que consuman Zustand o eventos de usuario.
+- Zero-Runtime-AI: No se realizan llamadas a LLMs en tiempo de ejecución. Todo el árbol narrativo es determinista y compilado.
+- Estética Brutalism/Fanzine: Bordes duros (border-2 border-black), sombras sin difuminar (shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]), tipografías monoespaciadas y rotaciones sutiles.
+
+## Swarm y Control de Versiones
+- Ningún sub-agente puede modificar archivos fuera de sus directorios autorizados en AGENTS.md.
+- Los tipos en src/types/story.ts son sagrados: no se modifican sin actualizar el arnés de tests.
+- Todo hito completado exige pasar 'npm run verify' y actualizar PROJECT_STATUS.md.

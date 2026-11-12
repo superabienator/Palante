@@ -1,0 +1,84 @@
+{
+  "meta": {
+    "title": "IBEX-35 & Púnica: Fanzine Edition",
+    "version": "1.0.0",
+    "initialNodeId": "nodo_inicio_proconsul",
+    "characters": {
+      "PROCONSUL_HORMIGON": {
+        "id": "PROCONSUL_HORMIGON",
+        "name": "El Procónsul del Hormigón",
+        "sphere": "POLITICA",
+        "realInspiration": "Jaume Matas, Francisco Camps y Carlos Fabra",
+        "initialStats": {
+          "pastaEnB": 25,
+          "presionJudicial": 15,
+          "impunidad": 60,
+          "reputacionMediatica": 50
+        },
+        "unlockedMechanics": [2, 8, 9, 10, 11, 12, 13]
+      }
+    }
+  },
+  "nodes": {
+    "nodo_inicio_proconsul": {
+      "id": "nodo_inicio_proconsul",
+      "archetypeId": "PROCONSUL_HORMIGON",
+      "sphere": "POLITICA",
+      "headline": "EL PLAN GENERAL DE ORDENACIÓN URBANA LLEGA A PLENO",
+      "context": "Tienes sobre la mesa la recalificación de 400 hectáreas de monte comunal rústico. El promotor de cabecera te espera en el asador con dos billetes de avión a Ginebra y un reloj de oro conmemorativo en el bolsillo.",
+      "evidenceDocument": "Plano municipal anotado a lápiz rojo con iniciales de concejales.",
+      "choices": [
+        {
+          "id": "c1",
+          "label": "Aprobar la recalificación exprés y pedir la comisión en efectivo",
+          "flavorQuote": "Ahora sí que es champán.",
+          "mechanicId": 9,
+          "modifiers": { "pastaEnB": 30, "presionJudicial": 20, "impunidad": -10 },
+          "nextNodeId": "nodo_registro_uco"
+        },
+        {
+          "id": "c2",
+          "label": "Fraccionar los expedientes en contratos menores de 190.000 €",
+          "flavorQuote": "Todo dentro de la ley, que para eso redactamos el pliego.",
+          "mechanicId": 11,
+          "modifiers": { "pastaEnB": 15, "presionJudicial": 5, "impunidad": 10 },
+          "nextNodeId": "nodo_registro_uco"
+        }
+      ]
+    },
+    "nodo_registro_uco": {
+      "id": "nodo_registro_uco",
+      "archetypeId": "PROCONSUL_HORMIGON",
+      "sphere": "POLITICA",
+      "headline": "REGISTRO DE LA GUARDIA CIVIL EN EL CONSISTORIO",
+      "context": "La UCO precinta el área de urbanismo a las 06:00 de la mañana. El partido no contesta al móvil privado y la televisión emite imágenes del coche patrulla frente a tu puerta.",
+      "evidenceDocument": "Acta judicial de incautación de cajas fuertes.",
+      "choices": [
+        {
+          "id": "c3",
+          "label": "Destruir las agendas y discos duros en el sótano",
+          "flavorQuote": "Avería técnica en los servidores del departamento.",
+          "mechanicId": 7,
+          "modifiers": { "presionJudicial": 40, "impunidad": -30 },
+          "nextNodeId": "nodo_fin_soto"
+        }
+      ]
+    },
+    "nodo_fin_soto": {
+      "id": "nodo_fin_soto",
+      "archetypeId": "PROCONSUL_HORMIGON",
+      "sphere": "POLITICA",
+      "headline": "PRISIÓN INCONDICIONAL EN SOTO DEL REAL",
+      "context": "El juez de guardia dicta auto de prisión preventiva sin fianza. El partido anuncia tu expulsión fulminante antes de que el furgón cruce el control de acceso del penal.",
+      "choices": [
+        {
+          "id": "c_restart",
+          "label": "Comenzar nueva legislatura con otro personaje",
+          "modifiers": {},
+          "nextNodeId": "nodo_inicio_proconsul"
+        }
+      ],
+      "ending": "PRISION_INCONDICIONAL"
+    }
+  }
+}
