@@ -13,17 +13,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'IBEX-35 & Púnica: Fanzine Edition | Juego Narrativo Punk',
+  title: 'IBEX-35 & Púnica: ¡PALANTE! | Fanzine Edition',
   description: 'Simulador satírico y ácido de toma de decisiones sobre la corrupción y las cloacas del poder en España.',
   openGraph: {
-    title: 'IBEX-35 & Púnica: Fanzine Edition',
+    title: 'IBEX-35 & Púnica: ¡PALANTE! (Fanzine Edition)',
     description: '¿Acabarás en el consejo de administración o en Soto del Real? Toma decisiones en el sumario judicial más turbio.',
     type: 'website',
     locale: 'es_ES',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'IBEX-35 & Púnica: Fanzine Edition',
+    title: 'IBEX-35 & Púnica: ¡PALANTE! (Fanzine Edition)',
     description: 'Juego de decisiones ácidas y cloacas del Estado.',
   },
 };

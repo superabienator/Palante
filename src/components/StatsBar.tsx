@@ -106,7 +106,7 @@ export function StatsBar({
           const isCriticalLow = config.dangerLow && value <= 20;
           const isAlarm = isCriticalHigh || isCriticalLow;
 
-          // Indicador predictivo tipo Reigns (cuando el jugador desliza hacia izq o der)
+          // Indicador predictivo de impacto (cuando el jugador desliza hacia izq o der)
           const delta = previewModifiers?.[config.key];
           const hasDelta = delta !== undefined && delta !== 0;
           const isPositive = (delta ?? 0) > 0;
@@ -128,7 +128,7 @@ export function StatsBar({
                   <span className="text-xs font-mono font-black tracking-tight uppercase text-black">
                     {config.label}
                   </span>
-                  {/* Punto titilante tipo Reigns */}
+                  {/* Punto titilante de alerta de impacto */}
                   {hasDelta && (
                     <span
                       aria-label="Impacto inminente"

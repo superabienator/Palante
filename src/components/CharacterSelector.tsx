@@ -85,17 +85,14 @@ export function CharacterSelector() {
             EXPEDIENTE GENERAL // SELECCIÓN DE IMPUTADO
           </span>
           <span className="text-xs uppercase font-bold text-zinc-600 hidden sm:inline">
-            Elige tu feudo de poder para iniciar tu mandato
+            Elige a tu imputado y afianza tus contactos
           </span>
         </div>
         <h1 className="text-2xl sm:text-4xl font-black uppercase text-black tracking-tight leading-none mb-3">
-          ¿A QUIÉN VAS A DEFENDER ANTE EL JUEZ?
+          ¿QUIÉN MANEJARÁ EL COTARRO HOY?
         </h1>
         <p className="text-sm text-zinc-800 leading-relaxed max-w-3xl">
-          Selecciona una de las tres esferas del poder en España y un arquetipo documentado en los
-          sumarios judiciales. Tu misión es sobrevivir el mayor número de trimestres en el poder
-          tomando decisiones binarias (Reigns style) sin que ninguna de tus 4 barras toque cero o
-          cien.
+          Elige tu poltrona en el banquillo. Tienes 25 trimestres para forrarte, amparar a tus amigos y saltar a un consejo de administración del IBEX 35 antes de que la Guardia Civil te reviente la puerta al amanecer. Desliza ante cada dilema y no dejes que tus cuatro barras toquen fondo ni se desborden de avaricia.
         </p>
       </div>
 
@@ -144,11 +141,11 @@ export function CharacterSelector() {
             >
               <div>
                 <div className="flex items-center justify-between border-b-2 border-black pb-2 mb-3">
-                  <span className="text-[11px] font-black uppercase bg-stone-200 px-2 py-0.5 border border-black">
-                    SUBTIPO #{char.id}
+                  <span className="text-[11px] font-black uppercase bg-stone-200 px-2 py-0.5 border border-black truncate max-w-[200px]">
+                    PIEZA: {char.name}
                   </span>
                   <span className="text-[10px] font-bold text-zinc-600 uppercase">
-                    {char.unlockedMechanics.length} MECÁNICAS ACTIVAS
+                    {char.unlockedMechanics.length} PRIVILEGIOS DE POLTRONA
                   </span>
                 </div>
 

@@ -209,9 +209,9 @@ export function ReignsCard({
             </div>
           )}
 
-          {/* Cita de Sumario / Escucha Telefónica en juego */}
+          {/* Indicación ágil de interacción */}
           <footer className="border-t-2 border-black pt-2 text-[11px] font-mono text-zinc-600 italic">
-            💡 Desliza hacia la izquierda o derecha para decidir
+            💡 Desliza la carta o pulsa las opciones para decidir tu destino
           </footer>
         </motion.article>
       </div>
