@@ -4,7 +4,7 @@ import {
   clampStat,
   applyModifiers,
 } from '../src/store/gameStore';
-import { CharacterStats } from '../src/types/story';
+import { CharacterStats, CLIMAX_CARD_ID } from '../src/types/story';
 
 describe('Game Engine & Zustand Store (Hito 3)', () => {
   beforeEach(() => {
@@ -78,7 +78,7 @@ describe('Game Engine & Zustand Store (Hito 3)', () => {
     });
   });
 
-  describe('Toma de Decisiones y Transición de Nodos', () => {
+  describe('Toma de Decisiones y Transición de Nodos (Modo Clásico)', () => {
     beforeEach(() => {
       useGameStore.getState().startGame('PROCONSUL_HORMIGON');
     });
@@ -90,8 +90,6 @@ describe('Game Engine & Zustand Store (Hito 3)', () => {
     });
 
     it('aplica la decisión c1 actualizando métricas, historial y nodo siguiente', () => {
-      // c1: pastaEnB: +30, presionJudicial: +20, impunidad: -10
-      // Inicial: { pastaEnB: 25, presionJudicial: 15, impunidad: 60, reputacionMediatica: 50 }
       const success = useGameStore.getState().makeChoice('c1');
       expect(success).toBe(true);
 
@@ -112,10 +110,8 @@ describe('Game Engine & Zustand Store (Hito 3)', () => {
     });
 
     it('avanza hasta el desenlace procesal culminando en GAME_OVER', () => {
-      // 1. Elección 1: c1 -> nodo_registro_uco
       useGameStore.getState().makeChoice('c1');
 
-      // 2. Elección 2: c3 (Destruir discos duros) -> nodo_fin_soto
       const success = useGameStore.getState().makeChoice('c3');
       expect(success).toBe(true);
 
@@ -147,6 +143,125 @@ describe('Game Engine & Zustand Store (Hito 3)', () => {
       expect(state.selectedArchetypeId).toBeNull();
       expect(state.currentNode).toBeNull();
       expect(state.history).toHaveLength(0);
+    });
+  });
+
+  describe('Semáforo de Riesgo en el Store (getActiveRiskAssessment)', () => {
+    it('devuelve null si la partida no ha comenzado', () => {
+      expect(useGameStore.getState().getActiveRiskAssessment()).toBeNull();
+    });
+
+    it('evalúa el riesgo en tiempo real cuando el jugador previsualiza decisiones', () => {
+      useGameStore.getState().startReignsGame('CUSTODIO_LIBRETA');
+
+      // Sin previsualizar dirección: evalúa el estado basal
+      const basalAssessment = useGameStore.getState().getActiveRiskAssessment();
+      expect(basalAssessment).not.toBeNull();
+      expect(['SAFE', 'VOLATILE', 'LETHAL']).toContain(basalAssessment?.level);
+
+      // Al previsualizar izquierda: calcula el riesgo proyectado
+      useGameStore.getState().setPreviewDirection('left');
+      const leftAssessment = useGameStore.getState().getActiveRiskAssessment();
+      expect(leftAssessment).not.toBeNull();
+      expect(leftAssessment?.explanation).toBeDefined();
+
+      // Al previsualizar derecha
+      useGameStore.getState().setPreviewDirection('right');
+      const rightAssessment = useGameStore.getState().getActiveRiskAssessment();
+      expect(rightAssessment).not.toBeNull();
+
+      // Al cancelar previsualización
+      useGameStore.getState().setPreviewDirection(null);
+      const resetAssessment = useGameStore.getState().getActiveRiskAssessment();
+      expect(resetAssessment?.level).toBe(basalAssessment?.level);
+    });
+  });
+
+  describe('Exposición de lastActivatedPrivilege en el Store', () => {
+    it('inicia en null y se actualiza al tomar decisiones con mechanicId', () => {
+      useGameStore.getState().startReignsGame('PROCONSUL_HORMIGON');
+      expect(useGameStore.getState().lastActivatedPrivilege).toBeNull();
+      expect(useGameStore.getState().lastActivatedPrivilegeInfo).toBeNull();
+
+      // Simulamos una carta con mechanicId en la elección izquierda
+      const currentCard = useGameStore.getState().currentReignsCard;
+      expect(currentCard).toBeDefined();
+
+      const ok = useGameStore.getState().makeReignsChoice('left');
+      expect(ok).toBe(true);
+
+      const state = useGameStore.getState();
+      if (currentCard?.leftChoice.mechanicId !== undefined) {
+        expect(state.lastActivatedPrivilege).toBe(currentCard.leftChoice.mechanicId);
+        expect(state.lastActivatedPrivilegeInfo?.id).toBe(currentCard.leftChoice.mechanicId);
+        expect(state.lastActivatedPrivilegeInfo?.name.length).toBeGreaterThan(0);
+      }
+
+      // Permite limpiar manualmente el privilegio
+      useGameStore.getState().clearLastActivatedPrivilege();
+      expect(useGameStore.getState().lastActivatedPrivilege).toBeNull();
+      expect(useGameStore.getState().lastActivatedPrivilegeInfo).toBeNull();
+    });
+  });
+
+  describe('Encadenamiento de Sagas y Ventana Deslizante de Banderas', () => {
+    it('mantiene recentlyGrantedFlags en una ventana deslizante de 3 turnos', () => {
+      useGameStore.getState().startReignsGame('CUSTODIO_LIBRETA');
+      expect(useGameStore.getState().recentlyGrantedFlags).toHaveLength(0);
+
+      // Inyectamos manualmente una bandera de prueba en el store para simular avance de saga
+      useGameStore.setState({
+        recentFlagsHistory: [['FLAG_TURNO_1']],
+        recentlyGrantedFlags: ['FLAG_TURNO_1'],
+        activeFlags: { FLAG_TURNO_1: true },
+      });
+      expect(useGameStore.getState().recentlyGrantedFlags).toContain('FLAG_TURNO_1');
+
+      // Turno 2: se añade otra bandera
+      const state2 = useGameStore.getState();
+      const updatedHistory = [...state2.recentFlagsHistory, ['FLAG_TURNO_2']].slice(-3);
+      useGameStore.setState({
+        recentFlagsHistory: updatedHistory,
+        recentlyGrantedFlags: Array.from(new Set(updatedHistory.flat())),
+      });
+      expect(useGameStore.getState().recentlyGrantedFlags).toEqual(['FLAG_TURNO_1', 'FLAG_TURNO_2']);
+
+      // Turno 3: turno sin banderas nuevas
+      const state3 = useGameStore.getState();
+      const history3 = [...state3.recentFlagsHistory, []].slice(-3);
+      useGameStore.setState({
+        recentFlagsHistory: history3,
+        recentlyGrantedFlags: Array.from(new Set(history3.flat())),
+      });
+      expect(useGameStore.getState().recentlyGrantedFlags).toEqual(['FLAG_TURNO_1', 'FLAG_TURNO_2']);
+
+      // Turno 4: turno sin banderas -> FLAG_TURNO_1 expira (hace más de 3 turnos)
+      const state4 = useGameStore.getState();
+      const history4 = [...state4.recentFlagsHistory, []].slice(-3);
+      useGameStore.setState({
+        recentFlagsHistory: history4,
+        recentlyGrantedFlags: Array.from(new Set(history4.flat())),
+      });
+      expect(useGameStore.getState().recentlyGrantedFlags).not.toContain('FLAG_TURNO_1');
+      expect(useGameStore.getState().recentlyGrantedFlags).toContain('FLAG_TURNO_2');
+    });
+  });
+
+  describe('Inyección de Clímax y Retiro Dorado en el Store', () => {
+    it('alcanza el Clímax procesal en el trimestre 24 cuando cardsSurvived llega a 23', () => {
+      useGameStore.getState().startReignsGame('CUSTODIO_LIBRETA');
+
+      // Simulamos que el jugador ha sobrevivido 22 cartas y responde a la 23ª
+      useGameStore.setState({ cardsSurvived: 22 });
+
+      const ok = useGameStore.getState().makeReignsChoice('right');
+      expect(ok).toBe(true);
+
+      const state = useGameStore.getState();
+      expect(state.cardsSurvived).toBe(23);
+      expect(state.currentReignsCard?.id).toBe(CLIMAX_CARD_ID);
+      expect(state.getStageInfo().isClimax).toBe(true);
+      expect(state.getStageInfo().quarterLabel).toContain('Trimestre 24');
     });
   });
 });

@@ -1,12 +1,95 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence, useMotionValue, useTransform, PanInfo } from 'framer-motion';
-import { useGameStore } from '../store/gameStore';
-import { ReignsCard as ReignsCardType } from '../types/story';
+import { useGameStore, ProjectedStatsRange } from '../store/gameStore';
+import { ReignsCard as ReignsCardType, RiskAssessment, RiskLevel, CharacterStats } from '../types/story';
 import { CharacterPortrait } from './CharacterPortrait';
 import { PRIVILEGES_REGISTRY } from '../config/privileges';
 import { soundManager } from '../utils/soundEffects';
+
+function calculateLocalRiskAssessment(
+  stats: CharacterStats,
+  projectedRange: ProjectedStatsRange | null
+): RiskAssessment {
+  if (!projectedRange) {
+    const isCritical =
+      stats.presionJudicial >= 85 ||
+      stats.pastaEnB <= 15 ||
+      stats.pastaEnB >= 85 ||
+      stats.impunidad <= 15 ||
+      stats.reputacionMediatica <= 15;
+    return {
+      level: isCritical ? 'VOLATILE' : 'SAFE',
+      dangerStats: [],
+      explanation: isCritical ? 'Parámetros institucionales en zona crítica' : 'Situación estable',
+    };
+  }
+
+  const dangerStats: RiskAssessment['dangerStats'] = [];
+  let hasLethal = false;
+  let hasVolatile = false;
+
+  const statKeys: Array<keyof CharacterStats> = [
+    'pastaEnB',
+    'presionJudicial',
+    'impunidad',
+    'reputacionMediatica',
+  ];
+
+  for (const key of statKeys) {
+    const variance = projectedRange[key];
+    if (!variance) continue;
+
+    const currentVal = stats[key] ?? 50;
+    const minProjected = Math.max(0, Math.min(100, currentVal + variance.min));
+    const maxProjected = Math.max(0, Math.min(100, currentVal + variance.max));
+
+    let isLethalForStat = false;
+    let isVolatileForStat = false;
+
+    if (key === 'pastaEnB') {
+      if (minProjected <= 0 || maxProjected >= 100) isLethalForStat = true;
+      else if (minProjected <= 15 || maxProjected >= 85) isVolatileForStat = true;
+    } else if (key === 'presionJudicial') {
+      if (maxProjected >= 100) isLethalForStat = true;
+      else if (maxProjected >= 80) isVolatileForStat = true;
+    } else if (key === 'impunidad') {
+      if (minProjected <= 0) isLethalForStat = true;
+      else if (minProjected <= 15) isVolatileForStat = true;
+    } else if (key === 'reputacionMediatica') {
+      if (minProjected <= 0) isLethalForStat = true;
+      else if (minProjected <= 15) isVolatileForStat = true;
+    }
+
+    if (isLethalForStat) {
+      hasLethal = true;
+      dangerStats.push({
+        statKey: key,
+        statLabel: key,
+        bound: key === 'presionJudicial' ? 'MAX' : 'MIN',
+        lethal: true,
+      });
+    } else if (isVolatileForStat) {
+      hasVolatile = true;
+      dangerStats.push({
+        statKey: key,
+        statLabel: key,
+        bound: key === 'presionJudicial' ? 'MAX' : 'MIN',
+        lethal: false,
+      });
+    }
+  }
+
+  const level: RiskLevel = hasLethal ? 'LETHAL' : hasVolatile ? 'VOLATILE' : 'SAFE';
+  const explanation = hasLethal
+    ? 'Peligro inminente de prisión o bancarrota en esta tirada'
+    : hasVolatile
+    ? 'Riesgo alto de desestabilización en parámetros clave'
+    : 'Tirada en márgenes institucionales seguros';
+
+  return { level, dangerStats, explanation };
+}
 
 export interface ReignsCardProps {
   card?: ReignsCardType | null;
@@ -81,6 +164,19 @@ export function ReignsCard({
   const setPreviewDirection = useGameStore((state) => state.setPreviewDirection);
   const lastDiceRoll = useGameStore((state) => state.lastDiceRoll);
   const clearLastDiceRoll = useGameStore((state) => state.clearLastDiceRoll);
+  const stats = useGameStore((state) => state.stats);
+  const getProjectedStatsRange = useGameStore((state) => state.getProjectedStatsRange);
+  const getActiveRiskAssessment = useGameStore((state) => state.getActiveRiskAssessment);
+
+  const projectedRange = typeof getProjectedStatsRange === 'function' ? getProjectedStatsRange() : null;
+
+  const riskAssessment: RiskAssessment = useMemo(() => {
+    if (typeof getActiveRiskAssessment === 'function') {
+      const storeAssessment = getActiveRiskAssessment();
+      if (storeAssessment) return storeAssessment;
+    }
+    return calculateLocalRiskAssessment(stats, projectedRange);
+  }, [getActiveRiskAssessment, stats, projectedRange]);
 
   const card = propCard ?? storeCard;
 
@@ -484,6 +580,22 @@ export function ReignsCard({
                   🎙️ "{card.leftChoice.flavorQuote}"
                 </div>
               )}
+              {/* Semáforo de Riesgo */}
+              <div className="mt-1">
+                {riskAssessment.level === 'LETHAL' ? (
+                  <span className="bg-red-950 text-red-200 border-2 border-red-500 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider animate-pulse shadow-[2px_2px_0px_0px_#000]">
+                    🔴 RIESGO: PELIGRO DE CÁRCEL / BANCARROTA
+                  </span>
+                ) : riskAssessment.level === 'VOLATILE' ? (
+                  <span className="bg-amber-950 text-amber-300 border border-amber-400 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider shadow-[1px_1px_0px_0px_#000]">
+                    🟡 RIESGO: VOLÁTIL
+                  </span>
+                ) : (
+                  <span className="bg-emerald-950 text-emerald-300 border border-emerald-400 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider shadow-[1px_1px_0px_0px_#000]">
+                    🟢 RIESGO: CONTROLADO
+                  </span>
+                )}
+              </div>
             </div>
           ) : previewDirection === 'right' ? (
             <div className="flex flex-col items-center w-full animate-in fade-in duration-100">
@@ -500,11 +612,35 @@ export function ReignsCard({
                   🎙️ "{card.rightChoice.flavorQuote}"
                 </div>
               )}
+              {/* Semáforo de Riesgo */}
+              <div className="mt-1">
+                {riskAssessment.level === 'LETHAL' ? (
+                  <span className="bg-red-950 text-red-200 border-2 border-red-500 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider animate-pulse shadow-[2px_2px_0px_0px_#000]">
+                    🔴 RIESGO: PELIGRO DE CÁRCEL / BANCARROTA
+                  </span>
+                ) : riskAssessment.level === 'VOLATILE' ? (
+                  <span className="bg-amber-950 text-amber-300 border border-amber-400 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider shadow-[1px_1px_0px_0px_#000]">
+                    🟡 RIESGO: VOLÁTIL
+                  </span>
+                ) : (
+                  <span className="bg-emerald-950 text-emerald-300 border border-emerald-400 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider shadow-[1px_1px_0px_0px_#000]">
+                    🟢 RIESGO: CONTROLADO
+                  </span>
+                )}
+              </div>
             </div>
           ) : (
             <div className="flex items-center justify-between w-full px-2 text-[10px] sm:text-xs font-bold text-zinc-700 uppercase tracking-wider">
               <span className="text-red-800 font-black">← Desliza Izquierda</span>
-              <span className="text-zinc-500 font-normal">| [O usa las teclas ← / →] |</span>
+              <span className="text-[10px] font-black flex items-center gap-1">
+                {riskAssessment.level === 'LETHAL' ? (
+                  <span className="text-red-700 font-black animate-pulse">🔴 RIESGO: PELIGRO DE CÁRCEL</span>
+                ) : riskAssessment.level === 'VOLATILE' ? (
+                  <span className="text-amber-800 font-black">🟡 RIESGO: VOLÁTIL</span>
+                ) : (
+                  <span className="text-emerald-800 font-black">🟢 RIESGO: CONTROLADO</span>
+                )}
+              </span>
               <span className="text-amber-900 font-black">Desliza Derecha →</span>
             </div>
           )}

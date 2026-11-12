@@ -6,6 +6,8 @@ import { ReignsCard } from '../components/ReignsCard';
 import { CharacterSelector } from '../components/CharacterSelector';
 import { VerdictModal } from '../components/VerdictModal';
 import { CharacterPortrait } from '../components/CharacterPortrait';
+import { LegislativeRoadmap } from '../components/LegislativeRoadmap';
+import { PrivilegeBadges } from '../components/PrivilegeBadges';
 import { useGameStore } from '../store/gameStore';
 import { PRIVILEGES_REGISTRY } from '../config/privileges';
 import { soundManager } from '../utils/soundEffects';
@@ -140,10 +142,16 @@ export default function HomePage() {
             {/* Barra de Estadísticas con Indicadores Predictivos en Tiempo Real */}
             <StatsBar showCharacterBadge={false} />
 
+            {/* Hoja de Ruta Judicial de la Legislatura (4 Años + Clímax) */}
+            <LegislativeRoadmap />
+
             {/* Ficha Interactiva de Decisiones Políticas */}
             <div className="py-2">
               <ReignsCard />
             </div>
+
+            {/* Bandeja de Chapas y Privilegios Desbloqueados */}
+            <PrivilegeBadges />
 
             {/* Sumario Judicial Desplegable (Evidencias y Privilegios sin saturar la pantalla) */}
             <div className="mt-2 border-2 border-black bg-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">

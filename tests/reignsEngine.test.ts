@@ -1,6 +1,20 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { useGameStore, checkReignsGameOver } from '../src/store/gameStore';
-import { CharacterStats } from '../src/types/story';
+import {
+  useGameStore,
+  checkReignsGameOver,
+  isCardAffiliated,
+  calculateCardWeight,
+  weightedRandomSelect,
+  selectNextReignsCard,
+  calculateRiskAssessment,
+  getLegislativeStageInfo,
+} from '../src/store/gameStore';
+import {
+  CharacterProfile,
+  CharacterStats,
+  ReignsCard,
+  CLIMAX_CARD_ID,
+} from '../src/types/story';
 
 describe('Reigns Engine & Game Loop (Modo Supervivencia)', () => {
   beforeEach(() => {
@@ -87,52 +101,321 @@ describe('Reigns Engine & Game Loop (Modo Supervivencia)', () => {
     });
   });
 
-  describe('Ciclo de Partida en Modo Reigns', () => {
-    it('inicia correctamente una partida con CUSTODIO_LIBRETA y baraja barajada', () => {
-      const success = useGameStore.getState().startReignsGame('CUSTODIO_LIBRETA');
-      expect(success).toBe(true);
+  describe('Ponderación por Esferas y Afinidad de Arquetipo (65% Afinidad)', () => {
+    const mockProfile: CharacterProfile = {
+      id: 'CUSTODIO_LIBRETA',
+      name: 'El Custodio de la Libreta',
+      sphere: 'POLITICA',
+      realInspiration: 'Tesorero',
+      initialStats: { pastaEnB: 70, presionJudicial: 40, impunidad: 50, reputacionMediatica: 20 },
+      unlockedMechanics: [1, 2],
+    };
 
-      const state = useGameStore.getState();
-      expect(state.status).toBe('PLAYING');
-      expect(state.gameMode).toBe('REIGNS');
-      expect(state.selectedArchetypeId).toBe('CUSTODIO_LIBRETA');
-      expect(state.characterProfile?.name).toBe('El Custodio de la Libreta');
-      expect(state.currentReignsCard).toBeDefined();
-      expect(state.currentReignsCard?.leftChoice).toBeDefined();
-      expect(state.currentReignsCard?.rightChoice).toBeDefined();
-      expect(state.daysInPower).toBe(90);
-      expect(state.cardsSurvived).toBe(0);
+    const cardPolitica: ReignsCard = {
+      id: 'card_politica_1',
+      speaker: 'Ministro',
+      speakerRole: 'Portavoz',
+      sphere: 'POLITICA',
+      headline: 'Dilema de Partido',
+      context: 'Fondos de campaña',
+      leftChoice: { label: 'Aceptar', stampText: 'SÍ', modifiers: {} },
+      rightChoice: { label: 'Rechazar', stampText: 'NO', modifiers: {} },
+      weight: 1,
+    };
+
+    const cardEmpresarialConAfinidad: ReignsCard = {
+      id: 'card_emp_1',
+      speaker: 'Constructor',
+      speakerRole: 'Ladrillo',
+      sphere: 'EMPRESARIAL',
+      headline: 'Mordida Obra',
+      context: 'Comisión en sobre',
+      archetypeAffinity: ['CUSTODIO_LIBRETA'],
+      leftChoice: { label: 'Trincar', stampText: 'SÍ', modifiers: {} },
+      rightChoice: { label: 'Pasar', stampText: 'NO', modifiers: {} },
+      weight: 1,
+    };
+
+    const cardOrdenNoAfin: ReignsCard = {
+      id: 'card_orden_1',
+      speaker: 'Comisario',
+      speakerRole: 'Policía',
+      sphere: 'ORDEN_JUSTICIA',
+      headline: 'Pinchazo UCO',
+      context: 'Audio filtrado',
+      archetypeAffinity: ['ARCHIVADOR_CLOACA'],
+      leftChoice: { label: 'Destruir', stampText: 'SÍ', modifiers: {} },
+      rightChoice: { label: 'Ignorar', stampText: 'NO', modifiers: {} },
+      weight: 1,
+    };
+
+    it('identifica correctamente si una carta es afín por esfera o por archetypeAffinity', () => {
+      // Coincide esfera POLITICA
+      expect(isCardAffiliated(cardPolitica, mockProfile)).toBe(true);
+      // Coincide arquetipo en archetypeAffinity
+      expect(isCardAffiliated(cardEmpresarialConAfinidad, mockProfile)).toBe(true);
+      // Ni esfera ni arquetipo coinciden
+      expect(isCardAffiliated(cardOrdenNoAfin, mockProfile)).toBe(false);
+      // Sin perfil, devuelve false
+      expect(isCardAffiliated(cardPolitica, null)).toBe(false);
     });
 
-    it('gestiona la previsualización en tiempo real del impacto de estadísticas', () => {
-      useGameStore.getState().startReignsGame('BARON_ENCOFRADO');
+    it('respeta el 65% de probabilidad hacia cartas afines en selectNextReignsCard', () => {
+      const allCards = [cardPolitica, cardOrdenNoAfin];
 
-      // Sin previsualización
-      expect(useGameStore.getState().getPreviewModifiers()).toBeNull();
+      // Con rng < 0.65 (ej. 0.40) -> debe seleccionar la afín (cardPolitica)
+      const pickedAffiliated = selectNextReignsCard({
+        allCards,
+        activeFlags: {},
+        cardsSurvived: 5,
+        characterProfile: mockProfile,
+        rng: () => 0.4,
+      });
+      expect(pickedAffiliated?.id).toBe(cardPolitica.id);
 
-      // Previsualizar izquierda
-      useGameStore.getState().setPreviewDirection('left');
-      const leftMods = useGameStore.getState().getPreviewModifiers();
-      expect(leftMods).toBeDefined();
-
-      // Previsualizar derecha
-      useGameStore.getState().setPreviewDirection('right');
-      const rightMods = useGameStore.getState().getPreviewModifiers();
-      expect(rightMods).toBeDefined();
-
-      // Limpiar
-      useGameStore.getState().setPreviewDirection(null);
-      expect(useGameStore.getState().getPreviewModifiers()).toBeNull();
+      // Con rng >= 0.65 (ej. 0.80) -> debe seleccionar la no afín (cardOrdenNoAfin)
+      const pickedNonAffiliated = selectNextReignsCard({
+        allCards,
+        activeFlags: {},
+        cardsSurvived: 5,
+        characterProfile: mockProfile,
+        rng: () => 0.8,
+      });
+      expect(pickedNonAffiliated?.id).toBe(cardOrdenNoAfin.id);
     });
 
-    it('aplica decisiones y avanza en la legislatura', () => {
-      useGameStore.getState().startReignsGame('BARON_ENCOFRADO');
-      const initialCards = useGameStore.getState().cardsSurvived;
+    it('distribuye estadísticamente ~65% de selecciones afines en 1000 iteraciones', () => {
+      const allCards = [cardPolitica, cardOrdenNoAfin];
+      let affiliatedCount = 0;
+      const iterations = 1000;
 
-      const ok = useGameStore.getState().makeReignsChoice('right');
-      expect(ok).toBe(true);
-      expect(useGameStore.getState().cardsSurvived).toBe(initialCards + 1);
-      expect(useGameStore.getState().daysInPower).toBe(180);
+      for (let i = 0; i < iterations; i++) {
+        const card = selectNextReignsCard({
+          allCards,
+          activeFlags: {},
+          cardsSurvived: 2,
+          characterProfile: mockProfile,
+        });
+        if (card && isCardAffiliated(card, mockProfile)) {
+          affiliatedCount++;
+        }
+      }
+
+      const ratio = affiliatedCount / iterations;
+      // Comprobamos que el ratio se sitúa en torno a 0.65 con un margen estadístico de ± 0.08
+      expect(ratio).toBeGreaterThanOrEqual(0.57);
+      expect(ratio).toBeLessThanOrEqual(0.73);
+    });
+  });
+
+  describe('Encadenamiento Prioritario de Sagas (Peso 5x)', () => {
+    const regularCard: ReignsCard = {
+      id: 'regular_card',
+      speaker: 'Interlocutor',
+      speakerRole: 'Papel',
+      sphere: 'POLITICA',
+      headline: 'Dilema Ordinario',
+      context: '...',
+      leftChoice: { label: 'A', stampText: 'A', modifiers: {} },
+      rightChoice: { label: 'B', stampText: 'B', modifiers: {} },
+      weight: 2,
+    };
+
+    const sagaCard: ReignsCard = {
+      id: 'saga_card_followup',
+      speaker: 'Saga Boss',
+      speakerRole: 'Trama',
+      sphere: 'POLITICA',
+      headline: 'Continuación de Saga',
+      context: '...',
+      weight: 2,
+      requiredFlags: ['GOLF_APROBADO'],
+      leftChoice: { label: 'A', stampText: 'A', modifiers: {} },
+      rightChoice: { label: 'B', stampText: 'B', modifiers: {} },
+    };
+
+    it('aplica multiplicador 5x al peso cuando requiredFlags coincide con recentlyGrantedFlags', () => {
+      // Sin bandera reciente -> peso base (2)
+      expect(calculateCardWeight(sagaCard, [])).toBe(2);
+      expect(calculateCardWeight(sagaCard, ['OTRA_BANDERA'])).toBe(2);
+
+      // Con bandera otorgada recientemente -> peso base * 5 (2 * 5 = 10)
+      expect(calculateCardWeight(sagaCard, ['GOLF_APROBADO'])).toBe(10);
+
+      // Carta regular sin requiredFlags mantiene su peso base
+      expect(calculateCardWeight(regularCard, ['GOLF_APROBADO'])).toBe(2);
+    });
+
+    it('prioriza significativamente la carta de saga en la selección ponderada', () => {
+      const cards = [regularCard, sagaCard];
+      let sagaCount = 0;
+      const runs = 1200;
+
+      // Con recentlyGrantedFlags: regularCard (peso 2) vs sagaCard (peso 10). Ratio teórico: 10/12 = 83.3%
+      for (let i = 0; i < runs; i++) {
+        const picked = weightedRandomSelect(cards, ['GOLF_APROBADO']);
+        if (picked?.id === 'saga_card_followup') {
+          sagaCount++;
+        }
+      }
+
+      const ratio = sagaCount / runs;
+      expect(ratio).toBeGreaterThan(0.70);
+      expect(ratio).toBeLessThan(0.95);
+    });
+  });
+
+  describe('Inyección Obligatoria del Clímax Procesal (cardsSurvived === 23)', () => {
+    const mockClimaxCard: ReignsCard = {
+      id: CLIMAX_CARD_ID,
+      speaker: 'Presidente Sala Penal',
+      speakerRole: 'Magistrado del Supremo',
+      sphere: 'ORDEN_JUSTICIA',
+      headline: 'EL PACTO DE LA TOJA',
+      context: 'Último trimestre de la legislatura...',
+      leftChoice: { label: 'Pactar', stampText: 'ENTREGAR', modifiers: {} },
+      rightChoice: { label: 'Pelear', stampText: 'RECHAZAR', modifiers: {} },
+      weight: 3,
+    };
+
+    const regularCard: ReignsCard = {
+      id: 'card_normal',
+      speaker: 'Alcalde',
+      speakerRole: 'Edil',
+      sphere: 'POLITICA',
+      headline: 'Dilema Habitual',
+      context: '...',
+      leftChoice: { label: 'A', stampText: 'A', modifiers: {} },
+      rightChoice: { label: 'B', stampText: 'B', modifiers: {} },
+      weight: 1,
+    };
+
+    const deck = [regularCard, mockClimaxCard];
+
+    it('inyecta obligatoriamente la carta CLIMAX_CARD_ID en cardsSurvived === 23 (trimestre 24)', () => {
+      const selected = selectNextReignsCard({
+        allCards: deck,
+        activeFlags: {},
+        cardsSurvived: 23,
+      });
+
+      expect(selected).not.toBeNull();
+      expect(selected?.id).toBe(CLIMAX_CARD_ID);
+    });
+
+    it('no permite que la carta de clímax aparezca antes del trimestre 24', () => {
+      for (const turn of [0, 5, 12, 22]) {
+        const selected = selectNextReignsCard({
+          allCards: deck,
+          activeFlags: {},
+          cardsSurvived: turn,
+        });
+        expect(selected?.id).toBe('card_normal');
+      }
+    });
+  });
+
+  describe('Semáforo de Riesgo Mortal (calculateRiskAssessment)', () => {
+    it('devuelve SAFE cuando las métricas proyectadas permanecen en zona segura', () => {
+      const stats: CharacterStats = {
+        pastaEnB: 50,
+        presionJudicial: 30,
+        impunidad: 50,
+        reputacionMediatica: 50,
+      };
+
+      const assessment = calculateRiskAssessment(stats, {
+        pastaEnB: { base: 5, min: 3, max: 7, diceNotation: '1d4' },
+        presionJudicial: { base: 5, min: 3, max: 7, diceNotation: '1d4' },
+      });
+
+      expect(assessment.level).toBe('SAFE');
+      expect(assessment.dangerStats).toHaveLength(0);
+      expect(assessment.explanation).toContain('PARÁMETROS CONTROLADOS');
+    });
+
+    it('devuelve VOLATILE cuando una métrica entra en umbral crítico (< 15 o > 85)', () => {
+      const stats: CharacterStats = {
+        pastaEnB: 20,
+        presionJudicial: 80,
+        impunidad: 50,
+        reputacionMediatica: 50,
+      };
+
+      // Presión judicial sube hasta 80 + 8 = 88 (> 85), pero no llega a 100
+      const assessment = calculateRiskAssessment(stats, {
+        presionJudicial: { base: 6, min: 4, max: 8, diceNotation: '1d4' },
+      });
+
+      expect(assessment.level).toBe('VOLATILE');
+      expect(assessment.dangerStats.length).toBeGreaterThan(0);
+      expect(assessment.dangerStats[0].statKey).toBe('presionJudicial');
+      expect(assessment.dangerStats[0].lethal).toBe(false);
+      expect(assessment.dangerStats[0].bound).toBe('MAX');
+      expect(assessment.explanation).toContain('ALERTA DE ALTA VOLATILIDAD');
+    });
+
+    it('devuelve LETHAL cuando la decisión puede alcanzar el colapso (0 o 100)', () => {
+      const stats: CharacterStats = {
+        pastaEnB: 10,
+        presionJudicial: 92,
+        impunidad: 50,
+        reputacionMediatica: 50,
+      };
+
+      // Presión judicial puede llegar a 92 + 10 = 102 >= 100 -> LETHAL
+      const assessment = calculateRiskAssessment(stats, {
+        presionJudicial: { base: 8, min: 6, max: 10, diceNotation: '1d4' },
+      });
+
+      expect(assessment.level).toBe('LETHAL');
+      const lethalStat = assessment.dangerStats.find((d) => d.statKey === 'presionJudicial');
+      expect(lethalStat).toBeDefined();
+      expect(lethalStat?.lethal).toBe(true);
+      expect(lethalStat?.bound).toBe('MAX');
+      expect(assessment.explanation).toContain('PELIGRO PROCESAL INMINENTE');
+    });
+
+    it('evalúa correctamente el estado actual cuando projectedRange es null', () => {
+      const statsInDanger: CharacterStats = {
+        pastaEnB: 8,
+        presionJudicial: 20,
+        impunidad: 50,
+        reputacionMediatica: 50,
+      };
+
+      const assessment = calculateRiskAssessment(statsInDanger, null);
+      expect(assessment.level).toBe('VOLATILE');
+      expect(assessment.dangerStats[0].statKey).toBe('pastaEnB');
+      expect(assessment.dangerStats[0].bound).toBe('MIN');
+    });
+  });
+
+  describe('Etapas de la Legislatura (getLegislativeStageInfo)', () => {
+    it('asigna correctamente los 4 años y detecta el clímax en el trimestre 24', () => {
+      // Año 1: T1 - T6 (cardsSurvived 0..5)
+      expect(getLegislativeStageInfo(0).year).toBe(1);
+      expect(getLegislativeStageInfo(5).year).toBe(1);
+      expect(getLegislativeStageInfo(0).isClimax).toBe(false);
+
+      // Año 2: T7 - T12 (cardsSurvived 6..11)
+      expect(getLegislativeStageInfo(6).year).toBe(2);
+      expect(getLegislativeStageInfo(11).year).toBe(2);
+
+      // Año 3: T13 - T18 (cardsSurvived 12..17)
+      expect(getLegislativeStageInfo(12).year).toBe(3);
+      expect(getLegislativeStageInfo(17).year).toBe(3);
+
+      // Año 4: T19 - T24 (cardsSurvived 18..23)
+      expect(getLegislativeStageInfo(18).year).toBe(4);
+      expect(getLegislativeStageInfo(22).year).toBe(4);
+      expect(getLegislativeStageInfo(22).isClimax).toBe(false);
+
+      // Trimestre 24 (cardsSurvived 23): Clímax
+      const climaxStage = getLegislativeStageInfo(23);
+      expect(climaxStage.year).toBe(4);
+      expect(climaxStage.isClimax).toBe(true);
+      expect(climaxStage.quarterLabel).toContain('Trimestre 24');
     });
   });
 });

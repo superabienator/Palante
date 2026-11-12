@@ -6,57 +6,62 @@ import {
   CharacterStats,
   EndingType,
   GameOverReason,
+  LegislativeStageInfo,
   ReignsCard,
   ReignsCardChoice,
+  RiskAssessment,
   SphereType,
   StatModifiers,
   StoryNode,
 } from '../types/story';
-import { calculateAggregatedPerks } from '../config/privileges';
+import { PRIVILEGES_REGISTRY } from '../config/privileges';
 import rawStoryData from '../content/story.json';
 import reignsDeckData from '../content/reignsDeck.json';
 
-export interface StatVariance {
-  base: number;
-  min: number;
-  max: number;
-  diceNotation: string;
-  perkBonus?: {
-    amount: number;
-    privilegeName: string;
-  };
-}
+import {
+  ActivatedPrivilegeInfo,
+  LastDiceRollSummary,
+  ProjectedStatsRange,
+  SingleStatRollResult,
+  StatVariance,
+  STAT_LABELS,
+  applyModifiers,
+  calculateCardWeight,
+  calculateProjectedStatsRange,
+  calculateRiskAssessment,
+  calculateStatVariance,
+  checkReignsGameOver,
+  clampStat,
+  getLegislativeStageInfo,
+  isCardAffiliated,
+  rollModifiersWithDice,
+  selectNextReignsCard,
+  weightedRandomSelect,
+} from './reignsEngine';
 
-export type ProjectedStatsRange = Partial<Record<keyof CharacterStats, StatVariance>>;
-
-export interface SingleStatRollResult {
-  statKey: keyof CharacterStats;
-  statLabel: string;
-  baseDelta: number;
-  rolledDelta: number;
-  min: number;
-  max: number;
-  diceFace: number; // 1..6
-  diceNotation: string;
-  statBefore?: number;
-  statAfter?: number;
-  privilegeApplied?: {
-    name: string;
-    amount: number;
-  };
-}
-
-export interface LastDiceRollSummary {
-  id: string;
-  direction: 'left' | 'right';
-  stampText: string;
-  cardHeadline?: string;
-  choiceLabel?: string;
-  flavorQuote?: string;
-  unlockedPrivilegeId?: number;
-  rolls: SingleStatRollResult[];
-  timestamp: number;
-}
+// Re-exportar funciones y tipos del motor para compatibilidad y uso modular
+export type {
+  ActivatedPrivilegeInfo,
+  LastDiceRollSummary,
+  ProjectedStatsRange,
+  SingleStatRollResult,
+  StatVariance,
+};
+export {
+  STAT_LABELS,
+  applyModifiers,
+  calculateCardWeight,
+  calculateProjectedStatsRange,
+  calculateRiskAssessment,
+  calculateStatVariance,
+  checkReignsGameOver,
+  clampStat,
+  getLegislativeStageInfo,
+  isCardAffiliated,
+  rollModifiersWithDice,
+  selectNextReignsCard,
+  weightedRandomSelect,
+};
 
 export interface GameHistoryEntry {
   nodeId: string;
@@ -92,6 +97,10 @@ export interface GameState {
   gameOverReason: GameOverReason | null;
   gameOverDescription: string | null;
   activeFlags: Record<string, boolean>;
+  recentlyGrantedFlags: Record<string, boolean> extends never ? string[] : string[];
+  recentFlagsHistory: string[][];
+  lastActivatedPrivilege: number | null;
+  lastActivatedPrivilegeInfo: ActivatedPrivilegeInfo | null;
 
   // Estado Modo Clásico
   currentNodeId: string;
@@ -107,7 +116,10 @@ export interface GameState {
   makeReignsChoice: (direction: 'left' | 'right') => boolean;
   getPreviewModifiers: () => StatModifiers | null;
   getProjectedStatsRange: () => ProjectedStatsRange | null;
+  getActiveRiskAssessment: () => RiskAssessment | null;
   clearLastDiceRoll: () => void;
+  clearLastActivatedPrivilege: () => void;
+  getStageInfo: () => LegislativeStageInfo;
 
   // Acciones Clásicas
   startGame: (archetypeId: ArchetypeId) => boolean;
@@ -122,271 +134,6 @@ const DEFAULT_STATS: CharacterStats = {
   impunidad: 50,
   reputacionMediatica: 50,
 };
-
-const STAT_LABELS: Record<keyof CharacterStats, string> = {
-  pastaEnB: 'Pasta en B',
-  presionJudicial: 'Presión Judicial',
-  impunidad: 'Impunidad',
-  reputacionMediatica: 'Reputación Mediática',
-};
-
-export const clampStat = (value: number, delta: number | undefined = 0): number => {
-  const nextValue = value + (delta ?? 0);
-  return Math.max(0, Math.min(100, Math.round(nextValue)));
-};
-
-export const applyModifiers = (
-  current: CharacterStats,
-  modifiers: StatModifiers
-): CharacterStats => {
-  return {
-    pastaEnB: clampStat(current.pastaEnB, modifiers.pastaEnB),
-    presionJudicial: clampStat(current.presionJudicial, modifiers.presionJudicial),
-    impunidad: clampStat(current.impunidad, modifiers.impunidad),
-    reputacionMediatica: clampStat(current.reputacionMediatica, modifiers.reputacionMediatica),
-  };
-};
-
-export function calculateStatVariance(
-  statKey: keyof CharacterStats,
-  baseDelta: number,
-  unlockedMechanics: number[]
-): StatVariance {
-  const perks = calculateAggregatedPerks(unlockedMechanics);
-  let adjustedBase = baseDelta;
-  let perkBonus: { amount: number; privilegeName: string } | undefined;
-
-  if (statKey === 'presionJudicial' && baseDelta > 0 && perks.presionJudicialDiscount > 0) {
-    const discount = Math.min(Math.max(0, baseDelta - 1), perks.presionJudicialDiscount);
-    if (discount > 0 && perks.presionPrivilegeName) {
-      adjustedBase = baseDelta - discount;
-      perkBonus = { amount: -discount, privilegeName: perks.presionPrivilegeName };
-    }
-  } else if (statKey === 'pastaEnB' && perks.pastaEnBBonus > 0) {
-    if (baseDelta > 0 && perks.pastaPrivilegeName) {
-      adjustedBase = baseDelta + perks.pastaEnBBonus;
-      perkBonus = { amount: perks.pastaEnBBonus, privilegeName: perks.pastaPrivilegeName };
-    } else if (baseDelta < 0 && perks.pastaPrivilegeName) {
-      const mitigation = Math.min(Math.max(0, Math.abs(baseDelta) - 1), Math.ceil(perks.pastaEnBBonus / 2));
-      if (mitigation > 0) {
-        adjustedBase = baseDelta + mitigation;
-        perkBonus = { amount: mitigation, privilegeName: perks.pastaPrivilegeName };
-      }
-    }
-  } else if (statKey === 'reputacionMediatica' && baseDelta < 0 && perks.reputacionShield > 0) {
-    const mitigation = Math.min(Math.max(0, Math.abs(baseDelta) - 1), perks.reputacionShield);
-    if (mitigation > 0 && perks.reputacionPrivilegeName) {
-      adjustedBase = baseDelta + mitigation;
-      perkBonus = { amount: mitigation, privilegeName: perks.reputacionPrivilegeName };
-    }
-  } else if (statKey === 'impunidad' && baseDelta < 0 && perks.impunidadShield > 0) {
-    const mitigation = Math.min(Math.max(0, Math.abs(baseDelta) - 1), perks.impunidadShield);
-    if (mitigation > 0 && perks.impunidadPrivilegeName) {
-      adjustedBase = baseDelta + mitigation;
-      perkBonus = { amount: mitigation, privilegeName: perks.impunidadPrivilegeName };
-    }
-  }
-
-  const absVal = Math.abs(adjustedBase);
-  let spread = 2;
-  let diceNotation = '1d4';
-  if (absVal > 14) {
-    spread = 4;
-    diceNotation = '1d8';
-  } else if (absVal > 6) {
-    spread = 3;
-    diceNotation = '1d6';
-  }
-
-  let min = adjustedBase - spread;
-  let max = adjustedBase + spread;
-
-  if (adjustedBase > 0) {
-    min = Math.max(1, min);
-  } else if (adjustedBase < 0) {
-    max = Math.min(-1, max);
-  }
-
-  return {
-    base: baseDelta,
-    min,
-    max,
-    diceNotation,
-    perkBonus,
-  };
-}
-
-export function calculateProjectedStatsRange(
-  modifiers: StatModifiers,
-  unlockedMechanics: number[]
-): ProjectedStatsRange {
-  const result: ProjectedStatsRange = {};
-  const keys: Array<keyof CharacterStats> = [
-    'pastaEnB',
-    'presionJudicial',
-    'impunidad',
-    'reputacionMediatica',
-  ];
-
-  for (const key of keys) {
-    const val = modifiers[key];
-    if (val !== undefined && val !== 0) {
-      result[key] = calculateStatVariance(key, val, unlockedMechanics);
-    }
-  }
-
-  return result;
-}
-
-export function rollModifiersWithDice(
-  modifiers: StatModifiers,
-  unlockedMechanics: number[],
-  direction: 'left' | 'right',
-  stampText: string
-): { rolledModifiers: StatModifiers; summary: LastDiceRollSummary } {
-  const rangeMap = calculateProjectedStatsRange(modifiers, unlockedMechanics);
-  const rolledModifiers: StatModifiers = {};
-  const rolls: SingleStatRollResult[] = [];
-
-  const keys: Array<keyof CharacterStats> = [
-    'pastaEnB',
-    'presionJudicial',
-    'impunidad',
-    'reputacionMediatica',
-  ];
-
-  for (const key of keys) {
-    const variance = rangeMap[key];
-    if (!variance) continue;
-
-    const span = variance.max - variance.min + 1;
-    const randomOffset = Math.floor(Math.random() * span);
-    const rolledDelta = variance.min + randomOffset;
-    rolledModifiers[key] = rolledDelta;
-
-    const normalizedRatio = span > 1 ? randomOffset / (span - 1) : 0.5;
-    const diceFace = Math.max(1, Math.min(6, Math.round(normalizedRatio * 5) + 1));
-
-    rolls.push({
-      statKey: key,
-      statLabel: STAT_LABELS[key],
-      baseDelta: variance.base,
-      rolledDelta,
-      min: variance.min,
-      max: variance.max,
-      diceFace,
-      diceNotation: variance.diceNotation,
-      privilegeApplied: variance.perkBonus
-        ? { name: variance.perkBonus.privilegeName, amount: variance.perkBonus.amount }
-        : undefined,
-    });
-  }
-
-  return {
-    rolledModifiers,
-    summary: {
-      id: `roll_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
-      direction,
-      stampText,
-      rolls,
-      timestamp: Date.now(),
-    },
-  };
-}
-
-function getEligibleCards(allCards: ReignsCard[], activeFlags: Record<string, boolean>): ReignsCard[] {
-  return allCards.filter((card) => {
-    if (!card.requiredFlags || card.requiredFlags.length === 0) {
-      return true;
-    }
-    return card.requiredFlags.every((flag) => !!activeFlags[flag]);
-  });
-}
-
-function shuffleCards(cards: ReignsCard[]): ReignsCard[] {
-  const copy = [...cards];
-  for (let i = copy.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[j]] = [copy[j], copy[i]];
-  }
-  return copy;
-}
-
-export function checkReignsGameOver(
-  stats: CharacterStats,
-  cardsSurvived: number
-): {
-  isGameOver: boolean;
-  reason: GameOverReason | null;
-  ending: EndingType | null;
-  description: string | null;
-} {
-  // 1. Supervivencia de Legislatura (Victoria a 25 cartas / ~6 años y medio de mandato)
-  if (cardsSurvived >= 25) {
-    return {
-      isGameOver: true,
-      reason: 'VICTORIA_LEGISLATURA',
-      ending: 'CONSEJO_IBEX',
-      description:
-        '¡LEGISLATURA SUPERADA! Has toreado a la fiscalía, blindado tu patrimonio y asegurado un sillón vitalicio de 450.000 € anuales en el consejo de administración de una multinacional del IBEX 35.',
-    };
-  }
-
-  // 2. Pasta en B (0 o 100)
-  if (stats.pastaEnB <= 0) {
-    return {
-      isGameOver: true,
-      reason: 'PASTA_MINIMA',
-      ending: 'PURGA_DE_OFICIO',
-      description:
-        'BANCARROTA POLÍTICA. Te has quedado sin liquidez opaca para abonar los sobresueldos del aparato. El partido te retira el blindaje y te expulsa por insolvente.',
-    };
-  }
-  if (stats.pastaEnB >= 100) {
-    return {
-      isGameOver: true,
-      reason: 'PASTA_MAXIMA',
-      ending: 'PRISION_INCONDICIONAL',
-      description:
-        'ALERTA INTERNACIONAL DE BLANQUEO. Tus cuentas en Ginebra cantan tanto que Europol y la fiscalía suiza bloquean todas tus sociedades pantalla. Detención coordinada.',
-    };
-  }
-
-  // 3. Presión Judicial (techo en 100)
-  if (stats.presionJudicial >= 100) {
-    return {
-      isGameOver: true,
-      reason: 'PRESION_MAXIMA',
-      ending: 'PRISION_INCONDICIONAL',
-      description:
-        'PRISIÓN INCONDICIONAL EN SOTO DEL REAL. Agentes de la UCO tiran abajo la puerta de tu domicilio de madrugada. El juez de la Audiencia decreta prisión comunicada y sin fianza.',
-    };
-  }
-
-  // 4. Impunidad (colapso a 0)
-  if (stats.impunidad <= 0) {
-    return {
-      isGameOver: true,
-      reason: 'IMPUNIDAD_MINIMA',
-      ending: 'PRISION_INCONDICIONAL',
-      description:
-        'PÉRDIDA DEL AFORAMIENTO. El Congreso vota unánimemente el suplicatorio. Sin aforamiento ni padrinos, vas directo al banquillo del tribunal penal ordinario.',
-    };
-  }
-
-  // 5. Reputación Mediática (colapso a 0)
-  if (stats.reputacionMediatica <= 0) {
-    return {
-      isGameOver: true,
-      reason: 'REPUTACION_MINIMA',
-      ending: 'PURGA_DE_OFICIO',
-      description:
-        'LINCHAMIENTO EDITORIAL. Portadas unánimes con tus escuchas más obscenas. El presidente del Gobierno comparece de urgencia para anunciar tu expulsión fulminante.',
-    };
-  }
-
-  return { isGameOver: false, reason: null, ending: null, description: null };
-}
 
 const dummyStorage = {
   getItem: () => null,
@@ -415,6 +162,10 @@ export const useGameStore = create<GameState>()(
       gameOverReason: null,
       gameOverDescription: null,
       activeFlags: {},
+      recentlyGrantedFlags: [],
+      recentFlagsHistory: [],
+      lastActivatedPrivilege: null,
+      lastActivatedPrivilegeInfo: null,
 
       currentNodeId: '',
       currentNode: null,
@@ -435,9 +186,14 @@ export const useGameStore = create<GameState>()(
 
         const rawCards = reignsDeckData.cards as ReignsCard[];
         const initialFlags: Record<string, boolean> = {};
-        const eligible = getEligibleCards(rawCards, initialFlags);
-        const shuffled = shuffleCards(eligible);
-        const firstCard = shuffled[0] ?? null;
+
+        const firstCard = selectNextReignsCard({
+          allCards: rawCards,
+          activeFlags: initialFlags,
+          cardsSurvived: 0,
+          characterProfile: character,
+          recentlyGrantedFlags: [],
+        });
 
         set({
           status: 'PLAYING',
@@ -446,7 +202,7 @@ export const useGameStore = create<GameState>()(
           selectedArchetypeId: archetypeId,
           characterProfile: { ...character },
           stats: { ...character.initialStats },
-          reignsDeck: shuffled,
+          reignsDeck: rawCards,
           currentReignsCard: firstCard,
           reignsCardIndex: 0,
           daysInPower: 90,
@@ -456,6 +212,9 @@ export const useGameStore = create<GameState>()(
           gameOverReason: null,
           gameOverDescription: null,
           activeFlags: initialFlags,
+          recentlyGrantedFlags: [],
+          recentFlagsHistory: [],
+          lastActivatedPrivilege: null,
           ending: null,
           unlockedMechanics: [...character.unlockedMechanics],
           evidenceDocuments: firstCard?.evidenceDocument ? [firstCard.evidenceDocument] : [],
@@ -490,8 +249,25 @@ export const useGameStore = create<GameState>()(
         return calculateProjectedStatsRange(modifiers, unlockedMechanics);
       },
 
+      getActiveRiskAssessment: (): RiskAssessment | null => {
+        const { status, stats } = get();
+        if (status !== 'PLAYING') {
+          return null;
+        }
+        const projectedRange = get().getProjectedStatsRange();
+        return calculateRiskAssessment(stats, projectedRange);
+      },
+
       clearLastDiceRoll: () => {
         set({ lastDiceRoll: null });
+      },
+
+      clearLastActivatedPrivilege: () => {
+        set({ lastActivatedPrivilege: null, lastActivatedPrivilegeInfo: null });
+      },
+
+      getStageInfo: (): LegislativeStageInfo => {
+        return getLegislativeStageInfo(get().cardsSurvived);
       },
 
       makeReignsChoice: (direction: 'left' | 'right'): boolean => {
@@ -504,6 +280,8 @@ export const useGameStore = create<GameState>()(
           unlockedMechanics,
           evidenceDocuments,
           activeFlags,
+          characterProfile,
+          recentFlagsHistory,
         } = get();
 
         if (status !== 'PLAYING' || !currentReignsCard) {
@@ -542,12 +320,35 @@ export const useGameStore = create<GameState>()(
           })),
         };
 
-        // Actualización de banderas activas (flags)
+        // Actualización de banderas activas (flags) y cola de banderas recientes (últimos 3 turnos)
         const updatedFlags = { ...activeFlags };
-        if (choice.grantedFlags && choice.grantedFlags.length > 0) {
-          for (const flag of choice.grantedFlags) {
+        const newlyGranted = choice.grantedFlags ?? [];
+        if (newlyGranted.length > 0) {
+          for (const flag of newlyGranted) {
             updatedFlags[flag] = true;
           }
+        }
+
+        const updatedFlagsHistory = [...(recentFlagsHistory ?? []), newlyGranted].slice(-3);
+        const updatedRecentlyGrantedFlags = Array.from(new Set(updatedFlagsHistory.flat()));
+
+        // Registro de privilegio activado para feedback visual y animación de pines
+        let nextLastActivatedPrivilege: number | null = null;
+        let nextLastActivatedPrivilegeInfo: ActivatedPrivilegeInfo | null = null;
+        if (choice.mechanicId !== undefined) {
+          const privDef = PRIVILEGES_REGISTRY[choice.mechanicId];
+          const isNew = !unlockedMechanics.includes(choice.mechanicId);
+          nextLastActivatedPrivilege = choice.mechanicId;
+          nextLastActivatedPrivilegeInfo = {
+            id: choice.mechanicId,
+            name: privDef?.name ?? `Mecánica #${choice.mechanicId}`,
+            category: privDef?.category,
+            shortTag: privDef?.shortTag,
+            description: privDef?.description,
+            inGameEffect: privDef?.inGameEffect,
+            isNewUnlock: isNew,
+            timestamp: Date.now(),
+          };
         }
 
         // Nuevas mecánicas y pruebas
@@ -577,30 +378,41 @@ export const useGameStore = create<GameState>()(
             cardsSurvived: nextCardsSurvived,
             daysInPower: nextDays,
             activeFlags: updatedFlags,
+            recentlyGrantedFlags: updatedRecentlyGrantedFlags,
+            recentFlagsHistory: updatedFlagsHistory,
+            lastActivatedPrivilege: nextLastActivatedPrivilege,
+            lastActivatedPrivilegeInfo: nextLastActivatedPrivilegeInfo,
             unlockedMechanics: nextUnlockedMechanics,
             evidenceDocuments: nextEvidences,
           });
           return true;
         }
 
-        // Obtener pool elegible con las nuevas banderas
+        // Selección ponderada del siguiente dilema según esferas (65%), sagas (peso 5x) y clímax (trimestre 24)
         const allCards = reignsDeckData.cards as ReignsCard[];
-        const eligible = getEligibleCards(allCards, updatedFlags);
-        // Descartar la carta actual si hay alternativas
-        const candidates = eligible.filter((c) => c.id !== currentReignsCard.id);
-        const nextDeck = candidates.length > 0 ? candidates : eligible;
-        const randomIndex = Math.floor(Math.random() * nextDeck.length);
-        const nextCard = nextDeck[randomIndex] ?? currentReignsCard;
+        const nextCard =
+          selectNextReignsCard({
+            allCards,
+            activeFlags: updatedFlags,
+            currentCardId: currentReignsCard.id,
+            cardsSurvived: nextCardsSurvived,
+            characterProfile,
+            recentlyGrantedFlags: updatedRecentlyGrantedFlags,
+          }) ?? currentReignsCard;
 
         set({
           stats: nextStats,
           currentReignsCard: nextCard,
-          reignsDeck: nextDeck,
+          reignsDeck: allCards,
           daysInPower: nextDays,
           cardsSurvived: nextCardsSurvived,
           previewDirection: null,
           lastDiceRoll: enrichedSummary,
           activeFlags: updatedFlags,
+          recentlyGrantedFlags: updatedRecentlyGrantedFlags,
+          recentFlagsHistory: updatedFlagsHistory,
+          lastActivatedPrivilege: nextLastActivatedPrivilege,
+          lastActivatedPrivilegeInfo: nextLastActivatedPrivilegeInfo,
           unlockedMechanics: nextUnlockedMechanics,
           evidenceDocuments: nextEvidences,
         });
@@ -637,6 +449,7 @@ export const useGameStore = create<GameState>()(
           unlockedMechanics: [...character.unlockedMechanics],
           evidenceDocuments: initialEvidences,
           ending: initialNode.ending ?? null,
+          lastActivatedPrivilege: null,
         });
 
         return true;
@@ -674,6 +487,24 @@ export const useGameStore = create<GameState>()(
           timestamp: Date.now(),
         };
 
+        let nextLastActivatedPrivilege: number | null = null;
+        let nextLastActivatedPrivilegeInfo: ActivatedPrivilegeInfo | null = null;
+        if (choice.mechanicId !== undefined) {
+          const privDef = PRIVILEGES_REGISTRY[choice.mechanicId];
+          const isNew = !unlockedMechanics.includes(choice.mechanicId);
+          nextLastActivatedPrivilege = choice.mechanicId;
+          nextLastActivatedPrivilegeInfo = {
+            id: choice.mechanicId,
+            name: privDef?.name ?? `Mecánica #${choice.mechanicId}`,
+            category: privDef?.category,
+            shortTag: privDef?.shortTag,
+            description: privDef?.description,
+            inGameEffect: privDef?.inGameEffect,
+            isNewUnlock: isNew,
+            timestamp: Date.now(),
+          };
+        }
+
         const nextUnlockedMechanics =
           choice.mechanicId !== undefined && !unlockedMechanics.includes(choice.mechanicId)
             ? [...unlockedMechanics, choice.mechanicId]
@@ -704,6 +535,8 @@ export const useGameStore = create<GameState>()(
           evidenceDocuments: nextEvidences,
           status: isGameOver ? 'GAME_OVER' : 'PLAYING',
           ending: resolvedEnding,
+          lastActivatedPrivilege: nextLastActivatedPrivilege,
+          lastActivatedPrivilegeInfo: nextLastActivatedPrivilegeInfo,
         });
 
         return true;
@@ -739,6 +572,10 @@ export const useGameStore = create<GameState>()(
           gameOverReason: null,
           gameOverDescription: null,
           activeFlags: {},
+          recentlyGrantedFlags: [],
+          recentFlagsHistory: [],
+          lastActivatedPrivilege: null,
+          lastActivatedPrivilegeInfo: null,
           history: [],
           unlockedMechanics: [],
           evidenceDocuments: [],
@@ -761,6 +598,10 @@ export const useGameStore = create<GameState>()(
         daysInPower: state.daysInPower,
         cardsSurvived: state.cardsSurvived,
         activeFlags: state.activeFlags,
+        recentlyGrantedFlags: state.recentlyGrantedFlags,
+        recentFlagsHistory: state.recentFlagsHistory,
+        lastActivatedPrivilege: state.lastActivatedPrivilege,
+        lastActivatedPrivilegeInfo: state.lastActivatedPrivilegeInfo,
         unlockedMechanics: state.unlockedMechanics,
         evidenceDocuments: state.evidenceDocuments,
         ending: state.ending,

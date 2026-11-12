@@ -12759,6 +12759,44 @@
       },
       "weight": 3,
       "requiredFlags": []
+    },
+    {
+      "id": "climax_tribunal_supremo_pacto_toja",
+      "speaker": "Presidente de la Sala Penal",
+      "speakerRole": "Magistrado del Supremo",
+      "speakerAvatar": "icon_juez",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "LA VISTA ORAL DEFINITIVA: EL PACTO DE LA TOJA",
+      "context": "Tensión máxima en el último trimestre de legislatura. Los furgones de la policía esperan fuera con los motores encendidos. En una sala anexa a la Sala Segunda del Tribunal Supremo, el magistrado y el fiscal jefe te reciben sin togas: te ofrecen una conformidad con entrega de botín o la apertura inmediata del juicio oral con petición de 28 años de prisión.",
+      "evidenceDocument": "Borrador de acuerdo de conformidad procesal rubricado por la Fiscalía General del Estado con condena en suspenso.",
+      "leftChoice": {
+        "label": "Aceptar el acuerdo de conformidad, pagar la multa millonaria y entregar el botín acumulado",
+        "stampText": "ENTREGAR BOTÍN",
+        "flavorQuote": "Entregas los fondos de Suiza, pagas la responsabilidad civil y te vas a tu casa con una condena en suspenso que no pisa el penal.",
+        "mechanicId": 35,
+        "modifiers": {
+          "pastaEnB": -60,
+          "presionJudicial": -40
+        },
+        "grantedFlags": [
+          "PACTO_TOJA_FIRMADO"
+        ]
+      },
+      "rightChoice": {
+        "label": "Rechazar la conformidad, amenazar con audios de la Corona y tirar de la manta ante las cámaras",
+        "stampText": "TIRAR DE LA MANTA",
+        "flavorQuote": "O me cuidáis o tiro de la manta: si caigo yo se cae el régimen entero, de arriba a abajo.",
+        "mechanicId": 4,
+        "modifiers": {
+          "impunidad": 40,
+          "reputacionMediatica": -50
+        },
+        "grantedFlags": [
+          "GUERRA_TOTAL_ESTADO"
+        ]
+      },
+      "weight": 10,
+      "requiredFlags": []
     }
   ]
 }

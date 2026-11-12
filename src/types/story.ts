@@ -138,3 +138,31 @@ export const GameOverReasonSchema = z.enum([
   'VICTORIA_LEGISLATURA', // Retiro dorado
 ]);
 export type GameOverReason = z.infer<typeof GameOverReasonSchema>;
+
+// === Contratos para Semáforo de Riesgo D6 y Etapas de Legislatura ===
+
+export const RiskLevelSchema = z.enum(['SAFE', 'VOLATILE', 'LETHAL']);
+export type RiskLevel = z.infer<typeof RiskLevelSchema>;
+
+export interface RiskAssessment {
+  level: RiskLevel;
+  dangerStats: Array<{
+    statKey: keyof CharacterStats;
+    statLabel: string;
+    bound: 'MIN' | 'MAX';
+    lethal: boolean;
+  }>;
+  explanation: string;
+}
+
+export type LegislativeYear = 1 | 2 | 3 | 4;
+
+export interface LegislativeStageInfo {
+  year: LegislativeYear;
+  title: string;
+  subtitle: string;
+  quarterLabel: string;
+  isClimax: boolean;
+}
+
+export const CLIMAX_CARD_ID = 'climax_tribunal_supremo_pacto_toja';
