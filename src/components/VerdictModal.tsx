@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useGameStore } from '../store/gameStore';
+import { FanzineDieFace } from './ReignsCard';
 
 export function VerdictModal() {
   const status = useGameStore((state) => state.status);
@@ -11,6 +12,7 @@ export function VerdictModal() {
   const gameOverDescription = useGameStore((state) => state.gameOverDescription);
   const daysInPower = useGameStore((state) => state.daysInPower);
   const cardsSurvived = useGameStore((state) => state.cardsSurvived);
+  const lastDiceRoll = useGameStore((state) => state.lastDiceRoll);
   const restartGame = useGameStore((state) => state.restartGame);
   const resetToCharacterSelect = useGameStore((state) => state.resetToCharacterSelect);
   const stats = useGameStore((state) => state.stats);
@@ -81,6 +83,48 @@ export function VerdictModal() {
           </p>
           <p className="italic">{gameOverDescription}</p>
         </div>
+
+        {/* Última Tirada de Dados que Decidió la Legislatura */}
+        {lastDiceRoll && lastDiceRoll.rolls.length > 0 && (
+          <div className="border-2 border-black bg-yellow-50 p-3 mb-5 text-xs">
+            <div className="font-black uppercase text-[10px] text-black mb-2 border-b border-black/20 pb-1 flex items-center justify-between">
+              <span>🎲 TIRADA DE DADOS DECISIVA ({lastDiceRoll.stampText}):</span>
+              <span className="text-zinc-600">{lastDiceRoll.cardHeadline}</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {lastDiceRoll.rolls.map((roll) => {
+                const sign = roll.rolledDelta > 0 ? `+${roll.rolledDelta}` : `${roll.rolledDelta}`;
+                return (
+                  <div
+                    key={roll.statKey}
+                    className="border border-black bg-white p-2 flex items-center gap-2"
+                  >
+                    <FanzineDieFace face={roll.diceFace} size={22} />
+                    <div>
+                      <div className="font-black text-black">
+                        {roll.statLabel}: {sign}%
+                        {roll.statBefore !== undefined && roll.statAfter !== undefined && (
+                          <span className="font-normal text-zinc-600 ml-1">
+                            ({roll.statBefore}% ➔ {roll.statAfter}%)
+                          </span>
+                        )}
+                      </div>
+                      {roll.privilegeApplied && (
+                        <div className="text-[10px] font-bold text-emerald-800">
+                          ⚡ {roll.privilegeApplied.name} (
+                          {roll.privilegeApplied.amount > 0
+                            ? `+${roll.privilegeApplied.amount}%`
+                            : `${roll.privilegeApplied.amount}%`}
+                          )
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {/* Balance Patrimonial al Fin de Carrera */}
         <div className="border-2 border-black bg-white p-3 mb-6 text-xs">

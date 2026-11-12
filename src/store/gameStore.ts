@@ -38,6 +38,8 @@ export interface SingleStatRollResult {
   max: number;
   diceFace: number; // 1..6
   diceNotation: string;
+  statBefore?: number;
+  statAfter?: number;
   privilegeApplied?: {
     name: string;
     amount: number;
@@ -48,6 +50,10 @@ export interface LastDiceRollSummary {
   id: string;
   direction: 'left' | 'right';
   stampText: string;
+  cardHeadline?: string;
+  choiceLabel?: string;
+  flavorQuote?: string;
+  unlockedPrivilegeId?: number;
   rolls: SingleStatRollResult[];
   timestamp: number;
 }
@@ -519,6 +525,23 @@ export const useGameStore = create<GameState>()(
         const nextCardsSurvived = cardsSurvived + 1;
         const nextDays = daysInPower + 90;
 
+        // Enriquecer el resumen con el antes/después de cada estadística y contexto de la decisión
+        const enrichedSummary: LastDiceRollSummary = {
+          ...summary,
+          cardHeadline: currentReignsCard.headline,
+          choiceLabel: choice.label,
+          flavorQuote: choice.flavorQuote,
+          unlockedPrivilegeId:
+            choice.mechanicId !== undefined && !unlockedMechanics.includes(choice.mechanicId)
+              ? choice.mechanicId
+              : undefined,
+          rolls: summary.rolls.map((r) => ({
+            ...r,
+            statBefore: stats[r.statKey],
+            statAfter: nextStats[r.statKey],
+          })),
+        };
+
         // Actualización de banderas activas (flags)
         const updatedFlags = { ...activeFlags };
         if (choice.grantedFlags && choice.grantedFlags.length > 0) {
@@ -550,7 +573,7 @@ export const useGameStore = create<GameState>()(
             gameOverDescription: verdict.description,
             ending: verdict.ending,
             previewDirection: null,
-            lastDiceRoll: summary,
+            lastDiceRoll: enrichedSummary,
             cardsSurvived: nextCardsSurvived,
             daysInPower: nextDays,
             activeFlags: updatedFlags,
@@ -576,7 +599,7 @@ export const useGameStore = create<GameState>()(
           daysInPower: nextDays,
           cardsSurvived: nextCardsSurvived,
           previewDirection: null,
-          lastDiceRoll: summary,
+          lastDiceRoll: enrichedSummary,
           activeFlags: updatedFlags,
           unlockedMechanics: nextUnlockedMechanics,
           evidenceDocuments: nextEvidences,

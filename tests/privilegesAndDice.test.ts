@@ -91,13 +91,21 @@ describe('Privilegios de Poltrona & Sistema de Tiradas de Dados', () => {
     const projected = useGameStore.getState().getProjectedStatsRange();
     expect(projected).not.toBeNull();
 
-    // Al tomar la decisión, se registra lastDiceRoll con el sello y tiradas
+    // Al tomar la decisión, se registra lastDiceRoll con el sello, contexto y antes/después
     const ok = useGameStore.getState().makeReignsChoice('left');
     expect(ok).toBe(true);
 
     const lastRoll = useGameStore.getState().lastDiceRoll;
     expect(lastRoll).not.toBeNull();
     expect(lastRoll?.direction).toBe('left');
+    expect(lastRoll?.choiceLabel).toBeDefined();
+    expect(lastRoll?.cardHeadline).toBeDefined();
     expect(lastRoll?.rolls.length).toBeGreaterThan(0);
+    expect(lastRoll?.rolls[0].statBefore).toBeTypeOf('number');
+    expect(lastRoll?.rolls[0].statAfter).toBeTypeOf('number');
+
+    // Permanece activo hasta que el usuario cierra la ventana emergente
+    useGameStore.getState().clearLastDiceRoll();
+    expect(useGameStore.getState().lastDiceRoll).toBeNull();
   });
 });
