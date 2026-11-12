@@ -1229,6 +1229,76 @@
         }
       ],
       "ending": "CONSEJO_IBEX"
+    },
+    "nodo_guerra_intxaurrondo_cumbre": {
+      "id": "nodo_guerra_intxaurrondo_cumbre",
+      "archetypeId": "FONTANERO_INTERIOR",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "EL BASTIÓN DE INTXAURRONDO: LÍNEA ROJA Y FONDOS RESERVADOS",
+      "context": "El general Rodríguez Galindo te recibe en su despacho del acuartelamiento. Sobre la mesa hay maletines con billetes de la serie W y carpetas de vigilancia sobre el sur de Francia. Exige inmunidad total para sus subordinados y el blindaje judicial del Palacio de La Cumbre.",
+      "evidenceDocument": "Informe de los servicios secretos militares con el esquema del mando único antiterrorista y el listado de fondos especiales.",
+      "choices": [
+        {
+          "id": "c_intx_node_1",
+          "label": "Firmar el blindaje del cuartel y ascender al coronel a general en el BOE",
+          "flavorQuote": "En la primera línea del Estado no se fiscalizan los métodos: la lealtad se premia con galones.",
+          "mechanicId": 40,
+          "modifiers": {
+            "pastaEnB": 20,
+            "presionJudicial": 15,
+            "impunidad": 35
+          },
+          "nextNodeId": "nodo_guerra_guadalajara_indulto"
+        },
+        {
+          "id": "c_intx_node_2",
+          "label": "Ordenar la inspección judicial de los sótanos y someter la unidad al Estado de derecho",
+          "flavorQuote": "La democracia no tolera cuarteles al margen de la Constitución: caiga quien caiga.",
+          "mechanicId": 38,
+          "modifiers": {
+            "pastaEnB": -15,
+            "presionJudicial": -25,
+            "impunidad": -20
+          },
+          "nextNodeId": "proconsul_fin_sobreseimiento"
+        }
+      ],
+      "ending": "SOBRESEIMIENTO_BOTIN"
+    },
+    "nodo_guerra_guadalajara_indulto": {
+      "id": "nodo_guerra_guadalajara_indulto",
+      "archetypeId": "ARQUITECTO_SOBRESEIMIENTO",
+      "sphere": "POLITICA",
+      "headline": "LA PUERTA DE GUADALAJARA: EL INDULTO NAVIDEÑO DE NOCHEBUENA",
+      "context": "Tras la condena del Tribunal Supremo a diez años de prisión para el exministro y su secretario de Estado, miles de militantes desfilan frente al penal. En los despachos de Moncloa se redacta el decreto de indulto parcial de dos tercios para sacarlos en tercer grado.",
+      "evidenceDocument": "Borrador de Real Decreto de indulto por razones de equidad y pacificación social con informe favorable de la fiscalía.",
+      "choices": [
+        {
+          "id": "c_guad_node_1",
+          "label": "Publicar el indulto en el BOE extraordinario de Nochebuena y abrir el régimen abierto",
+          "flavorQuote": "Pacificar el Estado y proteger a los nuestros: tres meses de prisión y a casa con pensión vitalicia.",
+          "mechanicId": 16,
+          "modifiers": {
+            "pastaEnB": 25,
+            "presionJudicial": -30,
+            "impunidad": 45
+          },
+          "nextNodeId": "nodo_inicio_proconsul"
+        },
+        {
+          "id": "c_guad_node_2",
+          "label": "Denegar el indulto y exigir el cumplimiento íntegro de la pena impuesta por el Supremo",
+          "flavorQuote": "Quien secuestró a ciudadanos inocentes debe cumplir la condena: la ley es igual para todos.",
+          "mechanicId": 38,
+          "modifiers": {
+            "pastaEnB": -18,
+            "presionJudicial": 25,
+            "impunidad": -30
+          },
+          "nextNodeId": "proconsul_fin_sobreseimiento"
+        }
+      ],
+      "ending": "INDULTO_EXPRES"
     }
   }
 }
