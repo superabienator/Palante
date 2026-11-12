@@ -12,6 +12,12 @@
 - [x] Hito 5: Maquetación fanzine punk interactiva (StatsBar, DecisionCard, selector de personajes y estado global en Next.js 15).
 - [x] Hito 6: Blindaje de seguridad HTTP, SEO/OpenGraph y optimización para despliegue en Vercel.
 - [x] Hito 7 (Evolución Reigns): Mecánica de swipe táctil/ratón en tiempo real (`ReignsCard`), selector jerárquico de 3 esferas y 12 subtipos, indicadores predictivos en `StatsBar`, baraja procedural de dilemas (`reignsDeck.json`) y veredictos judiciales de fin de carrera (`VerdictModal`).
+- [x] Hito 8 (Expansión Histórica, Panel /Admin y Pipeline de Actualidad):
+  - Biblia 2.0 reconstruida en `docs/lore/biblia_juego.md` (10 NPCs recurrentes, 6 Macro-sagas, cartas de crisis y grandes sumarios: Malaya, ERE, Nóos, Pujol 3%, Bankia, Castor, Villarejo, Paesa).
+  - Mazo procedural expandido a 40 cartas completas e interconectadas por flags en `src/content/reignsDeck.json`.
+  - Panel administrativo visual `/admin` en `src/app/admin/page.tsx` para usuarios no técnicos (gestión de mazo, bandeja de virales y formulario interactivo con deslizadores de estadísticas).
+  - Backend API persistente en `src/app/api/admin/cards/route.ts` con lectura y escritura de tarjetas en disco.
+  - Pipeline de actualidad asistida (`scripts/suggestNewsCard.mjs` / `npm run news:suggest`) con 3 cartas de actualidad precargadas (Plantón de Abascal a Évole, Mascarillas en Pandemia, Comisión de Investigación).
 
 ---
 
