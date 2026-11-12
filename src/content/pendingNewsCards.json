@@ -118,5 +118,113 @@
       ]
     },
     "requiredFlags": []
+  },
+  {
+    "id": "VIRAL_CREMATORIO_TOYOTA_N332",
+    "speaker": "El Comentarista de la Tertulia Matinal",
+    "speakerRole": "Voz de la Crónica Negra Costera",
+    "sphere": "ORDEN_JUSTICIA",
+    "headline": "¿AJUSTE DE CUENTAS O ACCIDENTE? ARDE UN COCHE CON UN COMISIONISTA EN LA N-332",
+    "context": "Un Toyota Corolla arde frente a un club de alterne en la carretera de Misent con un conocido conseguidor del ladrillo en su interior. La Guardia Civil investiga si el fuego purificador tiene que ver con las cintas grabadas del PAI del Pinar.",
+    "evidenceDocument": "Fotografía en portada de periódico comarcal con el chasis calcinado y restos de gasolina sintética.",
+    "leftChoice": {
+      "id": "c_toyota_1",
+      "label": "Filtrar que fue una disputa sentimental y blindar al jefe de seguridad en el tanatorio",
+      "stampText": "DESMENTIR",
+      "flavorQuote": "En esta comarca la gente confunde un cortocircuito fortuito con una vendetta siciliana.",
+      "modifiers": {
+        "pastaEnB": -5,
+        "presionJudicial": -10,
+        "impunidad": 15,
+        "reputacionMediatica": -10
+      },
+      "grantedFlags": ["VIRAL_TOYOTA_SILENCIADO"]
+    },
+    "rightChoice": {
+      "id": "c_toyota_2",
+      "label": "Aprovechar el revuelo para culpar a la mafia del Este y pedir refuerzos policiales",
+      "stampText": "MAFIA RUSA",
+      "flavorQuote": "Los rusos y los búlgaros resuelven sus cuentas como en los noventa; que la policía vigile la costa.",
+      "modifiers": {
+        "pastaEnB": 0,
+        "presionJudicial": 10,
+        "impunidad": -5,
+        "reputacionMediatica": 10
+      },
+      "grantedFlags": ["VIRAL_TOYOTA_RUMANO"]
+    },
+    "requiredFlags": []
+  },
+  {
+    "id": "VIRAL_CREMATORIO_POSIDONIA_YATE",
+    "speaker": "Portavoz de Salvem el Litoral",
+    "speakerRole": "Activista Submarino en Zodiac",
+    "sphere": "EMPRESARIAL",
+    "headline": "UN SUPERYATE DE 60 METROS FONDEA SOBRE LA PRADERA PROTEGIDA DE POSIDONIA",
+    "context": "El megayate de un oligarca socio de la promotora local ha tirado un ancla de dos toneladas sobre una reserva biológica marina. Activistas en lancha se encadenan a la hélice con pancartas mientras los turistas graban vídeos en TikTok.",
+    "evidenceDocument": "Vídeo viral de un buceador mostrando la cadena del ancla arando trescientos metros de fondo marino virgen.",
+    "leftChoice": {
+      "id": "c_posidonia_1",
+      "label": "Pagar la multa medioambiental de inmediato con la calderilla del casino",
+      "stampText": "CALDERILLA",
+      "flavorQuote": "Trescientos mil euros de multa no pagan ni el repostaje de diésel para llegar a Cerdeña.",
+      "modifiers": {
+        "pastaEnB": -10,
+        "presionJudicial": -15,
+        "impunidad": 15,
+        "reputacionMediatica": -15
+      },
+      "grantedFlags": ["VIRAL_POSIDONIA_MULTADA"]
+    },
+    "rightChoice": {
+      "id": "c_posidonia_2",
+      "label": "Denunciar a los activistas por piratería marítima y riesgo para la navegación",
+      "stampText": "PIRATERÍA",
+      "flavorQuote": "Esos antisistema en lancha amenazaban la seguridad de ilustres inversores internacionales.",
+      "modifiers": {
+        "pastaEnB": 0,
+        "presionJudicial": 10,
+        "impunidad": 10,
+        "reputacionMediatica": 15
+      },
+      "grantedFlags": ["VIRAL_ACTIVISTAS_ACUSADOS"]
+    },
+    "requiredFlags": []
+  },
+  {
+    "id": "VIRAL_CREMATORIO_ROTONDA_HORMIGON",
+    "speaker": "El Cronista Municipal de Misent",
+    "speakerRole": "Periodista Local de Pluma Afilada",
+    "sphere": "POLITICA",
+    "headline": "INAUGURAN UNA ESCULTURA DE TRES MILLONES EN LA ROTONDA MIENTRAS SE CORTA EL AGUA",
+    "context": "El alcalde y el constructor Bertomeu descorchan cava junto a una mole de bronce de treinta metros de altura en el acceso a la autovía, mientras los vecinos de los barrios periféricos sufren cortes de suministro de agua potable.",
+    "evidenceDocument": "Factura de la fundición artística aprobada por decreto de urgencia con cargo al canon de saneamiento.",
+    "leftChoice": {
+      "id": "c_rotonda_1",
+      "label": "Regalar bidones de agua con el logotipo del ayuntamiento y la promotora",
+      "stampText": "BIDONES VIP",
+      "flavorQuote": "El arte moderno sitúa a Misent en el mapa mundial; el agua volverá cuando llueva.",
+      "modifiers": {
+        "pastaEnB": -8,
+        "presionJudicial": -5,
+        "impunidad": 15,
+        "reputacionMediatica": -15
+      },
+      "grantedFlags": ["VIRAL_BIDONES_REPARTIDOS"]
+    },
+    "rightChoice": {
+      "id": "c_rotonda_2",
+      "label": "Bautizar la rotonda con el nombre de un ministro ilustre para que acuda al telediario",
+      "stampText": "MINISTRO",
+      "flavorQuote": "Si viene el ministro a cortar la cinta, el corte de agua pasa a ser una anécdota comarcal.",
+      "modifiers": {
+        "pastaEnB": 5,
+        "presionJudicial": -10,
+        "impunidad": 20,
+        "reputacionMediatica": 15
+      },
+      "grantedFlags": ["VIRAL_MINISTRO_ROTONDA"]
+    },
+    "requiredFlags": []
   }
 ]

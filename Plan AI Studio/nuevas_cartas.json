@@ -1,0 +1,2076 @@
+{
+    "sagaName": "Operación Trinque Real: Los 32 Terabytes del Apocalipsis",
+    "description": "El comisario de la gorra ha caído en prisión preventiva, pero custodia un arsenal clandestino de 32 terabytes con audios de ministros, jueces y amantes del monarca. Mientras subasta los dosieres desde su celda en Estremera, deberás elegir entre el contraataque del chantaje para demoler las instituciones o la fontanería judicial para encapsular la causa y purgar a los fiscales independientes.",
+    "cards": [
+        {
+            "id": "saga_villarejo_01_aviso_estremera",
+            "speaker": "El Letrado de Trinchera",
+            "speakerRole": "El Abogado de las Cloacas",
+            "sphere": "ORDEN_JUSTICIA",
+            "headline": "MENSAJE DESDE LA CELDA 42: 'O SALGO EN LIBERTAD O SALTAMOS TODOS'",
+            "context": "El abogado de confianza del comisario se sienta frente a ti en una cafetería de Bravo Murillo. Deja sobre la servilleta un pendrive encriptado con un extracto de dos minutos donde se escucha a un ministro coordinando un montaje policial contra rivales políticos.",
+            "evidenceDocument": "Pendrive Verbatim con etiqueta adhesiva: 'Extracto Mini-Pepe / Grabación Rianxo'",
+            "weight": 5,
+            "requiredFlags": [],
+            "leftChoice": {
+                "label": "Comprar el silencio del comisario prometiéndole un informe médico de demencia sobrevenida para sacarlo de prisión.",
+                "stampText": "PACTAR",
+                "flavorQuote": "Dile a Pepe que se esté tranquilo, que el forense de guardia es de los nuestros y le va a ver un ictus de manual.",
+                "modifiers": {
+                    "pastaEnB": -12,
+                    "presionJudicial": -10,
+                    "impunidad": 14,
+                    "reputacionMediatica": -8
+                },
+                "grantedFlags": [
+                    "pacto_comisario_sellado"
+                ],
+                "mechanicId": 32
+            },
+            "rightChoice": {
+                "label": "Rechazar el chantaje, calificarlo de 'delincuente sin credibilidad' y ordenar un registro sorpresa en su celda.",
+                "stampText": "AISLAMIENTO",
+                "flavorQuote": "A mí este canalla no me torea. Que Asuntos Internos le dé la vuelta al colchón y le incaute hasta los cordones.",
+                "modifiers": {
+                    "pastaEnB": 0,
+                    "presionJudicial": 15,
+                    "impunidad": -14,
+                    "reputacionMediatica": 10
+                },
+                "grantedFlags": [
+                    "guerra_abierta_cloacas"
+                ]
+            }
+        },
+        {
+            "id": "saga_villarejo_02_asalto_kitchen",
+            "speaker": "Don Paco 'El Fontanero'",
+            "speakerRole": "El Mozo de Cloaca Gubernamental",
+            "sphere": "POLITICA",
+            "headline": "OPERACIÓN EN EL GARAJE: EL CHÓFER PIDE 2.000 AL MES DE FONDOS RESERVADOS",
+            "context": "En el despacho de Interior, el secretario de Estado te presenta el plan para neutralizar los discos duros que custodia la mujer del extesorero. El chófer de la familia está dispuesto a sustraer los dispositivos si le garantizan una nómina en negro y plaza fija en el cuerpo policial.",
+            "evidenceDocument": "Recibí de fondos reservados por 2.000 euros en billetes sin numerar firmado con el alias 'El Cocinero'",
+            "weight": 4,
+            "requiredFlags": [
+                "pacto_comisario_sellado"
+            ],
+            "leftChoice": {
+                "label": "Autorizar el soborno mensual con fondos reservados y prometerle el ingreso en la academia de Ávila.",
+                "stampText": "UNTAR TOPO",
+                "flavorQuote": "Al chófer se le pagan los dos mil pavos todos los meses en la serie W y que traiga los lápices de memoria.",
+                "modifiers": {
+                    "pastaEnB": -10,
+                    "presionJudicial": -12,
+                    "impunidad": 16,
+                    "reputacionMediatica": -6
+                },
+                "grantedFlags": [
+                    "chofer_captado",
+                    "kitchen_en_marcha"
+                ],
+                "mechanicId": 15
+            },
+            "rightChoice": {
+                "label": "Descartar al chófer por considerarlo una chapuza y encargar el asalto a un falso cura armado.",
+                "stampText": "OPERATIVO LOCO",
+                "flavorQuote": "Un cura con alzacuellos no levanta sospechas ni ante la portera. Que entre y les pida los pendrives por las buenas.",
+                "modifiers": {
+                    "pastaEnB": -5,
+                    "presionJudicial": 18,
+                    "impunidad": -15,
+                    "reputacionMediatica": -18
+                },
+                "grantedFlags": [
+                    "falso_cura_desplegado"
+                ],
+                "mechanicId": 16
+            }
+        },
+        {
+            "id": "saga_villarejo_03_filtracion_bomba",
+            "speaker": "El Director del Digital Amigo",
+            "speakerRole": "El Portavoz de la Tubería",
+            "sphere": "EMPRESARIAL",
+            "headline": "EXCLUSIVA DE MADRUGADA: 'AUDIOS DE LAS CUENTAS SUIZAS EN PORTADA'",
+            "context": "El comisario ha cumplido su amenaza de guerra abierta y entrega una cinta con las conversaciones de la amiga entrañable del monarca detallando transferencias de cien millones en Ginebra. El digital afín te ofrece retrasar la publicación si compras publicidad institucional encubierta.",
+            "evidenceDocument": "Cinta magnetofónica de 60 minutos con transcripción: 'Las comisiones del AVE a La Meca se cobraron en el Banco Mirabaud'",
+            "weight": 5,
+            "requiredFlags": [
+                "guerra_abierta_cloacas"
+            ],
+            "leftChoice": {
+                "label": "Regar el digital con tres millones en campañas de turismo autonómico para que entierre la exclusiva.",
+                "stampText": "COMPRAR PAZ",
+                "flavorQuote": "Dile al editor que tiene cerrada la campaña de carreteras para todo el año; esa cinta no sale ni en fotocopias.",
+                "modifiers": {
+                    "pastaEnB": -16,
+                    "presionJudicial": -8,
+                    "impunidad": 10,
+                    "reputacionMediatica": 12
+                },
+                "grantedFlags": [
+                    "prensa_comprada",
+                    "escandalo_tapado"
+                ]
+            },
+            "rightChoice": {
+                "label": "Dejar que reviente el escándalo y alegar que se trata de 'falsedades de una despechada' para proteger la Corona.",
+                "stampText": "NEGAR TODO",
+                "flavorQuote": "Que publiquen lo que quieran. La inviolabilidad constitucional del artículo 56 es un muro que no tumba ni Dios.",
+                "modifiers": {
+                    "pastaEnB": 0,
+                    "presionJudicial": 16,
+                    "impunidad": -16,
+                    "reputacionMediatica": -18
+                },
+                "grantedFlags": [
+                    "monarquia_en_llamas"
+                ]
+            }
+        },
+        {
+            "id": "saga_villarejo_04_fiscal_rebelde",
+            "speaker": "Ignacio 'El Incorruptible'",
+            "speakerRole": "El Fiscal Molesto",
+            "sphere": "ORDEN_JUSTICIA",
+            "headline": "REQUERIMIENTO JUDICIAL: EL FISCAL PIDE IMPUTAR A MEDIA CUPULA DEL IBEX",
+            "context": "El fiscal anticorrupción asignado a la macrocausa no atiende a llamadas ministeriales y acaba de redactar un auto demoledor: solicita imputar a los presidentes de las mayores energéticas y bancos del país por contratar los servicios de espionaje del comisario.",
+            "evidenceDocument": "Escrito de acusación con sello de la Fiscalía Especial Anticorrupción de 142 folios",
+            "weight": 4,
+            "requiredFlags": [
+                "kitchen_en_marcha"
+            ],
+            "leftChoice": {
+                "label": "Montar una campaña de difamación inventando un lío de faldas con la abogada de la acusación ('StampaGate').",
+                "stampText": "PURGAR FISCAL",
+                "flavorQuote": "Con decir que se va de cañas con la abogada de la acusación popular lo tenemos liquidado. El fiscal general lo echa en dos días.",
+                "modifiers": {
+                    "pastaEnB": -8,
+                    "presionJudicial": -14,
+                    "impunidad": 15,
+                    "reputacionMediatica": -12
+                },
+                "grantedFlags": [
+                    "fiscal_apartado",
+                    "stampagate_activado"
+                ],
+                "mechanicId": 29
+            },
+            "rightChoice": {
+                "label": "Permitir que el fiscal avance y sacrificar a los directores de seguridad del IBEX para proteger a los presidentes.",
+                "stampText": "FUSIBLES",
+                "flavorQuote": "Que imputen a los jefes de seguridad, que para eso cobran medio kilo al año. Los presidentes ni pisaron la marisquería.",
+                "modifiers": {
+                    "pastaEnB": 6,
+                    "presionJudicial": 8,
+                    "impunidad": -6,
+                    "reputacionMediatica": 8
+                },
+                "grantedFlags": [
+                    "seguridad_sacrificada"
+                ],
+                "mechanicId": 35
+            }
+        },
+        {
+            "id": "saga_villarejo_05_chapuza_olivares",
+            "speaker": "Comisario de Asuntos Internos",
+            "speakerRole": "El Policía de Trinchera",
+            "sphere": "ORDEN_JUSTICIA",
+            "headline": "ESCÁNDALO EN EL BARRIO DE SALAMANCA: EL FALSO CURA ACABA ATRIPILLADO Y DETENIDO",
+            "context": "El operativo clandestino se ha convertido en una comedia negra: el asaltante disfrazado de cura ha sido reducido por el hijo del tesorero y la policía municipal ha acudido al aviso. Está en el calabozo con un revólver antiguo y bridas plásticas en los bolsillos.",
+            "evidenceDocument": "Acta de incautación de atrezzo eclesiástico: sotana raída, alzacuellos de plástico y pistola de fogueo modificada",
+            "weight": 5,
+            "requiredFlags": [
+                "falso_cura_desplegado"
+            ],
+            "leftChoice": {
+                "label": "Coordinar con el juez instructor para declararlo demente de inmediato y sacarlo ante la prensa en silla de ruedas.",
+                "stampText": "DEMENTE OFICIAL",
+                "flavorQuote": "A este hombre me lo metes en una silla de ruedas ya. Que parezca un pirado suelto y cerramos la pieza con siete llaves.",
+                "modifiers": {
+                    "pastaEnB": -6,
+                    "presionJudicial": -12,
+                    "impunidad": 12,
+                    "reputacionMediatica": -10
+                },
+                "grantedFlags": [
+                    "falso_cura_enterrado"
+                ],
+                "mechanicId": 32
+            },
+            "rightChoice": {
+                "label": "Dejar que el asaltante declare ante el juzgado ordinario e intentar culpar a un servicio secreto extranjero.",
+                "stampText": "CONSPIRACIÓN",
+                "flavorQuote": "Decimos que es un agente marroquí o venezolano enviado para desestabilizar la nación. A la prensa patriótica le encanta.",
+                "modifiers": {
+                    "pastaEnB": 0,
+                    "presionJudicial": 17,
+                    "impunidad": -15,
+                    "reputacionMediatica": -14
+                },
+                "grantedFlags": [
+                    "ridiculo_internacional"
+                ]
+            }
+        },
+        {
+            "id": "saga_villarejo_06_cita_castellana",
+            "speaker": "Don Isidro 'El Banquero Sabio'",
+            "speakerRole": "El Barón del Encofrado Nacional",
+            "sphere": "EMPRESARIAL",
+            "headline": "CENA PRIVADA EN EL CLUB FINANCIERO: 'EL IBEX EXIGE COMPLIANCE PREVENTIVO'",
+            "context": "Los primeros espadas de la gran banca y el sector energético te reúnen en una sala blindada frente al Paseo de la Castellana. Advierten que si sus compañías siguen imputadas, se hundirá la cotización internacional y el Gobierno se quedará sin colocaciones de deuda.",
+            "evidenceDocument": "Informe pericial de consultora de auditoría alegando la existencia de un 'Manual de Prevención de Delitos Corporativos'",
+            "weight": 4,
+            "requiredFlags": [
+                "fiscal_apartado"
+            ],
+            "leftChoice": {
+                "label": "Pactar con la Sala de la Audiencia Nacional la doctrina del compliance para exonerar a las multinacionales.",
+                "stampText": "COMPLIANCE IBEX",
+                "flavorQuote": "Las empresas cotizadas tenían un protocolo ético impecable en PDF; la culpa del espionaje es del botones.",
+                "modifiers": {
+                    "pastaEnB": 18,
+                    "presionJudicial": -16,
+                    "impunidad": 14,
+                    "reputacionMediatica": -8
+                },
+                "grantedFlags": [
+                    "ibex_blindado"
+                ],
+                "mechanicId": 35
+            },
+            "rightChoice": {
+                "label": "Exigirles que aporten diez millones en patrocinios a los medios del régimen si quieren que el fiscal jefe eche el freno.",
+                "stampText": "PEAJE BANCARIO",
+                "flavorQuote": "Si queréis salvar el trasero corporativo, empezad a soltar pasta en las tertulias matinales para cambiar el viento.",
+                "modifiers": {
+                    "pastaEnB": 14,
+                    "presionJudicial": -4,
+                    "impunidad": 6,
+                    "reputacionMediatica": 10
+                },
+                "grantedFlags": [
+                    "banca_sometida"
+                ]
+            }
+        },
+        {
+            "id": "saga_villarejo_07_subasta_carcelaria",
+            "speaker": "El Preso Preventivo VIP",
+            "speakerRole": "El Archivador de Cloaca",
+            "sphere": "ORDEN_JUSTICIA",
+            "headline": "SUBASTA DESDE EL LOCUTORIO: DOSIERES SECRETOS A LA VENTA EN EL PATIO",
+            "context": "A través de vis a vis íntimos y notas manuscritas en los dobladillos de la ropa sucia, el comisario ha organizado una red clandestina para vender pruebas periciales a políticos encausados que buscan anular sus juicios por defectos de forma.",
+            "evidenceDocument": "Cuaderno escolar con listado de clientes y tarifas en criptomonedas: 'Pieza Iron: 500k / Pieza Land: 300k'",
+            "weight": 3,
+            "requiredFlags": [
+                "escandalo_tapado"
+            ],
+            "leftChoice": {
+                "label": "Comprarle el archivo completo de audios del partido por tres millones en cuentas de Suiza para quemarlo.",
+                "stampText": "COMPRA TOTAL",
+                "flavorQuote": "Pagamos lo que pida en la cuenta de Ginebra. Esos audios no pueden quedar flotando en el mercado negro.",
+                "modifiers": {
+                    "pastaEnB": -18,
+                    "presionJudicial": -15,
+                    "impunidad": 18,
+                    "reputacionMediatica": 8
+                },
+                "grantedFlags": [
+                    "archivo_destruido_total"
+                ],
+                "mechanicId": 6
+            },
+            "rightChoice": {
+                "label": "Intervenirle las comunicaciones en prisión y abrirle una nueva causa por revelación de secretos.",
+                "stampText": "APRETAR TUERCAS",
+                "flavorQuote": "Que le pinchen el locutorio y le metan veinte años más de condena; que se entere de quién manda en Instituciones Penitenciarias.",
+                "modifiers": {
+                    "pastaEnB": 0,
+                    "presionJudicial": 12,
+                    "impunidad": -8,
+                    "reputacionMediatica": 4
+                },
+                "grantedFlags": [
+                    "comisario_acorralado"
+                ]
+            }
+        },
+        {
+            "id": "saga_villarejo_08_reunion_fiscal_jefe",
+            "speaker": "Don Manuel 'Lujo Asiático'",
+            "speakerRole": "El Tapón Institucional",
+            "sphere": "ORDEN_JUSTICIA",
+            "headline": "DESPACHO DE LA FISCALÍA GENERAL: 'EL FISCAL BUENO YA TIENE LA TIJERA'",
+            "context": "El recién nombrado fiscal jefe anticorrupción te recibe con un café de máquina. Te confirma que tiene redactado el decreto interno para retirar a los fiscales rebeldes de las piezas más sensibles alegando 'criterios organizativos de jerarquía funcional'.",
+            "evidenceDocument": "Orden interna de servicio firmada limitando el acceso a las carpetas digitales del sumario Tándem",
+            "weight": 4,
+            "requiredFlags": [
+                "stampagate_activado"
+            ],
+            "leftChoice": {
+                "label": "Respaldar el decreto disciplinario y nombrar a un fiscal dócil que archive la pieza política.",
+                "stampText": "DECRETAR ARCHIVO",
+                "flavorQuote": "Esto es un lujo asiático, Manuel. Me apartas a los dos exaltados y ponemos a alguien que entienda el sentido de Estado.",
+                "modifiers": {
+                    "pastaEnB": -4,
+                    "presionJudicial": -18,
+                    "impunidad": 17,
+                    "reputacionMediatica": -14
+                },
+                "grantedFlags": [
+                    "fiscalia_domesticada",
+                    "cordon_sanitario"
+                ],
+                "mechanicId": 36
+            },
+            "rightChoice": {
+                "label": "Frenar la destitución por temor a un motín en la junta de fiscales y al descrédito ante la Unión Europea.",
+                "stampText": "FRENAR PURGA",
+                "flavorQuote": "Si apartamos al fiscal a las bravas, Bruselas nos congela los fondos de recuperación. Hay que hilar más fino.",
+                "modifiers": {
+                    "pastaEnB": 0,
+                    "presionJudicial": 14,
+                    "impunidad": -10,
+                    "reputacionMediatica": 12
+                },
+                "grantedFlags": [
+                    "rebelion_fiscales"
+                ]
+            }
+        },
+        {
+            "id": "saga_villarejo_09_toga_amiga_auto",
+            "speaker": "El Magistrado de la Audiencia",
+            "speakerRole": "El Arquitecto del Sobreseimiento",
+            "sphere": "ORDEN_JUSTICIA",
+            "headline": "AUTO DE SALVACIÓN: EL JUEZ MARCA LA LÍNEA ROJA EN EL CONSEJO DE MINISTROS",
+            "context": "El juez instructor del juzgado central dicta la resolución definitiva de la pieza principal. En los razonamientos jurídicos establece que la cúpula del Ejecutivo no tuvo conocimiento de las operaciones parapoliciales, atribuyendo todo el operativo a la 'iniciativa personal y descontrolada' de los mandos policiales.",
+            "evidenceDocument": "Auto de transformación de procedimiento abreviado excluyendo expresamente al presidente del Gobierno",
+            "weight": 5,
+            "requiredFlags": [
+                "ibex_blindado",
+                "fiscalia_domesticada"
+            ],
+            "leftChoice": {
+                "label": "Aplaudir el auto judicial y condecorar discretamente al magistrado con la encomienda de San Raimundo de Peñafort.",
+                "stampText": "ENCAPSULAR",
+                "flavorQuote": "El juez ha estado soberbio. Una línea roja impecable: los ministros no sabían nada y los policías al banquillo.",
+                "modifiers": {
+                    "pastaEnB": 8,
+                    "presionJudicial": -18,
+                    "impunidad": 18,
+                    "reputacionMediatica": 6
+                },
+                "grantedFlags": [
+                    "impunidad_consagrada"
+                ],
+                "mechanicId": 31
+            },
+            "rightChoice": {
+                "label": "Filtrar a la oposición que el auto es una chapuza procesal para provocar un recurso y forzar un cambio de sede judicial.",
+                "stampText": "DILATAR SALA",
+                "flavorQuote": "Que recurran a la Sala de lo Penal. Entre apelaciones, recusaciones y cambios de ponencia ganamos otros cuatro años.",
+                "modifiers": {
+                    "pastaEnB": -2,
+                    "presionJudicial": -10,
+                    "impunidad": 12,
+                    "reputacionMediatica": -8
+                },
+                "grantedFlags": [
+                    "prescripcion_en_camino"
+                ],
+                "mechanicId": 34
+            }
+        },
+        {
+            "id": "saga_villarejo_10_huida_al_golfo",
+            "speaker": "El Emisario de Zarzuela",
+            "speakerRole": "El Consejero Palaciego",
+            "sphere": "POLITICA",
+            "headline": "VUELO CHÁRTER DE MADRUGADA: 'EL PATRÓN DEBE DORMIR EN LOS EMIRATOS'",
+            "context": "El escándalo de las comisiones del AVE y las donaciones opacas es incontrolable en los informativos. En una reunión de urgencia en Moncloa se decide la salida del monarca emérito hacia Abu Dabi en un reactor privado de lujo para evitar una imputación penal en el Tribunal Supremo.",
+            "evidenceDocument": "Plan de vuelo Madrid-Abu Dabi con pasajero registrado bajo seudónimo diplomático",
+            "weight": 4,
+            "requiredFlags": [
+                "monarquia_en_llamas"
+            ],
+            "leftChoice": {
+                "label": "Facilitar el salvoconducto diplomático y coordinar con Hacienda una regularización fiscal exprés sin sanción.",
+                "stampText": "EVACUACIÓN REAL",
+                "flavorQuote": "Que despegue a las seis de la mañana antes de que abran los juzgados. Dos regularizaciones extemporáneas y asunto resuelto.",
+                "modifiers": {
+                    "pastaEnB": -8,
+                    "presionJudicial": -14,
+                    "impunidad": 15,
+                    "reputacionMediatica": -16
+                },
+                "grantedFlags": [
+                    "emerito_en_el_golfo",
+                    "regularizacion_pactada"
+                ],
+                "mechanicId": 35
+            },
+            "rightChoice": {
+                "label": "Exigirle que permanezca en su residencia oficial y afronte la investigación del Supremo para salvar la institución.",
+                "stampText": "SITIO A PALACIO",
+                "flavorQuote": "Si el emérito se fuga al desierto, la Corona se hunde en las encuestas. Que se quede y declare ante la Sala Segunda.",
+                "modifiers": {
+                    "pastaEnB": 0,
+                    "presionJudicial": 18,
+                    "impunidad": -18,
+                    "reputacionMediatica": 8
+                },
+                "grantedFlags": [
+                    "abdicacion_institucional"
+                ]
+            }
+        },
+        {
+            "id": "saga_villarejo_11_climax_sillon_ibex",
+            "speaker": "El Presidente de la Eléctrica",
+            "speakerRole": "El Pasante Giratorio",
+            "sphere": "EMPRESARIAL",
+            "headline": "CONSEJO DE ADMINISTRACIÓN EXTRAORDINARIO: 'BIENVENIDO AL SELECTIVO, CAMARADA'",
+            "context": "Con la causa judicial totalmente sepultada, las multinacionales blindadas y los fiscales díscolos desterrados a provincias, se celebra la junta de accionistas del gigante energético. En el orden del día figura tu nombramiento como consejero independiente con un sueldo de 650.000 euros anuales.",
+            "evidenceDocument": "Contrato de consejero independiente con cláusula de blindaje por cese anticipado de tres millones de euros",
+            "weight": 5,
+            "requiredFlags": [
+                "impunidad_consagrada"
+            ],
+            "leftChoice": {
+                "label": "Rubricar el contrato de consejero con tarjeta black y brindar con champán francés por los servicios prestados.",
+                "stampText": "PUERTA GIRATORIA",
+                "flavorQuote": "El Estado lo crea y el IBEX se lo lleva, querido amigo. Te has ganado cada céntimo de esta remuneración en diferido.",
+                "modifiers": {
+                    "pastaEnB": 18,
+                    "presionJudicial": -12,
+                    "impunidad": 18,
+                    "reputacionMediatica": -10
+                },
+                "grantedFlags": [
+                    "triunfo_absoluto_oligarquia"
+                ],
+                "mechanicId": 20
+            },
+            "rightChoice": {
+                "label": "Exigir la presidencia de la fundación corporativa para gestionar las adjudicaciones de obra verde a empresas afines.",
+                "stampText": "FUNDACIÓN CAJA",
+                "flavorQuote": "El sillón del consejo es calderilla; yo quiero la presidencia de la fundación para seguir repartiendo el tres por ciento.",
+                "modifiers": {
+                    "pastaEnB": 15,
+                    "presionJudicial": -8,
+                    "impunidad": 16,
+                    "reputacionMediatica": 4
+                },
+                "grantedFlags": [
+                    "imperio_fundacional_activo"
+                ],
+                "mechanicId": 3
+            }
+        },
+        {
+            "id": "saga_villarejo_12_climax_banquillo_nacional",
+            "speaker": "El Presidente del Tribunal",
+            "speakerRole": "El Juez de Sala",
+            "sphere": "ORDEN_JUSTICIA",
+            "headline": "JUICIO ORAL EN SAN FERNANDO DE HENARES: 'VISTO PARA SENTENCIA'",
+            "context": "La rebelión de los fiscales y la filtración masiva de los 32 terabytes han dinamitado el blindaje gubernamental. Tras cuatro meses de declaraciones públicas, caras desencajadas ante las cámaras y traiciones cruzadas, el tribunal de la Audiencia Nacional llama a la última palabra.",
+            "evidenceDocument": "Petición final del Ministerio Fiscal solicitando 48 años de prisión incondicional y comiso íntegro de bienes",
+            "weight": 5,
+            "requiredFlags": [
+                "abdicacion_institucional"
+            ],
+            "leftChoice": {
+                "label": "Alegar indefensión por escuchas ilegales y denunciar una conspiración masiva de las cloacas policiales.",
+                "stampText": "DOCTRINA NULIDAD",
+                "flavorQuote": "Todo este juicio es una farsa montada con pruebas contaminadas por una policía corrupta. ¡Exijo la nulidad radical!",
+                "modifiers": {
+                    "pastaEnB": -10,
+                    "presionJudicial": -6,
+                    "impunidad": 10,
+                    "reputacionMediatica": -14
+                },
+                "grantedFlags": [
+                    "recurso_amparo_supremo"
+                ],
+                "mechanicId": 34
+            },
+            "rightChoice": {
+                "label": "Asumir la condena con dignidad fingida esperando el indulto gubernamental en dos años por razones de salud.",
+                "stampText": "PACTO INDULTO",
+                "flavorQuote": "Cumpliremos dos añitos discretos en un módulo de respeto y luego el Consejo de Ministros nos firma el tercer grado.",
+                "modifiers": {
+                    "pastaEnB": 6,
+                    "presionJudicial": 18,
+                    "impunidad": 12,
+                    "reputacionMediatica": -18
+                },
+                "grantedFlags": [
+                    "indulto_pactado_moncloa"
+                ]
+            }
+        }
+    ]
+}{
+    "sagaName": "Operación Trinque Real: El Clímax de las Cloacas",
+    "description": "Las ramificaciones de los 32 terabytes alcanzan su punto de no retorno. Entre las cuentas cifradas del banco Mirabaud en Ginebra, el motín en la junta de fiscales, la amenaza del ingreso en Soto del Real y la tramitación de indultos de urgencia en el Consejo de Ministros, deberás decidir si culminas la fuga dorada, te atrincheras en el aforamiento o dinamitas el Estado desde el banquillo.",
+    "cards": [
+        {
+            "id": "saga_villarejo_13_cuenta_ginebra_mirabaud",
+            "speaker": "Don Alberto 'El Fiduciario'",
+            "speakerRole": "El Lavandero Transnacional",
+            "sphere": "EMPRESARIAL",
+            "headline": "NOTIFICACIÓN DE LA BANCA PRIVADA: 'HAY QUE VACIAR LA CUENTA DE SUIZA YA'",
+            "context": "Tu gestor en Ginebra te llama por línea encriptada desde una cabina en la Place de la Fusterie. El fiscal suizo Yves Bertossa ha enviado una comisión rogatoria a Madrid preguntando por la titularidad real de la fundación panameña que nutre los fondos de los intermediarios.",
+            "evidenceDocument": "Extracto bancario de Union Bancaire Privée / Mirabaud a nombre de la fundación Zagatka con saldo de 64.800.000 €",
+            "weight": 5,
+            "requiredFlags": [
+                "archivo_destruido_total"
+            ],
+            "leftChoice": {
+                "label": "Liquidar la cuenta por ventanilla en efectivo y transferir el oro a un fideicomiso en Singapur vía Paesa.",
+                "stampText": "BYPASS ASIÁTICO",
+                "flavorQuote": "Los billetes no tienen código genético, amigo. Se sacan en sacas de francos suizos y mañana están en Singapur.",
+                "modifiers": {
+                    "pastaEnB": 18,
+                    "presionJudicial": -10,
+                    "impunidad": 16,
+                    "reputacionMediatica": -8
+                },
+                "grantedFlags": [
+                    "fortuna_en_singapur",
+                    "ruta_paesa_activa"
+                ],
+                "mechanicId": 38
+            },
+            "rightChoice": {
+                "label": "Presentar una regularización tributaria voluntaria extemporánea antes de que la Fiscalía abra diligencias formales.",
+                "stampText": "REGULARIZAR",
+                "flavorQuote": "Pagamos cuatro millones de propina a la Agencia Tributaria y el artículo 305 del Código Penal nos limpia el delito.",
+                "modifiers": {
+                    "pastaEnB": -16,
+                    "presionJudicial": -15,
+                    "impunidad": 14,
+                    "reputacionMediatica": -14
+                },
+                "grantedFlags": [
+                    "regularizacion_tributaria_blindada"
+                ],
+                "mechanicId": 35
+            }
+        },
+        {
+            "id": "saga_villarejo_14_motin_junta_fiscales",
+            "speaker": "El Decano de la Carrera",
+            "speakerRole": "El Mártir Procesal",
+            "sphere": "ORDEN_JUSTICIA",
+            "headline": "MOTÍN EN LA SALA DE JUNTAS: LOS FISCALES EXIGEN MANTENER LA IMPUTACIÓN POLÍTICA",
+            "context": "La Junta de Fiscales de Sala se reúne de urgencia en un ambiente irrespirable. La mayoría de los fiscales de carrera se niega a acatar la orden jerárquica del fiscal jefe de retirar la acusación contra el exministro del Interior y amenaza con invocar el artículo 27 del Estatuto.",
+            "evidenceDocument": "Acta de la Junta de Fiscales con 19 votos a favor de registrar la sede del partido y 4 en contra",
+            "weight": 5,
+            "requiredFlags": [
+                "rebelion_fiscales"
+            ],
+            "leftChoice": {
+                "label": "Imponer la orden jerárquica por escrito y cesar al teniente fiscal díscolo mediante Real Decreto exprés.",
+                "stampText": "PURGA TOTAL",
+                "flavorQuote": "Aquí la jerarquía se cumple o se van a redactar calificaciones de multas de tráfico a Ponferrada.",
+                "modifiers": {
+                    "pastaEnB": -4,
+                    "presionJudicial": -16,
+                    "impunidad": 15,
+                    "reputacionMediatica": -18
+                },
+                "grantedFlags": [
+                    "fiscalia_intervenida_brutalmente"
+                ],
+                "mechanicId": 37
+            },
+            "rightChoice": {
+                "label": "Ceder temporalmente y permitir que investiguen al secretario de Estado para salvar al ministro.",
+                "stampText": "CORTAFUEGOS",
+                "flavorQuote": "Dejamos caer al número dos. Que se coma él el marrón de la Kitchen y el ministro que se vaya de embajador a la Santa Sede.",
+                "modifiers": {
+                    "pastaEnB": 0,
+                    "presionJudicial": 8,
+                    "impunidad": -6,
+                    "reputacionMediatica": 10
+                },
+                "grantedFlags": [
+                    "numero_dos_sacrificado"
+                ],
+                "mechanicId": 31
+            }
+        },
+        {
+            "id": "saga_villarejo_15_chantaje_chofer_topo",
+            "speaker": "Sergio 'El Cocinero'",
+            "speakerRole": "El Chófer Topo",
+            "sphere": "ORDEN_JUSTICIA",
+            "headline": "LLAMADA DESDE LA GASOLINERA: 'O ME DAIS LA PLAZA EN MADRID O HABLO'",
+            "context": "El conductor del extesorero te llama desde una tarjeta prepago comprada en la A-6. Dice que ya aprobó el examen de la policía, pero que si lo mandan destinado a Cataluña o no le pagan la liquidación prometida de fondos reservados, entrega al juez los audios que grabó a escondidas a los comisarios.",
+            "evidenceDocument": "Copia de examen de oposición a la Policía Nacional con nota inflada y anotación en rojo: 'Apto por orden superior'",
+            "weight": 4,
+            "requiredFlags": [
+                "chofer_captado"
+            ],
+            "leftChoice": {
+                "label": "Asignarle plaza de escolta en la embajada en Lisboa y transferirle 50.000 € de la partida de gastos reservados.",
+                "stampText": "DESTINO DORADO",
+                "flavorQuote": "Mándalo a Lisboa con sueldo de agregado, coche oficial y que no pise España en diez años.",
+                "modifiers": {
+                    "pastaEnB": -8,
+                    "presionJudicial": -12,
+                    "impunidad": 14,
+                    "reputacionMediatica": 2
+                },
+                "grantedFlags": [
+                    "chofer_silenciado_definitivo"
+                ],
+                "mechanicId": 15
+            },
+            "rightChoice": {
+                "label": "Amenazarle con acusarle de falso testimonio y complicidad en el asalto para desacreditarlo ante la UCO.",
+                "stampText": "AMEDRENTAR",
+                "flavorQuote": "Dile a ese muerto de hambre que si abre la boca, entra en prisión antes de que termine de decir 'Kitchen'.",
+                "modifiers": {
+                    "pastaEnB": 0,
+                    "presionJudicial": 14,
+                    "impunidad": -12,
+                    "reputacionMediatica": -8
+                },
+                "grantedFlags": [
+                    "chofer_despechado_testifica"
+                ]
+            }
+        },
+        {
+            "id": "saga_villarejo_16_pacto_indulto_moncloa",
+            "speaker": "El Subsecretario de Presidencia",
+            "speakerRole": "El Fontanero de Aparato",
+            "sphere": "POLITICA",
+            "headline": "BORRADOR DEL CONSEJO DE MINISTROS: 'EL INDULTO DE LOS TRES MESES'",
+            "context": "En un reservado de la calle Génova se negocian las condiciones de la capitulación penal. Te ofrecen ingresar voluntariamente en el centro penitenciario de Brieva o en un módulo de respeto para, a los noventa días exactos, tramitarte el indulto parcial de dos tercios y el tercer grado por razones de arraigo.",
+            "evidenceDocument": "Minuta confidencial con membrete del Ministerio de Justicia sobre indultos concedidos a exministros en 1998",
+            "weight": 5,
+            "requiredFlags": [
+                "indulto_pactado_moncloa"
+            ],
+            "leftChoice": {
+                "label": "Aceptar el pacto, ingresar con discreción mediática y esperar el Real Decreto de indulto tras las elecciones.",
+                "stampText": "DOCTRINA VERA",
+                "flavorQuote": "Tres meses en un módulo tranquilo jugando al frontón, sale el indulto en Nochebuena y te vas a tu casa como un señor.",
+                "modifiers": {
+                    "pastaEnB": -6,
+                    "presionJudicial": -18,
+                    "impunidad": 16,
+                    "reputacionMediatica": -14
+                },
+                "grantedFlags": [
+                    "indulto_ejecutado",
+                    "superviviente_institucional"
+                ]
+            },
+            "rightChoice": {
+                "label": "Rechazar pisar la cárcel un solo día y fugarte a Suiza solicitando asilo político preventivo.",
+                "stampText": "FUGA A SUIZA",
+                "flavorQuote": "A mí no me encierra ni Dios. Mañana cruzo la frontera por Ginebra y que le pidan la extradición al Tribunal Federal.",
+                "modifiers": {
+                    "pastaEnB": -14,
+                    "presionJudicial": 12,
+                    "impunidad": 8,
+                    "reputacionMediatica": -18
+                },
+                "grantedFlags": [
+                    "exilio_en_ginebra"
+                ],
+                "mechanicId": 39
+            }
+        },
+        {
+            "id": "saga_villarejo_17_incapacidad_demente",
+            "speaker": "El Forense de Confianza",
+            "speakerRole": "La Toga Amiga",
+            "sphere": "ORDEN_JUSTICIA",
+            "headline": "DICTAMEN DEL INSTITUTO DE MEDICINA LEGAL: 'DETERIORO COGNITIVO SEVERO'",
+            "context": "El médico forense adscrito a la Audiencia Nacional entrega el informe pericial sobre el asaltante de los pendrives. Concluye que padece delirios persecutorios paranoides, lo que impide legalmente someterlo a interrogatorio judicial sobre quién le encargó el operativo.",
+            "evidenceDocument": "Informe pericial psiquiátrico de 8 páginas con diagnóstico de enajenación mental permanente",
+            "weight": 4,
+            "requiredFlags": [
+                "falso_cura_enterrado"
+            ],
+            "leftChoice": {
+                "label": "Ratificar el informe, clausurar la pieza separada y trasladar al testigo a un centro psiquiátrico penitenciario.",
+                "stampText": "SEPULTAR CAUSA",
+                "flavorQuote": "Caso cerrado. Un pobre loco actuando en solitario. La prensa hablará dos días de la sotana y a otra cosa.",
+                "modifiers": {
+                    "pastaEnB": -4,
+                    "presionJudicial": -15,
+                    "impunidad": 16,
+                    "reputacionMediatica": 4
+                },
+                "grantedFlags": [
+                    "tapadera_perfecta_consolidada"
+                ],
+                "mechanicId": 32
+            },
+            "rightChoice": {
+                "label": "Reabrir la causa a instancias de la acusación popular para interrogar a los mandos que le suministraron el arma.",
+                "stampText": "REAPERTURA",
+                "flavorQuote": "Ese informe huele a chamusquina desde la Castellana. Queremos saber de qué armería policial salió el revólver.",
+                "modifiers": {
+                    "pastaEnB": 0,
+                    "presionJudicial": 16,
+                    "impunidad": -14,
+                    "reputacionMediatica": 12
+                },
+                "grantedFlags": [
+                    "escandalo_armeria_policial"
+                ]
+            }
+        },
+        {
+            "id": "saga_villarejo_18_recurso_amparo_supremo",
+            "speaker": "El Catedrático de Procesal",
+            "speakerRole": "El Defensor de Élite",
+            "sphere": "ORDEN_JUSTICIA",
+            "headline": "SALA SEGUNDA DEL SUPREMO: 'LAS ESCUCHAS EN PRISIÓN VULNERAN EL DERECHO DE DEFENSA'",
+            "context": "Tu abogado de cabecera presenta recurso de casación ante el Tribunal Supremo alegando que las grabaciones ordenadas por el primer juez instructor violaron el secreto entre letrado y cliente en el locutorio, exigiendo la anulación íntegra del sumario.",
+            "evidenceDocument": "Recurso de Casación ante la Sala Segunda invocando la doctrina jurisprudencial de la nulidad por árbol envenenado",
+            "weight": 5,
+            "requiredFlags": [
+                "recurso_amparo_supremo"
+            ],
+            "leftChoice": {
+                "label": "Pagar trescientos mil euros de minuta para forzar la nulidad total de las grabaciones y apartar al juez instructor.",
+                "stampText": "DOCTRINA GARZÓN",
+                "flavorQuote": "Si pinchaste al abogado en la cárcel, te vas a la puta calle inhabilitado y el sumario entero va a la papelera.",
+                "modifiers": {
+                    "pastaEnB": -15,
+                    "presionJudicial": -18,
+                    "impunidad": 18,
+                    "reputacionMediatica": -6
+                },
+                "grantedFlags": [
+                    "sumario_anulado_por_supremo",
+                    "juez_inhabilitado"
+                ],
+                "mechanicId": 34
+            },
+            "rightChoice": {
+                "label": "Pactar una condena de conformidad mínima de dos años con multa pecuniaria para evitar el riesgo del Supremo.",
+                "stampText": "CONFORMIDAD",
+                "flavorQuote": "Aceptamos dos añitos sin ingreso efectivo en prisión, pagamos la multa con la caja B y salvamos el patrimonio.",
+                "modifiers": {
+                    "pastaEnB": -10,
+                    "presionJudicial": -10,
+                    "impunidad": 8,
+                    "reputacionMediatica": -12
+                },
+                "grantedFlags": [
+                    "condena_simbolica_firmada"
+                ]
+            }
+        },
+        {
+            "id": "saga_villarejo_19_monopolio_fundacion_ibex",
+            "speaker": "El Consejero Delegado",
+            "speakerRole": "El Barón del Encofrado Nacional",
+            "sphere": "EMPRESARIAL",
+            "headline": "CONVENIO ESTRATÉGICO: 50 MILLONES EN FONDOS DE LA FUNDACIÓN CORPORATIVA",
+            "context": "Instalado ya en el consejo de la corporación cotizada, te asignan el control de los fondos de patrocinio cultural y social. Las constructoras del consorcio solicitan adjudicar convenios a dedo a fundaciones creadas por dirigentes políticos para garantizar futuros contratos de obra civil.",
+            "evidenceDocument": "Convenio de colaboración público-privada con la Fundación de Estudios Institucionales por 12.000.000 € anuales",
+            "weight": 4,
+            "requiredFlags": [
+                "imperio_fundacional_activo"
+            ],
+            "leftChoice": {
+                "label": "Aprobar los convenios con mordida del 3% camuflada en gastos de estudios sociológicos.",
+                "stampText": "PEAJE CULTURAL",
+                "flavorQuote": "Las fundaciones no las fiscaliza el Tribunal de Cuentas. Metemos ahí el 3% de las autopistas y todos contentos.",
+                "modifiers": {
+                    "pastaEnB": 18,
+                    "presionJudicial": 6,
+                    "impunidad": 14,
+                    "reputacionMediatica": -4
+                },
+                "grantedFlags": [
+                    "maquinaria_3porciento_eterna"
+                ],
+                "mechanicId": 3
+            },
+            "rightChoice": {
+                "label": "Limitar el dinero a financiar cátedras universitarias para jueces y magistrados que imparten cursos de verano.",
+                "stampText": "UNTO ACADÉMICO",
+                "flavorQuote": "Pagamos diez mil euros por conferencia a los jueces de la Audiencia Nacional y tenemos la sala domesticada para siempre.",
+                "modifiers": {
+                    "pastaEnB": -8,
+                    "presionJudicial": -14,
+                    "impunidad": 17,
+                    "reputacionMediatica": 10
+                },
+                "grantedFlags": [
+                    "jueces_en_nomina_academica"
+                ],
+                "mechanicId": 4
+            }
+        },
+        {
+            "id": "saga_villarejo_20_comision_investigacion_congreso",
+            "speaker": "El Portavoz Parlamentario",
+            "speakerRole": "El Custodio de la Libreta",
+            "sphere": "POLITICA",
+            "headline": "COMISIÓN DE INVESTIGACIÓN EN EL CONGRESO: 'NO ME CONSTA, NO RECUERDO'",
+            "context": "Te sientas bajo los focos de la comisión de investigación en el hemiciclo. Los diputados de la oposición muestran en televisión las fotocopias de tus anotaciones de sobresueldos y preguntan quién era la persona detrás de las iniciales 'M.R.'.",
+            "evidenceDocument": "Diario de sesiones del Congreso de los Diputados con 48 repeticiones de la fórmula 'No me consta'",
+            "weight": 4,
+            "requiredFlags": [
+                "cordon_sanitario"
+            ],
+            "leftChoice": {
+                "label": "Aplicar la amnesia institucional absoluta y sonreír con desprecio ante las preguntas de los grupos rivales.",
+                "stampText": "NO ME CONSTA",
+                "flavorQuote": "Señoría, desconozco absolutamente esa libreta. Jamás he visto a ese señor y niego la mayor de principio a fin.",
+                "modifiers": {
+                    "pastaEnB": 0,
+                    "presionJudicial": -10,
+                    "impunidad": 16,
+                    "reputacionMediatica": -16
+                },
+                "grantedFlags": [
+                    "teatro_parlamentario_superado"
+                ]
+            },
+            "rightChoice": {
+                "label": "Lanzar una pulla insinuando que la oposición también cobraba de la misma constructora en maletines paralelos.",
+                "stampText": "VENTILADOR",
+                "flavorQuote": "Si hablamos de cajas B, señorías, saquemos también los billetes de los trenes del sur, que aquí cobró hasta el apuntador.",
+                "modifiers": {
+                    "pastaEnB": -4,
+                    "presionJudicial": 8,
+                    "impunidad": -8,
+                    "reputacionMediatica": 14
+                },
+                "grantedFlags": [
+                    "guerra_total_bipartidismo"
+                ],
+                "mechanicId": 12
+            }
+        },
+        {
+            "id": "saga_villarejo_21_fuga_luxemburgo_esquela",
+            "speaker": "Francisco 'El Zorro'",
+            "speakerRole": "El Difunto de Conveniencia",
+            "sphere": "ORDEN_JUSTICIA",
+            "headline": "PLAN EVASIÓN EN EL AEROPUERTO: 'LA ESQUELA YA ESTÁ PAGADA EN LA PRENSA'",
+            "context": "En una suite del hotel Le Royal de Luxemburgo, el conseguidor definitivo te ofrece la salida definitiva: publicar tu esquela en el diario nacional, fingir un entierro en Tailandia con cenizas falsas y renacer en París con pasaporte diplomático de un país asiático.",
+            "evidenceDocument": "Página recortada de necrológicas con texto: 'Falleció cristianamente en Bangkok' y certificado de defunción sellado",
+            "weight": 5,
+            "requiredFlags": [
+                "ruta_paesa_activa"
+            ],
+            "leftChoice": {
+                "label": "Pagar dos millones por el funeral ficticio y retirarte a vivir en un ático de la Avenue Foch bajo identidad falsa.",
+                "stampText": "MUERTO OFICIAL",
+                "flavorQuote": "Una esquela en prensa, cuatro misas gregorianas pagadas y el juez archiva por defunción del investigado. Impecable.",
+                "modifiers": {
+                    "pastaEnB": -18,
+                    "presionJudicial": -18,
+                    "impunidad": 18,
+                    "reputacionMediatica": -18
+                },
+                "grantedFlags": [
+                    "fantasma_parisino_libre"
+                ],
+                "mechanicId": 40
+            },
+            "rightChoice": {
+                "label": "Rechazar el teatro fúnebre, quedarte con el dinero en Singapur y contratar al mejor bufete de Zúrich.",
+                "stampText": "BANCA SUIZA",
+                "flavorQuote": "Yo no me muero ni de mentira. Con cien millones en Singapur, los suizos me defienden hasta el juicio final.",
+                "modifiers": {
+                    "pastaEnB": 16,
+                    "presionJudicial": -4,
+                    "impunidad": 12,
+                    "reputacionMediatica": -6
+                },
+                "grantedFlags": [
+                    "magnate_en_la_sombra"
+                ],
+                "mechanicId": 6
+            }
+        },
+        {
+            "id": "saga_villarejo_22_epilogo_castellana_dorada",
+            "speaker": "El Decano del IBEX",
+            "speakerRole": "El Pasante Giratorio",
+            "sphere": "EMPRESARIAL",
+            "headline": "COCTEL DE CELEBRACIÓN: 'EL PAÍS YA HA PASADO PÁGINA'",
+            "context": "Última planta de la torre corporativa. Mirando hacia el Paseo de la Castellana con una copa de coñac en la mano, contemplas el tráfico de coches oficiales. El sumario ha sido sepultado, los jueces díscolos purgados y el dinero descansa a buen recaudo sin pagar un solo euro.",
+            "evidenceDocument": "Placa conmemorativa de bronce en el vestíbulo de la torre con tu nombre como benefactor institucional",
+            "weight": 5,
+            "requiredFlags": [
+                "sumario_anulado_por_supremo"
+            ],
+            "leftChoice": {
+                "label": "Financiar el nuevo partido bisagra para asegurarte el control del Ministerio de Justicia en la próxima legislatura.",
+                "stampText": "AMONAR EL TABLERO",
+                "flavorQuote": "Los gobiernos pasan, querido, pero nosotros seguimos aquí sentados en la moqueta de la Castellana por los siglos de los siglos.",
+                "modifiers": {
+                    "pastaEnB": -12,
+                    "presionJudicial": -18,
+                    "impunidad": 18,
+                    "reputacionMediatica": 12
+                },
+                "grantedFlags": [
+                    "senor_absoluto_del_regimen"
+                ],
+                "mechanicId": 20
+            },
+            "rightChoice": {
+                "label": "Comprar un paquete accionarial en los tres grandes canales de televisión para controlar los telediarios.",
+                "stampText": "CONTROL MEDIÁTICO",
+                "flavorQuote": "Si compras las tres tertulias de la mañana, la corrupción de este país es exactamente lo que tú digas que sea.",
+                "modifiers": {
+                    "pastaEnB": -15,
+                    "presionJudicial": -12,
+                    "impunidad": 16,
+                    "reputacionMediatica": 18
+                },
+                "grantedFlags": [
+                    "dueno_de_la_narrativa"
+                ],
+                "mechanicId": 28
+            }
+        },
+        {
+            "id": "saga_villarejo_23_epilogo_soto_del_real",
+            "speaker": "El Funcionario de Prisiones",
+            "speakerRole": "El Carcelero de Confianza",
+            "sphere": "ORDEN_JUSTICIA",
+            "headline": "INGRESO EN EL MÓDULO 4: 'DEJE LA CORBATA Y EL RELOJ DE ORO'",
+            "context": "Las traiciones del chófer y la caída del cortafuegos judicial te han llevado al penal de Soto del Real. El funcionario te entrega el kit penitenciario mientras en el televisor de la sala común se emite en directo el informativo con tu entrada esposado en furgón policial.",
+            "evidenceDocument": "Ficha penitenciaria de ingreso con foto de frente y huellas dactilares tintadas",
+            "weight": 5,
+            "requiredFlags": [
+                "chofer_despechado_testifica"
+            ],
+            "leftChoice": {
+                "label": "Pedir papel y bolígrafo para escribir tus memorias amenazando con tirar de la manta definitiva.",
+                "stampText": "MEMORIAS EN B",
+                "flavorQuote": "Diles en Moncloa que he pedido cinco cuadernos de espiral. O me tramitan el tercer grado o publico hasta las facturas de la boda.",
+                "modifiers": {
+                    "pastaEnB": 6,
+                    "presionJudicial": 12,
+                    "impunidad": 8,
+                    "reputacionMediatica": 16
+                },
+                "grantedFlags": [
+                    "libro_bomba_en_redaccion"
+                ],
+                "mechanicId": 4
+            },
+            "rightChoice": {
+                "label": "Convertirte en el líder del módulo organizando el economato y el tráfico de tabaco con tu pasta en el extranjero.",
+                "stampText": "AMO DEL MÓDULO",
+                "flavorQuote": "Aquí dentro el dinero de Ginebra sigue comprando la mejor celda, la comida del exterior y el respeto de los quinquis.",
+                "modifiers": {
+                    "pastaEnB": -10,
+                    "presionJudicial": 6,
+                    "impunidad": 12,
+                    "reputacionMediatica": -14
+                },
+                "grantedFlags": [
+                    "rey_penitenciario"
+                ]
+            }
+        },
+        {
+            "id": "saga_villarejo_24_epilogo_emiratos_dorados",
+            "speaker": "El Chambelán del Desierto",
+            "speakerRole": "El Consejero Palaciego",
+            "sphere": "POLITICA",
+            "headline": "VILLA EN ABU DABI: 'AQUÍ NO LLEGAN LAS ÓRDENES DE INTERPOL'",
+            "context": "Te instalas en una villa de lujo en la isla de Nurai tras acompañar al monarca emérito en su exilio dorado. Rodeado de escoltas de la Guardia Civil pagados por el Estado español y yates de jeques árabes, contemplas el mar mientras los tribunales españoles se declaran incompetentes.",
+            "evidenceDocument": "Visado de residencia permanente dorado concedido por la corte real emiratí con exención fiscal total",
+            "weight": 5,
+            "requiredFlags": [
+                "emerito_en_el_golfo"
+            ],
+            "leftChoice": {
+                "label": "Montar una consultoría internacional de intermediación armamentística entre los países del Golfo y las empresas del IBEX.",
+                "stampText": "CONSULTOR GOLFO",
+                "flavorQuote": "En el desierto no hay Fiscalía Anticorrupción, solo contratos millonarios de fragatas y comisiones en euros limpios.",
+                "modifiers": {
+                    "pastaEnB": 18,
+                    "presionJudicial": -18,
+                    "impunidad": 18,
+                    "reputacionMediatica": -10
+                },
+                "grantedFlags": [
+                    "senor_del_comercio_arabe"
+                ],
+                "mechanicId": 37
+            },
+            "rightChoice": {
+                "label": "Financiar en la sombra vuelos privados para que los amigos de la nobleza vengan a celebrar regatas privadas.",
+                "stampText": "REGATAS VIP",
+                "flavorQuote": "Que fleten el avión desde Sanxenxo; aquí tenemos sol, marisco importado y la inviolabilidad absoluta del artículo 56.",
+                "modifiers": {
+                    "pastaEnB": -14,
+                    "presionJudicial": -16,
+                    "impunidad": 16,
+                    "reputacionMediatica": -16
+                },
+                "grantedFlags": [
+                    "dolce_vita_del_desierto"
+                ]
+            }
+        }
+    ]
+}{
+    "sagaName": "El Festín del Hormigón: La Pizza del Tres por Ciento",
+    "description": "El verano más asfixiante de la costa mediterránea coincide con la adjudicación de la mayor autovía comarcal y el hospital privatizado bajo una baja temeraria del 40%. Entre recalificaciones salvajes de suelo protegido, sacas de dolarrublos inyectadas por mafias internacionales y la amenaza latente de la UCO pinchando las llamadas del aparejador municipal, deberás gestionar los modificados de obra al 30% sin que los cimientos del imperio acaben en el juzgado o bajo el asfalto.",
+    "cards": [
+        {
+            "id": "saga_hormigon_01_baja_temeraria",
+            "speaker": "Rubén Bertomeu",
+            "speakerRole": "El Alquimista de la Hormigonera",
+            "sphere": "EMPRESARIAL",
+            "headline": "CONCURSO DE LA VARIANTE COSTERA: 'PRESENTA UNA BAJA DEL 40% O NO COMEMOS'",
+            "context": "En el reservado de la marisquería, entre cabezas de cigala y planos manchados de alioli, el patriarca de la constructora te exige reventar el concurso público de la autovía comarcal. La oferta no cubre ni el cemento, pero el plan maestro no consiste en picar piedra por ese precio.",
+            "evidenceDocument": "Pliego de licitación de la Consejería de Obras Públicas con presupuesto base de 85 millones de euros",
+            "weight": 5,
+            "requiredFlags": [],
+            "leftChoice": {
+                "label": "Presentar la baja temeraria del 40% pactando de antemano el modificado de obra con el consejero afín.",
+                "stampText": "REVENTAR PLIEGO",
+                "flavorQuote": "Tú tira el precio por los suelos para echar a las constructoras de Madrid; la pasta de verdad entra con la pizza.",
+                "modifiers": {
+                    "pastaEnB": 14,
+                    "presionJudicial": 6,
+                    "impunidad": -4,
+                    "reputacionMediatica": 10
+                },
+                "grantedFlags": [
+                    "adjudicacion_temeraria_ganada",
+                    "pacto_pizza_sellado"
+                ],
+                "mechanicId": 12
+            },
+            "rightChoice": {
+                "label": "Ir en Unión Temporal de Empresas (UTE) con la gran multinacional del IBEX y repartir la mordida al 50%.",
+                "stampText": "PACTAR CON IBEX",
+                "flavorQuote": "Nos asociamos con Dragados o Ferrovial; ellos ponen el nombre en el BOE y nosotros cobramos el peaje local.",
+                "modifiers": {
+                    "pastaEnB": 8,
+                    "presionJudicial": -6,
+                    "impunidad": 12,
+                    "reputacionMediatica": 6
+                },
+                "grantedFlags": [
+                    "ute_ibex_firmada"
+                ],
+                "mechanicId": 13
+            }
+        },
+        {
+            "id": "saga_hormigon_02_la_pizza_modificado",
+            "speaker": "El Aparejador Municipal",
+            "speakerRole": "El Mozo de Cloaca Gubernamental",
+            "sphere": "POLITICA",
+            "headline": "INFORME GEOTÉCNICO SORPRESA: 'HA APARECIDO UNA FALLA Y EL TÚNEL CUESTA EL DOBLE'",
+            "context": "A los tres meses de meter las excavadoras, la obra se detiene en seco. El aparejador del ayuntamiento firma un informe técnico de urgencia que detecta arcillas expansivas invisibles, justificando un modificado presupuestario del 30% para salvar el trazado.",
+            "evidenceDocument": "Adenda técnica con firma visada: 'Modificado nº 1 por causa geológica sobrevenida (+24.500.000 €)'",
+            "weight": 5,
+            "requiredFlags": [
+                "pacto_pizza_sellado"
+            ],
+            "leftChoice": {
+                "label": "Aprobar el sobrecoste en comisión de gobierno extraordinaria y repartir los sobres en el maletero del sedán.",
+                "stampText": "HORNEAR PIZZA",
+                "flavorQuote": "Introducían modificaciones falsas en el proyecto y, sobre esa modificación, la mordida era de hasta el treinta por ciento.",
+                "modifiers": {
+                    "pastaEnB": 18,
+                    "presionJudicial": 12,
+                    "impunidad": -8,
+                    "reputacionMediatica": -10
+                },
+                "grantedFlags": [
+                    "mordida_pizza_cobrada",
+                    "alerta_intervencion_activa"
+                ],
+                "mechanicId": 12
+            },
+            "rightChoice": {
+                "label": "Recortar el grosor del asfalto y el drenaje para ahorrar costes sin firmar papeles que huelan en la Intervención.",
+                "stampText": "HORMIGÓN HUECO",
+                "flavorQuote": "Le echamos la mitad de grava y una capita fina de brea; si la carretera se hunde en cinco años, ya habremos cobrado.",
+                "modifiers": {
+                    "pastaEnB": 12,
+                    "presionJudicial": -4,
+                    "impunidad": 6,
+                    "reputacionMediatica": -14
+                },
+                "grantedFlags": [
+                    "obra_chapucera_entregada"
+                ]
+            }
+        },
+        {
+            "id": "saga_hormigon_03_inyeccion_traian",
+            "speaker": "Traian 'El Fontanero del Este'",
+            "speakerRole": "El Lavandero Transnacional",
+            "sphere": "EMPRESARIAL",
+            "headline": "MALETAS EN EL CLUB NÁUTICO: 'TRAIGO QUINCE MILLONES EN DOLARRUBLOS FRESCOS'",
+            "context": "El enlace de las mafias internacionales fondea su yate frente al puerto deportivo. Te ofrece financiar la urbanización de lujo anexa a la autovía inyectando sacas de billetes no declarados a cambio de que el consistorio recalifique el pinar protegido que da al acantilado.",
+            "evidenceDocument": "Contrato privado de préstamo al portador redactado en papel timbrado de una sociedad de Belice",
+            "weight": 4,
+            "requiredFlags": [
+                "adjudicacion_temeraria_ganada"
+            ],
+            "leftChoice": {
+                "label": "Aceptar los fondos opacos y blanquearlos a través de ventas sobre plano a testaferros extranjeros.",
+                "stampText": "LAVAR RUBLOS",
+                "flavorQuote": "El concejal Bolroy se muestra cada día más voraz porque hace negocios con Guillén, otra máquina de lavar dolarrublos.",
+                "modifiers": {
+                    "pastaEnB": 18,
+                    "presionJudicial": 14,
+                    "impunidad": -6,
+                    "reputacionMediatica": -12
+                },
+                "grantedFlags": [
+                    "mafia_metida_en_el_ladrillo",
+                    "foco_blanqueo_uco"
+                ],
+                "mechanicId": 10
+            },
+            "rightChoice": {
+                "label": "Rechazar el dinero mafioso y exigir crédito blando a la caja de ahorros autonómica controlada por el partido.",
+                "stampText": "CRÉDITO POLÍTICO",
+                "flavorQuote": "Con los rusos ni agua, que esos no entienden de recursos contenciosos. Que nos abra la línea el director de la caja.",
+                "modifiers": {
+                    "pastaEnB": -8,
+                    "presionJudicial": -6,
+                    "impunidad": 12,
+                    "reputacionMediatica": 8
+                },
+                "grantedFlags": [
+                    "credito_caja_abierto"
+                ],
+                "mechanicId": 21
+            }
+        },
+        {
+            "id": "saga_hormigon_04_pleno_nocturno_pgou",
+            "speaker": "Don Evaristo 'El Alcalde'",
+            "speakerRole": "El Procónsul del Hormigón",
+            "sphere": "POLITICA",
+            "headline": "PLENO MUNICIPAL A LAS TRES DE LA MADRUGADA: 'EL PINAR PROTEGIDO AHORA ES RESIDENCIAL'",
+            "context": "Aprovechando la víspera de la fiesta patronal y con el salón de plenos vacío, el regidor somete a votación la modificación puntual del Plan General de Ordenación Urbana. Dos concejales de la oposición han salido del hemiciclo tras recibir llamadas discretas sobre sus hipotecas.",
+            "evidenceDocument": "Acta municipal con sello de urgencia que reclasifica 400 hectáreas de suelo no urbanizable protegido a suelo terciario",
+            "weight": 4,
+            "requiredFlags": [
+                "mordida_pizza_cobrada"
+            ],
+            "leftChoice": {
+                "label": "Comprar el monte público por cuatro perras y meterle un millón de euros en la cuenta al alcalde.",
+                "stampText": "COMPRA ALCALDE",
+                "flavorQuote": "Que le saques al alcalde la recalificación de esa montaña que es pública y le metas un millón en el banco. ¡Ahora sí que es champán!",
+                "modifiers": {
+                    "pastaEnB": 16,
+                    "presionJudicial": 15,
+                    "impunidad": -10,
+                    "reputacionMediatica": -16
+                },
+                "grantedFlags": [
+                    "monte_publico_recalificado",
+                    "alcalde_en_nomina"
+                ],
+                "mechanicId": 9
+            },
+            "rightChoice": {
+                "label": "Fraccionar la actuación en una docena de convenios urbanísticos menores para eludir la exposición pública.",
+                "stampText": "CONTRATO MENOR",
+                "flavorQuote": "Si había que ejecutar un camino rural se adjudicaba por 190.000 euros, siempre por debajo del tope del concurso.",
+                "modifiers": {
+                    "pastaEnB": 10,
+                    "presionJudicial": -8,
+                    "impunidad": 14,
+                    "reputacionMediatica": 4
+                },
+                "grantedFlags": [
+                    "parcelas_troceadas"
+                ],
+                "mechanicId": 11
+            }
+        },
+        {
+            "id": "saga_hormigon_05_visita_inspector_hacienda",
+            "speaker": "El Inspector de la AEAT",
+            "speakerRole": "El Auditor de Aduanas",
+            "sphere": "ORDEN_JUSTICIA",
+            "headline": "NOTIFICACIÓN TRIBUTARIA: 'HAY UN DESFASE DE OCHO MILLONES EN BILLETES MORADOS'",
+            "context": "Un inspector jefe de la Agencia Tributaria se persona en la sede de la constructora solicitando los albaranes de movimiento de tierras y las facturas de subcontratación de áridos. Las cuentas revelan retiradas masivas en billetes de 500 euros.",
+            "evidenceDocument": "Requerimiento formal de la AEAT con propuesta de sanción y remisión del expediente a la Fiscalía de Delitos Económicos",
+            "weight": 4,
+            "requiredFlags": [
+                "alerta_intervencion_activa"
+            ],
+            "leftChoice": {
+                "label": "Activar los contactos políticos en la Delegación del Gobierno para cesar al inspector o trasladarlo a Ceuta.",
+                "stampText": "DESPACHAR AUDITOR",
+                "flavorQuote": "Llama al delegado de Hacienda ahora mismo; ese funcionario tiene que estar revisando declaraciones de la renta en Melilla el lunes.",
+                "modifiers": {
+                    "pastaEnB": -10,
+                    "presionJudicial": -16,
+                    "impunidad": 16,
+                    "reputacionMediatica": -8
+                },
+                "grantedFlags": [
+                    "inspector_purgado",
+                    "inspeccion_bloqueada"
+                ],
+                "mechanicId": 37
+            },
+            "rightChoice": {
+                "label": "Fabricar una red de facturas falsas con empresas de transporte pantalla y pagar la sanción con recargo mínimo.",
+                "stampText": "FACTURAS B",
+                "flavorQuote": "Llama a los transportistas de Murcia; que emitan cuarenta facturas por movimiento de gravas que no ha visto ni Dios.",
+                "modifiers": {
+                    "pastaEnB": -6,
+                    "presionJudicial": 6,
+                    "impunidad": 8,
+                    "reputacionMediatica": -6
+                },
+                "grantedFlags": [
+                    "parche_tributario_colado"
+                ],
+                "mechanicId": 10
+            }
+        },
+        {
+            "id": "saga_hormigon_06_vertedero_clandestino",
+            "speaker": "Matías 'El Transportista'",
+            "speakerRole": "El Fontanero de Aparato",
+            "sphere": "EMPRESARIAL",
+            "headline": "AMENAZA ECOLÓGICA: 'LOS RESIDUOS TÓXICOS NO CABEN EN LA PLANTA OFICIAL'",
+            "context": "El desmonte del túnel ha extraído miles de toneladas de lodos contaminados con metales pesados. Llevarlos a la planta de tratamiento autorizada costaría cuatro millones de euros, pero los transportistas de la comarca ofrecen tirarlos de noche en una rambla seca protegida.",
+            "evidenceDocument": "Albarán de transporte falsificado con destino a 'Centro Gestor Homologado' inexistente",
+            "weight": 3,
+            "requiredFlags": [
+                "obra_chapucera_entregada"
+            ],
+            "leftChoice": {
+                "label": "Descargar los escombros y vertidos en el barranco protegido con un descuento del 50% sobre el precio de mercado.",
+                "stampText": "VERTIDO PIRATA",
+                "flavorQuote": "Eliminación de residuos a precios reducidos en un cincuenta por ciento gracias a las descargas abusivas y sin control ambiental.",
+                "modifiers": {
+                    "pastaEnB": 14,
+                    "presionJudicial": 10,
+                    "impunidad": -6,
+                    "reputacionMediatica": -16
+                },
+                "grantedFlags": [
+                    "delito_ecologico_cometido"
+                ],
+                "mechanicId": 31
+            },
+            "rightChoice": {
+                "label": "Enterrar los lodos bajo la propia explanada del nuevo hospital concertado y hormigonar encima a toda prisa.",
+                "stampText": "HORMIGÓN TÓXICO",
+                "flavorQuote": "Metes el residuo en el sótano del hospital, echas medio metro de losa de hormigón armado y aquí no huele a nada.",
+                "modifiers": {
+                    "pastaEnB": 6,
+                    "presionJudicial": -4,
+                    "impunidad": 10,
+                    "reputacionMediatica": -8
+                },
+                "grantedFlags": [
+                    "hospital_tombstone"
+                ]
+            }
+        },
+        {
+            "id": "saga_hormigon_07_donacion_fundacion_cultural",
+            "speaker": "Don Félix 'El Patricio'",
+            "speakerRole": "El Custodio de la Libreta",
+            "sphere": "POLITICA",
+            "headline": "DESPACHO DE LA FUNDACIÓN PATROCINADORA: 'EL 3% DE LA VARIANTE DEBE ENTRAR POR CONVENIO'",
+            "context": "El gestor cultural del partido gobernante te recibe en el palco del auditorio municipal. Te recuerda que el partido tiene que afrontar las elecciones autonómicas y que la constructora debe transferir su aportación voluntaria al patronato cultural.",
+            "evidenceDocument": "Borrador de convenio de donación desinteresada a la 'Fundación Círculo de las Artes Litorales' por 2.550.000 €",
+            "weight": 4,
+            "requiredFlags": [
+                "adjudicacion_temeraria_ganada"
+            ],
+            "leftChoice": {
+                "label": "Transferir el 3% a través de facturas simuladas de asesoramiento musical y patrocinio de festivales.",
+                "stampText": "TRES POR CIENTO",
+                "flavorQuote": "El virus del tres por ciento —que en ocasiones alcanzó el veinte— inundó el país y se extendió como una práctica generalizada.",
+                "modifiers": {
+                    "pastaEnB": -8,
+                    "presionJudicial": -10,
+                    "impunidad": 16,
+                    "reputacionMediatica": 10
+                },
+                "grantedFlags": [
+                    "partido_dopado_electoralmente",
+                    "blindaje_autonomico_sellado"
+                ],
+                "mechanicId": 3
+            },
+            "rightChoice": {
+                "label": "Entregar la mordida en billetes de quinientos en dos cajas de zapatos directamente en el piso franco del tesorero.",
+                "stampText": "CAJA DE ZAPATOS",
+                "flavorQuote": "Déjate de auditorías de fundaciones; en billetes morados dentro de una caja de zapatos no hay rastro ni para el fiscal.",
+                "modifiers": {
+                    "pastaEnB": 10,
+                    "presionJudicial": 12,
+                    "impunidad": -8,
+                    "reputacionMediatica": -14
+                },
+                "grantedFlags": [
+                    "fajos_en_piso_franco"
+                ],
+                "mechanicId": 1
+            }
+        },
+        {
+            "id": "saga_hormigon_08_pinchazo_uco_aparejador",
+            "speaker": "El Teniente de la Policía Judicial",
+            "speakerRole": "El Comisario de las Cloacas",
+            "sphere": "ORDEN_JUSTICIA",
+            "headline": "AUTO DE ESCUCHAS TELEFÓNICAS: 'LOS AGENTES TIENEN 80 HORAS DE AUDIOS DE LA CONCEJALÍA'",
+            "context": "Un confidente de la comandancia provincial te avisa por teléfono de cabina: la Unidad Central Operativa (UCO) lleva seis meses con el teléfono del concejal de urbanismo intervenido. Hay grabaciones explícitas negociando 'el pastel de las parcelas' y el precio por metro cuadrado de recalificación.",
+            "evidenceDocument": "Auto judicial ordenando la intervención del teléfono móvil del aparejador y prórroga de balizas de seguimiento",
+            "weight": 5,
+            "requiredFlags": [
+                "monte_publico_recalificado"
+            ],
+            "leftChoice": {
+                "label": "Comprar a un mando de la comandancia con fondos reservados para que destruya los CDs con las escuchas originales.",
+                "stampText": "BORRAR AUDIO",
+                "flavorQuote": "Que le den un cambiazo a las cintas en la secretaría del juzgado; si no hay cadena de custodia limpia, el juez anula el auto.",
+                "modifiers": {
+                    "pastaEnB": -14,
+                    "presionJudicial": -16,
+                    "impunidad": 18,
+                    "reputacionMediatica": -6
+                },
+                "grantedFlags": [
+                    "escuchas_anuladas_por_defecto",
+                    "guardia_civil_untada"
+                ],
+                "mechanicId": 34
+            },
+            "rightChoice": {
+                "label": "Hacer que el aparejador municipal asuma toda la responsabilidad en prensa alegando que actuó a espaldas de la empresa.",
+                "stampText": "SOLTAR LASTRE",
+                "flavorQuote": "Ese aparejador es un muerto de hambre que se ha vuelto loco pidiendo comisiones por su cuenta. Nosotros somos víctimas.",
+                "modifiers": {
+                    "pastaEnB": -4,
+                    "presionJudicial": 8,
+                    "impunidad": -6,
+                    "reputacionMediatica": 8
+                },
+                "grantedFlags": [
+                    "aparejador_imputado_solitario"
+                ]
+            }
+        },
+        {
+            "id": "saga_hormigon_09_bloqueo_hospital_ibex",
+            "speaker": "Don Juan Miguel 'El Presidente del IBEX'",
+            "speakerRole": "El Barón del Encofrado Nacional",
+            "sphere": "EMPRESARIAL",
+            "headline": "AMENAZA DE RESCISIÓN: 'O METÉIS 200 MILLONES EN LA CONCESIÓN DEL HOSPITAL O LLEVAMOS EL CONTRATO AL TRIBUNAL'",
+            "context": "El socio mayoritario de la concesión hospitalaria exige renegociar las tarifas del canon sanitario. Amenaza con paralizar la apertura de urgencias y activar la cláusula de indemnización del contrato alegando que el volumen de pacientes estimado en el pliego era ficticio.",
+            "evidenceDocument": "Escrito de resolución contractual exigiendo indemnización de 180.000.000 € amparada en el pliego de condiciones de la UTE",
+            "weight": 5,
+            "requiredFlags": [
+                "ute_ibex_firmada"
+            ],
+            "leftChoice": {
+                "label": "Firmar un decreto autonómico garantizando una compensación pública anual incluso en caso de huelga o negligencia.",
+                "stampText": "CLÁUSULA CASTOR",
+                "flavorQuote": "Se firma el decreto que establecía una compensación incluso en caso de dolo o negligencia; el Estado indemniza y asunto zanjado.",
+                "modifiers": {
+                    "pastaEnB": 16,
+                    "presionJudicial": 4,
+                    "impunidad": 16,
+                    "reputacionMediatica": -18
+                },
+                "grantedFlags": [
+                    "hospital_blindado_por_boe"
+                ],
+                "mechanicId": 17
+            },
+            "rightChoice": {
+                "label": "Filtrar a los periódicos las auditorías de sobrecostes de la constructora nacional para forzarles a rebajar sus pretensiones.",
+                "stampText": "GUERRA DE PRENSA",
+                "flavorQuote": "A estos señoritos de Madrid les sacamos en portada las mordidas que pagaban en las obras de Levante y bajan la cabeza en dos días.",
+                "modifiers": {
+                    "pastaEnB": -6,
+                    "presionJudicial": 10,
+                    "impunidad": -10,
+                    "reputacionMediatica": 14
+                },
+                "grantedFlags": [
+                    "guerra_abierta_con_ibex"
+                ],
+                "mechanicId": 28
+            }
+        },
+        {
+            "id": "saga_hormigon_10_operacion_traian_vendetta",
+            "speaker": "El Sicario del Este",
+            "speakerRole": "El Lavandero Transnacional",
+            "sphere": "EMPRESARIAL",
+            "headline": "NOCHE CERRADA EN LA OBRA: 'EL HORMIGÓN NO SE SECA HASTA QUE TRAIAN RECUPERE SU DINERO'",
+            "context": "Dos todoterrenos negros con matrícula de Ucrania bloquean la entrada de las hormigoneras en el nudo de enlace. El inversor mafioso sospecha que el cerco de la UCO va a bloquear las parcelas y exige recuperar sus quince millones de euros en mano antes del amanecer.",
+            "evidenceDocument": "Localizador GPS adherido a los bajos del coche particular del constructor",
+            "weight": 5,
+            "requiredFlags": [
+                "mafia_metida_en_el_ladrillo"
+            ],
+            "leftChoice": {
+                "label": "Entregarle las escrituras notariales del complejo hotelero en primera línea de playa como garantía patrimonial.",
+                "stampText": "CEDER HOTEL",
+                "flavorQuote": "Una gran empresa de capital mixto, legal y mafioso, que entrega sus activos patrimoniales para salvar la cabeza de los socios.",
+                "modifiers": {
+                    "pastaEnB": -16,
+                    "presionJudicial": -8,
+                    "impunidad": 12,
+                    "reputacionMediatica": -12
+                },
+                "grantedFlags": [
+                    "patrimonio_en_manos_mafiosas"
+                ],
+                "mechanicId": 30
+            },
+            "rightChoice": {
+                "label": "Filtrar anónimamente las coordenadas del muelle deportivo a la Brigada de Estupefacientes para que revienten el yate de Traian.",
+                "stampText": "CHIVATAZO GEO",
+                "flavorQuote": "Le mandamos a los GEO al atraque catorce diciendo que hay trescientos kilos de nieve en la sentina; que se apañen ellos con la UDYCO.",
+                "modifiers": {
+                    "pastaEnB": 6,
+                    "presionJudicial": 14,
+                    "impunidad": -14,
+                    "reputacionMediatica": 12
+                },
+                "grantedFlags": [
+                    "redada_mafiosa_puerto"
+                ]
+            }
+        },
+        {
+            "id": "saga_hormigon_11_climax_corte_de_cinta",
+            "speaker": "El Presidente de la Generalitat",
+            "speakerRole": "El Procónsul del Hormigón",
+            "sphere": "POLITICA",
+            "headline": "INAUGURACIÓN OFICIAL: 'CORTAMOS LA CINTA DE LA AUTOVÍA ENTRE VÍTORES Y BANDERAS'",
+            "context": "Mediodía de julio. Calor abrasador sobre el asfalto recién pintado. El presidente autonómico, rodeado de obispos, consellers y empresarios con gemelos de oro, corta la cinta tricolor de la autovía comarcal mientras la banda de música toca el himno regional.",
+            "evidenceDocument": "Tijeras de plata conmemorativas de la inauguración oficial con la inscripción: 'Progreso y Prosperidad para la Costa'",
+            "weight": 5,
+            "requiredFlags": [
+                "blindaje_autonomico_sellado",
+                "escuchas_anuladas_por_defecto"
+            ],
+            "leftChoice": {
+                "label": "Brindar con champán en la tribuna y anunciar la candidatura a la presidencia de la Cámara de Comercio.",
+                "stampText": "TRIUNFO TOTAL",
+                "flavorQuote": "La civilización no es la poesía ni los discursos morales, amigo: la civilización es este puto hormigón y las cloacas bien pagadas.",
+                "modifiers": {
+                    "pastaEnB": 18,
+                    "presionJudicial": -14,
+                    "impunidad": 18,
+                    "reputacionMediatica": 16
+                },
+                "grantedFlags": [
+                    "emperador_del_litoral"
+                ],
+                "mechanicId": 8
+            },
+            "rightChoice": {
+                "label": "Aprovechar la euforia para presentar el macroproyecto urbanístico de mil chalés sobre las marismas protegidas.",
+                "stampText": "MACRO-RESORT",
+                "flavorQuote": "Si nos han tragado este modificado, ahora metemos las excavadoras hasta el mismo borde del mar y que nos paren si tienen cojones.",
+                "modifiers": {
+                    "pastaEnB": 16,
+                    "presionJudicial": 8,
+                    "impunidad": 14,
+                    "reputacionMediatica": 6
+                },
+                "grantedFlags": [
+                    "burbuja_infinita_activa"
+                ],
+                "mechanicId": 4
+            }
+        },
+        {
+            "id": "saga_hormigon_12_climax_madrugada_ucl",
+            "speaker": "El Secretario Judicial",
+            "speakerRole": "El Juez de Sala",
+            "sphere": "ORDEN_JUSTICIA",
+            "headline": "OPERACIÓN CREMATORIO: 'CINCUENTA REGISTROS SIMULTÁNEOS AL AMANECER'",
+            "context": "Seis de la mañana. Los arietes de la Guardia Civil revientan la cancela de tu chalé de lujo en primera línea. El secretario del juzgado, escoltado por agentes con pasamontañas de la UCO, te notifica el auto de detención incomunicada y el embargo preventivo de todas tus cuentas.",
+            "evidenceDocument": "Auto de entrada y registro domiciliario firmado por el Juzgado de Instrucción nº 3 por delitos de cohecho, prevaricación y malversación",
+            "weight": 5,
+            "requiredFlags": [
+                "delito_ecologico_cometido"
+            ],
+            "leftChoice": {
+                "label": "Activar el protocolo de destrucción en la barbacoa del jardín quemando las agendas antes de que entren los agentes.",
+                "stampText": "FUEGO PURIFICADOR",
+                "flavorQuote": "Échale gasolina a las libretas de las fincas y tira los discos duros a la piscina; que solo encuentren ceniza y humo.",
+                "modifiers": {
+                    "pastaEnB": -16,
+                    "presionJudicial": -6,
+                    "impunidad": 10,
+                    "reputacionMediatica": -18
+                },
+                "grantedFlags": [
+                    "cenizas_en_el_jardin",
+                    "prision_preventiva_eludida"
+                ],
+                "mechanicId": 7
+            },
+            "rightChoice": {
+                "label": "Entregarte sin resistencia exhibiendo una sonrisa cínica ante los fotógrafos de los periódicos matinales.",
+                "stampText": "SOTO DEL REAL",
+                "flavorQuote": "Tranquilos, muchachos, que el que entra en furgón policial el lunes sale en Mercedes el viernes con un buen abogado.",
+                "modifiers": {
+                    "pastaEnB": 4,
+                    "presionJudicial": 18,
+                    "impunidad": -16,
+                    "reputacionMediatica": -18
+                },
+                "grantedFlags": [
+                    "preso_ilustre_comarca"
+                ]
+            }
+        }
+    ]
+}{
+    "sagaName": "El Festín del Hormigón: El Colapso de la Costa",
+    "description": "Las ramificaciones del hormigón ilegal y los modificados de obra al 30% alcanzan su desenlace definitivo. Entre la quiebra inminente de la caja de ahorros autonómica, el hallazgo de restos arqueológicos sepultados bajo la variante, la rebelión de los testaferros fiduciarios en Ginebra y las órdenes de demolición del Tribunal Supremo, deberás decidir si culminas la fuga en yate hacia Mónaco, te atrincheras en el aforamiento del Senado o entierras el caso en un laberinto procesal de recursos y sobreseimientos.",
+    "cards": [
+        {
+            "id": "saga_hormigon_13_quiebra_caja_autonomica",
+            "speaker": "Don José Luis 'El Consejero'",
+            "speakerRole": "El Taumaturgo del Agujero",
+            "sphere": "EMPRESARIAL",
+            "headline": "ALERTA EN LA CAJA DE AHORROS: 'EL AGUJERO EN EL LADRILLO ES DE 3.000 MILLONES'",
+            "context": "El director general de la caja de ahorros autonómica te cita a puerta cerrada en la sede central de la entidad. Las líneas de crédito concedidas a tu constructora para la urbanización marina no se pueden refinanciar: los inspectores del Banco de España están en el sótano auditando los créditos a promotores amigos.",
+            "evidenceDocument": "Acta secreta de la comisión de riesgos aprobando préstamos hipotecarios sin tasación independiente a sociedades de Belice",
+            "weight": 5,
+            "requiredFlags": [
+                "credito_caja_abierto"
+            ],
+            "leftChoice": {
+                "label": "Traspasar todo el suelo tóxico al Banco Malo (Sareb) con aval del Estado y una quita del 70%.",
+                "stampText": "BANCO MALO",
+                "flavorQuote": "Haya Real Estate y los fondos se quedan con los créditos y pisos por 18.000 millones; el muerto se lo come el contribuyente.",
+                "modifiers": {
+                    "pastaEnB": 18,
+                    "presionJudicial": 6,
+                    "impunidad": 16,
+                    "reputacionMediatica": -16
+                },
+                "grantedFlags": [
+                    "ladrillo_endosado_sareb",
+                    "pacto_financiero_ibex"
+                ],
+                "mechanicId": 22
+            },
+            "rightChoice": {
+                "label": "Colocar participaciones preferentes a los jubilados de las sucursales para tapar el agujero de liquidez.",
+                "stampText": "PREFERENTES",
+                "flavorQuote": "Dile a los directores de sucursal que le encasqueten el producto a los abuelos que vengan a cobrar la pensión.",
+                "modifiers": {
+                    "pastaEnB": 14,
+                    "presionJudicial": 12,
+                    "impunidad": 8,
+                    "reputacionMediatica": -18
+                },
+                "grantedFlags": [
+                    "estafa_preferentes_activa"
+                ],
+                "mechanicId": 23
+            }
+        },
+        {
+            "id": "saga_hormigon_14_hallazgo_ruinas_romanas",
+            "speaker": "Silvia Bertomeu",
+            "speakerRole": "La Arquitecta Rebelde",
+            "sphere": "POLITICA",
+            "headline": "PARÓN EN EL KM 14: 'LAS RETROEXCAVADORAS HAN DESTROZADO UNA VILLA ROMANA'",
+            "context": "Las palas han sacado a la luz mosaicos y columnas romanas del siglo II justo en el trazado del nudo de enlace de la autovía. La arqueóloga territorial exige paralizar las obras de inmediato y declarar el terreno Bien de Interés Cultural (BIC).",
+            "evidenceDocument": "Informe arqueológico preliminar con fotografías de mosaicos policromados fracturados por orugas de maquinaria pesada",
+            "weight": 4,
+            "requiredFlags": [
+                "adjudicacion_temeraria_ganada"
+            ],
+            "leftChoice": {
+                "label": "Meter las hormigoneras en el turno de noche y sepultar las ruinas bajo dos metros de cemento rápido.",
+                "stampText": "CEMENTO NOCTURNO",
+                "flavorQuote": "A las tres de la madrugada no hay arqueólogos. Le echas tres cubas de hormigón y aquí no ha habido romanos en la puta vida.",
+                "modifiers": {
+                    "pastaEnB": 12,
+                    "presionJudicial": 10,
+                    "impunidad": -6,
+                    "reputacionMediatica": -15
+                },
+                "grantedFlags": [
+                    "ruinas_sepultadas_bajo_asfalto"
+                ],
+                "mechanicId": 31
+            },
+            "rightChoice": {
+                "label": "Comprar a la jefa de patrimonio de la conselleria con un piso en la urbanización para que declare los restos sin valor.",
+                "stampText": "UNTAR PATRIMONIO",
+                "flavorQuote": "Le regalas un ático con vistas al peñón y firma que cuatro piedras de caliche no pueden parar el progreso de la comarca.",
+                "modifiers": {
+                    "pastaEnB": -8,
+                    "presionJudicial": -12,
+                    "impunidad": 15,
+                    "reputacionMediatica": 8
+                },
+                "grantedFlags": [
+                    "patrimonio_domesticado"
+                ],
+                "mechanicId": 9
+            }
+        },
+        {
+            "id": "saga_hormigon_15_fideicomiso_ginebra_redada",
+            "speaker": "Don Alberto 'El Fiduciario'",
+            "speakerRole": "El Lavandero Transnacional",
+            "sphere": "EMPRESARIAL",
+            "headline": "COMISIÓN ROGATORIA SUIZA: 'EL FISCAL BERTOSSA PIDE EL BLOQUEO DE LA CUENTA MIRABAUD'",
+            "context": "Tu gestor bancario en Ginebra te envía un fax cifrado al hotel de lujo. El juzgado central de instrucción de Madrid ha cursado una petición de auxilio judicial sobre las cuentas fiduciarias donde el clan de Traian y tu constructora ingresaron las comisiones del modificado.",
+            "evidenceDocument": "Orden de bloqueo cautelar emitida por la Fiscalía de Ginebra sobre la cuenta 701262BR a nombre de sociedad panameña",
+            "weight": 5,
+            "requiredFlags": [
+                "patrimonio_en_manos_mafiosas"
+            ],
+            "leftChoice": {
+                "label": "Activar la red de Francisco Paesa para vaciar los depósitos por ventanilla en efectivo y reenviarlos a Singapur.",
+                "stampText": "VÍA PAESA",
+                "flavorQuote": "El dinero en metálico se saca en billetes de mil francos y se ingresa en el DBS de Singapur antes de que el juez traduzca el exhorto.",
+                "modifiers": {
+                    "pastaEnB": 18,
+                    "presionJudicial": -14,
+                    "impunidad": 18,
+                    "reputacionMediatica": -8
+                },
+                "grantedFlags": [
+                    "botin_en_singapur",
+                    "fuga_dorada_posible"
+                ],
+                "mechanicId": 38
+            },
+            "rightChoice": {
+                "label": "Presentar un escrito de recusación contra el magistrado español alegando enemistad manifiesta y filtraciones a la prensa.",
+                "stampText": "RECUSAR JUEZ",
+                "flavorQuote": "Le metemos una querella por revelación de secretos al instructor y paralizamos la comisión rogatoria seis meses en la Sala.",
+                "modifiers": {
+                    "pastaEnB": -10,
+                    "presionJudicial": -8,
+                    "impunidad": 12,
+                    "reputacionMediatica": -10
+                },
+                "grantedFlags": [
+                    "rogatoria_empantanada"
+                ],
+                "mechanicId": 34
+            }
+        },
+        {
+            "id": "saga_hormigon_16_aforamiento_senado",
+            "speaker": "El Secretario General del Partido",
+            "speakerRole": "El Custodio de la Libreta",
+            "sphere": "POLITICA",
+            "headline": "LISTAS ELECTORALES AL SENADO: 'HAY QUE METER AL ALCALDE POR DESIGNACIÓN AUTONÓMICA'",
+            "context": "La UCO tiene prácticamente cerrado el atestado sobre el pelotazo del monte público. La única manera de arrebatarle la causa al juez de instrucción de la comarca es otorgarle inmediatamente el aforamiento parlamentario al regidor implicado para enviar el caso al Tribunal Supremo.",
+            "evidenceDocument": "Credencial oficial de la Junta Electoral proclamando senador por designación de las Cortes Valencianas",
+            "weight": 4,
+            "requiredFlags": [
+                "alcalde_en_nomina"
+            ],
+            "leftChoice": {
+                "label": "Nombrarlo senador autonómico de urgencia para forzar que el sumario suba a la Sala Segunda del Supremo.",
+                "stampText": "AFORAMIENTO",
+                "flavorQuote": "Lo aforamos el martes por la tarde; que el juez de pueblo se coma los mocos y el expediente duerma en el Supremo tres años.",
+                "modifiers": {
+                    "pastaEnB": -6,
+                    "presionJudicial": -16,
+                    "impunidad": 18,
+                    "reputacionMediatica": -16
+                },
+                "grantedFlags": [
+                    "alcalde_aforado_supremo",
+                    "causa_en_sala_segunda"
+                ],
+                "mechanicId": 35
+            },
+            "rightChoice": {
+                "label": "Dejarlo caer, exigir su dimisión inmediata y presentar una querella del partido como acusación popular fingida.",
+                "stampText": "ACUSACIÓN FALSA",
+                "flavorQuote": "Nos personamos como acusación popular; así controlamos el sumario por dentro y saboteamos las pruebas desde el banquillo.",
+                "modifiers": {
+                    "pastaEnB": 0,
+                    "presionJudicial": 6,
+                    "impunidad": 10,
+                    "reputacionMediatica": 14
+                },
+                "grantedFlags": [
+                    "partido_personado_trampa"
+                ]
+            }
+        },
+        {
+            "id": "saga_hormigon_17_resurgimiento_cenizas",
+            "speaker": "El Perito de la Policía Científica",
+            "speakerRole": "El Comisario de las Cloacas",
+            "sphere": "ORDEN_JUSTICIA",
+            "headline": "INFORME FORENSE DEL JARDÍN: 'HAN RECUPERADO RESTOS DE LOS CUADERNOS QUEMADOS'",
+            "context": "La brigada científica de la Guardia Civil no se ha tragado la coartada de la barbacoa. Con técnicas de espectrometría infrarroja en el laboratorio central, los peritos han logrado reconstruir anotaciones clave de los folios calcinados con entregas de dinero a concejales.",
+            "evidenceDocument": "Informe pericial lofoscópico con transcripción térmica de grafito sobre papel quemado: 'Entrega 50.000 € en sobre - Alcalde'",
+            "weight": 4,
+            "requiredFlags": [
+                "cenizas_en_el_jardin"
+            ],
+            "leftChoice": {
+                "label": "Sobornar al técnico de laboratorio judicial con una plaza en la fundación privada para impugnar la cadena de custodia.",
+                "stampText": "ROMPER CUSTODIA",
+                "flavorQuote": "Que el perito declare que las muestras se mezclaron con cenizas del asador; si hay duda razonable, el juez no puede admitirlo.",
+                "modifiers": {
+                    "pastaEnB": -12,
+                    "presionJudicial": -14,
+                    "impunidad": 15,
+                    "reputacionMediatica": -4
+                },
+                "grantedFlags": [
+                    "prueba_pericial_anulada"
+                ],
+                "mechanicId": 34
+            },
+            "rightChoice": {
+                "label": "Filtrar a la prensa que el informe policial es un montaje de la oposición orquestado por mandos socialistas.",
+                "stampText": "CONSPIRACIÓN",
+                "flavorQuote": "Decimos en los periódicos que esto es la policía política de Rubalcaba fabricando pruebas para ganar las elecciones.",
+                "modifiers": {
+                    "pastaEnB": -4,
+                    "presionJudicial": 8,
+                    "impunidad": -8,
+                    "reputacionMediatica": 12
+                },
+                "grantedFlags": [
+                    "guerra_politica_policial"
+                ],
+                "mechanicId": 28
+            }
+        },
+        {
+            "id": "saga_hormigon_18_fuga_yate_monaco",
+            "speaker": "El Capitán del 'Príncipe Negro'",
+            "speakerRole": "El Marino Mercenario",
+            "sphere": "EMPRESARIAL",
+            "headline": "NOCHE DE LUNA NUEVA EN EL PUERTO: 'LOS MOTORES ESTÁN CALIENTES Y RUMBO A AGUAS INTERNACIONALES'",
+            "context": "Con el auto de detención emitido y las cuentas embargadas, tu yate de 40 metros aguarda amarrado en el pantalán privado sin encender las luces de posición. El patrón tiene el plan de navegación listo hacia Córcega y Mónaco, fuera del alcance del helicóptero del Servicio Marítimo.",
+            "evidenceDocument": "Hoja de despacho de buque con destino declarado falso a Palma de Mallorca y bodegas cargadas con cajas de caudales",
+            "weight": 5,
+            "requiredFlags": [
+                "botin_en_singapur"
+            ],
+            "leftChoice": {
+                "label": "Zarpar de inmediato de noche, arrojar los teléfonos al mar y fijar residencia en el principado monegasco.",
+                "stampText": "EVASIÓN MARINA",
+                "flavorQuote": "Soltamos amarras ya. En doce horas estamos en aguas de Mónaco y que vengan los de la UCO a pedirle cuentas al príncipe.",
+                "modifiers": {
+                    "pastaEnB": 18,
+                    "presionJudicial": -18,
+                    "impunidad": 18,
+                    "reputacionMediatica": -18
+                },
+                "grantedFlags": [
+                    "exilio_dorado_monaco"
+                ],
+                "mechanicId": 38
+            },
+            "rightChoice": {
+                "label": "Quedarte en tierra, entregar el pasaporte y esperar que los bufetes de Madrid negocien una fianza millonaria.",
+                "stampText": "FIANZA MILLONARIA",
+                "flavorQuote": "Si me fugo me tratan de delincuente; si me quedo y pago diez millones de fianza, los bancos siguen haciendo negocios conmigo.",
+                "modifiers": {
+                    "pastaEnB": -16,
+                    "presionJudicial": -10,
+                    "impunidad": 14,
+                    "reputacionMediatica": 6
+                },
+                "grantedFlags": [
+                    "libertad_bajo_fianza_elite"
+                ],
+                "mechanicId": 33
+            }
+        },
+        {
+            "id": "saga_hormigon_19_demolicion_supremo_resort",
+            "speaker": "El Magistrado de lo Contencioso",
+            "speakerRole": "La Toga Amiga",
+            "sphere": "ORDEN_JUSTICIA",
+            "headline": "SENTENCIA FIRME DE DERRIBO: 'HAY QUE TIRAR EL COMPLEJO TURÍSTICO POR INVADIR DOMINIO PÚBLICO'",
+            "context": "La Sala Tercera del Tribunal Supremo tumba definitivamente el plan urbanístico: declara ilegales los hoteles en el acantilado y ordena la demolición inmediata de 500 apartamentos a costa de la promotora y la restauración ambiental del paraje natural.",
+            "evidenceDocument": "Sentencia firme del Tribunal Supremo ordenando la demolición forzosa en un plazo improrrogable de seis meses",
+            "weight": 5,
+            "requiredFlags": [
+                "burbuja_infinita_activa"
+            ],
+            "leftChoice": {
+                "label": "Aprobar una ley autonómica de reordenación del litoral con efectos retroactivos para legalizar el complejo 'por interés social'.",
+                "stampText": "LEY A MEDIDA",
+                "flavorQuote": "Metemos una disposición adicional en la ley de presupuestos de la Generalitat que declare el hotel de interés turístico estratégico.",
+                "modifiers": {
+                    "pastaEnB": 14,
+                    "presionJudicial": -12,
+                    "impunidad": 18,
+                    "reputacionMediatica": -14
+                },
+                "grantedFlags": [
+                    "hotel_blindado_por_ley_autonomica"
+                ],
+                "mechanicId": 8
+            },
+            "rightChoice": {
+                "label": "Declarar la constructora en concurso de acreedores fraudulento y exigir que el derribo lo pague el Ministerio de Medio Ambiente.",
+                "stampText": "CONCURSO VACÍO",
+                "flavorQuote": "Vaciamos la sociedad promotora, dejamos tres mil euros en la cuenta y que la dinamita la pague el Estado.",
+                "modifiers": {
+                    "pastaEnB": 10,
+                    "presionJudicial": 6,
+                    "impunidad": 10,
+                    "reputacionMediatica": -12
+                },
+                "grantedFlags": [
+                    "quiebra_pacto_estado"
+                ]
+            }
+        },
+        {
+            "id": "saga_hormigon_20_motin_preferentistas",
+            "speaker": "El Jefe de Seguridad de la Sucursal",
+            "speakerRole": "El Policía de Trinchera",
+            "sphere": "ORDEN_JUSTICIA",
+            "headline": "CERCO A LA SEDE BANCARIA: 'MIL JUBILADOS CORTAN LA CALLE CON BOCINAS Y PANCARTAS'",
+            "context": "El canje de preferentes por acciones sin valor ha provocado el estallido popular. Cientos de ahorradores furiosos rodean la sede central de la caja de ahorros arrojando huevos y pintura roja contra los cristales blindados mientras el consejo de administración permanece atrapado en la planta 12.",
+            "evidenceDocument": "Pancarta incautada en la puerta con el lema: 'Banqueros ladrones, devolvednos los ahorros de toda una vida'",
+            "weight": 4,
+            "requiredFlags": [
+                "estafa_preferentes_activa"
+            ],
+            "leftChoice": {
+                "label": "Ordenar a los antidisturbios desalojar la plaza a porrazos alegando alteración grave del orden público y coacciones.",
+                "stampText": "CARGA POLICIAL",
+                "flavorQuote": "Que la policía despeje la calle a pelotazos de goma; el consejo tiene que salir en sus coches oficiales a almorzar.",
+                "modifiers": {
+                    "pastaEnB": 0,
+                    "presionJudicial": 8,
+                    "impunidad": 12,
+                    "reputacionMediatica": -18
+                },
+                "grantedFlags": [
+                    "represion_bancaria_violenta"
+                ]
+            },
+            "rightChoice": {
+                "label": "Pactar un arbitraje de consumo exprés devolviendo el dinero solo a los clientes más ruidosos para disolver la protesta.",
+                "stampText": "ARBITRAJE PARCHE",
+                "flavorQuote": "Les pagamos a los cuarenta que salen en televisión y a los otros nueve mil que se vayan al juzgado de lo civil a esperar diez años.",
+                "modifiers": {
+                    "pastaEnB": -14,
+                    "presionJudicial": -10,
+                    "impunidad": 10,
+                    "reputacionMediatica": 8
+                },
+                "grantedFlags": [
+                    "arbitraje_tramposo_cerrado"
+                ],
+                "mechanicId": 24
+            }
+        },
+        {
+            "id": "saga_hormigon_21_climax_el_panteon_del_ladrillo",
+            "speaker": "Rubén Bertomeu",
+            "speakerRole": "El Alquimista de la Hormigonera",
+            "sphere": "EMPRESARIAL",
+            "headline": "CREMATORIO: 'EL VIEJO IMPERIO SE DERRUMBA EN LA MESA DEL VELATORIO'",
+            "context": "Última noche en el chalé de la costa. El patriarca contempla las maquetas de la ciudad turística mientras en el televisor se anuncia la aprobación de la ley que legaliza sus complejos. La soledad es absoluta: los socios mafiosos han cobrado, los políticos se han aforado y la comarca es una masa infinita de cemento gris.",
+            "evidenceDocument": "Testamento ológrafo redactado sobre servilleta del club náutico legando la corporación a una fundación opaca de Vaduz",
+            "weight": 5,
+            "requiredFlags": [
+                "emperador_del_litoral"
+            ],
+            "leftChoice": {
+                "label": "Constituir un holding fiduciario en Liechtenstein y legar el monopolio del suelo a tus herederos con blindaje fiscal total.",
+                "stampText": "DINASTÍA DEL HORMIGÓN",
+                "flavorQuote": "He transformado este lodazal de huertas en una máquina de riqueza; que los poetas lloren por los pinos mientras mis hijos cobran las rentas.",
+                "modifiers": {
+                    "pastaEnB": 18,
+                    "presionJudicial": -16,
+                    "impunidad": 18,
+                    "reputacionMediatica": 10
+                },
+                "grantedFlags": [
+                    "senor_eterno_del_mediterraneo"
+                ],
+                "mechanicId": 6
+            },
+            "rightChoice": {
+                "label": "Donar una colección millonaria de arte clásico a la ciudad para que el ayuntamiento te erija un monumento en el paseo marítimo.",
+                "stampText": "PATRICIO INMORTAL",
+                "flavorQuote": "Les compro cuatro cuadros en Londres, financio el museo municipal y el mismo pueblo que me insultaba me pone una estatua de bronce.",
+                "modifiers": {
+                    "pastaEnB": -16,
+                    "presionJudicial": -18,
+                    "impunidad": 16,
+                    "reputacionMediatica": 18
+                },
+                "grantedFlags": [
+                    "benefactor_canonizado"
+                ],
+                "mechanicId": 3
+            }
+        },
+        {
+            "id": "saga_hormigon_22_climax_presidio_picassent",
+            "speaker": "El Juez de Vigilancia Penitenciaria",
+            "speakerRole": "El Juez de Sala",
+            "sphere": "ORDEN_JUSTICIA",
+            "headline": "AUTO PENITENCIARIO: 'DENEGADO EL TERCER GRADO POR FALTA DE ARREPENTIMIENTO'",
+            "context": "En el centro penitenciario de Picassent, tras cinco años de prisión efectiva, el juez de vigilancia rechaza tu solicitud de salidas de fin de semana. El auto subraya que no has devuelto los cuarenta millones distraídos en Suiza ni has colaborado en la localización del botín de la autovía.",
+            "evidenceDocument": "Auto judicial denegando la progresión a tercer grado penitenciario y manteniendo la clasificación en segundo grado ordinario",
+            "weight": 5,
+            "requiredFlags": [
+                "preso_ilustre_comarca"
+            ],
+            "leftChoice": {
+                "label": "Amenazar por carta al presidente autonómico con desvelar los recibos de los trajes y las cuentas secretas de campaña.",
+                "stampText": "CARTA BOMBA",
+                "flavorQuote": "O me sacáis en régimen abierto antes de Navidad o le entrego a la UCO las facturas del sastre y los talones de la sede.",
+                "modifiers": {
+                    "pastaEnB": 4,
+                    "presionJudicial": -8,
+                    "impunidad": 14,
+                    "reputacionMediatica": -14
+                },
+                "grantedFlags": [
+                    "chantaje_carcelario_triunfante"
+                ],
+                "mechanicId": 4
+            },
+            "rightChoice": {
+                "label": "Resignarte al régimen ordinario y escribir un manual satírico sobre cómo saquear el erario público sin despeinarse.",
+                "stampText": "BESTSELLER CARCELARIO",
+                "flavorQuote": "En España la cárcel solo es el peaje que pagamos los pioneros; saldré a los setenta años y me gastaré la pasta en champán.",
+                "modifiers": {
+                    "pastaEnB": 8,
+                    "presionJudicial": 12,
+                    "impunidad": -6,
+                    "reputacionMediatica": 16
+                },
+                "grantedFlags": [
+                    "guru_de_la_picaresca"
+                ]
+            }
+        },
+        {
+            "id": "saga_hormigon_23_climax_palacio_senado",
+            "speaker": "El Presidente del Senado",
+            "speakerRole": "El Procónsul del Hormigón",
+            "sphere": "POLITICA",
+            "headline": "TRIBUNAL SUPREMO: 'LA SALA SEGUNDA ARCHIVA LA CAUSA POR PRESCRIPCIÓN DE LOS DELITOS'",
+            "context": "Los leones del Senado amparan el triunfo definitivo. Tras cuatro años de recursos de amparo, suspensiones por enfermedad y conflictos de competencias entre salas, el Tribunal Supremo declara formalmente extinguida la responsabilidad penal por prescripción de los plazos de instrucción.",
+            "evidenceDocument": "Auto de sobreseimiento libre dictado por la Sala de lo Penal del Tribunal Supremo por prescripción extintiva de la prevaricación",
+            "weight": 5,
+            "requiredFlags": [
+                "causa_en_sala_segunda"
+            ],
+            "leftChoice": {
+                "label": "Exigir la presidencia de la Comisión Constitucional y una indemnización al Estado por persecución injusta.",
+                "stampText": "TRIUNFO ABSOLUTO",
+                "flavorQuote": "El Supremo me ha devuelto el honor intacto; ahora que los jueces que me persiguieron paguen las costas de su bolsillo.",
+                "modifiers": {
+                    "pastaEnB": 10,
+                    "presionJudicial": -18,
+                    "impunidad": 18,
+                    "reputacionMediatica": 14
+                },
+                "grantedFlags": [
+                    "senador_intocable_vitalicio"
+                ],
+                "mechanicId": 35
+            },
+            "rightChoice": {
+                "label": "Cobrar las dietas de alojamiento en Madrid pese a residir en una mansión de la costa y montar una sicav familiar.",
+                "stampText": "DIETAS Y SICAV",
+                "flavorQuote": "Cobro el sueldo, las dietas de kilometraje sin justificar y meto el patrimonio en una sicav al uno por ciento. ¡Viva la Constitución!",
+                "modifiers": {
+                    "pastaEnB": 16,
+                    "presionJudicial": -15,
+                    "impunidad": 17,
+                    "reputacionMediatica": -12
+                },
+                "grantedFlags": [
+                    "oligarca_parlamentario"
+                ],
+                "mechanicId": 20
+            }
+        },
+        {
+            "id": "saga_hormigon_24_climax_palacio_monaco",
+            "speaker": "El Banquero Monegasco",
+            "speakerRole": "El Lavandero Transnacional",
+            "sphere": "EMPRESARIAL",
+            "headline": "CLUB DE YATES DE MÓNACO: 'BRINDIS AL ATARDECER POR LA IMPUNIDAD INTERNACIONAL'",
+            "context": "Desde la terraza del Yacht Club de Mónaco, contemplando los superyates amarrados en el puerto de Hércules. Las autoridades españolas han visto denegada la orden europea de detención por defectos formales en la traducción y la fortuna en Singapur genera un millón de euros mensuales en intereses limpios.",
+            "evidenceDocument": "Pasaporte diplomático de país caribeño y tarjeta de socio vitalicio del Yacht Club de Monaco",
+            "weight": 5,
+            "requiredFlags": [
+                "exilio_dorado_monaco"
+            ],
+            "leftChoice": {
+                "label": "Financiar una escudería de Fórmula 1 para codearte con magnates del petróleo y blanquear los últimos fondos.",
+                "stampText": "MOTOR Y BLANQUEO",
+                "flavorQuote": "En las carreras de coches nadie pregunta de dónde sale el dinero del patrocinio; solo quieren ver el logotipo en el alerón.",
+                "modifiers": {
+                    "pastaEnB": -14,
+                    "presionJudicial": -18,
+                    "impunidad": 18,
+                    "reputacionMediatica": 18
+                },
+                "grantedFlags": [
+                    "magnate_del_motor_global"
+                ],
+                "mechanicId": 40
+            },
+            "rightChoice": {
+                "label": "Comprar parcelas en el metaverso y emitir criptomonedas vinculadas a promociones inmobiliarias ficticias en España.",
+                "stampText": "CRIPTO-LADRILLO",
+                "flavorQuote": "Si el suelo físico se gasta, inventamos suelo virtual; la estupidez humana y la avaricia no tienen fronteras ni juzgados.",
+                "modifiers": {
+                    "pastaEnB": 18,
+                    "presionJudicial": -18,
+                    "impunidad": 16,
+                    "reputacionMediatica": 8
+                },
+                "grantedFlags": [
+                    "zar_del_criptoladrillo"
+                ]
+            }
+        }
+    ]
+}

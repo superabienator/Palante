@@ -690,6 +690,59 @@
         }
       ],
       "ending": "SOBRESEIMIENTO_BOTIN"
+    },
+    "nodo_crematorio_misent_pgou": {
+      "id": "nodo_crematorio_misent_pgou",
+      "archetypeId": "ALQUIMISTA_HORMIGONERA",
+      "sphere": "EMPRESARIAL",
+      "headline": "RUBÉN BERTOMEU PRESENTA EL PAI DEL PINAR EN EL ASADOR LA XARXA",
+      "context": "Te sientas en el reservado con el alcalde de Misent y el arquitecto municipal. Hay una bolsa de deportes con cuatrocientos mil euros en billetes sobre la banqueta. O recalifican cuatrocientas hectáreas de pinar protegido de monte comunal o Traian y los fondos del Este se marchan a construir a la Costa Azul.",
+      "evidenceDocument": "Borrador del PGOU de Misent con notas manuscritas: «Aprobación definitiva sin exposición pública».",
+      "choices": [
+        {
+          "id": "c_crem_1",
+          "label": "Entregar la bolsa de deportes y ordenar el vertido de hormigón sobre la necrópolis romana",
+          "flavorQuote": "El dinero ni se crea ni se destruye, sólo cambia de manos para que las hormigoneras no paren.",
+          "mechanicId": 3,
+          "modifiers": { "pastaEnB": 25, "presionJudicial": 15, "impunidad": 10 },
+          "nextNodeId": "nodo_crematorio_traian_marina"
+        },
+        {
+          "id": "c_crem_2",
+          "label": "Pagar a Eladio Sarcos para que silencie a los ecologistas y a la prensa comarcal",
+          "flavorQuote": "Saber estar cada uno en su sitio; si cruzan la línea se les borra del mapa.",
+          "mechanicId": 8,
+          "modifiers": { "pastaEnB": -15, "presionJudicial": -10, "impunidad": 20 },
+          "nextNodeId": "nodo_registro_uco"
+        }
+      ]
+    },
+    "nodo_crematorio_traian_marina": {
+      "id": "nodo_crematorio_traian_marina",
+      "archetypeId": "BARON_ENCOFRADO",
+      "sphere": "EMPRESARIAL",
+      "headline": "ATRACA EL SUPERYATE DE TRAIAN EN LA DÁRSENA PRIVADA DE MISENT",
+      "context": "El buque de sesenta metros con bandera de conveniencia atraca de madrugada en el dique ilegal. Traian desembarca veinticinco millones en billetes mientras el fiscal de medio ambiente firma la querella criminal por destrucción de la posidonia.",
+      "evidenceDocument": "Acta de infracción de la Capitanía Marítima y cuaderno de bitácora sin sellos de aduana.",
+      "choices": [
+        {
+          "id": "c_crem_traian_1",
+          "label": "Zarpar a toda máquina rumbo a aguas internacionales antes de que llegue la UCO",
+          "flavorQuote": "En aguas internacionales no hay fiscales de costas; que se queden con el hormigón agrietado.",
+          "mechanicId": 31,
+          "modifiers": { "pastaEnB": 30, "presionJudicial": -30, "impunidad": 40 },
+          "nextNodeId": "nodo_inicio_proconsul"
+        },
+        {
+          "id": "c_crem_traian_2",
+          "label": "Comprar al presidente de la Audiencia Provincial con un atraque vitalicio para su velero",
+          "flavorQuote": "A los magistrados les regalas un amarre y las querellas ecologistas duermen en un cajón.",
+          "mechanicId": 34,
+          "modifiers": { "pastaEnB": -20, "presionJudicial": -25, "impunidad": 35 },
+          "nextNodeId": "proconsul_fin_sobreseimiento"
+        }
+      ],
+      "ending": "FUGA_Y_PRESCRIPCION"
     }
   }
 }

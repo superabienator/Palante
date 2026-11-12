@@ -1,0 +1,546 @@
+{
+  "sagaName": "Crematorio: El Cártel de Misent",
+  "description": "Macro-sagas extraídas directamente de la novela 'Crematorio' de Rafael Chirbes. La especulación urbanística salvaje en la costa mediterránea, el cemento sobre ruinas romanas, la mafia de Traian, los ajustes de cuentas con fuego y la dársena deportiva.",
+  "cards": [
+    {
+      "id": "saga_crematorio_01_recalificacion_pinar",
+      "speaker": "Rubén Bertomeu",
+      "speakerRole": "El Gran Arquitecto y Promotor de Misent",
+      "sphere": "EMPRESARIAL",
+      "headline": "EL PLAN PARCIAL DEL PINAR: CONVERTIR EL MONTE EN CIUDAD DE VACACIONES",
+      "context": "Has diseñado la mayor promoción residencial del litoral: cuatro mil chalets adosados, campo de golf y centro comercial sobre el pinar de Misent. El concejal de urbanismo duda porque el suelo está protegido por ley forestal, pero una modificación del PGOU lo arregla en quince días.",
+      "evidenceDocument": "Borrador de recalificación del PGOU de Misent con anotaciones a lápiz en el margen: «Aprobación exprés antes de elecciones».",
+      "weight": 3,
+      "requiredFlags": [],
+      "leftChoice": {
+        "label": "Pagar la comisión al concejal y aprobar la recalificación urgente",
+        "stampText": "RECALIFICAR",
+        "flavorQuote": "El dinero ni se crea ni se destruye, sólo cambia de manos para que las hormigoneras no paren.",
+        "mechanicId": 1,
+        "modifiers": { "pastaEnB": 15, "presionJudicial": 10, "impunidad": 5, "reputacionMediatica": -10 },
+        "grantedFlags": ["CREMATORIO_PINAR_APROBADO"]
+      },
+      "rightChoice": {
+        "label": "Esperar a las elecciones y financiar la campaña del nuevo alcalde",
+        "stampText": "ESPERAR",
+        "flavorQuote": "En esta comarca quien tiene prisa se ahoga; primero se compra al partido y luego se redacta la ordenanza.",
+        "mechanicId": 37,
+        "modifiers": { "pastaEnB": -10, "presionJudicial": -5, "impunidad": 10, "reputacionMediatica": 5 },
+        "grantedFlags": ["CREMATORIO_PINAR_POSTERGADO"]
+      }
+    },
+    {
+      "id": "saga_crematorio_02_incendio_monte",
+      "speaker": "Ramón Collado",
+      "speakerRole": "El Fontanero de las Obras",
+      "sphere": "EMPRESARIAL",
+      "headline": "EL PAI DE LA LADERA SE BLOQUEA: EL MONTE COMUNAL ARDE MISTERIOSAMENTE",
+      "context": "Medio Ambiente ha emitido un informe desfavorable por el valor ecológico de la masa boscosa. Collado te susurra que un fuego providencial a finales de agosto, con viento de poniente, desclasifica el suelo por la vía rápida antes de que llegue septiembre.",
+      "evidenceDocument": "Garrafa de combustible y restos de mecha rápida hallados en la cuneta del kilómetro 12 de la carretera comarcal.",
+      "weight": 2,
+      "requiredFlags": ["CREMATORIO_PINAR_APROBADO"],
+      "leftChoice": {
+        "label": "Dar luz verde al incendio y culpar a un rayo o a excursionistas descuidados",
+        "stampText": "PURIFICAR",
+        "flavorQuote": "El fuego deja el terreno limpio de maleza y de informes técnicos; la ceniza es el mejor abono para el ladrillo.",
+        "mechanicId": 2,
+        "modifiers": { "pastaEnB": 20, "presionJudicial": 15, "impunidad": -10, "reputacionMediatica": -20 },
+        "grantedFlags": ["CREMATORIO_MONTE_CALCINADO"]
+      },
+      "rightChoice": {
+        "label": "Frenar el fuego y comprar parcelas colindantes a los campesinos arruinados",
+        "stampText": "COMPRAR",
+        "flavorQuote": "A estos viejos les pones cuatro perras por sus bancales de algarrobos y te firman la cesión con lágrimas en los ojos.",
+        "mechanicId": 1,
+        "modifiers": { "pastaEnB": -15, "presionJudicial": -10, "impunidad": 15, "reputacionMediatica": 10 },
+        "grantedFlags": ["CREMATORIO_BANCALES_COMPRADOS"]
+      }
+    },
+    {
+      "id": "saga_crematorio_03_ruinas_bajo_hormigon",
+      "speaker": "Capataz de la Retroexcavadora",
+      "speakerRole": "Encargado de Cimientos de Bertomeu",
+      "sphere": "EMPRESARIAL",
+      "headline": "APARECE UNA NECRÓPOLIS ROMANA BAJO LA PISCINA DEL RESORT",
+      "context": "Las palas mecánicas han abierto una zanja y han sacado a la luz esqueletos con monedas en la boca y ánforas intactas. Si avisas a la Conselleria de Cultura, los arqueólogos paralizarán las obras durante tres años.",
+      "evidenceDocument": "Moneda romana de bronce acuñada en Valentia y fotografía tomada con móvil del mosaico desenterrado.",
+      "weight": 2,
+      "requiredFlags": ["CREMATORIO_MONTE_CALCINADO"],
+      "leftChoice": {
+        "label": "Verter tres camiones de hormigón rápido a las dos de la madrugada",
+        "stampText": "HORMIGONAR",
+        "flavorQuote": "La historia romana está muy bien en los libros, pero aquí tenemos pagarés que vencen a fin de mes.",
+        "mechanicId": 3,
+        "modifiers": { "pastaEnB": 15, "presionJudicial": 12, "impunidad": 5, "reputacionMediatica": -15 },
+        "grantedFlags": ["CREMATORIO_RUINAS_SEPULTADAS"]
+      },
+      "rightChoice": {
+        "label": "Donar dos tinajas al museo local y reubicar la piscina sin avisar a Valencia",
+        "stampText": "DONAR",
+        "flavorQuote": "Hacemos una foto para el diario provincial con el concejal de Cultura y seguimos picando sin levantar polvo.",
+        "mechanicId": 11,
+        "modifiers": { "pastaEnB": -10, "presionJudicial": -8, "impunidad": 5, "reputacionMediatica": 15 },
+        "grantedFlags": ["CREMATORIO_MUSEO_PACTADO"]
+      }
+    },
+    {
+      "id": "saga_crematorio_04_bolsa_deportes_alcalde",
+      "speaker": "Ramón Collado",
+      "speakerRole": "El Conseguidor de la Mariconera",
+      "sphere": "POLITICA",
+      "headline": "COMIDA EN EL RESERVADO DE LA XARXA: EL MALETÍN PARA EL ALCALDE",
+      "context": "Te has citado en el reservado del restaurante La Xarxa. El alcalde y el arquitecto municipal comen percebes y dorada salvaje mientras esperan que dejes sobre la banqueta la bolsa de deportes con cuatrocientos mil euros en billetes de quinientos.",
+      "evidenceDocument": "Ticket de comida por 1.840 euros con anotación manuscrita: «Pagado en metálico por Grupo Bertomeu».",
+      "weight": 3,
+      "requiredFlags": ["CREMATORIO_RUINAS_SEPULTADAS"],
+      "leftChoice": {
+        "label": "Entregar la bolsa de deportes bajo la mesa y exigir la licencia definitiva",
+        "stampText": "UNTAZO",
+        "flavorQuote": "Hay que saber cuándo hablar entre susurros y cuándo acariciarle el lomo a quien tiene la pluma de firmar.",
+        "mechanicId": 7,
+        "modifiers": { "pastaEnB": -18, "presionJudicial": 10, "impunidad": 20, "reputacionMediatica": -5 },
+        "grantedFlags": ["CREMATORIO_LICENCIA_FIRMADA"]
+      },
+      "rightChoice": {
+        "label": "Prometerles dos áticos dúplex a nombre de una sociedad panameña",
+        "stampText": "PISOS EN B",
+        "flavorQuote": "El dinero en mano quema en el bolsillo; las escrituras a nombre de una mercantil de Belice son para toda la vida.",
+        "mechanicId": 6,
+        "modifiers": { "pastaEnB": 5, "presionJudicial": -5, "impunidad": 15, "reputacionMediatica": 5 },
+        "grantedFlags": ["CREMATORIO_ATICOS_PACTADOS"]
+      }
+    },
+    {
+      "id": "saga_crematorio_05_socio_ruso_traian",
+      "speaker": "Traian",
+      "speakerRole": "El Inversor de Europa del Este",
+      "sphere": "EMPRESARIAL",
+      "headline": "TRAIAN EXIGE BLANQUEAR 25 MILLONES EN EL COMPLEJO RESIDENCIAL",
+      "context": "Traian llega en su Mercedes con cristales blindados y se bebe dos whiskies dobles de dos tragos en la cafetería del paseo. Quiere inyectar 25 millones de procedencia desconocida en la segunda fase del PAI a través de cuentas en Nicosia.",
+      "evidenceDocument": "Contrato de sindicación financiera firmado entre Grupo Bertomeu y una sociedad limitada de Chipre.",
+      "weight": 2,
+      "requiredFlags": ["CREMATORIO_LICENCIA_FIRMADA"],
+      "leftChoice": {
+        "label": "Aceptar los fondos rusos y asignarle el 40% de la sociedad promotora",
+        "stampText": "PACTAR",
+        "flavorQuote": "A Traian no se le mira el pasaporte ni se le pregunta de dónde saca el whisky; trae liquidez inmediata.",
+        "mechanicId": 6,
+        "modifiers": { "pastaEnB": 25, "presionJudicial": 18, "impunidad": -10, "reputacionMediatica": -15 },
+        "grantedFlags": ["CREMATORIO_SOCIO_RUSO_ACTIVO"]
+      },
+      "rightChoice": {
+        "label": "Rechazar la inyección directa y pedir un crédito sindicado a la caja de ahorros",
+        "stampText": "BANCA LOCAL",
+        "flavorQuote": "El director de la caja comarcal come de nuestra mano y no viene con escoltas de Bucarest armados.",
+        "mechanicId": 24,
+        "modifiers": { "pastaEnB": -10, "presionJudicial": -10, "impunidad": 10, "reputacionMediatica": 10 },
+        "grantedFlags": ["CREMATORIO_CREDITO_CAJA_LOGRADO"]
+      }
+    },
+    {
+      "id": "saga_crematorio_06_cintas_chantaje_manez",
+      "speaker": "Máñez",
+      "speakerRole": "Exsocio y Comisionista Despechado",
+      "sphere": "POLITICA",
+      "headline": "«TENGO CINTAS GRABADAS»: CHANTAJE EN EL DESPACHO NOBLE",
+      "context": "Máñez se planta en tu despacho. Dice que grabó con un casete oculto en la americana todas las conversaciones sobre las mordidas del Pinar y los pagos al alcalde. O le ingresas dos millones en Zúrich o lleva las cintas al Juzgado de Instrucción número 3 de Misent.",
+      "evidenceDocument": "Microcasete magnético marca TDK con etiqueta manuscrita: «Reunión La Xarxa - Reparto PAI Pinar».",
+      "weight": 2,
+      "requiredFlags": ["CREMATORIO_SOCIO_RUSO_ACTIVO"],
+      "leftChoice": {
+        "label": "Ingresar los dos millones en Zúrich y exigir la entrega del máster de las cintas",
+        "stampText": "PAGAR",
+        "flavorQuote": "El chantaje es un impuesto revolucionario que se paga con sonrisa para que no te embarguen la vida entera.",
+        "mechanicId": 33,
+        "modifiers": { "pastaEnB": -20, "presionJudicial": -12, "impunidad": 10, "reputacionMediatica": 5 },
+        "grantedFlags": ["CREMATORIO_CHANTAJE_PAGADO"]
+      },
+      "rightChoice": {
+        "label": "Avisar a Eladio Sarcos para que le dé un escarmiento definitivo",
+        "stampText": "ENCARGO",
+        "flavorQuote": "A quien nos pone la grabadora delante hay que recordarle que en los cimientos de la autovía cabe mucha gente.",
+        "mechanicId": 8,
+        "modifiers": { "pastaEnB": 5, "presionJudicial": 18, "impunidad": -15, "reputacionMediatica": -20 },
+        "grantedFlags": ["CREMATORIO_ORDEN_SARCOS_DADA"]
+      }
+    },
+    {
+      "id": "saga_crematorio_07_sarcos_silenciador",
+      "speaker": "Eladio Sarcos",
+      "speakerRole": "Jefe de Matones e Intermediario Oscuro",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "SARCOS ACTÚA EN LA SOMBRA: VISITA NOCTURNA AL APARCAMIENTO",
+      "context": "Sarcos ha localizado el coche de Máñez aparcado frente a un club nocturno en la N-332. Viene a tu chalet a pedirte la última confirmación antes de que el problema quede 'solucionado de raíz'.",
+      "evidenceDocument": "Parte confidencial de seguimiento con matrículas y horarios de entrada de Máñez en el local de copas.",
+      "weight": 2,
+      "requiredFlags": ["CREMATORIO_ORDEN_SARCOS_DADA"],
+      "leftChoice": {
+        "label": "Confirmar la operación: fuego y destrucción del vehículo",
+        "stampText": "EJECUTAR",
+        "flavorQuote": "Saber estar cada uno en su sitio; si cruzan la línea se les borra del mapa antes de que canten.",
+        "mechanicId": 8,
+        "modifiers": { "pastaEnB": -5, "presionJudicial": 20, "impunidad": -20, "reputacionMediatica": -15 },
+        "grantedFlags": ["CREMATORIO_COCHE_QUEMADO_N332"]
+      },
+      "rightChoice": {
+        "label": "Frenar a Sarcos a última hora y ofrecerle a Máñez la dirección de ventas",
+        "stampText": "RECOLOCAR",
+        "flavorQuote": "Es más barato atar a un perro rabioso con una nómina de lujo que lidiar con la policía científica de la UCO.",
+        "mechanicId": 40,
+        "modifiers": { "pastaEnB": -12, "presionJudicial": -10, "impunidad": 15, "reputacionMediatica": 10 },
+        "grantedFlags": ["CREMATORIO_MANEZ_RECOLOCADO"]
+      }
+    },
+    {
+      "id": "saga_crematorio_08_coche_ardiendo_n332",
+      "speaker": "La Locutora de Radio Misent",
+      "speakerRole": "Voz de la Crónica de Sucesos",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "UN VEHÍCULO ARDE EN LA NACIONAL 332: UN HERIDO GRAVE POR QUEMADURAS",
+      "context": "La radio local interrumpe su emisión: en el kilómetro 14 de la N-332, junto a un local de alterne, ha ardido un coche. Un individuo con quemaduras de pronóstico reservado ha sido trasladado al hospital. La Policía Judicial y el Seprona abren diligencias.",
+      "evidenceDocument": "Informe de atestado policial de la Guardia Civil de Tráfico con restos de acelerante sintético.",
+      "weight": 3,
+      "requiredFlags": ["CREMATORIO_COCHE_QUEMADO_N332"],
+      "leftChoice": {
+        "label": "Enviar abogados al hospital para comprar el silencio del herido",
+        "stampText": "SILENCIAR",
+        "flavorQuote": "Le decimos que le pagamos la mejor clínica de Suiza y una renta vitalicia si declara que fue un fallo eléctrico.",
+        "mechanicId": 34,
+        "modifiers": { "pastaEnB": -15, "presionJudicial": -10, "impunidad": 15, "reputacionMediatica": -5 },
+        "grantedFlags": ["CREMATORIO_TESTIGO_COMPRADO"]
+      },
+      "rightChoice": {
+        "label": "Desvincular a la promotora y filtrar que se trataba de un ajuste de cuentas entre narcos",
+        "stampText": "DESVIAR",
+        "flavorQuote": "Que la prensa titule 'Vendetta del Este'; en esta costa nadie investiga un ajuste de cuentas nocturno.",
+        "mechanicId": 27,
+        "modifiers": { "pastaEnB": 0, "presionJudicial": 15, "impunidad": -5, "reputacionMediatica": -20 },
+        "grantedFlags": ["CREMATORIO_NARCOS_CULPADOS"]
+      }
+    },
+    {
+      "id": "saga_crematorio_09_silvia_denuncia_verde",
+      "speaker": "Silvia Bertomeu",
+      "speakerRole": "Hija de Bertomeu y Restauradora Hipócrita",
+      "sphere": "POLITICA",
+      "headline": "SILVIA AMENAZA CON EL FISCAL DE MEDIO AMBIENTE",
+      "context": "Tu hija Silvia llega a la casa familiar de la montaña indignada tras la muerte de su tío Matías. Ha descubierto los informes de la Confederación Hidrográfica que demuestran que el PAI agota el acuífero de Misent y amenaza con acudir a la Fiscalía.",
+      "evidenceDocument": "Dosier de la asociación ecologista comarcal con sellos oficiales de la Confederación Hidrográfica del Júcar.",
+      "weight": 2,
+      "requiredFlags": ["CREMATORIO_TESTIGO_COMPRADO"],
+      "leftChoice": {
+        "label": "Comprarle una galería de arte en París y pagarle el viaje a su marido",
+        "stampText": "UNTAR FAMILIA",
+        "flavorQuote": "La moralina ecologista de mi hija se cura con un piso en Saint-Germain-des-Prés y un talonario sin fondo.",
+        "mechanicId": 37,
+        "modifiers": { "pastaEnB": -18, "presionJudicial": -15, "impunidad": 20, "reputacionMediatica": 10 },
+        "grantedFlags": ["CREMATORIO_SILVIA_SILENCIADA"]
+      },
+      "rightChoice": {
+        "label": "Despreciar sus amenazas y recordarle que vive del dinero del hormigón",
+        "stampText": "DESPRECIAR",
+        "flavorQuote": "Hablas de la naturaleza pero no te quitas tus blusas de seda de quinientos euros ni dejas de pedirme el cheque mensual.",
+        "mechanicId": 13,
+        "modifiers": { "pastaEnB": 10, "presionJudicial": 18, "impunidad": -15, "reputacionMediatica": -20 },
+        "grantedFlags": ["CREMATORIO_GUERRA_FAMILIAR"]
+      }
+    },
+    {
+      "id": "saga_crematorio_10_inauguracion_o_tanatorio",
+      "speaker": "Mónica",
+      "speakerRole": "La Joven Esposa del Constructor",
+      "sphere": "EMPRESARIAL",
+      "headline": "CLÍMAX EN MISENT: FIESTA VIP EN EL RESORT O REGISTRO EN EL VELATORIO",
+      "context": "Llega el día del corte de cinta de la primera fase del Complejo Residencial Costa de Misent. Mientras se enfría el Moët & Chandon y tocan los mariachis contratados por Traian, furgones de la UCO rondan la rotonda de acceso.",
+      "evidenceDocument": "Invitación de gala VIP con relieve dorado y orden de entrada y registro firmada por el Juzgado de Guardia.",
+      "weight": 1,
+      "requiredFlags": ["CREMATORIO_SILVIA_SILENCIADA"],
+      "leftChoice": {
+        "label": "Inaugurar por todo lo alto con el conseller y las cámaras de televisión",
+        "stampText": "TRIUNFO",
+        "flavorQuote": "Aquí se inaugura y se cobra; mientras haya fotos con el conseller nadie se atreve a meternos en el calabozo.",
+        "mechanicId": 40,
+        "modifiers": { "pastaEnB": 25, "presionJudicial": -15, "impunidad": 25, "reputacionMediatica": 20 },
+        "grantedFlags": ["CREMATORIO_TRIUNFO_TOTAL"]
+      },
+      "rightChoice": {
+        "label": "Fugarse discretamente en el yate hacia Mónaco con los maletines de billetes",
+        "stampText": "FUGARSE",
+        "flavorQuote": "El hormigón se queda aquí para los gusanos; nosotros nos marchamos con las cuentas limpias en Suiza.",
+        "mechanicId": 31,
+        "modifiers": { "pastaEnB": 15, "presionJudicial": -20, "impunidad": 30, "reputacionMediatica": -30 },
+        "grantedFlags": ["CREMATORIO_FUGA_MONACO"]
+      }
+    },
+    {
+      "id": "saga_crematorio_marina_01_concesion_puerto",
+      "speaker": "Rubén Bertomeu",
+      "speakerRole": "Señor de la Costa",
+      "sphere": "EMPRESARIAL",
+      "headline": "LA DÁRSENA DE ORO: CONCESIÓN ADMINISTRATIVA DE LA MARINA DE MISENT",
+      "context": "Quieres privatizar ochocientos metros de playa pública para construir una marina deportiva con quinientos amarres para yates de gran eslora. El Ministerio de Fomento exige un informe de impacto costero que tardaría un lustro en tramitarse por vía ordinaria.",
+      "evidenceDocument": "Plano batimétrico de la bahía de Misent con el sello de solicitud de concesión de Dominio Público Marítimo-Terrestre.",
+      "weight": 3,
+      "requiredFlags": [],
+      "leftChoice": {
+        "label": "Tramitar la concesión como 'infraestructura de interés general turístico urgente'",
+        "stampText": "DE INTERÉS",
+        "flavorQuote": "Le decimos al director general que si no firma la concesión el dinero de los turistas rusos se va a Cannes.",
+        "mechanicId": 5,
+        "modifiers": { "pastaEnB": 15, "presionJudicial": 5, "impunidad": 15, "reputacionMediatica": -5 },
+        "grantedFlags": ["MARINA_CONCESION_OBTENIDA"]
+      },
+      "rightChoice": {
+        "label": "Asociarse con el Club Náutico tradicional y prometer atraques gratis a los jueces",
+        "stampText": "CLUB VIP",
+        "flavorQuote": "A los magistrados de la Audiencia les regalas un amarre para su velero y los recursos ecologistas duermen en un cajón.",
+        "mechanicId": 34,
+        "modifiers": { "pastaEnB": -10, "presionJudicial": -15, "impunidad": 25, "reputacionMediatica": 10 },
+        "grantedFlags": ["MARINA_CLUB_PACTADO"]
+      }
+    },
+    {
+      "id": "saga_crematorio_marina_02_dragado_posidonia",
+      "speaker": "Ingeniero de Dragas",
+      "speakerRole": "Técnico del Canal de Navegación",
+      "sphere": "EMPRESARIAL",
+      "headline": "EL CANAL DE ENTRADA CHOCA CONTRA LA PRADERA DE POSIDONIA",
+      "context": "Para que atraquen los superyates de Traian necesitas ocho metros de calado, pero el fondo marino está cubierto de posidonia oceánica estrictamente protegida por directivas europeas. El dragado destruirá el ecosistema submarino.",
+      "evidenceDocument": "Informe pericial del Instituto de Ecología Litoral alertando de la destrucción irreversible de la pradera protegida.",
+      "weight": 2,
+      "requiredFlags": ["MARINA_CONCESION_OBTENIDA"],
+      "leftChoice": {
+        "label": "Meter las dragas de succión nocturnas y triturar la posidonia en 48 horas",
+        "stampText": "DRAGAR",
+        "flavorQuote": "Si Bruselas protesta decimos que la posidonia murió por culpa de los vertidos de los pescadores locales.",
+        "mechanicId": 3,
+        "modifiers": { "pastaEnB": 18, "presionJudicial": 15, "impunidad": -5, "reputacionMediatica": -20 },
+        "grantedFlags": ["MARINA_POSIDONIA_DESTRUIDA"]
+      },
+      "rightChoice": {
+        "label": "Comprar un informe biológico amañado que sitúe la posidonia tres millas más al sur",
+        "stampText": "FALSEAR",
+        "flavorQuote": "Tres mil euros a un catedrático de Biología y la posidonia se teletransporta en el mapa donde no moleste al dique.",
+        "mechanicId": 27,
+        "modifiers": { "pastaEnB": -8, "presionJudicial": -8, "impunidad": 12, "reputacionMediatica": 5 },
+        "grantedFlags": ["MARINA_INFORME_COMPRADO"]
+      }
+    },
+    {
+      "id": "saga_crematorio_marina_03_capitania_maritima",
+      "speaker": "El Capitán Marítimo",
+      "speakerRole": "Autoridad Portuaria de Distrito",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "INSPECCIÓN DE CAPITANÍA: EL CALADO DEL ESPIGÓN EXCEDE EL PERMISO",
+      "context": "El capitán marítimo se persona con la patrullera del Servicio Marítimo. Ha detectado que el espigón de hormigón invade quinientos metros más de mar de lo estipulado en la concesión para ganar atraques comerciales de lujo.",
+      "evidenceDocument": "Acta de infracción marítima con propuesta de paralización inmediata de las obras de atraque.",
+      "weight": 2,
+      "requiredFlags": ["MARINA_POSIDONIA_DESTRUIDA"],
+      "leftChoice": {
+        "label": "Regalarle el uso vitalicio de un atraque número uno y un barco cabinado",
+        "stampText": "REGALO",
+        "flavorQuote": "En el mar todo el mundo tiene afición a navegar; con un atraque reservado se firman los planos que hagan falta.",
+        "mechanicId": 7,
+        "modifiers": { "pastaEnB": -12, "presionJudicial": -12, "impunidad": 18, "reputacionMediatica": 5 },
+        "grantedFlags": ["MARINA_CAPITAN_COMPRADO"]
+      },
+      "rightChoice": {
+        "label": "Llamar al secretario de Estado en Madrid para exigir su traslado disciplinario",
+        "stampText": "PURGAR",
+        "flavorQuote": "A este funcionario se le manda a vigilar bateas de mejillones a Galicia si se cree que puede parar el progreso.",
+        "mechanicId": 25,
+        "modifiers": { "pastaEnB": 0, "presionJudicial": 10, "impunidad": 20, "reputacionMediatica": -10 },
+        "grantedFlags": ["MARINA_CAPITAN_PURGADO"]
+      }
+    },
+    {
+      "id": "saga_crematorio_marina_04_yate_traian",
+      "speaker": "Traian",
+      "speakerRole": "El Armador del Mar Negro",
+      "sphere": "EMPRESARIAL",
+      "headline": "ATRACA EL SUPERYATE DE TRAIAN SIN PASAR POR ADUANAS",
+      "context": "Un yate de sesenta metros de eslora con bandera de las Islas Caimán atraca en la dársena de noche con las luces apagadas. Traian desembarca cajas metálicas en el muelle de servicio sin pasar control fronterizo ni de la Guardia Civil.",
+      "evidenceDocument": "Libro de registro portuario con la casilla de atraque nocturno rellenada con tachones y sin matrícula oficial.",
+      "weight": 3,
+      "requiredFlags": ["MARINA_CAPITAN_COMPRADO"],
+      "leftChoice": {
+        "label": "Facilitar el muelle privado y ordenar a la seguridad del puerto mirar a otro lado",
+        "stampText": "COBERTURA",
+        "flavorQuote": "Aquí no se mira lo que entra en los barcos; se cobra la tarifa de atraque y se brinda con vodka.",
+        "mechanicId": 6,
+        "modifiers": { "pastaEnB": 22, "presionJudicial": 18, "impunidad": -10, "reputacionMediatica": -18 },
+        "grantedFlags": ["MARINA_MUELLE_OPLANO_ACTIVO"]
+      },
+      "rightChoice": {
+        "label": "Exigirle que descargue en alta mar y que no comprometa la marina privada",
+        "stampText": "FRENAR",
+        "flavorQuote": "A mí no me traigas la mercancía a los pantalanes; este puerto es para aparentar respetabilidad europea.",
+        "mechanicId": 33,
+        "modifiers": { "pastaEnB": -10, "presionJudicial": -12, "impunidad": 15, "reputacionMediatica": 10 },
+        "grantedFlags": ["MARINA_DISTANCIA_TRAIAN"]
+      }
+    },
+    {
+      "id": "saga_crematorio_marina_05_aduanas_vigilancia",
+      "speaker": "Oficial de Vigilancia Aduanera",
+      "speakerRole": "Comandante de Operaciones Especiales Aeronavales",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "EL HELICÓPTERO DE ADUANAS SOBREVUELA LA DÁRSENA DEPORTIVA",
+      "context": "Vigilancia Aduanera sospecha que la marina de Misent es un nodo internacional de blanqueo y contrabando. Un helicóptero ilumina los pantalanes con su foco mientras lanchas rápidas de la Agencia Tributaria rodean la bocana del puerto.",
+      "evidenceDocument": "Filmación térmica en infrarrojos de la descarga de bultos sospechosos en el pantalán 4.",
+      "weight": 2,
+      "requiredFlags": ["MARINA_MUELLE_OPLANO_ACTIVO"],
+      "leftChoice": {
+        "label": "Mostrar los contratos de fletamento ficticios firmados con una sociedad de Londres",
+        "stampText": "SOCIEDAD UK",
+        "flavorQuote": "Son inversores británicos de descanso en la costa; los aduaneros se estrellan contra el derecho mercantil internacional.",
+        "mechanicId": 37,
+        "modifiers": { "pastaEnB": -5, "presionJudicial": -10, "impunidad": 18, "reputacionMediatica": 5 },
+        "grantedFlags": ["MARINA_ADUANA_FRENADA"]
+      },
+      "rightChoice": {
+        "label": "Sacrificar al patrón de la lancha auxiliar y dejar que lo detengan como señuelo",
+        "stampText": "CABEZA DE TURCO",
+        "flavorQuote": "Que empapelen al marinero de turno; le pagamos la fianza y la nave nodriza queda libre de sospecha.",
+        "mechanicId": 25,
+        "modifiers": { "pastaEnB": -10, "presionJudicial": 12, "impunidad": -5, "reputacionMediatica": -15 },
+        "grantedFlags": ["MARINA_PATRON_DETENIDO"]
+      }
+    },
+    {
+      "id": "saga_crematorio_marina_06_inmobiliaria_pantalla",
+      "speaker": "Notario de Misent",
+      "speakerRole": "Fedatario Público de Confianza",
+      "sphere": "EMPRESARIAL",
+      "headline": "VENTA MASIVA DE ATRAQUES: CINCUENTA PANTALLAS EN BELICE Y LUXEMBURGO",
+      "context": "Los quinientos amarres salen a subasta privada. Para evitar que Hacienda investigue el patrimonio de los compradores, el notario propone escriturar las cesiones a través de sociedades radicadas en paraísos fiscales.",
+      "evidenceDocument": "Poder notarial con apostilla de La Haya autorizando la compra de cincuenta amarres en favor de una fiduciaria panameña.",
+      "weight": 3,
+      "requiredFlags": ["MARINA_ADUANA_FRENADA"],
+      "leftChoice": {
+        "label": "Firmar la venta en bloque con el notario y cobrar el 15% de comisión en Suiza",
+        "stampText": "ESCRITURAR",
+        "flavorQuote": "El notario lee deprisa y no hace preguntas incómodas; el dinero entra directo en cuentas cifradas en Ginebra.",
+        "mechanicId": 33,
+        "modifiers": { "pastaEnB": 25, "presionJudicial": 15, "impunidad": 10, "reputacionMediatica": -10 },
+        "grantedFlags": ["MARINA_ATRAQUES_VENDIDOS"]
+      },
+      "rightChoice": {
+        "label": "Reservar la mitad de los atraques para alquilarlos en temporada alta a precio de oro",
+        "stampText": "ALQUILAR",
+        "flavorQuote": "Un amarre en agosto en el Mediterráneo rinde más que un pozo de petróleo; cobramos en efectivo sin IVA.",
+        "mechanicId": 5,
+        "modifiers": { "pastaEnB": 15, "presionJudicial": -5, "impunidad": 10, "reputacionMediatica": 10 },
+        "grantedFlags": ["MARINA_ALQUILER_EXPLOTADO"]
+      }
+    },
+    {
+      "id": "saga_crematorio_marina_07_pescadores_motin",
+      "speaker": "El Patrón Mayor de la Cofradía",
+      "speakerRole": "Representante de los Pescadores Tradicionales",
+      "sphere": "POLITICA",
+      "headline": "MOTÍN EN LA DÁRSENA: LOS PESCADORES BLOQUEAN LA BOCANA CON SUS BARCOS",
+      "context": "La Cofradía de Pescadores de Misent se alza en huelga: las obras de ampliación del espigón privado les han arrebatado el muelle de atraque de las barcas de arrastre y la lonja tradicional. Bloquean la entrada impidiendo el paso a los yates de lujo.",
+      "evidenceDocument": "Pancarta incautada en la lonja: «El puerto es del pueblo, no de los mafiosos de Bertomeu».",
+      "weight": 2,
+      "requiredFlags": ["MARINA_ATRAQUES_VENDIDOS"],
+      "leftChoice": {
+        "label": "Enviar a los antidisturbios y amenazar con retirar las licencias de pesca",
+        "stampText": "DESALOJAR",
+        "flavorQuote": "Cuatro barcazas viejas no van a arruinar un negocio millonario; que la policía despeje la bocana en diez minutos.",
+        "mechanicId": 25,
+        "modifiers": { "pastaEnB": 5, "presionJudicial": 12, "impunidad": 15, "reputacionMediatica": -25 },
+        "grantedFlags": ["MARINA_PESCADORES_REPRIMIDOS"]
+      },
+      "rightChoice": {
+        "label": "Pagarles una indemnización por 'lucro cesante' a cambio de que apoyen la marina",
+        "stampText": "INDEMNIZAR",
+        "flavorQuote": "A los pescadores se les llena el bolsillo con billetes frescos y se convierten en nuestros mejores relaciones públicas.",
+        "mechanicId": 21,
+        "modifiers": { "pastaEnB": -15, "presionJudicial": -10, "impunidad": 10, "reputacionMediatica": 15 },
+        "grantedFlags": ["MARINA_PESCADORES_COMPRADOS"]
+      }
+    },
+    {
+      "id": "saga_crematorio_marina_08_club_nautico_palco",
+      "speaker": "Mónica",
+      "speakerRole": "Anfitriona de la Alta Sociedad de Misent",
+      "sphere": "EMPRESARIAL",
+      "headline": "LA CENA DE GALA EN EL CLUB DE YATES: MINISTROS, MAGISTRADOS Y POLICÍAS",
+      "context": "Mónica organiza la cena de inauguración en el restaurante panorámico de la marina. En las mesas se sientan exministros con despacho en Madrid, presidentes de sala de la Audiencia Provincial y los constructores más ricos de la costa, todos bebiendo champagne.",
+      "evidenceDocument": "Menú exclusivo de la gala con percebes, caviar del Caspio y vinos de 800 euros la botella.",
+      "weight": 2,
+      "requiredFlags": ["MARINA_PESCADORES_COMPRADOS"],
+      "leftChoice": {
+        "label": "Fotografiarse con el presidente de la Audiencia Provincial y regalarle un reloj de oro",
+        "stampText": "BLINDAJE VIP",
+        "flavorQuote": "Una foto sonriendo con los jueces en la mesa presidencial vale más que cincuenta recursos de amparo.",
+        "mechanicId": 34,
+        "modifiers": { "pastaEnB": -10, "presionJudicial": -20, "impunidad": 25, "reputacionMediatica": 20 },
+        "grantedFlags": ["MARINA_MAGISTRADOS_BLINDADOS"]
+      },
+      "rightChoice": {
+        "label": "Filtrar a la prensa el listado de asistentes para demostrar quién manda en Misent",
+        "stampText": "EXHIBICIÓN",
+        "flavorQuote": "Que toda España vea que los jueces y los ministros comen en nuestra mano; nadie se atreverá a tocarnos un pelo.",
+        "mechanicId": 30,
+        "modifiers": { "pastaEnB": 10, "presionJudicial": 15, "impunidad": 20, "reputacionMediatica": -15 },
+        "grantedFlags": ["MARINA_FIESTA_PUBLICADA"]
+      }
+    },
+    {
+      "id": "saga_crematorio_marina_09_fiscalia_costas",
+      "speaker": "Fiscal Delegado de Medio Ambiente",
+      "speakerRole": "Acusación Pública Anticorrupción",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "QUERELLA CRIMINAL DE LA FISCALÍA POR DELITO CONTRA LA ORDENACIÓN DEL LITORAL",
+      "context": "La Fiscalía Anticorrupción de Alicante interpone querella criminal contra la concesionaria del puerto deportivo por usurpación de dominio público, cohecho continuado y delito medioambiental.",
+      "evidenceDocument": "Auto de admisión a trámite de la querella con orden de aportación de todos los libros contables de la marina.",
+      "weight": 3,
+      "requiredFlags": ["MARINA_MAGISTRADOS_BLINDADOS"],
+      "leftChoice": {
+        "label": "Recusar al fiscal alegando enemistad manifiesta y dilatar la instrucción seis años",
+        "stampText": "RECUSAR",
+        "flavorQuote": "Le buscamos una foto en una cena con ecologistas y lo apartamos de la causa antes de que pida las cuentas.",
+        "mechanicId": 16,
+        "modifiers": { "pastaEnB": -12, "presionJudicial": -18, "impunidad": 20, "reputacionMediatica": -5 },
+        "grantedFlags": ["MARINA_FISCAL_RECUSADO"]
+      },
+      "rightChoice": {
+        "label": "Pagar a un bufete de catedráticos para pactar una multa administrativa sin cárcel",
+        "stampText": "PACTAR MULTA",
+        "flavorQuote": "Convertimos el delito ecológico en una sanción administrativa que se paga con los beneficios de un solo fin de semana.",
+        "mechanicId": 17,
+        "modifiers": { "pastaEnB": -20, "presionJudicial": -25, "impunidad": 15, "reputacionMediatica": 10 },
+        "grantedFlags": ["MARINA_MULTA_PAGADA"]
+      }
+    },
+    {
+      "id": "saga_crematorio_marina_10_temporal_o_fuga",
+      "speaker": "Capitán del Buque Insignia",
+      "speakerRole": "Patrón del Yate Privado",
+      "sphere": "EMPRESARIAL",
+      "headline": "EL TEMPORAL DE LEVANTE REVIENTA EL DIQUE O ESCAPADA A AGUAS INTERNACIONALES",
+      "context": "Un violento temporal de levante azota la costa de Misent y amenaza con derrumbar el dique exterior que se construyó con hormigón de mala calidad para ahorrar costes. Al mismo tiempo, la Guardia Civil tiene orden de precintar los amarres.",
+      "evidenceDocument": "Aviso meteorológico rojo de Capitanía Marítima con olas de ocho metros y orden judicial de embargo cautelar.",
+      "weight": 1,
+      "requiredFlags": ["MARINA_FISCAL_RECUSADO"],
+      "leftChoice": {
+        "label": "Cobrar el seguro millonario por catástrofe natural tras el colapso del espigón",
+        "stampText": "COBRAR SEGURO",
+        "flavorQuote": "La naturaleza destruye lo que la justicia no se atrevió a tocar; cobramos la póliza del Consorcio y salimos limpios.",
+        "mechanicId": 20,
+        "modifiers": { "pastaEnB": 25, "presionJudicial": -10, "impunidad": 20, "reputacionMediatica": -15 },
+        "grantedFlags": ["MARINA_SEGURO_COBRADO"]
+      },
+      "rightChoice": {
+        "label": "Zarpar a toda máquina rumbo a Beirut antes de que el juez dicte la orden de busca",
+        "stampText": "ZARPAR",
+        "flavorQuote": "En aguas internacionales no hay fiscales de costas; que se queden con el hormigón agrietado de Misent.",
+        "mechanicId": 31,
+        "modifiers": { "pastaEnB": 20, "presionJudicial": -25, "impunidad": 30, "reputacionMediatica": -30 },
+        "grantedFlags": ["MARINA_FUGA_BEIRUT"]
+      }
+    }
+  ]
+}

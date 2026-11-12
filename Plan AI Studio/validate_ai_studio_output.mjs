@@ -113,6 +113,12 @@ Ejemplo:
     cleanedContent = cleanedContent.replace(/^```/, '').replace(/```$/, '').trim();
   }
 
+  // Soporte para múltiples bloques JSON pegados consecutivamente (}{)
+  if (!cleanedContent.startsWith('[') && /\}\s*\{/.test(cleanedContent)) {
+    console.log(`🧩 Detectados múltiples bloques JSON concatenados. Auto-envolviendo en array...`);
+    cleanedContent = '[' + cleanedContent.replace(/\}\s*\{/g, '},{') + ']';
+  }
+
   let parsedJson;
   try {
     parsedJson = JSON.parse(cleanedContent);
@@ -121,10 +127,20 @@ Ejemplo:
     process.exit(1);
   }
 
-  // Normalizar lista de cartas: puede venir como { cards: [...] }, como array directo [...], o como una sola carta {...}
+  // Normalizar lista de cartas: puede venir como { cards: [...] }, como array directo [...], o como array de sagas [{ cards: [...] }, ...]
   let incomingCards = [];
   if (Array.isArray(parsedJson)) {
-    incomingCards = parsedJson;
+    for (const item of parsedJson) {
+      if (item && Array.isArray(item.cards)) {
+        console.log(`🏷️  Macro-Saga detectada: "${item.sagaName || 'Sin título'}"`);
+        if (item.description) {
+          console.log(`📝 Descripción: ${item.description}`);
+        }
+        incomingCards.push(...item.cards);
+      } else if (item && typeof item === 'object' && item.id) {
+        incomingCards.push(item);
+      }
+    }
   } else if (parsedJson && Array.isArray(parsedJson.cards)) {
     console.log(`🏷️  Macro-Saga detectada: "${parsedJson.sagaName || 'Sin título'}"`);
     if (parsedJson.description) {
