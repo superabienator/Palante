@@ -7,49 +7,7 @@ import { CharacterSelector } from '../components/CharacterSelector';
 import { VerdictModal } from '../components/VerdictModal';
 import { CharacterPortrait } from '../components/CharacterPortrait';
 import { useGameStore } from '../store/gameStore';
-
-const MECHANICS_REGISTRY: Record<number, { name: string; tag: string }> = {
-  1: { name: 'Recalificación PGOU Monte', tag: 'URBANISMO' },
-  2: { name: 'Incendio Forestal Oportuno', tag: 'URBANISMO' },
-  3: { name: 'Sepultura de Ruina Romana', tag: 'OBRA PÚBLICA' },
-  4: { name: 'Rescate de Radial Quebrada', tag: 'IBEX 35' },
-  5: { name: 'Bolsas de Basura en Helipuerto', tag: 'MALAYA' },
-  6: { name: 'Cláusula Indemnizatoria Castor', tag: 'IBEX 35' },
-  7: { name: 'Aeropuerto Peatonal sin Aviones', tag: 'DIPUTACIÓN' },
-  8: { name: 'Donativo Anónimo Planta Noble', tag: 'FINANCIACIÓN' },
-  9: { name: 'Sobresueldo en Sobre Manila', tag: 'CAJA B' },
-  10: { name: 'Borrado con Martillo a Discos', tag: 'OBSTRUCCIÓN' },
-  11: { name: 'Misales a la Banca Andorrana', tag: '3% / PUJOL' },
-  12: { name: 'Mordida del 3% en Obra Civil', tag: 'COMISIONES' },
-  13: { name: 'Filtración de Cuaderno Contable', tag: 'PRENSA' },
-  14: { name: 'Micrófono en Centro Floral', tag: 'CLOACAS' },
-  15: { name: 'Sueldo Reservado al Chófer', tag: 'KITCHEN' },
-  16: { name: 'Subasta de 32 Terabytes de Audios', tag: 'KOMPROMAT' },
-  17: { name: 'Asalto de Falso Cura al Domicilio', tag: 'OPERACIONES' },
-  18: { name: 'Borrador Policial Fantasma UDYCO', tag: 'INTOXICACIÓN' },
-  19: { name: 'Purga de Fiscal Anticorrupción', tag: 'TOGAS' },
-  20: { name: 'Pinchazo en Hotel Mayfair Londres', tag: 'CORONA' },
-  21: { name: 'Traje Diplomático a Medida', tag: 'COHECHO' },
-  22: { name: 'Cumpleaños con Payaso y Confeti', tag: 'GÜRTEL' },
-  23: { name: 'Partida Presupuestaria 31L Reptil', tag: 'ERE' },
-  24: { name: 'Chófer con Sobre de Subvención', tag: 'CLIENTELISMO' },
-  25: { name: 'Foro Deportivo Sin Factura', tag: 'NÓOS' },
-  26: { name: 'Pinchazo Amiguito del Alma', tag: 'COHECHO' },
-  27: { name: 'Tarjeta Black sin Retención', tag: 'CAJAS' },
-  28: { name: 'Venta de Ladrillo Tóxico a Sareb', tag: 'RESCATE' },
-  29: { name: 'Safari Africano a Costa de Cédulas', tag: 'CAJAS' },
-  30: { name: 'Folleto Engañoso de Salida a Bolsa', tag: 'BANKIA' },
-  31: { name: 'Condonación de Crédito Electoral', tag: 'BANCA' },
-  32: { name: 'Billetes Serie W de la Fábrica', tag: 'PAESA' },
-  33: { name: 'Esquela y Misa Falsa en Burgos', tag: 'PAESA' },
-  34: { name: 'Papeles Falsificados de Laos', tag: 'ROLDÁN' },
-  35: { name: 'Valija Diplomática Ginebra-Singapur', tag: 'BLANQUEO' },
-  36: { name: 'Dictamen de Demencia Sobrevenida', tag: 'SOBRESEIMIENTO' },
-  37: { name: 'Blindaje Procesal de Urgencia', tag: 'CRISIS' },
-  38: { name: 'Inyección de Furgón de Seguridad', tag: 'CRISIS' },
-  39: { name: 'Maniobra de Pasillo en Comisión', tag: 'CRISIS' },
-  40: { name: 'Llamada al Editor del Periódico', tag: 'CRISIS' },
-};
+import { PRIVILEGES_REGISTRY } from '../config/privileges';
 
 export default function HomePage() {
   const [mounted, setMounted] = useState(false);
@@ -234,19 +192,28 @@ export default function HomePage() {
                       </span>
                     </div>
 
-                    <div className="flex flex-wrap gap-1.5 max-h-48 overflow-y-auto">
+                    <div className="flex flex-col gap-2 max-h-48 overflow-y-auto pr-1">
                       {unlockedMechanics.map((id) => {
-                        const mech = MECHANICS_REGISTRY[id];
+                        const mech = PRIVILEGES_REGISTRY[id];
                         return (
-                          <span
+                          <div
                             key={id}
-                            className="border border-black bg-stone-100 text-black px-2 py-0.5 text-xs font-bold flex items-center gap-1 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]"
+                            className="border border-black bg-stone-100 text-black p-2 text-xs shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]"
                           >
-                            <span className="text-[9px] bg-black text-white px-1 py-0.2 font-black uppercase">
-                              {mech?.tag ?? 'PODER'}
-                            </span>
-                            <span>{mech?.name ?? `Privilegio #${id}`}</span>
-                          </span>
+                            <div className="flex items-center justify-between gap-2 mb-0.5">
+                              <span className="font-black uppercase">
+                                {mech?.name ?? `Privilegio #${id}`}
+                              </span>
+                              <span className="text-[9px] bg-black text-white px-1.5 py-0.2 font-black uppercase">
+                                {mech?.shortTag ?? 'PODER'}
+                              </span>
+                            </div>
+                            {mech && (
+                              <p className="text-[11px] font-bold text-emerald-900">
+                                ⚡ {mech.inGameEffect}
+                              </p>
+                            )}
+                          </div>
                         );
                       })}
                     </div>

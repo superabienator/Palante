@@ -12,8 +12,45 @@ import {
   StatModifiers,
   StoryNode,
 } from '../types/story';
+import { calculateAggregatedPerks } from '../config/privileges';
 import rawStoryData from '../content/story.json';
 import reignsDeckData from '../content/reignsDeck.json';
+
+export interface StatVariance {
+  base: number;
+  min: number;
+  max: number;
+  diceNotation: string;
+  perkBonus?: {
+    amount: number;
+    privilegeName: string;
+  };
+}
+
+export type ProjectedStatsRange = Partial<Record<keyof CharacterStats, StatVariance>>;
+
+export interface SingleStatRollResult {
+  statKey: keyof CharacterStats;
+  statLabel: string;
+  baseDelta: number;
+  rolledDelta: number;
+  min: number;
+  max: number;
+  diceFace: number; // 1..6
+  diceNotation: string;
+  privilegeApplied?: {
+    name: string;
+    amount: number;
+  };
+}
+
+export interface LastDiceRollSummary {
+  id: string;
+  direction: 'left' | 'right';
+  stampText: string;
+  rolls: SingleStatRollResult[];
+  timestamp: number;
+}
 
 export interface GameHistoryEntry {
   nodeId: string;
@@ -45,6 +82,7 @@ export interface GameState {
   daysInPower: number; // cada carta ~ 90 días (un trimestre)
   cardsSurvived: number;
   previewDirection: 'left' | 'right' | null;
+  lastDiceRoll: LastDiceRollSummary | null;
   gameOverReason: GameOverReason | null;
   gameOverDescription: string | null;
   activeFlags: Record<string, boolean>;
@@ -62,6 +100,8 @@ export interface GameState {
   setPreviewDirection: (dir: 'left' | 'right' | null) => void;
   makeReignsChoice: (direction: 'left' | 'right') => boolean;
   getPreviewModifiers: () => StatModifiers | null;
+  getProjectedStatsRange: () => ProjectedStatsRange | null;
+  clearLastDiceRoll: () => void;
 
   // Acciones Clásicas
   startGame: (archetypeId: ArchetypeId) => boolean;
@@ -75,6 +115,13 @@ const DEFAULT_STATS: CharacterStats = {
   presionJudicial: 20,
   impunidad: 50,
   reputacionMediatica: 50,
+};
+
+const STAT_LABELS: Record<keyof CharacterStats, string> = {
+  pastaEnB: 'Pasta en B',
+  presionJudicial: 'Presión Judicial',
+  impunidad: 'Impunidad',
+  reputacionMediatica: 'Reputación Mediática',
 };
 
 export const clampStat = (value: number, delta: number | undefined = 0): number => {
@@ -93,6 +140,153 @@ export const applyModifiers = (
     reputacionMediatica: clampStat(current.reputacionMediatica, modifiers.reputacionMediatica),
   };
 };
+
+export function calculateStatVariance(
+  statKey: keyof CharacterStats,
+  baseDelta: number,
+  unlockedMechanics: number[]
+): StatVariance {
+  const perks = calculateAggregatedPerks(unlockedMechanics);
+  let adjustedBase = baseDelta;
+  let perkBonus: { amount: number; privilegeName: string } | undefined;
+
+  if (statKey === 'presionJudicial' && baseDelta > 0 && perks.presionJudicialDiscount > 0) {
+    const discount = Math.min(Math.max(0, baseDelta - 1), perks.presionJudicialDiscount);
+    if (discount > 0 && perks.presionPrivilegeName) {
+      adjustedBase = baseDelta - discount;
+      perkBonus = { amount: -discount, privilegeName: perks.presionPrivilegeName };
+    }
+  } else if (statKey === 'pastaEnB' && perks.pastaEnBBonus > 0) {
+    if (baseDelta > 0 && perks.pastaPrivilegeName) {
+      adjustedBase = baseDelta + perks.pastaEnBBonus;
+      perkBonus = { amount: perks.pastaEnBBonus, privilegeName: perks.pastaPrivilegeName };
+    } else if (baseDelta < 0 && perks.pastaPrivilegeName) {
+      const mitigation = Math.min(Math.max(0, Math.abs(baseDelta) - 1), Math.ceil(perks.pastaEnBBonus / 2));
+      if (mitigation > 0) {
+        adjustedBase = baseDelta + mitigation;
+        perkBonus = { amount: mitigation, privilegeName: perks.pastaPrivilegeName };
+      }
+    }
+  } else if (statKey === 'reputacionMediatica' && baseDelta < 0 && perks.reputacionShield > 0) {
+    const mitigation = Math.min(Math.max(0, Math.abs(baseDelta) - 1), perks.reputacionShield);
+    if (mitigation > 0 && perks.reputacionPrivilegeName) {
+      adjustedBase = baseDelta + mitigation;
+      perkBonus = { amount: mitigation, privilegeName: perks.reputacionPrivilegeName };
+    }
+  } else if (statKey === 'impunidad' && baseDelta < 0 && perks.impunidadShield > 0) {
+    const mitigation = Math.min(Math.max(0, Math.abs(baseDelta) - 1), perks.impunidadShield);
+    if (mitigation > 0 && perks.impunidadPrivilegeName) {
+      adjustedBase = baseDelta + mitigation;
+      perkBonus = { amount: mitigation, privilegeName: perks.impunidadPrivilegeName };
+    }
+  }
+
+  const absVal = Math.abs(adjustedBase);
+  let spread = 2;
+  let diceNotation = '1d4';
+  if (absVal > 14) {
+    spread = 4;
+    diceNotation = '1d8';
+  } else if (absVal > 6) {
+    spread = 3;
+    diceNotation = '1d6';
+  }
+
+  let min = adjustedBase - spread;
+  let max = adjustedBase + spread;
+
+  if (adjustedBase > 0) {
+    min = Math.max(1, min);
+  } else if (adjustedBase < 0) {
+    max = Math.min(-1, max);
+  }
+
+  return {
+    base: baseDelta,
+    min,
+    max,
+    diceNotation,
+    perkBonus,
+  };
+}
+
+export function calculateProjectedStatsRange(
+  modifiers: StatModifiers,
+  unlockedMechanics: number[]
+): ProjectedStatsRange {
+  const result: ProjectedStatsRange = {};
+  const keys: Array<keyof CharacterStats> = [
+    'pastaEnB',
+    'presionJudicial',
+    'impunidad',
+    'reputacionMediatica',
+  ];
+
+  for (const key of keys) {
+    const val = modifiers[key];
+    if (val !== undefined && val !== 0) {
+      result[key] = calculateStatVariance(key, val, unlockedMechanics);
+    }
+  }
+
+  return result;
+}
+
+export function rollModifiersWithDice(
+  modifiers: StatModifiers,
+  unlockedMechanics: number[],
+  direction: 'left' | 'right',
+  stampText: string
+): { rolledModifiers: StatModifiers; summary: LastDiceRollSummary } {
+  const rangeMap = calculateProjectedStatsRange(modifiers, unlockedMechanics);
+  const rolledModifiers: StatModifiers = {};
+  const rolls: SingleStatRollResult[] = [];
+
+  const keys: Array<keyof CharacterStats> = [
+    'pastaEnB',
+    'presionJudicial',
+    'impunidad',
+    'reputacionMediatica',
+  ];
+
+  for (const key of keys) {
+    const variance = rangeMap[key];
+    if (!variance) continue;
+
+    const span = variance.max - variance.min + 1;
+    const randomOffset = Math.floor(Math.random() * span);
+    const rolledDelta = variance.min + randomOffset;
+    rolledModifiers[key] = rolledDelta;
+
+    const normalizedRatio = span > 1 ? randomOffset / (span - 1) : 0.5;
+    const diceFace = Math.max(1, Math.min(6, Math.round(normalizedRatio * 5) + 1));
+
+    rolls.push({
+      statKey: key,
+      statLabel: STAT_LABELS[key],
+      baseDelta: variance.base,
+      rolledDelta,
+      min: variance.min,
+      max: variance.max,
+      diceFace,
+      diceNotation: variance.diceNotation,
+      privilegeApplied: variance.perkBonus
+        ? { name: variance.perkBonus.privilegeName, amount: variance.perkBonus.amount }
+        : undefined,
+    });
+  }
+
+  return {
+    rolledModifiers,
+    summary: {
+      id: `roll_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+      direction,
+      stampText,
+      rolls,
+      timestamp: Date.now(),
+    },
+  };
+}
 
 function getEligibleCards(allCards: ReignsCard[], activeFlags: Record<string, boolean>): ReignsCard[] {
   return allCards.filter((card) => {
@@ -211,6 +405,7 @@ export const useGameStore = create<GameState>()(
       daysInPower: 0,
       cardsSurvived: 0,
       previewDirection: null,
+      lastDiceRoll: null,
       gameOverReason: null,
       gameOverDescription: null,
       activeFlags: {},
@@ -251,6 +446,7 @@ export const useGameStore = create<GameState>()(
           daysInPower: 90,
           cardsSurvived: 0,
           previewDirection: null,
+          lastDiceRoll: null,
           gameOverReason: null,
           gameOverDescription: null,
           activeFlags: initialFlags,
@@ -276,6 +472,22 @@ export const useGameStore = create<GameState>()(
           : currentReignsCard.rightChoice.modifiers;
       },
 
+      getProjectedStatsRange: (): ProjectedStatsRange | null => {
+        const { currentReignsCard, previewDirection, unlockedMechanics } = get();
+        if (!currentReignsCard || !previewDirection) {
+          return null;
+        }
+        const modifiers =
+          previewDirection === 'left'
+            ? currentReignsCard.leftChoice.modifiers
+            : currentReignsCard.rightChoice.modifiers;
+        return calculateProjectedStatsRange(modifiers, unlockedMechanics);
+      },
+
+      clearLastDiceRoll: () => {
+        set({ lastDiceRoll: null });
+      },
+
       makeReignsChoice: (direction: 'left' | 'right'): boolean => {
         const {
           status,
@@ -295,7 +507,15 @@ export const useGameStore = create<GameState>()(
         const choice: ReignsCardChoice =
           direction === 'left' ? currentReignsCard.leftChoice : currentReignsCard.rightChoice;
 
-        const nextStats = applyModifiers(stats, choice.modifiers);
+        // Ejecutar tirada de dados aplicando privilegios pasivos del personaje
+        const { rolledModifiers, summary } = rollModifiersWithDice(
+          choice.modifiers,
+          unlockedMechanics,
+          direction,
+          choice.stampText
+        );
+
+        const nextStats = applyModifiers(stats, rolledModifiers);
         const nextCardsSurvived = cardsSurvived + 1;
         const nextDays = daysInPower + 90;
 
@@ -330,6 +550,7 @@ export const useGameStore = create<GameState>()(
             gameOverDescription: verdict.description,
             ending: verdict.ending,
             previewDirection: null,
+            lastDiceRoll: summary,
             cardsSurvived: nextCardsSurvived,
             daysInPower: nextDays,
             activeFlags: updatedFlags,
@@ -355,6 +576,7 @@ export const useGameStore = create<GameState>()(
           daysInPower: nextDays,
           cardsSurvived: nextCardsSurvived,
           previewDirection: null,
+          lastDiceRoll: summary,
           activeFlags: updatedFlags,
           unlockedMechanics: nextUnlockedMechanics,
           evidenceDocuments: nextEvidences,
@@ -490,6 +712,7 @@ export const useGameStore = create<GameState>()(
           daysInPower: 0,
           cardsSurvived: 0,
           previewDirection: null,
+          lastDiceRoll: null,
           gameOverReason: null,
           gameOverDescription: null,
           activeFlags: {},

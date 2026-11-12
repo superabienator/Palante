@@ -5,6 +5,7 @@ import { ArchetypeId, SphereType } from '../types/story';
 import { useGameStore } from '../store/gameStore';
 import reignsDeckData from '../content/reignsDeck.json';
 import { CharacterPortrait } from './CharacterPortrait';
+import { PRIVILEGES_REGISTRY, calculateAggregatedPerks } from '../config/privileges';
 
 interface SphereConfig {
   key: SphereType;
@@ -134,6 +135,8 @@ export function CharacterSelector() {
           const char = characters[archetypeId];
           if (!char) return null;
 
+          const perks = calculateAggregatedPerks(char.unlockedMechanics);
+
           return (
             <article
               key={char.id}
@@ -171,7 +174,7 @@ export function CharacterSelector() {
                 </p>
 
                 {/* Métricas Iniciales */}
-                <div className="border-2 border-black bg-white p-3 mb-4 text-xs">
+                <div className="border-2 border-black bg-white p-3 mb-3 text-xs">
                   <div className="font-black uppercase text-[10px] text-zinc-600 mb-2 border-b border-zinc-200 pb-1">
                     ESTADÍSTICAS INICIALES DEL MANDATO:
                   </div>
@@ -194,13 +197,60 @@ export function CharacterSelector() {
                     </div>
                   </div>
                 </div>
+
+                {/* Privilegios de Poltrona y Efecto en Tiradas de Dados */}
+                <div className="border-2 border-black bg-amber-50/70 p-3 mb-4 text-xs">
+                  <div className="font-black uppercase text-[10px] text-black mb-1.5 flex items-center justify-between border-b border-black/20 pb-1">
+                    <span>⚡ VENTAJAS EN TIRADAS DE DADOS:</span>
+                    <span className="bg-black text-white px-1.5 py-0.2 text-[9px]">ACTIVO</span>
+                  </div>
+
+                  <div className="flex flex-wrap gap-1.5 mb-2 text-[10px] font-bold">
+                    {perks.presionJudicialDiscount > 0 && (
+                      <span className="border border-black bg-white px-1.5 py-0.5 text-emerald-900">
+                        🛡️ -{perks.presionJudicialDiscount}% Presión UCO
+                      </span>
+                    )}
+                    {perks.pastaEnBBonus > 0 && (
+                      <span className="border border-black bg-white px-1.5 py-0.5 text-emerald-900">
+                        💰 +{perks.pastaEnBBonus}% Mordidas B
+                      </span>
+                    )}
+                    {perks.reputacionShield > 0 && (
+                      <span className="border border-black bg-white px-1.5 py-0.5 text-emerald-900">
+                        📰 -{perks.reputacionShield}% Daño Prensa
+                      </span>
+                    )}
+                    {perks.impunidadShield > 0 && (
+                      <span className="border border-black bg-white px-1.5 py-0.5 text-emerald-900">
+                        ⚖️ -{perks.impunidadShield}% Caída Impunidad
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="flex flex-wrap gap-1">
+                    {char.unlockedMechanics.map((mId) => {
+                      const priv = PRIVILEGES_REGISTRY[mId];
+                      if (!priv) return null;
+                      return (
+                        <span
+                          key={mId}
+                          title={`${priv.description} (${priv.inGameEffect})`}
+                          className="text-[10px] border border-black/40 bg-white/80 px-1.5 py-0.5 text-zinc-800"
+                        >
+                          • {priv.name}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
 
               {/* Botón de Inicio de Partida */}
               <button
                 type="button"
                 onClick={() => startReignsGame(char.id)}
-                className="w-full border-3 border-black bg-black text-white hover:bg-zinc-800 active:translate-x-0.5 active:translate-y-0.5 py-3 px-4 font-black uppercase text-sm tracking-wider shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all"
+                className="w-full border-3 border-black bg-black text-white hover:bg-zinc-800 active:translate-x-0.5 active:translate-y-0.5 py-3 px-4 font-black uppercase text-sm tracking-wider shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer"
               >
                 ★ TOMAR POSESIÓN DEL CARGO ★
               </button>

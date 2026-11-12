@@ -1,15 +1,72 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion, useMotionValue, useTransform, PanInfo } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useTransform, PanInfo } from 'framer-motion';
 import { useGameStore } from '../store/gameStore';
 import { ReignsCard as ReignsCardType } from '../types/story';
 import { CharacterPortrait } from './CharacterPortrait';
+import { PRIVILEGES_REGISTRY } from '../config/privileges';
 
 export interface ReignsCardProps {
   card?: ReignsCardType | null;
   className?: string;
   disabled?: boolean;
+}
+
+/**
+ * Dado Fanzine Brutalista en Blanco y Negro (Caras 1 a 6)
+ */
+function FanzineDieFace({ face, size = 28 }: { face: number; size?: number }) {
+  const dots: Record<number, Array<[number, number]>> = {
+    1: [[50, 50]],
+    2: [
+      [28, 28],
+      [72, 72],
+    ],
+    3: [
+      [25, 25],
+      [50, 50],
+      [75, 75],
+    ],
+    4: [
+      [28, 28],
+      [72, 28],
+      [28, 72],
+      [72, 72],
+    ],
+    5: [
+      [25, 25],
+      [75, 25],
+      [50, 50],
+      [25, 75],
+      [75, 75],
+    ],
+    6: [
+      [28, 24],
+      [72, 24],
+      [28, 50],
+      [72, 50],
+      [28, 76],
+      [72, 76],
+    ],
+  };
+
+  const pips = dots[Math.max(1, Math.min(6, face))] ?? dots[1];
+
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 100 100"
+      className="inline-block shrink-0 border-2 border-black bg-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+      aria-label={`Dado cara ${face}`}
+    >
+      <rect x="2" y="2" width="96" height="96" fill="#ffffff" stroke="#000000" strokeWidth="6" />
+      {pips.map(([cx, cy], idx) => (
+        <circle key={idx} cx={cx} cy={cy} r="10" fill="#000000" />
+      ))}
+    </svg>
+  );
 }
 
 export function ReignsCard({
@@ -20,6 +77,7 @@ export function ReignsCard({
   const storeCard = useGameStore((state) => state.currentReignsCard);
   const makeReignsChoice = useGameStore((state) => state.makeReignsChoice);
   const setPreviewDirection = useGameStore((state) => state.setPreviewDirection);
+  const lastDiceRoll = useGameStore((state) => state.lastDiceRoll);
 
   const card = propCard ?? storeCard;
 
@@ -29,6 +87,17 @@ export function ReignsCard({
   const rightStampOpacity = useTransform(x, [0, 30, 120], [0, 0.4, 1]);
 
   const [exitX, setExitX] = useState<number | null>(null);
+  const [visibleRollId, setVisibleRollId] = useState<string | null>(null);
+
+  // Mostrar animación de dados flotantes brevemente al resolver cada jugada
+  useEffect(() => {
+    if (!lastDiceRoll) return;
+    setVisibleRollId(lastDiceRoll.id);
+    const timer = setTimeout(() => {
+      setVisibleRollId((current) => (current === lastDiceRoll.id ? null : current));
+    }, 2400);
+    return () => clearTimeout(timer);
+  }, [lastDiceRoll]);
 
   // Atajos de teclado (← y → o A / D)
   useEffect(() => {
@@ -37,9 +106,11 @@ export function ReignsCard({
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
         e.preventDefault();
+        setPreviewDirection('left');
         triggerChoice('left');
       } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
         e.preventDefault();
+        setPreviewDirection('right');
         triggerChoice('right');
       }
     };
@@ -106,8 +177,95 @@ export function ReignsCard({
     else crisisType = 'prensa';
   }
 
+  const leftPrivilegeUnlock = card.leftChoice.mechanicId
+    ? PRIVILEGES_REGISTRY[card.leftChoice.mechanicId]
+    : undefined;
+  const rightPrivilegeUnlock = card.rightChoice.mechanicId
+    ? PRIVILEGES_REGISTRY[card.rightChoice.mechanicId]
+    : undefined;
+
   return (
-    <div className={`w-full max-w-xl mx-auto flex flex-col items-center ${className}`}>
+    <div className={`w-full max-w-xl mx-auto flex flex-col items-center relative ${className}`}>
+      {/* Animación Breve de Dados Flotantes al Resolver la Jugada */}
+      <AnimatePresence mode="wait">
+        {lastDiceRoll && visibleRollId === lastDiceRoll.id && (
+          <motion.div
+            key={lastDiceRoll.id}
+            initial={{ opacity: 0, y: 24, scale: 0.85, rotate: -3 }}
+            animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
+            exit={{ opacity: 0, y: -18, scale: 0.9 }}
+            transition={{ duration: 0.32, ease: 'easeOut' }}
+            className="pointer-events-none z-30 w-full mb-3 border-3 border-black bg-yellow-100 p-3 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] font-mono"
+            aria-live="polite"
+          >
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b-2 border-black pb-1.5 mb-2">
+              <div className="flex items-center gap-2">
+                <motion.div
+                  initial={{ rotate: -360, scale: 0.4 }}
+                  animate={{ rotate: 0, scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 260, damping: 16 }}
+                >
+                  <FanzineDieFace
+                    face={lastDiceRoll.rolls[0]?.diceFace ?? 6}
+                    size={26}
+                  />
+                </motion.div>
+                <span className="text-xs font-black uppercase tracking-wider bg-black text-white px-2 py-0.5">
+                  🎲 TIRADA JUDICIAL: {lastDiceRoll.stampText}
+                </span>
+              </div>
+              <span className="text-[10px] font-bold uppercase text-zinc-700">
+                RESOLUCIÓN DE DADOS
+              </span>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              {lastDiceRoll.rolls.map((roll) => {
+                const isDanger =
+                  roll.statKey === 'presionJudicial'
+                    ? roll.rolledDelta > 0
+                    : roll.rolledDelta < 0;
+                const sign = roll.rolledDelta > 0 ? `+${roll.rolledDelta}` : `${roll.rolledDelta}`;
+
+                return (
+                  <div
+                    key={roll.statKey}
+                    className={`border-2 border-black px-2 py-1 text-xs flex items-center gap-1.5 bg-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]`}
+                  >
+                    <motion.div
+                      initial={{ rotate: 180, scale: 0.5 }}
+                      animate={{ rotate: 0, scale: 1 }}
+                      transition={{ duration: 0.35 }}
+                    >
+                      <FanzineDieFace face={roll.diceFace} size={20} />
+                    </motion.div>
+                    <div>
+                      <span className="font-bold text-zinc-800">{roll.statLabel}: </span>
+                      <span
+                        className={`font-black ${
+                          isDanger ? 'text-red-700' : 'text-emerald-800'
+                        }`}
+                      >
+                        {sign}%
+                      </span>
+                      <span className="text-[10px] text-zinc-500 ml-1">
+                        ({roll.min > 0 ? `+${roll.min}` : roll.min} a{' '}
+                        {roll.max > 0 ? `+${roll.max}` : roll.max})
+                      </span>
+                      {roll.privilegeApplied && (
+                        <span className="block text-[9px] font-black text-emerald-800">
+                          ⚡ {roll.privilegeApplied.amount > 0 ? `+${roll.privilegeApplied.amount}` : roll.privilegeApplied.amount}% por {roll.privilegeApplied.name}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Contenedor Draggable con Framer Motion */}
       <div className="relative w-full min-h-[420px] flex items-center justify-center p-2">
         <motion.article
@@ -163,6 +321,7 @@ export function ReignsCard({
           <header className="border-b-2 border-black pb-3 mb-4 flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <CharacterPortrait
+                src={card.portraitUrl}
                 speaker={card.speaker}
                 speakerRole={card.speakerRole}
                 alt={card.speaker}
@@ -210,8 +369,11 @@ export function ReignsCard({
           )}
 
           {/* Indicación ágil de interacción */}
-          <footer className="border-t-2 border-black pt-2 text-[11px] font-mono text-zinc-600 italic">
-            💡 Desliza la carta o pulsa las opciones para decidir tu destino
+          <footer className="border-t-2 border-black pt-2 text-[11px] font-mono text-zinc-600 italic flex items-center justify-between">
+            <span>💡 Apunta o desliza para ver los márgenes de dados en la telemetría</span>
+            <span className="font-bold not-italic text-[10px] bg-stone-200 px-1.5 py-0.5 border border-black">
+              🎲 RIESGO VARIABLE
+            </span>
           </footer>
         </motion.article>
       </div>
@@ -224,28 +386,39 @@ export function ReignsCard({
           onClick={() => triggerChoice('left')}
           onMouseEnter={() => setPreviewDirection('left')}
           onMouseLeave={() => setPreviewDirection(null)}
+          onFocus={() => setPreviewDirection('left')}
+          onBlur={() => setPreviewDirection(null)}
           disabled={disabled}
-          className="group border-3 border-black bg-white hover:bg-stone-50 active:translate-x-0.5 active:translate-y-0.5 p-3.5 text-left font-mono shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer"
+          className="group border-3 border-black bg-white hover:bg-amber-50 active:translate-x-0.5 active:translate-y-0.5 p-3.5 text-left font-mono shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer flex flex-col justify-between"
         >
-          <div className="flex items-center justify-between mb-1.5">
-            <span className="text-xs font-black uppercase text-red-700 tracking-wider">
-              ← [ {card.leftChoice.stampText} ]
-            </span>
-            <span className="text-[10px] border border-black px-1.5 py-0.5 bg-stone-100 font-bold uppercase hidden sm:inline">
-              Tecla: ← / A
-            </span>
-          </div>
-          <p className="text-sm font-bold text-black leading-snug">
-            {card.leftChoice.label}
-          </p>
-          {card.leftChoice.flavorQuote && (
-            <div className="mt-2 border-l-3 border-red-700 bg-red-50/40 pl-2 py-1">
-              <span className="text-[9px] font-black uppercase tracking-wider text-red-800 block mb-0.5">
-                🎙️ AUDIO UCO INTERVENIDO:
+          <div>
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="text-xs font-black uppercase text-red-700 tracking-wider">
+                ← [ {card.leftChoice.stampText} ]
               </span>
-              <p className="text-xs text-zinc-800 italic leading-snug">
-                "{card.leftChoice.flavorQuote}"
-              </p>
+              <span className="text-[10px] border border-black px-1.5 py-0.5 bg-stone-100 font-bold uppercase hidden sm:inline">
+                🎲 Tecla: ← / A
+              </span>
+            </div>
+            <p className="text-sm font-bold text-black leading-snug">
+              {card.leftChoice.label}
+            </p>
+            {card.leftChoice.flavorQuote && (
+              <div className="mt-2 border-l-3 border-red-700 bg-red-50/40 pl-2 py-1">
+                <span className="text-[9px] font-black uppercase tracking-wider text-red-800 block mb-0.5">
+                  🎙️ AUDIO UCO INTERVENIDO:
+                </span>
+                <p className="text-xs text-zinc-800 italic leading-snug">
+                  "{card.leftChoice.flavorQuote}"
+                </p>
+              </div>
+            )}
+          </div>
+
+          {leftPrivilegeUnlock && (
+            <div className="mt-2 pt-1.5 border-t border-dashed border-black text-[10px] font-black text-emerald-900 flex items-center gap-1">
+              <span>⚡ SUMA PRIVILEGIO:</span>
+              <span className="underline">{leftPrivilegeUnlock.name}</span>
             </div>
           )}
         </button>
@@ -256,28 +429,39 @@ export function ReignsCard({
           onClick={() => triggerChoice('right')}
           onMouseEnter={() => setPreviewDirection('right')}
           onMouseLeave={() => setPreviewDirection(null)}
+          onFocus={() => setPreviewDirection('right')}
+          onBlur={() => setPreviewDirection(null)}
           disabled={disabled}
-          className="group border-3 border-black bg-white hover:bg-stone-50 active:translate-x-0.5 active:translate-y-0.5 p-3.5 text-left font-mono shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer"
+          className="group border-3 border-black bg-white hover:bg-amber-50 active:translate-x-0.5 active:translate-y-0.5 p-3.5 text-left font-mono shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer flex flex-col justify-between"
         >
-          <div className="flex items-center justify-between mb-1.5">
-            <span className="text-xs font-black uppercase text-black tracking-wider">
-              [ {card.rightChoice.stampText} ] →
-            </span>
-            <span className="text-[10px] border border-black px-1.5 py-0.5 bg-stone-100 font-bold uppercase hidden sm:inline">
-              Tecla: → / D
-            </span>
-          </div>
-          <p className="text-sm font-bold text-black leading-snug">
-            {card.rightChoice.label}
-          </p>
-          {card.rightChoice.flavorQuote && (
-            <div className="mt-2 border-l-3 border-black bg-stone-100/70 pl-2 py-1">
-              <span className="text-[9px] font-black uppercase tracking-wider text-zinc-800 block mb-0.5">
-                🎙️ AUDIO UCO INTERVENIDO:
+          <div>
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="text-xs font-black uppercase text-black tracking-wider">
+                [ {card.rightChoice.stampText} ] →
               </span>
-              <p className="text-xs text-zinc-800 italic leading-snug">
-                "{card.rightChoice.flavorQuote}"
-              </p>
+              <span className="text-[10px] border border-black px-1.5 py-0.5 bg-stone-100 font-bold uppercase hidden sm:inline">
+                🎲 Tecla: → / D
+              </span>
+            </div>
+            <p className="text-sm font-bold text-black leading-snug">
+              {card.rightChoice.label}
+            </p>
+            {card.rightChoice.flavorQuote && (
+              <div className="mt-2 border-l-3 border-black bg-stone-100/70 pl-2 py-1">
+                <span className="text-[9px] font-black uppercase tracking-wider text-zinc-800 block mb-0.5">
+                  🎙️ AUDIO UCO INTERVENIDO:
+                </span>
+                <p className="text-xs text-zinc-800 italic leading-snug">
+                  "{card.rightChoice.flavorQuote}"
+                </p>
+              </div>
+            )}
+          </div>
+
+          {rightPrivilegeUnlock && (
+            <div className="mt-2 pt-1.5 border-t border-dashed border-black text-[10px] font-black text-emerald-900 flex items-center gap-1">
+              <span>⚡ SUMA PRIVILEGIO:</span>
+              <span className="underline">{rightPrivilegeUnlock.name}</span>
             </div>
           )}
         </button>
