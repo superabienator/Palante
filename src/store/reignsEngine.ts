@@ -1,5 +1,4 @@
 import {
-  CharacterProfile,
   CharacterStats,
   EndingType,
   GameOverReason,
@@ -13,7 +12,6 @@ import {
   StatModifiers,
   CLIMAX_CARD_ID,
 } from '../types/story';
-import { calculateAggregatedPerks } from '../config/privileges';
 
 export type { InExtremisCriticalStat, InExtremisStatus };
 
@@ -22,10 +20,7 @@ export interface StatVariance {
   min: number;
   max: number;
   diceNotation: string;
-  perkBonus?: {
-    amount: number;
-    privilegeName: string;
-  };
+  riskLevel: 'LOW' | 'MEDIUM' | 'HIGH';
 }
 
 export type ProjectedStatsRange = Partial<Record<keyof CharacterStats, StatVariance>>;
@@ -94,78 +89,41 @@ export const applyModifiers = (
   };
 };
 
-export function calculateStatVariance(
-  statKey: keyof CharacterStats,
-  baseDelta: number,
-  unlockedMechanics: number[]
-): StatVariance {
-  const perks = calculateAggregatedPerks(unlockedMechanics);
-  let adjustedBase = baseDelta;
-  let perkBonus: { amount: number; privilegeName: string } | undefined;
-
-  if (statKey === 'presionJudicial' && baseDelta > 0 && perks.presionJudicialDiscount > 0) {
-    const discount = Math.min(Math.max(0, baseDelta - 1), perks.presionJudicialDiscount);
-    if (discount > 0 && perks.presionPrivilegeName) {
-      adjustedBase = baseDelta - discount;
-      perkBonus = { amount: -discount, privilegeName: perks.presionPrivilegeName };
-    }
-  } else if (statKey === 'pastaEnB' && perks.pastaEnBBonus > 0) {
-    if (baseDelta > 0 && perks.pastaPrivilegeName) {
-      adjustedBase = baseDelta + perks.pastaEnBBonus;
-      perkBonus = { amount: perks.pastaEnBBonus, privilegeName: perks.pastaPrivilegeName };
-    } else if (baseDelta < 0 && perks.pastaPrivilegeName) {
-      const mitigation = Math.min(Math.max(0, Math.abs(baseDelta) - 1), Math.ceil(perks.pastaEnBBonus / 2));
-      if (mitigation > 0) {
-        adjustedBase = baseDelta + mitigation;
-        perkBonus = { amount: mitigation, privilegeName: perks.pastaPrivilegeName };
-      }
-    }
-  } else if (statKey === 'reputacionMediatica' && baseDelta < 0 && perks.reputacionShield > 0) {
-    const mitigation = Math.min(Math.max(0, Math.abs(baseDelta) - 1), perks.reputacionShield);
-    if (mitigation > 0 && perks.reputacionPrivilegeName) {
-      adjustedBase = baseDelta + mitigation;
-      perkBonus = { amount: mitigation, privilegeName: perks.reputacionPrivilegeName };
-    }
-  } else if (statKey === 'impunidad' && baseDelta < 0 && perks.impunidadShield > 0) {
-    const mitigation = Math.min(Math.max(0, Math.abs(baseDelta) - 1), perks.impunidadShield);
-    if (mitigation > 0 && perks.impunidadPrivilegeName) {
-      adjustedBase = baseDelta + mitigation;
-      perkBonus = { amount: mitigation, privilegeName: perks.impunidadPrivilegeName };
-    }
+export function calculateStatVariance(baseDelta: number): StatVariance {
+  if (baseDelta === 0) {
+    return {
+      base: 0,
+      min: 0,
+      max: 0,
+      diceNotation: '1d6',
+      riskLevel: 'LOW',
+    };
   }
 
-  const absVal = Math.abs(adjustedBase);
-  let spread = 2;
-  let diceNotation = '1d4';
-  if (absVal > 14) {
-    spread = 4;
-    diceNotation = '1d8';
-  } else if (absVal > 6) {
-    spread = 3;
-    diceNotation = '1d6';
-  }
+  const absVal = Math.abs(baseDelta);
+  const riskLevel: StatVariance['riskLevel'] =
+    absVal <= 5 ? 'LOW' : absVal <= 14 ? 'MEDIUM' : 'HIGH';
 
-  let min = adjustedBase - spread;
-  let max = adjustedBase + spread;
-
-  if (adjustedBase > 0) {
-    min = Math.max(1, min);
-  } else if (adjustedBase < 0) {
-    max = Math.min(-1, max);
-  }
+  const min =
+    baseDelta > 0
+      ? Math.max(1, Math.round(baseDelta * 0.6))
+      : Math.round(baseDelta * 1.6);
+  const max =
+    baseDelta > 0
+      ? Math.round(baseDelta * 1.6)
+      : Math.min(-1, Math.round(baseDelta * 0.6));
 
   return {
     base: baseDelta,
     min,
     max,
-    diceNotation,
-    perkBonus,
+    diceNotation: '1d6',
+    riskLevel,
   };
 }
 
 export function calculateProjectedStatsRange(
-  modifiers: StatModifiers,
-  unlockedMechanics: number[]
+  modifiers: StatModifiers
 ): ProjectedStatsRange {
   const result: ProjectedStatsRange = {};
   const keys: Array<keyof CharacterStats> = [
@@ -178,7 +136,7 @@ export function calculateProjectedStatsRange(
   for (const key of keys) {
     const val = modifiers[key];
     if (val !== undefined && val !== 0) {
-      result[key] = calculateStatVariance(key, val, unlockedMechanics);
+      result[key] = calculateStatVariance(val);
     }
   }
 
@@ -187,11 +145,11 @@ export function calculateProjectedStatsRange(
 
 export function rollModifiersWithDice(
   modifiers: StatModifiers,
-  unlockedMechanics: number[],
   direction: 'left' | 'right',
-  stampText: string
+  stampText: string,
+  forcedRoll?: number
 ): { rolledModifiers: StatModifiers; summary: LastDiceRollSummary } {
-  const rangeMap = calculateProjectedStatsRange(modifiers, unlockedMechanics);
+  const rangeMap = calculateProjectedStatsRange(modifiers);
   const rolledModifiers: StatModifiers = {};
   const rolls: SingleStatRollResult[] = [];
 
@@ -206,13 +164,14 @@ export function rollModifiersWithDice(
     const variance = rangeMap[key];
     if (!variance) continue;
 
-    const span = variance.max - variance.min + 1;
-    const randomOffset = Math.floor(Math.random() * span);
-    const rolledDelta = variance.min + randomOffset;
+    const diceFace =
+      forcedRoll !== undefined
+        ? Math.max(1, Math.min(6, Math.round(forcedRoll)))
+        : Math.floor(Math.random() * 6) + 1;
+    const factor = 0.6 + ((diceFace - 1) / 5) * 1.0;
+    const rawRolled = Math.round(variance.base * factor);
+    const rolledDelta = Math.max(variance.min, Math.min(variance.max, rawRolled));
     rolledModifiers[key] = rolledDelta;
-
-    const normalizedRatio = span > 1 ? randomOffset / (span - 1) : 0.5;
-    const diceFace = Math.max(1, Math.min(6, Math.round(normalizedRatio * 5) + 1));
 
     rolls.push({
       statKey: key,
@@ -223,9 +182,6 @@ export function rollModifiersWithDice(
       max: variance.max,
       diceFace,
       diceNotation: variance.diceNotation,
-      privilegeApplied: variance.perkBonus
-        ? { name: variance.perkBonus.privilegeName, amount: variance.perkBonus.amount }
-        : undefined,
     });
   }
 
@@ -315,21 +271,6 @@ export function checkReignsGameOver(
   }
 
   return { isGameOver: false, reason: null, ending: null, description: null };
-}
-
-/**
- * Determina si una carta es afín a un perfil de personaje:
- * - Coincide en la esfera institucional (POLITICA, ORDEN_JUSTICIA, EMPRESARIAL)
- * - O el arquetipo del personaje está incluido en archetypeAffinity de la carta
- */
-export function isCardAffiliated(
-  card: ReignsCard,
-  profile?: CharacterProfile | null
-): boolean {
-  if (!profile) return false;
-  if (card.sphere === profile.sphere) return true;
-  if (card.archetypeAffinity && card.archetypeAffinity.includes(profile.id)) return true;
-  return false;
 }
 
 /**
@@ -477,7 +418,6 @@ export interface SelectNextCardParams {
   activeFlags: Record<string, boolean>;
   currentCardId?: string;
   cardsSurvived: number;
-  characterProfile?: CharacterProfile | null;
   recentlyGrantedFlags?: string[];
   inExtremisStatus?: InExtremisStatus;
   currentStats?: CharacterStats;
@@ -485,20 +425,18 @@ export interface SelectNextCardParams {
 }
 
 /**
- * Motor central de selección procedural de cartas:
+ * Motor central de selección procedural de cartas (Estilo Reigns Puro):
  * 1. Inyección obligatoria de la carta de clímax (CLIMAX_CARD_ID) en trimestre 24 (cardsSurvived === 23).
  * 2. Filtrado de cartas elegibles según banderas activas y estado in extremis.
  * 3. Descarte de la carta actual si hay alternativas disponibles.
- * 4. Ponderación por esferas y afinidad (65% de probabilidad de seleccionar del pool afín).
- * 5. Encadenamiento de sagas: peso x5 para cartas con requiredFlags en recentlyGrantedFlags.
- * 6. Rata acorralada: cartas isInExtremis con peso 10x/20x en estado crítico, peso 0 en estado normal.
+ * 4. Encadenamiento de sagas: peso x5 para cartas con requiredFlags en recentlyGrantedFlags.
+ * 5. Rata acorralada: cartas isInExtremis con peso 10x/20x en estado crítico, peso 0 en estado normal.
  */
 export function selectNextReignsCard({
   allCards,
   activeFlags,
   currentCardId,
   cardsSurvived,
-  characterProfile,
   recentlyGrantedFlags = [],
   inExtremisStatus,
   currentStats,
@@ -538,26 +476,8 @@ export function selectNextReignsCard({
   const candidates = eligible.filter((c) => c.id !== currentCardId);
   const pool = candidates.length > 0 ? candidates : eligible;
 
-  // 4. Separación por afinidad (si in extremis está activo, las cartas de salvación están en ambos pools para no quedar bloqueadas por la esfera)
-  const affiliated = pool.filter(
-    (c) => isCardAffiliated(c, characterProfile) || (inExtremis.active && c.isInExtremis)
-  );
-  const nonAffiliated = pool.filter(
-    (c) => !isCardAffiliated(c, characterProfile) || (inExtremis.active && c.isInExtremis)
-  );
-
-  // 5. Ponderación 65% afín
-  const roll = rng();
-  const chooseAffiliated = roll < 0.65;
-
-  if (chooseAffiliated && affiliated.length > 0) {
-    return weightedRandomSelect(affiliated, recentlyGrantedFlags, inExtremis, rng);
-  } else if (!chooseAffiliated && nonAffiliated.length > 0) {
-    return weightedRandomSelect(nonAffiliated, recentlyGrantedFlags, inExtremis, rng);
-  } else {
-    // Si la cubeta elegida está vacía, recurrir al pool disponible
-    return weightedRandomSelect(pool, recentlyGrantedFlags, inExtremis, rng);
-  }
+  // 4. Selección ponderada pura por estado de medidores y sagas
+  return weightedRandomSelect(pool, recentlyGrantedFlags, inExtremis, rng);
 }
 
 /**

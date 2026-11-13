@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { flushSync } from 'react-dom';
 import { ArchetypeId, SphereType } from '../types/story';
 import { useGameStore } from '../store/gameStore';
 import reignsDeckData from '../content/reignsDeck.json';
@@ -246,10 +247,21 @@ export function CharacterSelector() {
                 </div>
               </div>
 
-              {/* Botón de Inicio de Partida */}
+              {/* Botón de Inicio de Partida con View Transition API */}
               <button
                 type="button"
-                onClick={() => startReignsGame(char.id)}
+                onClick={() => {
+                  if (typeof document !== 'undefined' && 'startViewTransition' in document) {
+                    (document as unknown as { startViewTransition: (cb: () => void) => void })
+                      .startViewTransition(() => {
+                        flushSync(() => {
+                          startReignsGame(char.id);
+                        });
+                      });
+                  } else {
+                    startReignsGame(char.id);
+                  }
+                }}
                 className="w-full border-3 border-black bg-black text-white hover:bg-zinc-800 active:translate-x-0.5 active:translate-y-0.5 py-3 px-4 font-black uppercase text-sm tracking-wider shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer"
               >
                 ★ TOMAR POSESIÓN DEL CARGO ★

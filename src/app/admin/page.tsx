@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import reignsDeckData from '../../content/reignsDeck.json';
 import initialPendingCards from '../../content/pendingNewsCards.json';
@@ -81,10 +81,22 @@ export default function AdminPage() {
   const [formData, setFormData] = useState<NewCardFormState>(INITIAL_FORM);
   const [formError, setFormError] = useState<string | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const toastRef = useRef<HTMLDivElement>(null);
+  const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const resetDialogRef = useRef<HTMLDialogElement>(null);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
-    setTimeout(() => {
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    requestAnimationFrame(() => {
+      try {
+        toastRef.current?.showPopover();
+      } catch {}
+    });
+    toastTimerRef.current = setTimeout(() => {
+      try {
+        toastRef.current?.hidePopover();
+      } catch {}
       setToastMessage(null);
     }, 4000);
   };
@@ -263,15 +275,18 @@ export default function AdminPage() {
     showToast('✕ Propuesta de actualidad descartada del sumario.');
   };
 
-  // Acción: Restaurar mazo a estado inicial
+  // Acción: Restaurar mazo a estado inicial (via <dialog> nativo)
   const handleResetToDefault = () => {
-    if (confirm('¿Restablecer el mazo activo y la bandeja a sus valores originales de fábrica?')) {
-      const baseCards = (reignsDeckData.cards ?? []) as ReignsCard[];
-      const basePending = initialPendingCards as unknown as ReignsCard[];
-      saveActiveCards(baseCards);
-      savePendingCards(basePending);
-      showToast('Mazo y bandeja restaurados a los valores iniciales.');
-    }
+    resetDialogRef.current?.showModal();
+  };
+
+  const confirmResetToDefault = () => {
+    const baseCards = (reignsDeckData.cards ?? []) as ReignsCard[];
+    const basePending = initialPendingCards as unknown as ReignsCard[];
+    saveActiveCards(baseCards);
+    savePendingCards(basePending);
+    resetDialogRef.current?.close();
+    showToast('Mazo y bandeja restaurados a los valores iniciales.');
   };
 
   // Acción: Copiar JSON del mazo activo al portapapeles
@@ -504,12 +519,49 @@ export default function AdminPage() {
           </div>
         </header>
 
-        {/* TOAST / ALERTA FLOTANTE */}
-        {toastMessage && (
-          <div className="border-3 border-black bg-black text-white p-3 font-black text-xs sm:text-sm uppercase tracking-wider shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] animate-bounce text-center">
-            {toastMessage}
+        {/* TOAST NATIVO EN TOP LAYER (popover="manual") */}
+        <div
+          ref={toastRef}
+          popover="manual"
+          role="status"
+          aria-live="polite"
+          className="fanzine-popover fixed top-6 left-1/2 -translate-x-1/2 m-0 border-3 border-black bg-black text-white px-5 py-3 font-black text-xs sm:text-sm uppercase tracking-wider shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] text-center max-w-[90vw]"
+        >
+          {toastMessage}
+        </div>
+
+        {/* DIALOG NATIVO DE CONFIRMACIÓN DESTRUCTIVA */}
+        <dialog
+          ref={resetDialogRef}
+          aria-labelledby="reset-confirm-title"
+          className="fanzine-dialog m-auto bg-transparent p-4 w-full max-w-md font-mono overflow-visible"
+        >
+          <div className="border-4 border-black bg-[#faf8f4] p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+            <h2 id="reset-confirm-title" className="text-base font-black uppercase text-black mb-2">
+              ⚠️ RESTAURAR MAZO DE FÁBRICA
+            </h2>
+            <p className="text-xs text-zinc-800 mb-5">
+              ¿Restablecer el mazo activo y la bandeja de virales a sus valores originales? Se perderán las ediciones locales no guardadas.
+            </p>
+            <div className="flex justify-end gap-2">
+              <button
+                type="button"
+                autoFocus
+                onClick={() => resetDialogRef.current?.close()}
+                className="border-2 border-black bg-white hover:bg-stone-100 px-3 py-1.5 text-xs font-black uppercase cursor-pointer"
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                onClick={confirmResetToDefault}
+                className="border-2 border-black bg-red-700 text-white hover:bg-red-800 px-3 py-1.5 text-xs font-black uppercase cursor-pointer shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+              >
+                Restaurar Todo
+              </button>
+            </div>
           </div>
-        )}
+        </dialog>
 
         {/* ========================================================
             BARRA DE PESTAÑAS (TABS)

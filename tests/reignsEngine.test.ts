@@ -2,7 +2,6 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import {
   useGameStore,
   checkReignsGameOver,
-  isCardAffiliated,
   calculateCardWeight,
   weightedRandomSelect,
   selectNextReignsCard,
@@ -11,7 +10,6 @@ import {
   getInExtremisStatus,
 } from '../src/store/gameStore';
 import {
-  CharacterProfile,
   CharacterStats,
   ReignsCard,
   CLIMAX_CARD_ID,
@@ -102,16 +100,7 @@ describe('Reigns Engine & Game Loop (Modo Supervivencia)', () => {
     });
   });
 
-  describe('Ponderación por Esferas y Afinidad de Arquetipo (65% Afinidad)', () => {
-    const mockProfile: CharacterProfile = {
-      id: 'CUSTODIO_LIBRETA',
-      name: 'El Custodio de la Libreta',
-      sphere: 'POLITICA',
-      realInspiration: 'Tesorero',
-      initialStats: { pastaEnB: 70, presionJudicial: 40, impunidad: 50, reputacionMediatica: 20 },
-      unlockedMechanics: [1, 2],
-    };
-
+  describe('Mazo Unificado Estilo Reigns Puro (Sin Filtro de Personaje)', () => {
     const cardPolitica: ReignsCard = {
       id: 'card_politica_1',
       speaker: 'Ministro',
@@ -124,7 +113,7 @@ describe('Reigns Engine & Game Loop (Modo Supervivencia)', () => {
       weight: 1,
     };
 
-    const cardEmpresarialConAfinidad: ReignsCard = {
+    const cardEmpresarial: ReignsCard = {
       id: 'card_emp_1',
       speaker: 'Constructor',
       speakerRole: 'Ladrillo',
@@ -137,7 +126,7 @@ describe('Reigns Engine & Game Loop (Modo Supervivencia)', () => {
       weight: 1,
     };
 
-    const cardOrdenNoAfin: ReignsCard = {
+    const cardOrden: ReignsCard = {
       id: 'card_orden_1',
       speaker: 'Comisario',
       speakerRole: 'Policía',
@@ -150,62 +139,51 @@ describe('Reigns Engine & Game Loop (Modo Supervivencia)', () => {
       weight: 1,
     };
 
-    it('identifica correctamente si una carta es afín por esfera o por archetypeAffinity', () => {
-      // Coincide esfera POLITICA
-      expect(isCardAffiliated(cardPolitica, mockProfile)).toBe(true);
-      // Coincide arquetipo en archetypeAffinity
-      expect(isCardAffiliated(cardEmpresarialConAfinidad, mockProfile)).toBe(true);
-      // Ni esfera ni arquetipo coinciden
-      expect(isCardAffiliated(cardOrdenNoAfin, mockProfile)).toBe(false);
-      // Sin perfil, devuelve false
-      expect(isCardAffiliated(cardPolitica, null)).toBe(false);
+    it('considera elegibles todas las cartas del mazo sin importar la esfera ni el arquetipo', () => {
+      const allCards = [cardPolitica, cardEmpresarial, cardOrden];
+      const seenIds = new Set<string>();
+
+      for (let i = 0; i < 60; i++) {
+        const picked = selectNextReignsCard({
+          allCards,
+          activeFlags: {},
+          cardsSurvived: 5,
+        });
+        if (picked) seenIds.add(picked.id);
+      }
+
+      expect(seenIds.has(cardPolitica.id)).toBe(true);
+      expect(seenIds.has(cardEmpresarial.id)).toBe(true);
+      expect(seenIds.has(cardOrden.id)).toBe(true);
     });
 
-    it('respeta el 65% de probabilidad hacia cartas afines en selectNextReignsCard', () => {
-      const allCards = [cardPolitica, cardOrdenNoAfin];
+    it('filtra cartas con requiredFlags según las banderas activas del tablero', () => {
+      const gatedCard: ReignsCard = {
+        ...cardPolitica,
+        id: 'card_gated',
+        requiredFlags: ['CASO_ABIERTO'],
+      };
+      const allCards = [cardOrden, gatedCard];
 
-      // Con rng < 0.65 (ej. 0.40) -> debe seleccionar la afín (cardPolitica)
-      const pickedAffiliated = selectNextReignsCard({
-        allCards,
-        activeFlags: {},
-        cardsSurvived: 5,
-        characterProfile: mockProfile,
-        rng: () => 0.4,
-      });
-      expect(pickedAffiliated?.id).toBe(cardPolitica.id);
-
-      // Con rng >= 0.65 (ej. 0.80) -> debe seleccionar la no afín (cardOrdenNoAfin)
-      const pickedNonAffiliated = selectNextReignsCard({
-        allCards,
-        activeFlags: {},
-        cardsSurvived: 5,
-        characterProfile: mockProfile,
-        rng: () => 0.8,
-      });
-      expect(pickedNonAffiliated?.id).toBe(cardOrdenNoAfin.id);
-    });
-
-    it('distribuye estadísticamente ~65% de selecciones afines en 1000 iteraciones', () => {
-      const allCards = [cardPolitica, cardOrdenNoAfin];
-      let affiliatedCount = 0;
-      const iterations = 1000;
-
-      for (let i = 0; i < iterations; i++) {
-        const card = selectNextReignsCard({
+      for (let i = 0; i < 15; i++) {
+        const picked = selectNextReignsCard({
           allCards,
           activeFlags: {},
           cardsSurvived: 2,
-          characterProfile: mockProfile,
         });
-        if (card && isCardAffiliated(card, mockProfile)) {
-          affiliatedCount++;
-        }
+        expect(picked?.id).toBe(cardOrden.id);
       }
 
-      const ratio = affiliatedCount / iterations;
-      // Comprobamos que el ratio se sitúa en torno a 0.65 con un margen estadístico de ± 0.08
-      expect(ratio).toBeGreaterThanOrEqual(0.57);
-      expect(ratio).toBeLessThanOrEqual(0.73);
+      const seenWithFlag = new Set<string>();
+      for (let i = 0; i < 30; i++) {
+        const picked = selectNextReignsCard({
+          allCards,
+          activeFlags: { CASO_ABIERTO: true },
+          cardsSurvived: 2,
+        });
+        if (picked) seenWithFlag.add(picked.id);
+      }
+      expect(seenWithFlag.has('card_gated')).toBe(true);
     });
   });
 
@@ -326,8 +304,8 @@ describe('Reigns Engine & Game Loop (Modo Supervivencia)', () => {
       };
 
       const assessment = calculateRiskAssessment(stats, {
-        pastaEnB: { base: 5, min: 3, max: 7, diceNotation: '1d4' },
-        presionJudicial: { base: 5, min: 3, max: 7, diceNotation: '1d4' },
+        pastaEnB: { base: 5, min: 3, max: 7, diceNotation: '1d6', riskLevel: 'LOW' },
+        presionJudicial: { base: 5, min: 3, max: 7, diceNotation: '1d6', riskLevel: 'LOW' },
       });
 
       expect(assessment.level).toBe('SAFE');
@@ -345,7 +323,7 @@ describe('Reigns Engine & Game Loop (Modo Supervivencia)', () => {
 
       // Presión judicial sube hasta 80 + 8 = 88 (> 85), pero no llega a 100
       const assessment = calculateRiskAssessment(stats, {
-        presionJudicial: { base: 6, min: 4, max: 8, diceNotation: '1d4' },
+        presionJudicial: { base: 6, min: 4, max: 8, diceNotation: '1d6', riskLevel: 'MEDIUM' },
       });
 
       expect(assessment.level).toBe('VOLATILE');
@@ -366,7 +344,7 @@ describe('Reigns Engine & Game Loop (Modo Supervivencia)', () => {
 
       // Presión judicial puede llegar a 92 + 10 = 102 >= 100 -> LETHAL
       const assessment = calculateRiskAssessment(stats, {
-        presionJudicial: { base: 8, min: 6, max: 10, diceNotation: '1d4' },
+        presionJudicial: { base: 8, min: 6, max: 10, diceNotation: '1d6', riskLevel: 'MEDIUM' },
       });
 
       expect(assessment.level).toBe('LETHAL');

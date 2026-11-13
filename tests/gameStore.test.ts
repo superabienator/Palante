@@ -41,22 +41,53 @@ describe('Game Engine & Zustand Store (Hito 3)', () => {
     });
   });
 
-  describe('Ciclo de Vida de Partida', () => {
-    it('inicia en estado NOT_STARTED sin personaje seleccionado', () => {
+  describe('Ciclo de Vida de Partida (Estilo Reigns Puro)', () => {
+    it('arranca directamente en estado PLAYING como tabula rasa (Sucesor #1)', () => {
       const state = useGameStore.getState();
-      expect(state.status).toBe('NOT_STARTED');
+      expect(state.status).toBe('PLAYING');
+      expect(state.rulerGeneration).toBe(1);
       expect(state.selectedArchetypeId).toBeNull();
-      expect(state.currentNode).toBeNull();
+      expect(state.characterProfile).toBeNull();
+      expect(state.stats).toEqual({
+        pastaEnB: 50,
+        presionJudicial: 20,
+        impunidad: 50,
+        reputacionMediatica: 50,
+      });
+      expect(state.currentReignsCard).not.toBeNull();
+      expect(state.unlockedMechanics).toEqual([]);
     });
 
-    it('falla al iniciar con un arquetipo no registrado', () => {
+    it('permite pasar al siguiente sucesor anónimo con nextSuccessor() incrementando rulerGeneration', () => {
+      useGameStore.getState().makeReignsChoice('left');
+      expect(useGameStore.getState().cardsSurvived).toBe(1);
+
+      useGameStore.getState().nextSuccessor();
+      const gen2 = useGameStore.getState();
+      expect(gen2.status).toBe('PLAYING');
+      expect(gen2.rulerGeneration).toBe(2);
+      expect(gen2.cardsSurvived).toBe(0);
+      expect(gen2.stats).toEqual({
+        pastaEnB: 50,
+        presionJudicial: 20,
+        impunidad: 50,
+        reputacionMediatica: 50,
+      });
+      expect(gen2.currentReignsCard).not.toBeNull();
+
+      useGameStore.getState().restartGame();
+      const gen3 = useGameStore.getState();
+      expect(gen3.rulerGeneration).toBe(3);
+      expect(gen3.status).toBe('PLAYING');
+    });
+
+    it('falla al iniciar modo clásico legado con un arquetipo no registrado', () => {
       // @ts-expect-error probando arquetipo inválido intencionadamente
       const success = useGameStore.getState().startGame('ARQUETIPO_FANTASMA');
       expect(success).toBe(false);
-      expect(useGameStore.getState().status).toBe('NOT_STARTED');
     });
 
-    it('inicia correctamente con PROCONSUL_HORMIGON cargando estadísticas y nodo raíz', () => {
+    it('inicia correctamente modo clásico legado con PROCONSUL_HORMIGON si se invoca explícitamente', () => {
       const success = useGameStore.getState().startGame('PROCONSUL_HORMIGON');
       expect(success).toBe(true);
 
@@ -73,12 +104,11 @@ describe('Game Engine & Zustand Store (Hito 3)', () => {
       expect(state.currentNodeId).toBe('nodo_inicio_proconsul');
       expect(state.currentNode?.headline).toContain('PLAN GENERAL');
       expect(state.evidenceDocuments.length).toBeGreaterThan(0);
-      expect(state.unlockedMechanics).toContain(9);
       expect(state.history).toHaveLength(0);
     });
   });
 
-  describe('Toma de Decisiones y Transición de Nodos (Modo Clásico)', () => {
+  describe('Toma de Decisiones y Transición de Nodos (Modo Clásico Legado)', () => {
     beforeEach(() => {
       useGameStore.getState().startGame('PROCONSUL_HORMIGON');
     });
@@ -122,37 +152,31 @@ describe('Game Engine & Zustand Store (Hito 3)', () => {
       expect(state.history).toHaveLength(2);
     });
 
-    it('permite reiniciar la legislatura (restartGame) conservando el arquetipo', () => {
+    it('reinicia al siguiente sucesor Reigns (restartGame) restaurando medidores base', () => {
       useGameStore.getState().makeChoice('c1');
       useGameStore.getState().restartGame();
 
       const state = useGameStore.getState();
       expect(state.status).toBe('PLAYING');
-      expect(state.selectedArchetypeId).toBe('PROCONSUL_HORMIGON');
-      expect(state.currentNodeId).toBe('nodo_inicio_proconsul');
-      expect(state.stats.pastaEnB).toBe(25); // restaurado a inicial
-      expect(state.history).toHaveLength(0);
-    });
-
-    it('permite regresar al selector de personajes (resetToCharacterSelect)', () => {
-      useGameStore.getState().makeChoice('c1');
-      useGameStore.getState().resetToCharacterSelect();
-
-      const state = useGameStore.getState();
-      expect(state.status).toBe('NOT_STARTED');
-      expect(state.selectedArchetypeId).toBeNull();
-      expect(state.currentNode).toBeNull();
-      expect(state.history).toHaveLength(0);
+      expect(state.gameMode).toBe('REIGNS');
+      expect(state.stats).toEqual({
+        pastaEnB: 50,
+        presionJudicial: 20,
+        impunidad: 50,
+        reputacionMediatica: 50,
+      });
+      expect(state.currentReignsCard).not.toBeNull();
     });
   });
 
   describe('Semáforo de Riesgo en el Store (getActiveRiskAssessment)', () => {
-    it('devuelve null si la partida no ha comenzado', () => {
+    it('devuelve null si la partida está en GAME_OVER', () => {
+      useGameStore.setState({ status: 'GAME_OVER' });
       expect(useGameStore.getState().getActiveRiskAssessment()).toBeNull();
     });
 
     it('evalúa el riesgo en tiempo real cuando el jugador previsualiza decisiones', () => {
-      useGameStore.getState().startReignsGame('CUSTODIO_LIBRETA');
+      useGameStore.getState().startNewReign(1);
 
       // Sin previsualizar dirección: evalúa el estado basal
       const basalAssessment = useGameStore.getState().getActiveRiskAssessment();
@@ -177,30 +201,19 @@ describe('Game Engine & Zustand Store (Hito 3)', () => {
     });
   });
 
-  describe('Exposición de lastActivatedPrivilege en el Store', () => {
-    it('inicia en null y se actualiza al tomar decisiones con mechanicId', () => {
-      useGameStore.getState().startReignsGame('PROCONSUL_HORMIGON');
+  describe('Sin Acumulación de Privilegios RPG en el Store', () => {
+    it('mantiene unlockedMechanics vacío y lastActivatedPrivilege en null al decidir', () => {
+      useGameStore.getState().startNewReign(1);
       expect(useGameStore.getState().lastActivatedPrivilege).toBeNull();
       expect(useGameStore.getState().lastActivatedPrivilegeInfo).toBeNull();
-
-      // Simulamos una carta con mechanicId en la elección izquierda
-      const currentCard = useGameStore.getState().currentReignsCard;
-      expect(currentCard).toBeDefined();
 
       const ok = useGameStore.getState().makeReignsChoice('left');
       expect(ok).toBe(true);
 
       const state = useGameStore.getState();
-      if (currentCard?.leftChoice.mechanicId !== undefined) {
-        expect(state.lastActivatedPrivilege).toBe(currentCard.leftChoice.mechanicId);
-        expect(state.lastActivatedPrivilegeInfo?.id).toBe(currentCard.leftChoice.mechanicId);
-        expect(state.lastActivatedPrivilegeInfo?.name.length).toBeGreaterThan(0);
-      }
-
-      // Permite limpiar manualmente el privilegio
-      useGameStore.getState().clearLastActivatedPrivilege();
-      expect(useGameStore.getState().lastActivatedPrivilege).toBeNull();
-      expect(useGameStore.getState().lastActivatedPrivilegeInfo).toBeNull();
+      expect(state.unlockedMechanics).toEqual([]);
+      expect(state.lastActivatedPrivilege).toBeNull();
+      expect(state.lastActivatedPrivilegeInfo).toBeNull();
     });
   });
 

@@ -1,15 +1,12 @@
 'use client';
 
 import React from 'react';
-import { CharacterStats, CharacterProfile } from '../types/story';
+import { CharacterStats } from '../types/story';
 import { useGameStore } from '../store/gameStore';
-import { calculateAggregatedPerks } from '../config/privileges';
 
 export interface StatsBarProps {
   stats?: CharacterStats;
-  characterProfile?: CharacterProfile | null;
   className?: string;
-  showCharacterBadge?: boolean;
 }
 
 interface StatConfig {
@@ -55,37 +52,31 @@ const STAT_CONFIGS: StatConfig[] = [
 
 export function StatsBar({
   stats: propStats,
-  characterProfile: propProfile,
   className = '',
-  showCharacterBadge = true,
 }: StatsBarProps) {
   const storeStats = useGameStore((state) => state.stats);
-  const storeProfile = useGameStore((state) => state.characterProfile);
   const getPreviewModifiers = useGameStore((state) => state.getPreviewModifiers);
   const getProjectedStatsRange = useGameStore((state) => state.getProjectedStatsRange);
-  const unlockedMechanics = useGameStore((state) => state.unlockedMechanics);
   const daysInPower = useGameStore((state) => state.daysInPower);
   const cardsSurvived = useGameStore((state) => state.cardsSurvived);
 
   const stats = propStats ?? storeStats;
-  const profile = propProfile ?? storeProfile;
   const previewModifiers = getPreviewModifiers();
   const projectedRange = getProjectedStatsRange();
-  const activePerks = calculateAggregatedPerks(unlockedMechanics);
 
   return (
     <section
       aria-label="Indicadores de Estado Fanzine"
-      className={`border-2 md:border-4 border-black bg-white p-3 md:p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] ${className}`}
+      className={`fanzine-container border-2 md:border-4 border-black bg-white p-3 md:p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] ${className}`}
     >
       {/* Encabezado Fanzine / Membrete Sumarial */}
       <div className="flex flex-wrap items-center justify-between gap-2 border-b-2 border-black pb-2 mb-3">
         <div className="flex items-center gap-2">
           <span className="bg-black text-white px-2 py-0.5 text-xs font-mono font-black uppercase tracking-widest">
-            TELEMETRÍA // DILIGENCIAS
+            TELEMETRÍA // MEDIDORES
           </span>
           <span className="text-[11px] font-mono text-black font-semibold uppercase tracking-wider hidden sm:inline">
-            Horquilla de Riesgo y Situación Patrimonial
+            Equilibrio del Régimen (0% o 100% = Caída)
           </span>
         </div>
 
@@ -95,43 +86,11 @@ export function StatsBar({
               {daysInPower} DÍAS ({cardsSurvived} DILEMAS)
             </span>
           )}
-          {showCharacterBadge && profile && (
-            <span className="border border-black px-1.5 py-0.5 bg-stone-100 font-black uppercase hidden sm:inline">
-              {profile.name}
-            </span>
-          )}
         </div>
       </div>
 
-      {/* Cinta de Privilegios Tácticos Activos del Personaje */}
-      <div className="flex flex-wrap items-center gap-1.5 mb-3 bg-stone-100 border border-black p-1.5 text-[10px] font-mono">
-        <span className="font-black uppercase bg-black text-white px-1.5 py-0.5">
-          ⚡ RESORTES DE POLTRONA:
-        </span>
-        {activePerks.presionJudicialDiscount > 0 && (
-          <span className="border border-black bg-white px-1.5 py-0.5 font-bold text-black">
-            🛡️ Escudo UCO: -{activePerks.presionJudicialDiscount}% en subidas judiciales
-          </span>
-        )}
-        {activePerks.pastaEnBBonus > 0 && (
-          <span className="border border-black bg-white px-1.5 py-0.5 font-bold text-black">
-            💰 Mordida B: +{activePerks.pastaEnBBonus}% en recaudación opaca
-          </span>
-        )}
-        {activePerks.reputacionShield > 0 && (
-          <span className="border border-black bg-white px-1.5 py-0.5 font-bold text-black">
-            📰 Control Prensa: -{activePerks.reputacionShield}% en desgaste mediático
-          </span>
-        )}
-        {activePerks.impunidadShield > 0 && (
-          <span className="border border-black bg-white px-1.5 py-0.5 font-bold text-black">
-            ⚖️ Aforamiento: -{activePerks.impunidadShield}% en pérdida de blindaje
-          </span>
-        )}
-      </div>
-
-      {/* Grid de 4 Indicadores Brutalistas con Márgenes de Tirada de Dados */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+      {/* Grid de 4 Indicadores Brutalistas con Container Queries */}
+      <div className="grid grid-cols-1 @sm:grid-cols-2 @lg:grid-cols-4 gap-3 md:gap-4">
         {STAT_CONFIGS.map((config) => {
           const value = Math.max(0, Math.min(100, stats[config.key] ?? 0));
           const isInRedZone = value < 15 || value > 85;
@@ -178,10 +137,8 @@ export function StatsBar({
           return (
             <div
               key={config.key}
-              className={`border-2 border-black p-2.5 transition-all duration-150 flex flex-col justify-between ${
-                isInRedZone
-                  ? 'bg-red-50/70 ring-2 ring-red-600 shadow-[3px_3px_0px_0px_#990000] -translate-y-0.5'
-                  : hasDelta
+              className={`stat-card border-2 border-black p-2.5 transition-all duration-150 flex flex-col justify-between ${
+                hasDelta
                   ? 'bg-amber-50 ring-2 ring-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] -translate-y-0.5'
                   : isAlarm
                   ? 'bg-zinc-100 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
@@ -218,6 +175,7 @@ export function StatsBar({
                       </span>
                     )}
                     <span
+                      data-danger={isInRedZone ? 'true' : undefined}
                       className={`text-xs font-mono font-bold px-1.5 py-0.2 ${
                         isInRedZone
                           ? 'bg-red-600 text-white font-black animate-pulse ring-2 ring-red-700 shadow-[0_0_8px_rgba(220,38,38,0.7)]'
@@ -260,12 +218,6 @@ export function StatsBar({
                         {projLow}% — {projHigh}%
                       </span>
                     </div>
-
-                    {variance.perkBonus && (
-                      <div className="mt-1 pt-1 border-t border-dashed border-black text-[9px] font-mono font-black text-emerald-800 leading-tight">
-                        ⚡ {variance.perkBonus.amount > 0 ? `+${variance.perkBonus.amount}` : variance.perkBonus.amount}% por «{variance.perkBonus.privilegeName}»
-                      </div>
-                    )}
                   </div>
                 )}
               </div>

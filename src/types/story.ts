@@ -114,7 +114,7 @@ export const ReignsCardSchema = z.object({
   speakerRole: z.string().describe('Cargo o papel en la trama (ej. Constructor, Fiscal, Ministro)'),
   speakerAvatar: z.string().optional().describe('Icono o código de recorte fanzine'),
   portraitUrl: z.string().optional().describe('Ruta a la ilustración fanzine de la carta o interlocutor'),
-  sphere: SphereTypeSchema,
+  sphere: SphereTypeSchema.optional(),
   headline: z.string().describe('Titular del dilema'),
   context: z.string().describe('Narración fanzine del dilema'),
   evidenceDocument: z.string().optional().describe('Pieza de convicción incautada si aplica'),

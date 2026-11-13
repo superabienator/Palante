@@ -14,7 +14,6 @@ import {
   StatModifiers,
   StoryNode,
 } from '../types/story';
-import { PRIVILEGES_REGISTRY } from '../config/privileges';
 import rawStoryData from '../content/story.json';
 import reignsDeckData from '../content/reignsDeck.json';
 
@@ -36,7 +35,6 @@ import {
   clampStat,
   getInExtremisStatus,
   getLegislativeStageInfo,
-  isCardAffiliated,
   rollModifiersWithDice,
   selectNextReignsCard,
   weightedRandomSelect,
@@ -63,7 +61,6 @@ export {
   clampStat,
   getInExtremisStatus,
   getLegislativeStageInfo,
-  isCardAffiliated,
   rollModifiersWithDice,
   selectNextReignsCard,
   weightedRandomSelect,
@@ -83,7 +80,8 @@ export interface GameHistoryEntry {
 export type GameStatus = 'NOT_STARTED' | 'PLAYING' | 'GAME_OVER';
 
 export interface GameState {
-  // Estado general
+  // Estado general (Estilo Reigns Puro)
+  rulerGeneration: number;
   status: GameStatus;
   gameMode: 'REIGNS' | 'CLASSIC';
   selectedSphere: SphereType | null;
@@ -103,12 +101,12 @@ export interface GameState {
   gameOverReason: GameOverReason | null;
   gameOverDescription: string | null;
   activeFlags: Record<string, boolean>;
-  recentlyGrantedFlags: Record<string, boolean> extends never ? string[] : string[];
+  recentlyGrantedFlags: string[];
   recentFlagsHistory: string[][];
   lastActivatedPrivilege: number | null;
   lastActivatedPrivilegeInfo: ActivatedPrivilegeInfo | null;
 
-  // Estado Modo Clásico
+  // Estado Modo Clásico (legado)
   currentNodeId: string;
   currentNode: StoryNode | null;
   history: GameHistoryEntry[];
@@ -117,7 +115,10 @@ export interface GameState {
 
   // Acciones Reigns
   selectSphere: (sphere: SphereType) => void;
-  startReignsGame: (archetypeId: ArchetypeId) => boolean;
+  startReignsGame: (archetypeId?: ArchetypeId) => boolean;
+  startNewReign: (generation?: number) => void;
+  nextSuccessor: () => void;
+  selectCharacter?: (archetypeId?: ArchetypeId) => boolean;
   setPreviewDirection: (dir: 'left' | 'right' | null) => void;
   makeReignsChoice: (direction: 'left' | 'right') => boolean;
   getPreviewModifiers: () => StatModifiers | null;
@@ -128,7 +129,7 @@ export interface GameState {
   clearLastActivatedPrivilege: () => void;
   getStageInfo: () => LegislativeStageInfo;
 
-  // Acciones Clásicas
+  // Acciones Clásicas / Ciclo
   startGame: (archetypeId: ArchetypeId) => boolean;
   makeChoice: (choiceId: string) => boolean;
   restartGame: () => void;
@@ -142,6 +143,51 @@ const DEFAULT_STATS: CharacterStats = {
   reputacionMediatica: 50,
 };
 
+function createInitialReignState(rulerGeneration = 1) {
+  const rawCards = reignsDeckData.cards as ReignsCard[];
+  const initialStats = { ...DEFAULT_STATS };
+  const inExtremisStatus = getInExtremisStatus(initialStats);
+
+  const firstCard = selectNextReignsCard({
+    allCards: rawCards,
+    activeFlags: {},
+    cardsSurvived: 0,
+    recentlyGrantedFlags: [],
+    inExtremisStatus,
+    currentStats: initialStats,
+  });
+
+  return {
+    rulerGeneration,
+    status: 'PLAYING' as GameStatus,
+    gameMode: 'REIGNS' as const,
+    selectedSphere: null,
+    selectedArchetypeId: null,
+    characterProfile: null,
+    stats: initialStats,
+    ending: null,
+    currentReignsCard: firstCard,
+    reignsDeck: rawCards,
+    reignsCardIndex: 0,
+    daysInPower: 90,
+    cardsSurvived: 0,
+    previewDirection: null,
+    lastDiceRoll: null,
+    gameOverReason: null,
+    gameOverDescription: null,
+    activeFlags: {},
+    recentlyGrantedFlags: [],
+    recentFlagsHistory: [],
+    lastActivatedPrivilege: null,
+    lastActivatedPrivilegeInfo: null,
+    currentNodeId: '',
+    currentNode: null,
+    history: [],
+    unlockedMechanics: [],
+    evidenceDocuments: firstCard?.evidenceDocument ? [firstCard.evidenceDocument] : [],
+  };
+}
+
 const dummyStorage = {
   getItem: () => null,
   setItem: () => {},
@@ -151,86 +197,27 @@ const dummyStorage = {
 export const useGameStore = create<GameState>()(
   persist(
     (set, get) => ({
-      status: 'NOT_STARTED',
-      gameMode: 'REIGNS',
-      selectedSphere: null,
-      selectedArchetypeId: null,
-      characterProfile: null,
-      stats: DEFAULT_STATS,
-      ending: null,
-
-      currentReignsCard: null,
-      reignsDeck: [],
-      reignsCardIndex: 0,
-      daysInPower: 0,
-      cardsSurvived: 0,
-      previewDirection: null,
-      lastDiceRoll: null,
-      gameOverReason: null,
-      gameOverDescription: null,
-      activeFlags: {},
-      recentlyGrantedFlags: [],
-      recentFlagsHistory: [],
-      lastActivatedPrivilege: null,
-      lastActivatedPrivilegeInfo: null,
-
-      currentNodeId: '',
-      currentNode: null,
-      history: [],
-      unlockedMechanics: [],
-      evidenceDocuments: [],
+      ...createInitialReignState(1),
 
       selectSphere: (sphere: SphereType) => {
         set({ selectedSphere: sphere });
       },
 
-      startReignsGame: (archetypeId: ArchetypeId): boolean => {
-        const characters = reignsDeckData.characters as Record<string, CharacterProfile>;
-        const character = characters[archetypeId];
-        if (!character) {
-          return false;
-        }
+      startNewReign: (generation = 1) => {
+        set(createInitialReignState(generation));
+      },
 
-        const rawCards = reignsDeckData.cards as ReignsCard[];
-        const initialFlags: Record<string, boolean> = {};
-        const initialStats = { ...character.initialStats };
-        const inExtremisStatus = getInExtremisStatus(initialStats);
+      nextSuccessor: () => {
+        set((state) => createInitialReignState((state.rulerGeneration || 1) + 1));
+      },
 
-        const firstCard = selectNextReignsCard({
-          allCards: rawCards,
-          activeFlags: initialFlags,
-          cardsSurvived: 0,
-          characterProfile: character,
-          recentlyGrantedFlags: [],
-          inExtremisStatus,
-          currentStats: initialStats,
-        });
+      startReignsGame: (): boolean => {
+        set(createInitialReignState(1));
+        return true;
+      },
 
-        set({
-          status: 'PLAYING',
-          gameMode: 'REIGNS',
-          selectedSphere: character.sphere,
-          selectedArchetypeId: archetypeId,
-          characterProfile: { ...character },
-          stats: initialStats,
-          reignsDeck: rawCards,
-          currentReignsCard: firstCard,
-          reignsCardIndex: 0,
-          daysInPower: 90,
-          cardsSurvived: 0,
-          previewDirection: null,
-          lastDiceRoll: null,
-          gameOverReason: null,
-          gameOverDescription: null,
-          activeFlags: initialFlags,
-          recentlyGrantedFlags: [],
-          recentFlagsHistory: [],
-          lastActivatedPrivilege: null,
-          ending: null,
-          unlockedMechanics: [...character.unlockedMechanics],
-          evidenceDocuments: firstCard?.evidenceDocument ? [firstCard.evidenceDocument] : [],
-        });
-
+      selectCharacter: (): boolean => {
+        set(createInitialReignState(1));
         return true;
       },
 
@@ -249,7 +236,7 @@ export const useGameStore = create<GameState>()(
       },
 
       getProjectedStatsRange: (): ProjectedStatsRange | null => {
-        const { currentReignsCard, previewDirection, unlockedMechanics } = get();
+        const { currentReignsCard, previewDirection } = get();
         if (!currentReignsCard || !previewDirection) {
           return null;
         }
@@ -257,7 +244,7 @@ export const useGameStore = create<GameState>()(
           previewDirection === 'left'
             ? currentReignsCard.leftChoice.modifiers
             : currentReignsCard.rightChoice.modifiers;
-        return calculateProjectedStatsRange(modifiers, unlockedMechanics);
+        return calculateProjectedStatsRange(modifiers);
       },
 
       getActiveRiskAssessment: (): RiskAssessment | null => {
@@ -292,10 +279,8 @@ export const useGameStore = create<GameState>()(
           stats,
           daysInPower,
           cardsSurvived,
-          unlockedMechanics,
           evidenceDocuments,
           activeFlags,
-          characterProfile,
           recentFlagsHistory,
         } = get();
 
@@ -306,10 +291,9 @@ export const useGameStore = create<GameState>()(
         const choice: ReignsCardChoice =
           direction === 'left' ? currentReignsCard.leftChoice : currentReignsCard.rightChoice;
 
-        // Ejecutar tirada de dados aplicando privilegios pasivos del personaje
+        // Ejecutar tirada de dados D6 pura (sin modificadores RPG de personaje)
         const { rolledModifiers, summary } = rollModifiersWithDice(
           choice.modifiers,
-          unlockedMechanics,
           direction,
           choice.stampText
         );
@@ -324,10 +308,6 @@ export const useGameStore = create<GameState>()(
           cardHeadline: currentReignsCard.headline,
           choiceLabel: choice.label,
           flavorQuote: choice.flavorQuote,
-          unlockedPrivilegeId:
-            choice.mechanicId !== undefined && !unlockedMechanics.includes(choice.mechanicId)
-              ? choice.mechanicId
-              : undefined,
           rolls: summary.rolls.map((r) => ({
             ...r,
             statBefore: stats[r.statKey],
@@ -346,31 +326,6 @@ export const useGameStore = create<GameState>()(
 
         const updatedFlagsHistory = [...(recentFlagsHistory ?? []), newlyGranted].slice(-3);
         const updatedRecentlyGrantedFlags = Array.from(new Set(updatedFlagsHistory.flat()));
-
-        // Registro de privilegio activado para feedback visual y animación de pines
-        let nextLastActivatedPrivilege: number | null = null;
-        let nextLastActivatedPrivilegeInfo: ActivatedPrivilegeInfo | null = null;
-        if (choice.mechanicId !== undefined) {
-          const privDef = PRIVILEGES_REGISTRY[choice.mechanicId];
-          const isNew = !unlockedMechanics.includes(choice.mechanicId);
-          nextLastActivatedPrivilege = choice.mechanicId;
-          nextLastActivatedPrivilegeInfo = {
-            id: choice.mechanicId,
-            name: privDef?.name ?? `Mecánica #${choice.mechanicId}`,
-            category: privDef?.category,
-            shortTag: privDef?.shortTag,
-            description: privDef?.description,
-            inGameEffect: privDef?.inGameEffect,
-            isNewUnlock: isNew,
-            timestamp: Date.now(),
-          };
-        }
-
-        // Nuevas mecánicas y pruebas
-        const nextUnlockedMechanics =
-          choice.mechanicId !== undefined && !unlockedMechanics.includes(choice.mechanicId)
-            ? [...unlockedMechanics, choice.mechanicId]
-            : unlockedMechanics;
 
         const nextEvidences =
           currentReignsCard.evidenceDocument &&
@@ -395,15 +350,15 @@ export const useGameStore = create<GameState>()(
             activeFlags: updatedFlags,
             recentlyGrantedFlags: updatedRecentlyGrantedFlags,
             recentFlagsHistory: updatedFlagsHistory,
-            lastActivatedPrivilege: nextLastActivatedPrivilege,
-            lastActivatedPrivilegeInfo: nextLastActivatedPrivilegeInfo,
-            unlockedMechanics: nextUnlockedMechanics,
+            lastActivatedPrivilege: null,
+            lastActivatedPrivilegeInfo: null,
+            unlockedMechanics: [],
             evidenceDocuments: nextEvidences,
           });
           return true;
         }
 
-        // Selección ponderada del siguiente dilema según esferas (65%), sagas (peso 5x), in extremis (10x/20x) y clímax (trimestre 24)
+        // Selección ponderada del siguiente dilema guiada únicamente por medidores, sagas (5x), in extremis (10x/20x) y clímax (trimestre 24)
         const inExtremisStatus = getInExtremisStatus(nextStats);
         const allCards = reignsDeckData.cards as ReignsCard[];
         const nextCard =
@@ -412,7 +367,6 @@ export const useGameStore = create<GameState>()(
             activeFlags: updatedFlags,
             currentCardId: currentReignsCard.id,
             cardsSurvived: nextCardsSurvived,
-            characterProfile,
             recentlyGrantedFlags: updatedRecentlyGrantedFlags,
             inExtremisStatus,
             currentStats: nextStats,
@@ -429,9 +383,9 @@ export const useGameStore = create<GameState>()(
           activeFlags: updatedFlags,
           recentlyGrantedFlags: updatedRecentlyGrantedFlags,
           recentFlagsHistory: updatedFlagsHistory,
-          lastActivatedPrivilege: nextLastActivatedPrivilege,
-          lastActivatedPrivilegeInfo: nextLastActivatedPrivilegeInfo,
-          unlockedMechanics: nextUnlockedMechanics,
+          lastActivatedPrivilege: null,
+          lastActivatedPrivilegeInfo: null,
+          unlockedMechanics: [],
           evidenceDocuments: nextEvidences,
         });
 
@@ -464,18 +418,18 @@ export const useGameStore = create<GameState>()(
           currentNodeId: initialNodeId,
           currentNode: { ...initialNode },
           history: [],
-          unlockedMechanics: [...character.unlockedMechanics],
+          unlockedMechanics: [],
           evidenceDocuments: initialEvidences,
           ending: initialNode.ending ?? null,
           lastActivatedPrivilege: null,
+          lastActivatedPrivilegeInfo: null,
         });
 
         return true;
       },
 
       makeChoice: (choiceId: string): boolean => {
-        const { status, currentNode, stats, history, unlockedMechanics, evidenceDocuments } =
-          get();
+        const { status, currentNode, stats, history, evidenceDocuments } = get();
 
         if (status !== 'PLAYING' || !currentNode) {
           return false;
@@ -505,29 +459,6 @@ export const useGameStore = create<GameState>()(
           timestamp: Date.now(),
         };
 
-        let nextLastActivatedPrivilege: number | null = null;
-        let nextLastActivatedPrivilegeInfo: ActivatedPrivilegeInfo | null = null;
-        if (choice.mechanicId !== undefined) {
-          const privDef = PRIVILEGES_REGISTRY[choice.mechanicId];
-          const isNew = !unlockedMechanics.includes(choice.mechanicId);
-          nextLastActivatedPrivilege = choice.mechanicId;
-          nextLastActivatedPrivilegeInfo = {
-            id: choice.mechanicId,
-            name: privDef?.name ?? `Mecánica #${choice.mechanicId}`,
-            category: privDef?.category,
-            shortTag: privDef?.shortTag,
-            description: privDef?.description,
-            inGameEffect: privDef?.inGameEffect,
-            isNewUnlock: isNew,
-            timestamp: Date.now(),
-          };
-        }
-
-        const nextUnlockedMechanics =
-          choice.mechanicId !== undefined && !unlockedMechanics.includes(choice.mechanicId)
-            ? [...unlockedMechanics, choice.mechanicId]
-            : unlockedMechanics;
-
         const nextEvidences =
           nextNode.evidenceDocument && !evidenceDocuments.includes(nextNode.evidenceDocument)
             ? [...evidenceDocuments, nextNode.evidenceDocument]
@@ -549,83 +480,47 @@ export const useGameStore = create<GameState>()(
           currentNodeId: nextNode.id,
           currentNode: { ...nextNode },
           history: [...history, historyEntry],
-          unlockedMechanics: nextUnlockedMechanics,
+          unlockedMechanics: [],
           evidenceDocuments: nextEvidences,
           status: isGameOver ? 'GAME_OVER' : 'PLAYING',
           ending: resolvedEnding,
-          lastActivatedPrivilege: nextLastActivatedPrivilege,
-          lastActivatedPrivilegeInfo: nextLastActivatedPrivilegeInfo,
+          lastActivatedPrivilege: null,
+          lastActivatedPrivilegeInfo: null,
         });
 
         return true;
       },
 
       restartGame: () => {
-        const { selectedArchetypeId, gameMode } = get();
-        if (selectedArchetypeId) {
-          if (gameMode === 'REIGNS') {
-            get().startReignsGame(selectedArchetypeId);
-          } else {
-            get().startGame(selectedArchetypeId);
-          }
-        }
+        set((state) => createInitialReignState((state.rulerGeneration || 1) + 1));
       },
 
       resetToCharacterSelect: () => {
-        set({
-          status: 'NOT_STARTED',
-          selectedSphere: null,
-          selectedArchetypeId: null,
-          characterProfile: null,
-          stats: DEFAULT_STATS,
-          currentNodeId: '',
-          currentNode: null,
-          currentReignsCard: null,
-          reignsDeck: [],
-          reignsCardIndex: 0,
-          daysInPower: 0,
-          cardsSurvived: 0,
-          previewDirection: null,
-          lastDiceRoll: null,
-          gameOverReason: null,
-          gameOverDescription: null,
-          activeFlags: {},
-          recentlyGrantedFlags: [],
-          recentFlagsHistory: [],
-          lastActivatedPrivilege: null,
-          lastActivatedPrivilegeInfo: null,
-          history: [],
-          unlockedMechanics: [],
-          evidenceDocuments: [],
-          ending: null,
-        });
+        set(createInitialReignState(1));
       },
     }),
     {
       name: 'ibex35-fanzine-game-storage',
+      version: 2,
       storage: createJSONStorage(() =>
         typeof window !== 'undefined' ? window.localStorage : dummyStorage
       ),
       partialize: (state) => ({
+        rulerGeneration: state.rulerGeneration,
         status: state.status,
         gameMode: state.gameMode,
-        selectedSphere: state.selectedSphere,
-        selectedArchetypeId: state.selectedArchetypeId,
-        characterProfile: state.characterProfile,
         stats: state.stats,
         daysInPower: state.daysInPower,
         cardsSurvived: state.cardsSurvived,
         activeFlags: state.activeFlags,
         recentlyGrantedFlags: state.recentlyGrantedFlags,
         recentFlagsHistory: state.recentFlagsHistory,
-        lastActivatedPrivilege: state.lastActivatedPrivilege,
-        lastActivatedPrivilegeInfo: state.lastActivatedPrivilegeInfo,
-        unlockedMechanics: state.unlockedMechanics,
         evidenceDocuments: state.evidenceDocuments,
         ending: state.ending,
         gameOverReason: state.gameOverReason,
         gameOverDescription: state.gameOverDescription,
       }),
+      migrate: () => createInitialReignState(1),
     }
   )
 );

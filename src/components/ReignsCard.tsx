@@ -1,11 +1,10 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { motion, AnimatePresence, useMotionValue, useTransform, PanInfo } from 'framer-motion';
+import { motion, useMotionValue, useTransform, PanInfo } from 'framer-motion';
 import { useGameStore, ProjectedStatsRange } from '../store/gameStore';
 import { ReignsCard as ReignsCardType, RiskAssessment, RiskLevel, CharacterStats } from '../types/story';
 import { CharacterPortrait } from './CharacterPortrait';
-import { PRIVILEGES_REGISTRY } from '../config/privileges';
 import { soundManager } from '../utils/soundEffects';
 
 function calculateLocalRiskAssessment(
@@ -194,8 +193,22 @@ export function ReignsCard({
 
   const [exitX, setExitX] = useState<number | null>(null);
   const swipeSoundPlayedRef = useRef(false);
+  const diceDialogRef = useRef<HTMLDialogElement>(null);
 
   const isDiceModalOpen = Boolean(lastDiceRoll);
+
+  useEffect(() => {
+    const dialog = diceDialogRef.current;
+    if (!dialog) return;
+
+    if (lastDiceRoll) {
+      if (!dialog.open) {
+        dialog.showModal();
+      }
+    } else if (dialog.open) {
+      dialog.close();
+    }
+  }, [lastDiceRoll]);
 
   // Detección de cartas de crisis o alerta procesal
   const isCrisis = Boolean(
@@ -212,10 +225,6 @@ export function ReignsCard({
   useEffect(() => {
     if (lastDiceRoll) {
       soundManager.playDiceRoll();
-      if (lastDiceRoll.unlockedPrivilegeId) {
-        const timer = setTimeout(() => soundManager.playCashChime(), 320);
-        return () => clearTimeout(timer);
-      }
     }
   }, [lastDiceRoll]);
 
@@ -226,22 +235,11 @@ export function ReignsCard({
     }
   }, [card?.id, isCrisis, card?.isInExtremis]);
 
-  // Atajos de teclado:
-  // - Si la ventana emergente de dados está abierta: Enter, Espacio o Escape la cierran ("Siguiente").
-  // - Si está cerrada: ←/A y →/D toman decisión sobre la carta activa.
+  // Atajos de teclado cuando no hay modal abierto (el <dialog> nativo gestiona Esc y foco):
   useEffect(() => {
-    if (disabled || !card) return;
+    if (disabled || !card || isDiceModalOpen) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (isDiceModalOpen) {
-        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') {
-          e.preventDefault();
-          soundManager.playPaperSwipe();
-          clearLastDiceRoll();
-        }
-        return;
-      }
-
       if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
         e.preventDefault();
         setPreviewDirection('left');
@@ -324,43 +322,24 @@ export function ReignsCard({
     else crisisType = 'prensa';
   }
 
-  const leftPrivilegeUnlock = card.leftChoice.mechanicId
-    ? PRIVILEGES_REGISTRY[card.leftChoice.mechanicId]
-    : undefined;
-  const rightPrivilegeUnlock = card.rightChoice.mechanicId
-    ? PRIVILEGES_REGISTRY[card.rightChoice.mechanicId]
-    : undefined;
-
-  const newlyUnlockedPrivilege = lastDiceRoll?.unlockedPrivilegeId
-    ? PRIVILEGES_REGISTRY[lastDiceRoll.unlockedPrivilegeId]
-    : undefined;
-
   return (
     <div className={`w-full max-w-xl mx-auto flex flex-col items-center relative ${className}`}>
       {/* =====================================================================
-          VENTANA EMERGENTE (MODAL) DE EXPLICACIÓN DE LA TIRADA DE DADOS
-          Permanece abierta hasta que el jugador pulse "Siguiente" o "Cerrar"
+          VENTANA EMERGENTE (<dialog> NATIVO) DE EXPLICACIÓN DE LA TIRADA DE DADOS
+          Top Layer nativo, gestión de foco, Esc y light-dismiss sin JS manual.
          ===================================================================== */}
-      <AnimatePresence>
-        {lastDiceRoll && (
-          <motion.div
-            key={lastDiceRoll.id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs font-mono"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="dice-roll-modal-title"
-          >
-            <motion.div
-              initial={{ scale: 0.88, y: 24, rotate: -1 }}
-              animate={{ scale: 1, y: 0, rotate: 0 }}
-              exit={{ scale: 0.92, y: 12, opacity: 0 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 24 }}
-              className="w-full max-w-lg border-4 border-[#121a12] bg-[#f5efdc] p-5 sm:p-6 shadow-[8px_8px_0px_0px_#121a12] max-h-[90vh] overflow-y-auto"
-            >
+      {lastDiceRoll && (
+        <dialog
+          ref={diceDialogRef}
+          aria-labelledby="dice-roll-modal-title"
+          onClose={() => {
+            soundManager.playPaperSwipe();
+            clearLastDiceRoll();
+          }}
+          {...({ closedby: 'any' } as Record<string, string>)}
+          className="fanzine-dialog m-auto bg-transparent p-4 w-full max-w-lg font-mono overflow-visible"
+        >
+          <div className="w-full border-4 border-[#121a12] bg-[#f5efdc] p-5 sm:p-6 shadow-[8px_8px_0px_0px_#121a12] max-h-[90vh] overflow-y-auto">
               {/* Cabecera de la Ventana Emergente con Botón Cerrar */}
               <div className="flex items-center justify-between gap-2 border-b-3 border-[#121a12] pb-3 mb-4">
                 <div className="flex items-center gap-2.5">
@@ -389,10 +368,7 @@ export function ReignsCard({
 
                 <button
                   type="button"
-                  onClick={() => {
-                    soundManager.playPaperSwipe();
-                    clearLastDiceRoll();
-                  }}
+                  onClick={() => diceDialogRef.current?.close()}
                   aria-label="Cerrar ventana de tirada de dados"
                   className="border-2 border-black bg-white hover:bg-black hover:text-white px-2.5 py-1 text-xs font-black uppercase shadow-[2px_2px_0px_0px_#121a12] cursor-pointer transition-colors"
                 >
@@ -422,7 +398,7 @@ export function ReignsCard({
               {/* Desglose Detallado de Cada Tirada de Dados */}
               <div className="mb-4">
                 <div className="text-[11px] font-black uppercase tracking-wider text-black mb-2">
-                  🎲 DESGLOSE DE LA TIRADA Y EFECTO DE TUS PRIVILEGIOS:
+                  🎲 DESGLOSE DE LA TIRADA DE DADOS:
                 </div>
 
                 <div className="flex flex-col gap-2.5">
@@ -492,15 +468,6 @@ export function ReignsCard({
                           <div>
                             • Impacto base de la decisión: <strong>{baseSign}%</strong> | Tirada obtenida en el margen [{minSign}%, {maxSign}%]: <strong>{sign}%</strong>.
                           </div>
-                          {roll.privilegeApplied && (
-                            <div className="font-bold text-emerald-950">
-                              ⚡ Tu privilegio «{roll.privilegeApplied.name}» modificó la horquilla en{' '}
-                              {roll.privilegeApplied.amount > 0
-                                ? `+${roll.privilegeApplied.amount}%`
-                                : `${roll.privilegeApplied.amount}%`}{' '}
-                              a tu favor.
-                            </div>
-                          )}
                         </div>
                       </div>
                     );
@@ -508,49 +475,27 @@ export function ReignsCard({
                 </div>
               </div>
 
-              {/* Aviso si se ha desbloqueado un nuevo Privilegio de Poltrona */}
-              {newlyUnlockedPrivilege && (
-                <div className="border-2 border-emerald-900 bg-emerald-100 p-3 mb-4 text-xs shadow-[2px_2px_0px_0px_#121a12]">
-                  <div className="font-black uppercase text-emerald-950 mb-0.5">
-                    🔓 ¡NUEVO PRIVILEGIO DE POLTRONA INCORPORADO AL EXPEDIENTE!
-                  </div>
-                  <div className="font-bold text-black">
-                    {newlyUnlockedPrivilege.name} ({newlyUnlockedPrivilege.shortTag})
-                  </div>
-                  <div className="text-[11px] text-emerald-900 mt-0.5">
-                    Efecto permanente: {newlyUnlockedPrivilege.inGameEffect}
-                  </div>
-                </div>
-              )}
-
               {/* Botones de Acción para Cerrar o Avanzar al Siguiente Dilema */}
               <div className="flex flex-col sm:flex-row gap-2.5 pt-2 border-t-2 border-[#121a12]">
                 <button
                   type="button"
-                  onClick={() => {
-                    soundManager.playPaperSwipe();
-                    clearLastDiceRoll();
-                  }}
+                  onClick={() => diceDialogRef.current?.close()}
                   className="sm:w-1/3 border-3 border-black bg-white hover:bg-stone-200 active:translate-x-0.5 active:translate-y-0.5 py-2.5 px-3 font-black uppercase text-xs tracking-wider shadow-[3px_3px_0px_0px_#121a12] cursor-pointer transition-all"
                 >
                   CERRAR
                 </button>
                 <button
                   type="button"
-                  onClick={() => {
-                    soundManager.playPaperSwipe();
-                    clearLastDiceRoll();
-                  }}
+                  onClick={() => diceDialogRef.current?.close()}
                   autoFocus
                   className="sm:w-2/3 border-3 border-black bg-black text-white hover:bg-zinc-800 active:translate-x-0.5 active:translate-y-0.5 py-2.5 px-4 font-black uppercase text-xs sm:text-sm tracking-wider shadow-[3px_3px_0px_0px_#121a12] cursor-pointer transition-all"
                 >
                   SIGUIENTE DILEMA → [ENTER]
                 </button>
               </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </dialog>
+      )}
 
       {/* =====================================================================
           HUD DINÁMICO SUPERIOR: PREVIEW DE DECISIÓN EN TIEMPO REAL (MÓVIL & ESCRITORIO)
@@ -814,13 +759,6 @@ export function ReignsCard({
               </div>
             )}
           </div>
-
-          {leftPrivilegeUnlock && (
-            <div className="mt-2 pt-1.5 border-t border-dashed border-black text-[10px] font-black text-emerald-950 flex items-center gap-1">
-              <span>⚡ SUMA PRIVILEGIO:</span>
-              <span className="underline">{leftPrivilegeUnlock.name}</span>
-            </div>
-          )}
         </button>
 
         {/* Opción Derecha */}
@@ -861,13 +799,6 @@ export function ReignsCard({
               </div>
             )}
           </div>
-
-          {rightPrivilegeUnlock && (
-            <div className="mt-2 pt-1.5 border-t border-dashed border-black text-[10px] font-black text-emerald-950 flex items-center gap-1">
-              <span>⚡ SUMA PRIVILEGIO:</span>
-              <span className="underline">{rightPrivilegeUnlock.name}</span>
-            </div>
-          )}
         </button>
       </div>
     </div>

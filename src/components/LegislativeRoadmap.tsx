@@ -93,7 +93,7 @@ export function LegislativeRoadmap({ className = '', cardsSurvived: propCards }:
   return (
     <section
       aria-label="Cronograma de la Legislatura"
-      className={`border-3 border-[#121a12] bg-[#fbf9f0] p-3 sm:p-4 shadow-[4px_4px_0px_0px_#121a12] font-mono ${className}`}
+      className={`fanzine-container border-3 border-[#121a12] bg-[#fbf9f0] p-3 sm:p-4 shadow-[4px_4px_0px_0px_#121a12] font-mono ${className}`}
     >
       {/* Cabecera Fanzine del Cronograma */}
       <div className="flex flex-wrap items-center justify-between gap-2 border-b-2 border-black pb-2 mb-3">
@@ -116,8 +116,8 @@ export function LegislativeRoadmap({ className = '', cardsSurvived: propCards }:
         </div>
       </div>
 
-      {/* Segmentos de la Legislatura (5 bloques: Año 1, 2, 3, 4 y Clímax) */}
-      <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 mb-3">
+      {/* Segmentos de la Legislatura con Container Queries */}
+      <div className="grid grid-cols-2 @sm:grid-cols-5 gap-2 mb-3">
         {LEGISLATIVE_STAGES.map((stage) => {
           const isCompleted = currentQuarter > stage.endQuarter;
           const isCurrent =
@@ -137,7 +137,7 @@ export function LegislativeRoadmap({ className = '', cardsSurvived: propCards }:
             <div
               key={stage.id}
               className={`border-2 p-2 flex flex-col justify-between transition-all duration-150 ${blockStyle} ${
-                stage.isClimax ? 'col-span-2 sm:col-span-1' : ''
+                stage.isClimax ? 'col-span-2 @sm:col-span-1' : ''
               }`}
             >
               <div className="flex items-center justify-between text-[10px] font-black tracking-wider mb-1">
