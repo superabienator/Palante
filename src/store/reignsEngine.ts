@@ -237,7 +237,16 @@ export function checkReignsGameOver(
     };
   }
 
-  // 3. Presión Judicial (techo en 100)
+  // 3. Presión Judicial (0 o 100)
+  if (stats.presionJudicial <= 0) {
+    return {
+      isGameOver: true,
+      reason: 'PRESION_MINIMA',
+      ending: 'PURGA_DE_OFICIO',
+      description:
+        'SOSPECHA DE TOPO. Tu expediente judicial está tan sospechosamente limpio que el aparato del partido deduce que estás colaborando en secreto con la Fiscalía. Purga fulminante.',
+    };
+  }
   if (stats.presionJudicial >= 100) {
     return {
       isGameOver: true,
@@ -248,7 +257,7 @@ export function checkReignsGameOver(
     };
   }
 
-  // 4. Impunidad (colapso a 0)
+  // 4. Impunidad (0 o 100)
   if (stats.impunidad <= 0) {
     return {
       isGameOver: true,
@@ -258,8 +267,17 @@ export function checkReignsGameOver(
         'PÉRDIDA DEL AFORAMIENTO. El Congreso vota unánimemente el suplicatorio. Sin aforamiento ni padrinos, vas directo al banquillo del tribunal penal ordinario.',
     };
   }
+  if (stats.impunidad >= 100) {
+    return {
+      isGameOver: true,
+      reason: 'IMPUNIDAD_MAXIMA',
+      ending: 'PURGA_DE_OFICIO',
+      description:
+        'EXCESO DE SOBERBIA Y TRAICIÓN INTERNA. Acumulas tantos dossiers de chantaje que todos los barones y comisarios pactan defenestrarte en bloque antes de que los devores.',
+    };
+  }
 
-  // 5. Reputación Mediática (colapso a 0)
+  // 5. Reputación Mediática (0 o 100)
   if (stats.reputacionMediatica <= 0) {
     return {
       isGameOver: true,
@@ -269,17 +287,22 @@ export function checkReignsGameOver(
         'LINCHAMIENTO EDITORIAL. Portadas unánimes con tus escuchas más obscenas. El presidente del Gobierno comparece de urgencia para anunciar tu expulsión fulminante.',
     };
   }
+  if (stats.reputacionMediatica >= 100) {
+    return {
+      isGameOver: true,
+      reason: 'REPUTACION_MAXIMA',
+      ending: 'PURGA_DE_OFICIO',
+      description:
+        'ECLIPSAS AL LÍDER SUPREMO. Sales tan bien en las tertulias y encuestas que Moncloa interpreta que le disputas el trono. Destierro dorado inmediato a un organismo sin presupuesto.',
+    };
+  }
 
   return { isGameOver: false, reason: null, ending: null, description: null };
 }
 
 /**
  * Evalúa si el personaje se encuentra en estado de "Rata Acorralada" (In Extremis).
- * Se activa si:
- * - pastaEnB <= 15 (bancarrota) o >= 85 (alerta antiblanqueo)
- * - presionJudicial >= 80 (UCO en la puerta)
- * - impunidad <= 15 (pérdida de aforamiento)
- * - reputacionMediatica <= 15 (linchamiento editorial)
+ * Se activa si cualquiera de los 4 medidores entra en zona crítica (<= 15 o >= 85).
  */
 export function getInExtremisStatus(stats: CharacterStats): InExtremisStatus {
   const criticalStats: InExtremisCriticalStat[] = [];
@@ -300,7 +323,14 @@ export function getInExtremisStatus(stats: CharacterStats): InExtremisStatus {
     });
   }
 
-  if (stats.presionJudicial >= 80) {
+  if (stats.presionJudicial <= 15) {
+    criticalStats.push({
+      key: 'presionJudicial',
+      label: STAT_LABELS.presionJudicial,
+      value: stats.presionJudicial,
+      dangerType: 'MIN_DANGER',
+    });
+  } else if (stats.presionJudicial >= 80) {
     criticalStats.push({
       key: 'presionJudicial',
       label: STAT_LABELS.presionJudicial,
@@ -316,6 +346,13 @@ export function getInExtremisStatus(stats: CharacterStats): InExtremisStatus {
       value: stats.impunidad,
       dangerType: 'MIN_DANGER',
     });
+  } else if (stats.impunidad >= 85) {
+    criticalStats.push({
+      key: 'impunidad',
+      label: STAT_LABELS.impunidad,
+      value: stats.impunidad,
+      dangerType: 'MAX_DANGER',
+    });
   }
 
   if (stats.reputacionMediatica <= 15) {
@@ -324,6 +361,13 @@ export function getInExtremisStatus(stats: CharacterStats): InExtremisStatus {
       label: STAT_LABELS.reputacionMediatica,
       value: stats.reputacionMediatica,
       dangerType: 'MIN_DANGER',
+    });
+  } else if (stats.reputacionMediatica >= 85) {
+    criticalStats.push({
+      key: 'reputacionMediatica',
+      label: STAT_LABELS.reputacionMediatica,
+      value: stats.reputacionMediatica,
+      dangerType: 'MAX_DANGER',
     });
   }
 
@@ -417,6 +461,7 @@ export interface SelectNextCardParams {
   allCards: ReignsCard[];
   activeFlags: Record<string, boolean>;
   currentCardId?: string;
+  playedCardIds?: string[];
   cardsSurvived: number;
   recentlyGrantedFlags?: string[];
   inExtremisStatus?: InExtremisStatus;
@@ -428,7 +473,7 @@ export interface SelectNextCardParams {
  * Motor central de selección procedural de cartas (Estilo Reigns Puro):
  * 1. Inyección obligatoria de la carta de clímax (CLIMAX_CARD_ID) en trimestre 24 (cardsSurvived === 23).
  * 2. Filtrado de cartas elegibles según banderas activas y estado in extremis.
- * 3. Descarte de la carta actual si hay alternativas disponibles.
+ * 3. Memoria de mazo: prioriza cartas no jugadas aún en este reinado (`playedCardIds`) y descarta `currentCardId`.
  * 4. Encadenamiento de sagas: peso x5 para cartas con requiredFlags en recentlyGrantedFlags.
  * 5. Rata acorralada: cartas isInExtremis con peso 10x/20x en estado crítico, peso 0 en estado normal.
  */
@@ -436,6 +481,7 @@ export function selectNextReignsCard({
   allCards,
   activeFlags,
   currentCardId,
+  playedCardIds = [],
   cardsSurvived,
   recentlyGrantedFlags = [],
   inExtremisStatus,
@@ -472,9 +518,12 @@ export function selectNextReignsCard({
     return null;
   }
 
-  // 3. Descartar la carta actual si hay alternativas
+  // 3. Evitar repetir cartas ya jugadas en este mandato; si se agotan, al menos descartar la actual
+  const playedSet = new Set(playedCardIds);
+  const unplayed = eligible.filter((c) => c.id !== currentCardId && !playedSet.has(c.id));
   const candidates = eligible.filter((c) => c.id !== currentCardId);
-  const pool = candidates.length > 0 ? candidates : eligible;
+  const pool =
+    unplayed.length > 0 ? unplayed : candidates.length > 0 ? candidates : eligible;
 
   // 4. Selección ponderada pura por estado de medidores y sagas
   return weightedRandomSelect(pool, recentlyGrantedFlags, inExtremis, rng);

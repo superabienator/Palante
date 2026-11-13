@@ -94,8 +94,12 @@ export interface GameState {
   currentReignsCard: ReignsCard | null;
   reignsDeck: ReignsCard[];
   reignsCardIndex: number;
+  playedCardIds: string[];
   daysInPower: number; // cada carta ~ 90 días (un trimestre)
   cardsSurvived: number;
+  bestQuartersSurvived: number;
+  discoveredEndings: GameOverReason[];
+  lastDeathReason: GameOverReason | null;
   previewDirection: 'left' | 'right' | null;
   lastDiceRoll: LastDiceRollSummary | null;
   gameOverReason: GameOverReason | null;
@@ -138,12 +142,20 @@ export interface GameState {
 
 const DEFAULT_STATS: CharacterStats = {
   pastaEnB: 50,
-  presionJudicial: 20,
+  presionJudicial: 40,
   impunidad: 50,
   reputacionMediatica: 50,
 };
 
-function createInitialReignState(rulerGeneration = 1, status: GameStatus = 'PLAYING') {
+function createInitialReignState(
+  rulerGeneration = 1,
+  status: GameStatus = 'PLAYING',
+  meta: {
+    bestQuartersSurvived?: number;
+    discoveredEndings?: GameOverReason[];
+    lastDeathReason?: GameOverReason | null;
+  } = {}
+) {
   const rawCards = reignsDeckData.cards as ReignsCard[];
   const initialStats = { ...DEFAULT_STATS };
   const inExtremisStatus = getInExtremisStatus(initialStats);
@@ -151,6 +163,7 @@ function createInitialReignState(rulerGeneration = 1, status: GameStatus = 'PLAY
   const firstCard = selectNextReignsCard({
     allCards: rawCards,
     activeFlags: {},
+    playedCardIds: [],
     cardsSurvived: 0,
     recentlyGrantedFlags: [],
     inExtremisStatus,
@@ -169,8 +182,12 @@ function createInitialReignState(rulerGeneration = 1, status: GameStatus = 'PLAY
     currentReignsCard: firstCard,
     reignsDeck: rawCards,
     reignsCardIndex: 0,
+    playedCardIds: firstCard ? [firstCard.id] : [],
     daysInPower: 90,
     cardsSurvived: 0,
+    bestQuartersSurvived: meta.bestQuartersSurvived ?? 0,
+    discoveredEndings: meta.discoveredEndings ?? [],
+    lastDeathReason: meta.lastDeathReason ?? null,
     previewDirection: null,
     lastDiceRoll: null,
     gameOverReason: null,
@@ -204,20 +221,44 @@ export const useGameStore = create<GameState>()(
       },
 
       startNewReign: (generation = 1) => {
-        set(createInitialReignState(generation));
+        set((state) =>
+          createInitialReignState(generation, 'PLAYING', {
+            bestQuartersSurvived: state.bestQuartersSurvived,
+            discoveredEndings: state.discoveredEndings,
+            lastDeathReason: state.lastDeathReason,
+          })
+        );
       },
 
       nextSuccessor: () => {
-        set((state) => createInitialReignState((state.rulerGeneration || 1) + 1));
+        set((state) =>
+          createInitialReignState((state.rulerGeneration || 1) + 1, 'PLAYING', {
+            bestQuartersSurvived: state.bestQuartersSurvived,
+            discoveredEndings: state.discoveredEndings,
+            lastDeathReason: state.lastDeathReason,
+          })
+        );
       },
 
       startReignsGame: (): boolean => {
-        set(createInitialReignState(1));
+        set((state) =>
+          createInitialReignState(1, 'PLAYING', {
+            bestQuartersSurvived: state.bestQuartersSurvived,
+            discoveredEndings: state.discoveredEndings,
+            lastDeathReason: state.lastDeathReason,
+          })
+        );
         return true;
       },
 
       selectCharacter: (): boolean => {
-        set(createInitialReignState(1));
+        set((state) =>
+          createInitialReignState(1, 'PLAYING', {
+            bestQuartersSurvived: state.bestQuartersSurvived,
+            discoveredEndings: state.discoveredEndings,
+            lastDeathReason: state.lastDeathReason,
+          })
+        );
         return true;
       },
 
@@ -279,6 +320,9 @@ export const useGameStore = create<GameState>()(
           stats,
           daysInPower,
           cardsSurvived,
+          playedCardIds,
+          bestQuartersSurvived,
+          discoveredEndings,
           evidenceDocuments,
           activeFlags,
           recentFlagsHistory,
@@ -335,8 +379,14 @@ export const useGameStore = create<GameState>()(
 
         // Fin de partida
         const verdict = checkReignsGameOver(nextStats, nextCardsSurvived);
+        const nextBestQuarters = Math.max(bestQuartersSurvived || 0, nextCardsSurvived);
 
         if (verdict.isGameOver) {
+          const nextDiscovered =
+            verdict.reason && !discoveredEndings.includes(verdict.reason)
+              ? [...discoveredEndings, verdict.reason]
+              : discoveredEndings;
+
           set({
             stats: nextStats,
             status: 'GAME_OVER',
@@ -346,6 +396,9 @@ export const useGameStore = create<GameState>()(
             previewDirection: null,
             lastDiceRoll: enrichedSummary,
             cardsSurvived: nextCardsSurvived,
+            bestQuartersSurvived: nextBestQuarters,
+            discoveredEndings: nextDiscovered,
+            lastDeathReason: verdict.reason,
             daysInPower: nextDays,
             activeFlags: updatedFlags,
             recentlyGrantedFlags: updatedRecentlyGrantedFlags,
@@ -358,14 +411,18 @@ export const useGameStore = create<GameState>()(
           return true;
         }
 
-        // Selección ponderada del siguiente dilema guiada únicamente por medidores, sagas (5x), in extremis (10x/20x) y clímax (trimestre 24)
+        // Selección ponderada del siguiente dilema guiada únicamente por medidores, sagas (5x), in extremis (10x/20x), memoria de baraja y clímax (trimestre 24)
         const inExtremisStatus = getInExtremisStatus(nextStats);
         const allCards = reignsDeckData.cards as ReignsCard[];
+        const updatedPlayedIds = playedCardIds.includes(currentReignsCard.id)
+          ? playedCardIds
+          : [...playedCardIds, currentReignsCard.id];
         const nextCard =
           selectNextReignsCard({
             allCards,
             activeFlags: updatedFlags,
             currentCardId: currentReignsCard.id,
+            playedCardIds: updatedPlayedIds,
             cardsSurvived: nextCardsSurvived,
             recentlyGrantedFlags: updatedRecentlyGrantedFlags,
             inExtremisStatus,
@@ -376,8 +433,12 @@ export const useGameStore = create<GameState>()(
           stats: nextStats,
           currentReignsCard: nextCard,
           reignsDeck: allCards,
+          playedCardIds: nextCard && !updatedPlayedIds.includes(nextCard.id)
+            ? [...updatedPlayedIds, nextCard.id]
+            : updatedPlayedIds,
           daysInPower: nextDays,
           cardsSurvived: nextCardsSurvived,
+          bestQuartersSurvived: nextBestQuarters,
           previewDirection: null,
           lastDiceRoll: enrichedSummary,
           activeFlags: updatedFlags,
@@ -492,7 +553,13 @@ export const useGameStore = create<GameState>()(
       },
 
       restartGame: () => {
-        set((state) => createInitialReignState((state.rulerGeneration || 1) + 1));
+        set((state) =>
+          createInitialReignState((state.rulerGeneration || 1) + 1, 'PLAYING', {
+            bestQuartersSurvived: state.bestQuartersSurvived,
+            discoveredEndings: state.discoveredEndings,
+            lastDeathReason: state.lastDeathReason,
+          })
+        );
       },
 
       resetToCharacterSelect: () => {
@@ -501,7 +568,7 @@ export const useGameStore = create<GameState>()(
     }),
     {
       name: 'ibex35-fanzine-game-storage',
-      version: 3,
+      version: 4,
       storage: createJSONStorage(() =>
         typeof window !== 'undefined' ? window.localStorage : dummyStorage
       ),
@@ -510,8 +577,12 @@ export const useGameStore = create<GameState>()(
         status: state.status,
         gameMode: state.gameMode,
         stats: state.stats,
+        playedCardIds: state.playedCardIds,
         daysInPower: state.daysInPower,
         cardsSurvived: state.cardsSurvived,
+        bestQuartersSurvived: state.bestQuartersSurvived,
+        discoveredEndings: state.discoveredEndings,
+        lastDeathReason: state.lastDeathReason,
         activeFlags: state.activeFlags,
         recentlyGrantedFlags: state.recentlyGrantedFlags,
         recentFlagsHistory: state.recentFlagsHistory,

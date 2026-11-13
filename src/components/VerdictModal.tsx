@@ -15,6 +15,8 @@ export function VerdictModal() {
   const gameOverDescription = useGameStore((state) => state.gameOverDescription);
   const daysInPower = useGameStore((state) => state.daysInPower);
   const cardsSurvived = useGameStore((state) => state.cardsSurvived);
+  const bestQuartersSurvived = useGameStore((state) => state.bestQuartersSurvived);
+  const discoveredEndings = useGameStore((state) => state.discoveredEndings);
   const lastDiceRoll = useGameStore((state) => state.lastDiceRoll);
   const nextSuccessor = useGameStore((state) => state.nextSuccessor);
   const stats = useGameStore((state) => state.stats);
@@ -108,7 +110,7 @@ export function VerdictModal() {
               {cardsSurvived} / 25 Trimestres
             </span>
             <span className="text-[11px] text-zinc-600 block font-bold">
-              ({daysInPower} DÍAS DE MANDATO)
+              ({daysInPower} DÍAS · 🏆 Récord: {bestQuartersSurvived}/25 · 📖 Finales: {discoveredEndings.length}/9)
             </span>
           </div>
         </div>

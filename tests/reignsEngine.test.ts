@@ -86,6 +86,45 @@ describe('Reigns Engine & Game Loop (Modo Supervivencia)', () => {
       expect(verdict.ending).toBe('PURGA_DE_OFICIO');
     });
 
+    it('detecta sospecha de topo (PRESION_MINIMA) cuando presionJudicial cae a 0', () => {
+      const stats: CharacterStats = {
+        pastaEnB: 50,
+        presionJudicial: 0,
+        impunidad: 50,
+        reputacionMediatica: 50,
+      };
+      const verdict = checkReignsGameOver(stats, 6);
+      expect(verdict.isGameOver).toBe(true);
+      expect(verdict.reason).toBe('PRESION_MINIMA');
+      expect(verdict.ending).toBe('PURGA_DE_OFICIO');
+    });
+
+    it('detecta exceso de soberbia (IMPUNIDAD_MAXIMA) cuando impunidad llega a 100', () => {
+      const stats: CharacterStats = {
+        pastaEnB: 50,
+        presionJudicial: 40,
+        impunidad: 100,
+        reputacionMediatica: 50,
+      };
+      const verdict = checkReignsGameOver(stats, 7);
+      expect(verdict.isGameOver).toBe(true);
+      expect(verdict.reason).toBe('IMPUNIDAD_MAXIMA');
+      expect(verdict.ending).toBe('PURGA_DE_OFICIO');
+    });
+
+    it('detecta eclipsar al líder (REPUTACION_MAXIMA) cuando reputacionMediatica llega a 100', () => {
+      const stats: CharacterStats = {
+        pastaEnB: 50,
+        presionJudicial: 40,
+        impunidad: 50,
+        reputacionMediatica: 100,
+      };
+      const verdict = checkReignsGameOver(stats, 9);
+      expect(verdict.isGameOver).toBe(true);
+      expect(verdict.reason).toBe('REPUTACION_MAXIMA');
+      expect(verdict.ending).toBe('PURGA_DE_OFICIO');
+    });
+
     it('concede el retiro dorado al consejo del IBEX tras sobrevivir 25 cartas', () => {
       const stats: CharacterStats = {
         pastaEnB: 45,
@@ -184,6 +223,19 @@ describe('Reigns Engine & Game Loop (Modo Supervivencia)', () => {
         if (picked) seenWithFlag.add(picked.id);
       }
       expect(seenWithFlag.has('card_gated')).toBe(true);
+    });
+
+    it('no repite cartas incluidas en playedCardIds mientras haya cartas sin jugar en el mazo', () => {
+      const allCards = [cardPolitica, cardEmpresarial, cardOrden];
+      const picked = selectNextReignsCard({
+        allCards,
+        activeFlags: {},
+        currentCardId: cardPolitica.id,
+        playedCardIds: [cardPolitica.id, cardEmpresarial.id],
+        cardsSurvived: 3,
+      });
+
+      expect(picked?.id).toBe(cardOrden.id);
     });
   });
 

@@ -15,6 +15,8 @@ export default function HomePage() {
   const status = useGameStore((state) => state.status);
   const rulerGeneration = useGameStore((state) => state.rulerGeneration);
   const cardsSurvived = useGameStore((state) => state.cardsSurvived);
+  const bestQuartersSurvived = useGameStore((state) => state.bestQuartersSurvived);
+  const discoveredEndings = useGameStore((state) => state.discoveredEndings);
   const currentReignsCard = useGameStore((state) => state.currentReignsCard);
   const startNewReign = useGameStore((state) => state.startNewReign);
 
@@ -47,10 +49,10 @@ export default function HomePage() {
 
   if (!mounted) {
     return (
-      <main className="min-h-screen bg-[#f4f1ea] p-4 sm:p-8 font-mono text-black">
-        <div className="max-w-3xl mx-auto border-4 border-black bg-white p-6 sm:p-12 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-          <div className="border-b-4 border-black pb-4 mb-6">
-            <div className="h-8 bg-black w-3/4 mb-2 animate-pulse" />
+      <main className="min-h-dvh bg-[#f4f1ea] p-4 sm:p-8 font-mono text-black flex items-center justify-center">
+        <div className="w-full max-w-2xl border-4 border-black bg-white p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+          <div className="border-b-4 border-black pb-3 mb-4">
+            <div className="h-7 bg-black w-3/4 mb-2 animate-pulse" />
             <div className="h-4 bg-zinc-300 w-1/2 animate-pulse" />
           </div>
           <p className="font-mono text-xs uppercase font-bold tracking-widest text-zinc-500">
@@ -63,139 +65,142 @@ export default function HomePage() {
 
   const currentQuarter = Math.min(cardsSurvived + 1, 25);
 
-  return (
-    <main className="min-h-screen bg-[#f4f1ea] text-black font-mono selection:bg-black selection:text-white p-3 sm:p-5 md:p-6">
-      <div className="max-w-4xl mx-auto flex flex-col gap-5">
-        {/* Cabecera Compacta Estilo Reigns Puro */}
-        <header className="border-3 md:border-4 border-black bg-white p-3 sm:p-4 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
-          <div className="flex flex-wrap items-center justify-between gap-2">
+  if (status === 'NOT_STARTED') {
+    return (
+      <main className="min-h-dvh bg-[#f4f1ea] text-black font-mono selection:bg-black selection:text-white p-3 sm:p-6 flex items-center justify-center">
+        <div className="w-full max-w-3xl flex flex-col gap-4">
+          <header className="border-4 border-black bg-white p-4 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] flex flex-wrap items-center justify-between gap-2">
             <div>
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-black uppercase tracking-tighter leading-none">
+              <h1 className="text-2xl sm:text-4xl font-black uppercase tracking-tighter leading-none">
                 IBÉRICA DE CORRUPCIÓN
               </h1>
               <p className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-zinc-700 mt-1">
-                Supervivencia Política Exprés // Desliza a Izquierda o Derecha
+                Supervivencia Política Exprés // Estilo Reigns
               </p>
             </div>
+            <button
+              type="button"
+              onClick={() => soundManager.toggleMute()}
+              className="border-2 border-black bg-stone-100 hover:bg-black hover:text-white px-2.5 py-1 text-[11px] font-black uppercase tracking-wider cursor-pointer transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+            >
+              {muted ? '🔇 MUTE' : '🔊 AUDIO ON'}
+            </button>
+          </header>
 
-            <div className="flex flex-wrap items-center gap-2">
-              <button
-                type="button"
-                onClick={() => soundManager.toggleMute()}
-                className="border-2 border-black bg-stone-100 hover:bg-black hover:text-white px-2.5 py-1 text-[11px] font-black uppercase tracking-wider cursor-pointer transition-colors flex items-center gap-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
-                title={muted ? 'Activar efectos sonoros analógicos' : 'Silenciar efectos'}
-              >
-                <span>{muted ? '🔇 MUTE' : '🔊 AUDIO ON'}</span>
-              </button>
-
-              {status !== 'NOT_STARTED' && (
-                <>
-                  <span className="border-2 border-black bg-amber-300 text-black px-2.5 py-1 text-[11px] font-black uppercase tracking-wider shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                    👑 SUCESOR #{rulerGeneration}
-                  </span>
-
-                  <span className="border-2 border-black bg-black text-white px-2.5 py-1 text-[11px] font-black uppercase tracking-wider shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                    ⏱️ TRIMESTRE {currentQuarter} / 25
-                  </span>
-                </>
-              )}
-            </div>
-          </div>
-        </header>
-
-        {/* Pantalla Inicial con Contexto y Botón de Inicio */}
-        {status === 'NOT_STARTED' && (
           <section
             aria-label="Portada y Contexto de la Partida"
-            className="border-4 border-black bg-[#faf8f4] p-5 sm:p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col gap-5"
+            className="border-4 border-black bg-[#faf8f4] p-5 sm:p-7 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col gap-4"
           >
-            <div className="border-b-3 border-black pb-4">
-              <span className="inline-block bg-red-700 text-white border-2 border-black px-2.5 py-0.5 text-[11px] font-black uppercase tracking-widest mb-2">
-                SUMARIO ABIERTO // EDICIÓN REIGNS
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-black leading-tight">
+            <div className="border-b-3 border-black pb-3">
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                <span className="inline-block bg-red-700 text-white border-2 border-black px-2.5 py-0.5 text-[11px] font-black uppercase tracking-widest">
+                  SUMARIO ABIERTO // TABULA RASA
+                </span>
+                {(bestQuartersSurvived > 0 || discoveredEndings.length > 0) && (
+                  <span className="border-2 border-black bg-amber-200 px-2 py-0.5 text-[11px] font-black uppercase">
+                    🏆 RÉCORD: {bestQuartersSurvived}/25 · 📖 FINALES: {discoveredEndings.length}/9
+                  </span>
+                )}
+              </div>
+              <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-black leading-tight">
                 BIENVENIDO A LA POLTRONA, IMPUTADO DE TURNO
               </h2>
-              <p className="text-sm sm:text-base text-zinc-800 mt-2 leading-relaxed">
-                Acabas de tomar posesión del cargo. Sin currículum que memorizar ni excusas que valgan:
-                tu único objetivo es sobrevivir <strong>25 trimestres (4 años de legislatura + prórroga)</strong>{' '}
-                despachando marrones a izquierda o derecha hasta jubilarte en un consejo del <strong>IBEX 35</strong>.
-                Si caes antes, un sucesor anónimo ocupará tu sillón al instante.
+              <p className="text-xs sm:text-sm text-zinc-800 mt-2 leading-relaxed">
+                Sin pasado que memorizar: sobrevive <strong>25 trimestres</strong> despachando marrones a izquierda o derecha hasta jubilarte en el <strong>IBEX 35</strong>. Si caes antes, un sucesor anónimo ocupará tu sillón al instante.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-              <div className="border-2 border-black bg-white p-3 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
-                <div className="font-black uppercase text-black mb-1">💰 PASTA EN B (0% ó 100% = CAÍDA)</div>
-                <p className="text-zinc-700">
-                  Si se agota, el partido te purga por insolvente. Si llega al 100%, cantas en Suiza y te caza Europol.
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+              <div className="border-2 border-black bg-white p-2.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                <div className="font-black uppercase text-black mb-0.5">💰 PASTA EN B (0% / 100%)</div>
+                <p className="text-zinc-700 text-[11px]">
+                  0% = purga por insolvente · 100% = Europol te caza en Suiza.
                 </p>
               </div>
-              <div className="border-2 border-black bg-white p-3 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
-                <div className="font-black uppercase text-black mb-1">⚖️ PRESIÓN JUDICIAL (100% = PRISIÓN)</div>
-                <p className="text-zinc-700">
-                  Pinchazos, registros de la UCO y autos de la Audiencia. Si toca el techo, duermes en Soto del Real.
+              <div className="border-2 border-black bg-white p-2.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                <div className="font-black uppercase text-black mb-0.5">⚖️ PRESIÓN JUDICIAL (0% / 100%)</div>
+                <p className="text-zinc-700 text-[11px]">
+                  0% = sospecha de topo chivato · 100% = prisión en Soto del Real.
                 </p>
               </div>
-              <div className="border-2 border-black bg-white p-3 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
-                <div className="font-black uppercase text-black mb-1">🛡️ IMPUNIDAD (0% = SUPLICATORIO)</div>
-                <p className="text-zinc-700">
-                  Tu red de favores y aforamiento. Si cae a cero, pierdes el blindaje y vas directo al banquillo.
+              <div className="border-2 border-black bg-white p-2.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                <div className="font-black uppercase text-black mb-0.5">🛡️ IMPUNIDAD (0% / 100%)</div>
+                <p className="text-zinc-700 text-[11px]">
+                  0% = pierdes el aforamiento · 100% = soberbia y traición interna.
                 </p>
               </div>
-              <div className="border-2 border-black bg-white p-3 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
-                <div className="font-black uppercase text-black mb-1">📰 REPUTACIÓN MEDIÁTICA (0% = PURGA)</div>
-                <p className="text-zinc-700">
-                  Control de portadas y tertulias. Si la prensa te lincha hasta el cero, te cesan en rueda de prensa.
+              <div className="border-2 border-black bg-white p-2.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                <div className="font-black uppercase text-black mb-0.5">📰 PRENSA (0% / 100%)</div>
+                <p className="text-zinc-700 text-[11px]">
+                  0% = linchamiento editorial · 100% = eclipsas al Líder Supremo.
                 </p>
               </div>
             </div>
 
-            <div className="border-2 border-dashed border-black bg-amber-50 p-3 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-              <div>
-                <span className="font-black uppercase text-black">🎲 MECÁNICA DE JUEGO: </span>
-                <span className="text-zinc-800">
-                  Desliza cada carta a <strong>izquierda (←)</strong> o <strong>derecha (→)</strong>. Cada decisión lanza un <strong>Dado D6</strong> que modula el impacto real sobre los medidores.
-                </span>
-              </div>
+            <div className="border-2 border-dashed border-black bg-amber-50 p-2.5 text-[11px] text-zinc-800">
+              <strong className="uppercase text-black">● PUNTO CIEGO:</strong> Al inclinar una carta verás un punto sobre los medidores afectados, pero <strong>no sabrás si suben o bajan</strong> hasta soltarla. Confía en tu instinto.
             </div>
 
             <button
               type="button"
               autoFocus
               onClick={handleStartGame}
-              className="w-full border-4 border-black bg-black text-white hover:bg-red-700 active:translate-x-0.5 active:translate-y-0.5 py-4 px-6 font-black uppercase text-base sm:text-lg tracking-wider shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] cursor-pointer transition-colors"
+              className="w-full border-4 border-black bg-black text-white hover:bg-red-700 active:translate-x-0.5 active:translate-y-0.5 py-3.5 px-6 font-black uppercase text-base tracking-wider shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] cursor-pointer transition-colors"
             >
               ▶ INICIAR PARTIDA // SENTARSE EN LA POLTRONA
             </button>
           </section>
-        )}
+        </div>
+      </main>
+    );
+  }
 
-        {/* Tablero Central Minimalista: 4 Medidores + Mazo Centrado */}
-        {status !== 'NOT_STARTED' && (
-          <section
-            className="flex flex-col items-center gap-5"
-            aria-label="Tablero de Supervivencia Política"
-          >
-            <StatsBar className="w-full" />
+  return (
+    <main className="min-h-dvh bg-[#f4f1ea] text-black font-mono selection:bg-black selection:text-white p-2 sm:p-4 flex flex-col justify-between overflow-x-hidden">
+      <div className="w-full max-w-2xl mx-auto flex flex-col gap-2.5 flex-1 justify-between">
+        {/* Cabecera de 1 sola línea compacta para encuadre 100dvh móvil */}
+        <header className="border-2 sm:border-3 border-black bg-white px-3 py-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-between gap-2">
+          <h1 className="text-sm sm:text-lg font-black uppercase tracking-tighter leading-none truncate">
+            IBÉRICA DE CORRUPCIÓN
+          </h1>
 
-            <div className="w-full py-1">
-              <ReignsCard />
-            </div>
-          </section>
-        )}
+          <div className="flex items-center gap-1.5 shrink-0">
+            <button
+              type="button"
+              onClick={() => soundManager.toggleMute()}
+              className="border-2 border-black bg-stone-100 hover:bg-black hover:text-white px-2 py-0.5 text-[10px] font-black uppercase cursor-pointer transition-colors"
+              title={muted ? 'Activar audio' : 'Silenciar audio'}
+            >
+              {muted ? '🔇' : '🔊'}
+            </button>
+
+            <span className="border-2 border-black bg-amber-300 text-black px-2 py-0.5 text-[10px] sm:text-[11px] font-black uppercase">
+              👑 #{rulerGeneration}
+            </span>
+
+            <span className="border-2 border-black bg-black text-white px-2 py-0.5 text-[10px] sm:text-[11px] font-black uppercase">
+              ⏱️ {currentQuarter}/25
+            </span>
+          </div>
+        </header>
+
+        {/* 4 Medidores en una sola fila horizontal */}
+        <StatsBar className="w-full" />
+
+        {/* Mazo Centrado */}
+        <section
+          className="flex-1 flex flex-col justify-center py-1"
+          aria-label="Tablero de Supervivencia Política"
+        >
+          <ReignsCard />
+        </section>
 
         {/* Modal Nativo de Caída y Sucesión Instantánea */}
         <VerdictModal />
 
-        {/* Pie de Página */}
-        <footer className="border-t-2 border-black pt-3 pb-6 text-center text-xs font-mono text-zinc-600 flex flex-col items-center gap-1">
-          <div className="font-bold uppercase tracking-wider text-black">
-            IBÉRICA DE CORRUPCIÓN // FANZINE EDITION
-          </div>
-          <div className="text-[10px] uppercase">
-            Desliza la carta o usa [ ← ] / [ → ] para sobrevivir en la poltrona.
-          </div>
+        {/* Pie mínimo */}
+        <footer className="text-center text-[10px] font-mono text-zinc-600 uppercase pb-1">
+          Desliza o usa [ ← ] / [ → ] · Récord: {bestQuartersSurvived}/25 · Finales: {discoveredEndings.length}/9
         </footer>
       </div>
     </main>

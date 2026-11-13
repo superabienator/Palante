@@ -50,7 +50,7 @@ describe('Game Engine & Zustand Store (Hito 3)', () => {
       expect(state.characterProfile).toBeNull();
       expect(state.stats).toEqual({
         pastaEnB: 50,
-        presionJudicial: 20,
+        presionJudicial: 40,
         impunidad: 50,
         reputacionMediatica: 50,
       });
@@ -66,19 +66,21 @@ describe('Game Engine & Zustand Store (Hito 3)', () => {
       expect(state.currentReignsCard).not.toBeNull();
     });
 
-    it('permite pasar al siguiente sucesor anónimo con nextSuccessor() incrementando rulerGeneration', () => {
+    it('permite pasar al siguiente sucesor anónimo con nextSuccessor() incrementando rulerGeneration y conservando récord/finales', () => {
       useGameStore.getState().startNewReign(1);
       useGameStore.getState().makeReignsChoice('left');
       expect(useGameStore.getState().cardsSurvived).toBe(1);
+      expect(useGameStore.getState().bestQuartersSurvived).toBe(1);
 
       useGameStore.getState().nextSuccessor();
       const gen2 = useGameStore.getState();
       expect(gen2.status).toBe('PLAYING');
       expect(gen2.rulerGeneration).toBe(2);
       expect(gen2.cardsSurvived).toBe(0);
+      expect(gen2.bestQuartersSurvived).toBe(1);
       expect(gen2.stats).toEqual({
         pastaEnB: 50,
-        presionJudicial: 20,
+        presionJudicial: 40,
         impunidad: 50,
         reputacionMediatica: 50,
       });
@@ -170,7 +172,7 @@ describe('Game Engine & Zustand Store (Hito 3)', () => {
       expect(state.gameMode).toBe('REIGNS');
       expect(state.stats).toEqual({
         pastaEnB: 50,
-        presionJudicial: 20,
+        presionJudicial: 40,
         impunidad: 50,
         reputacionMediatica: 50,
       });
