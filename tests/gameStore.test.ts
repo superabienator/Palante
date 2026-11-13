@@ -42,9 +42,9 @@ describe('Game Engine & Zustand Store (Hito 3)', () => {
   });
 
   describe('Ciclo de Vida de Partida (Estilo Reigns Puro)', () => {
-    it('arranca directamente en estado PLAYING como tabula rasa (Sucesor #1)', () => {
+    it('arranca en portada inicial NOT_STARTED con medidores base y primera carta preparada', () => {
       const state = useGameStore.getState();
-      expect(state.status).toBe('PLAYING');
+      expect(state.status).toBe('NOT_STARTED');
       expect(state.rulerGeneration).toBe(1);
       expect(state.selectedArchetypeId).toBeNull();
       expect(state.characterProfile).toBeNull();
@@ -58,7 +58,16 @@ describe('Game Engine & Zustand Store (Hito 3)', () => {
       expect(state.unlockedMechanics).toEqual([]);
     });
 
+    it('inicia la partida en estado PLAYING al pulsar Iniciar Partida (startNewReign)', () => {
+      useGameStore.getState().startNewReign(1);
+      const state = useGameStore.getState();
+      expect(state.status).toBe('PLAYING');
+      expect(state.rulerGeneration).toBe(1);
+      expect(state.currentReignsCard).not.toBeNull();
+    });
+
     it('permite pasar al siguiente sucesor anónimo con nextSuccessor() incrementando rulerGeneration', () => {
+      useGameStore.getState().startNewReign(1);
       useGameStore.getState().makeReignsChoice('left');
       expect(useGameStore.getState().cardsSurvived).toBe(1);
 

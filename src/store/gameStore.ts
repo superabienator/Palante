@@ -143,7 +143,7 @@ const DEFAULT_STATS: CharacterStats = {
   reputacionMediatica: 50,
 };
 
-function createInitialReignState(rulerGeneration = 1) {
+function createInitialReignState(rulerGeneration = 1, status: GameStatus = 'PLAYING') {
   const rawCards = reignsDeckData.cards as ReignsCard[];
   const initialStats = { ...DEFAULT_STATS };
   const inExtremisStatus = getInExtremisStatus(initialStats);
@@ -159,7 +159,7 @@ function createInitialReignState(rulerGeneration = 1) {
 
   return {
     rulerGeneration,
-    status: 'PLAYING' as GameStatus,
+    status,
     gameMode: 'REIGNS' as const,
     selectedSphere: null,
     selectedArchetypeId: null,
@@ -197,7 +197,7 @@ const dummyStorage = {
 export const useGameStore = create<GameState>()(
   persist(
     (set, get) => ({
-      ...createInitialReignState(1),
+      ...createInitialReignState(1, 'NOT_STARTED'),
 
       selectSphere: (sphere: SphereType) => {
         set({ selectedSphere: sphere });
@@ -496,12 +496,12 @@ export const useGameStore = create<GameState>()(
       },
 
       resetToCharacterSelect: () => {
-        set(createInitialReignState(1));
+        set(createInitialReignState(1, 'NOT_STARTED'));
       },
     }),
     {
       name: 'ibex35-fanzine-game-storage',
-      version: 2,
+      version: 3,
       storage: createJSONStorage(() =>
         typeof window !== 'undefined' ? window.localStorage : dummyStorage
       ),
@@ -520,7 +520,7 @@ export const useGameStore = create<GameState>()(
         gameOverReason: state.gameOverReason,
         gameOverDescription: state.gameOverDescription,
       }),
-      migrate: () => createInitialReignState(1),
+      migrate: () => createInitialReignState(1, 'NOT_STARTED'),
     }
   )
 );
