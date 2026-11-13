@@ -12965,6 +12965,473 @@
       },
       "weight": 1,
       "requiredFlags": []
+    },
+    {
+      "id": "desfase_misa_champan",
+      "speaker": "Monseñor de la Mitra Dorada",
+      "speakerRole": "Obispo y Padrino de Cenas",
+      "speakerAvatar": "icon_obispo",
+      "sphere": "POLITICA",
+      "headline": "MISA DE DOCE Y RESERVADO CON CHAMPÁN Y CENTOLLO",
+      "context": "Acabas de comulgar en primera fila ante las cámaras defendiendo los valores tradicionales y la austeridad cristiana. A las dos en punto te esperan en el reservado del asador con cuatro botellas de Dom Pérignon, centollo vivo y dos constructores con ganas de brindar.",
+      "evidenceDocument": "Ticket provisional del reservado #4: 3.420 euros en marisco y champán francés.",
+      "leftChoice": {
+        "label": "Dar el sermón contra el vicio y encerrarte en el reservado a descorchar champán",
+        "stampText": "MISA Y CHAMPÁN",
+        "flavorQuote": "Por la mañana golpe de pecho en el altar; por la tarde brindis con centollo a puerta cerrada.",
+        "modifiers": {
+          "reputacionMediatica": 8,
+          "pastaEnB": -12,
+          "impunidad": 10,
+          "presionJudicial": 6
+        },
+        "grantedFlags": [
+          "RESACA_EPISCOPAL"
+        ]
+      },
+      "rightChoice": {
+        "label": "Dejar un sobre sin numerar en el cepillo y mandar la factura a Protocolo",
+        "stampText": "CEPILLO EN B",
+        "flavorQuote": "Dios ve los corazones, pero Hacienda no ve los sobres de la sacristía.",
+        "modifiers": {
+          "pastaEnB": -10,
+          "impunidad": 12,
+          "presionJudicial": 8
+        }
+      },
+      "weight": 4,
+      "requiredFlags": []
+    },
+    {
+      "id": "desfase_misa_resaca",
+      "speaker": "El Director del Diario",
+      "speakerRole": "El Jefe de Redacción",
+      "speakerAvatar": "icon_director",
+      "sphere": "POLITICA",
+      "headline": "EL MONAGUILLO GRABA EL BRINDIS EN LA SACRISTÍA",
+      "context": "Un vídeo borroso de tu brindis con champán tras la misa de doce circula por los teléfonos de la redacción. Se te oye cantar el himno con una copa en cada mano y prometer un pelotazo urbanístico al párroco.",
+      "leftChoice": {
+        "label": "Regalar al monaguillo una plaza fija de asesor en la Diputación",
+        "stampText": "PLAZA DE ASESOR",
+        "flavorQuote": "El chico tenía vocación de servicio público... y nosotros memoria selectiva.",
+        "modifiers": {
+          "pastaEnB": -15,
+          "impunidad": 10,
+          "reputacionMediatica": 5,
+          "presionJudicial": 8
+        }
+      },
+      "rightChoice": {
+        "label": "Declarar que era vino de consagrar sin alcohol y acusar a un montaje de IA",
+        "stampText": "MONTAJE DE IA",
+        "flavorQuote": "Niego la mayor, niego el champán y si hace falta niego hasta que estuve en misa.",
+        "modifiers": {
+          "reputacionMediatica": -12,
+          "impunidad": 5,
+          "presionJudicial": 6
+        }
+      },
+      "weight": 10,
+      "requiredFlags": [
+        "RESACA_EPISCOPAL"
+      ]
+    },
+    {
+      "id": "desfase_parador_coca",
+      "speaker": "El Fontanero de Ferraz",
+      "speakerRole": "Fontanero de las Cloacas",
+      "speakerAvatar": "icon_fontanero",
+      "sphere": "POLITICA",
+      "headline": "SUITE DEL PARADOR: \"MATERIAL DE OFICINA\" EN EL ESPEJO",
+      "context": "La cumbre territorial del partido acabó a las seis de la mañana con dos espejos rallados, tres botellas de ginebra premium y media delegación cantando flamenco sobre la mesa de juntas. El gerente del Parador pide instrucciones para la factura.",
+      "evidenceDocument": "Albarán del Parador Nacional: \"Desperfectos de mobiliario y suministros de madrugada\".",
+      "leftChoice": {
+        "label": "Facturar la fiesta entera como \"catering y material de oficina de jornada técnica\"",
+        "stampText": "MATERIAL OFICINA",
+        "flavorQuote": "Si cuela como folios y café de termo, no lo audita ni el Tribunal de Cuentas.",
+        "modifiers": {
+          "pastaEnB": 10,
+          "impunidad": 8,
+          "presionJudicial": 12,
+          "reputacionMediatica": -6
+        },
+        "grantedFlags": [
+          "FIESTA_PARADOR"
+        ]
+      },
+      "rightChoice": {
+        "label": "Soltar billetes de quinientos del sobre del constructor y silenciar al recepcionista",
+        "stampText": "BILLETES AL CONTADO",
+        "flavorQuote": "El efectivo no deja rastro, salvo en la sonrisa del conserje.",
+        "modifiers": {
+          "pastaEnB": -18,
+          "impunidad": 12,
+          "reputacionMediatica": 6
+        }
+      },
+      "weight": 4,
+      "requiredFlags": []
+    },
+    {
+      "id": "desfase_parador_botones",
+      "speaker": "El Comisario de las Cloacas",
+      "speakerRole": "Señor de los 32 Terabytes",
+      "speakerAvatar": "icon_comisario",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "EL BOTONES ENCONTRÓ LA BOLSITA JUNTO A TU TARJETA",
+      "context": "El botones de turno de noche recogió de la moqueta del Parador una bolsita blanca envuelta en tu tarjeta de visita oficial del Ministerio. Dice que un periodista de investigación le ofrece dinero por la foto.",
+      "leftChoice": {
+        "label": "Nombrar al botones director adjunto de Patrimonio en tiempo récord",
+        "stampText": "CARGO A DEDO",
+        "flavorQuote": "De subir maletas a firmar subvenciones en cuarenta y ocho horas: el ascensor social ibérico.",
+        "modifiers": {
+          "pastaEnB": -14,
+          "impunidad": 12,
+          "reputacionMediatica": -5,
+          "presionJudicial": 6
+        }
+      },
+      "rightChoice": {
+        "label": "Enviar al Comisario a requisar el móvil y las cámaras del pasillo",
+        "stampText": "REQUISAR MÓVIL",
+        "flavorQuote": "Por seguridad nacional, las cámaras del Parador sufrieron un apagón oportuno.",
+        "modifiers": {
+          "impunidad": 10,
+          "presionJudicial": 14,
+          "pastaEnB": -8
+        }
+      },
+      "weight": 10,
+      "requiredFlags": [
+        "FIESTA_PARADOR"
+      ]
+    },
+    {
+      "id": "desfase_burdel_tarjeta_black",
+      "speaker": "El Custodio de la Libreta",
+      "speakerRole": "Tesorero en la Sombra",
+      "speakerAvatar": "icon_tesorero",
+      "sphere": "EMPRESARIAL",
+      "headline": "REUNIÓN EN EL CLUB \"EL EDÉN\" CON TARJETA BLACK",
+      "context": "Ayer cerraste una adjudicación de autovías a las cuatro de la mañana en un club de alterne de la carretera de Burgos. El datáfono marcó 4.800 euros con la tarjeta corporativa de la empresa pública.",
+      "evidenceDocument": "Cargo bancario: \"Sala El Edén S.L. - Concepto: Consultoría Nocturna\".",
+      "leftChoice": {
+        "label": "Contabilizarlo como \"dietas de representación y prospección en carretera\"",
+        "stampText": "DIETAS DE VIAJE",
+        "flavorQuote": "Todo esfuerzo por el interés general fuera del horario laboral merece cobertura.",
+        "modifiers": {
+          "pastaEnB": 14,
+          "presionJudicial": 14,
+          "impunidad": 6,
+          "reputacionMediatica": -8
+        },
+        "grantedFlags": [
+          "TICKET_BURDEL"
+        ]
+      },
+      "rightChoice": {
+        "label": "Cargar la cuenta a la fundación benéfica del grupo constructor",
+        "stampText": "CARGO FUNDACIÓN",
+        "flavorQuote": "La obra social de la constructora cubre muchas alegrías nocturnas.",
+        "modifiers": {
+          "pastaEnB": 8,
+          "impunidad": 10,
+          "presionJudicial": 10
+        }
+      },
+      "weight": 4,
+      "requiredFlags": []
+    },
+    {
+      "id": "desfase_burdel_extracto",
+      "speaker": "El Director del Diario",
+      "speakerRole": "El Jefe de Redacción",
+      "speakerAvatar": "icon_director",
+      "sphere": "POLITICA",
+      "headline": "FILTRAN EL EXTRACTO DEL PUTICLUB A TODAS LAS TERTULIAS",
+      "context": "Alguien de contabilidad ha filtrado el extracto de los 4.800 euros en \"Sala El Edén\". Las televisiones llevan tu cara en pantalla partida mientras la oposición pide tu cabeza en el Congreso.",
+      "leftChoice": {
+        "label": "Decir en rueda de prensa que fuiste a \"repartir folletos de empleo femenino\"",
+        "stampText": "EXCUSAS DE ORO",
+        "flavorQuote": "Con cara de póker: \"Estaba realizando una inspección sociolaboral sin previo aviso\".",
+        "modifiers": {
+          "reputacionMediatica": -16,
+          "impunidad": 8,
+          "presionJudicial": 6
+        }
+      },
+      "rightChoice": {
+        "label": "Querellarte contra el banco por vulnerar tu intimidad y comprar dos portadas",
+        "stampText": "QUERELLA Y PORTADA",
+        "flavorQuote": "El mejor ataque es una querella millonaria y publicidad institucional a doble página.",
+        "modifiers": {
+          "pastaEnB": -22,
+          "reputacionMediatica": 14,
+          "impunidad": 10
+        }
+      },
+      "weight": 10,
+      "requiredFlags": [
+        "TICKET_BURDEL"
+      ]
+    },
+    {
+      "id": "desfase_yate_marbella",
+      "speaker": "El Barón del Hormigón",
+      "speakerRole": "Constructor de Obra Pública",
+      "speakerAvatar": "icon_constructor",
+      "sphere": "EMPRESARIAL",
+      "headline": "AFTER-HOURS EN EL YATE CON UN JUEZ Y EL COMISARIO",
+      "context": "Tercer día seguido de fiesta en un megayate en Marbella. En la cubierta de proa bailan un magistrado de la Audiencia, el comisario de turno y dos adjudicatarios con copas de balón y puros habanos.",
+      "leftChoice": {
+        "label": "Abrir otra caja de champán y firmar allí la recalificación de la playa",
+        "stampText": "FIESTA EN PROA",
+        "flavorQuote": "Entre copa y copa se desbloquean más licencias que en diez años de ventanilla.",
+        "modifiers": {
+          "pastaEnB": 20,
+          "impunidad": 12,
+          "presionJudicial": 10,
+          "reputacionMediatica": -8
+        },
+        "grantedFlags": [
+          "YATE_AFTER_HOURS"
+        ]
+      },
+      "rightChoice": {
+        "label": "Tirar los móviles de todos por la borda antes de que amanezca",
+        "stampText": "MÓVILES AL MAR",
+        "flavorQuote": "Lo que pasa en aguas internacionales se queda en el fondo del Mediterráneo.",
+        "modifiers": {
+          "pastaEnB": -10,
+          "impunidad": 14,
+          "presionJudicial": -6
+        }
+      },
+      "weight": 4,
+      "requiredFlags": []
+    },
+    {
+      "id": "desfase_yate_aduanas",
+      "speaker": "La Jueza de Guardia",
+      "speakerRole": "Instructora del Juzgado 4",
+      "speakerAvatar": "icon_jueza",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "LANCHA DE ADUANAS Y PAPARAZZI FRENTE A PUERTO BANÚS",
+      "context": "Un fotógrafo con teleobjetivo y una patrullera de Vigilancia Aduanera rodean el yate mientras la fiesta sigue en cubierta con música electrónica a todo volumen.",
+      "leftChoice": {
+        "label": "Alegar que es una \"cumbre informal sobre pesca sostenible\"",
+        "stampText": "CUMBRE PESQUERA",
+        "flavorQuote": "Con gafas de sol y albornoz, saludas a la patrullera como alto comisionado.",
+        "modifiers": {
+          "reputacionMediatica": -10,
+          "impunidad": 6,
+          "presionJudicial": 10
+        }
+      },
+      "rightChoice": {
+        "label": "Pagar en metálico al patrón para que os saque en zodiac por la cala trasera",
+        "stampText": "FUGA EN ZODIAC",
+        "flavorQuote": "Escapada épica en lancha neumática dejando al constructor dando explicaciones.",
+        "modifiers": {
+          "pastaEnB": -18,
+          "impunidad": 12,
+          "reputacionMediatica": 6
+        }
+      },
+      "weight": 10,
+      "requiredFlags": [
+        "YATE_AFTER_HOURS"
+      ]
+    },
+    {
+      "id": "desfase_bautizo_fondos_reservados",
+      "speaker": "El Custodio de la Libreta",
+      "speakerRole": "Tesorero en la Sombra",
+      "speakerAvatar": "icon_tesorero",
+      "sphere": "POLITICA",
+      "headline": "BAUTIZO IMPERIAL CON FONDOS RESERVADOS DEL MINISTERIO",
+      "context": "Bautizas a tu sobrino en una finca con orquesta, cortador de jamón cinco jotas, barra libre hasta el amanecer y fuegos artificiales. El administrador pregunta de qué partida sacamos los 28.000 euros.",
+      "leftChoice": {
+        "label": "Cargar la fiesta entera a los fondos reservados de seguridad nacional",
+        "stampText": "FONDOS RESERVADOS",
+        "flavorQuote": "Proteger la alegría de la familia también es cuestión de Estado.",
+        "modifiers": {
+          "pastaEnB": 12,
+          "impunidad": 8,
+          "presionJudicial": 12,
+          "reputacionMediatica": -6
+        }
+      },
+      "rightChoice": {
+        "label": "Cobrar entrada en sobre a cada contratista invitado \"para la hucha del niño\"",
+        "stampText": "SOBRE DEL BAUTIZO",
+        "flavorQuote": "El chaval salió de la pila bautismal con más patrimonio que un consejo asesor.",
+        "modifiers": {
+          "pastaEnB": 18,
+          "presionJudicial": 8,
+          "impunidad": 6
+        }
+      },
+      "weight": 3,
+      "requiredFlags": []
+    },
+    {
+      "id": "desfase_caceria_finca",
+      "speaker": "El Barón del Hormigón",
+      "speakerRole": "Constructor de Obra Pública",
+      "speakerAvatar": "icon_constructor",
+      "sphere": "EMPRESARIAL",
+      "headline": "CACERÍA DE ÉLITE CON UN JABALÍ ENJAULADO Y PURO HABANO",
+      "context": "Montería privada en Toledo sin licencia ni permisos medioambientales. Te ponen un jabalí delante de la escopeta para la foto mientras dos consejeros negocian el trazado de una autovía sobre olivos centenarios.",
+      "leftChoice": {
+        "label": "Posar con el puro, disparar y colocar al guarda forestal en un consejo",
+        "stampText": "MONTERÍA VIP",
+        "flavorQuote": "El guarda miró para otro lado y terminó con despacho propio en Medio Ambiente.",
+        "modifiers": {
+          "pastaEnB": 14,
+          "impunidad": 10,
+          "reputacionMediatica": -10,
+          "presionJudicial": 6
+        }
+      },
+      "rightChoice": {
+        "label": "Firmar allí mismo el decreto de la autovía sobre la mesa del catering",
+        "stampText": "DECRETO EN FINCA",
+        "flavorQuote": "Entre perdiz escabechada y coñac se aprueban las infraestructuras del país.",
+        "modifiers": {
+          "pastaEnB": 20,
+          "presionJudicial": 12,
+          "impunidad": 8
+        }
+      },
+      "weight": 3,
+      "requiredFlags": []
+    },
+    {
+      "id": "desfase_comision_ibiza",
+      "speaker": "El Fontanero de Ferraz",
+      "speakerRole": "Fontanero de las Cloacas",
+      "speakerAvatar": "icon_fontanero",
+      "sphere": "POLITICA",
+      "headline": "PLANTÓN A LA COMISIÓN POR \"GRIPE\"... Y SELFIE EN IBIZA",
+      "context": "Presentaste baja médica para no comparecer en la comisión de investigación parlamentaria, pero anoche subiste por error una historia bailando sin camisa en la fiesta de la espuma de Ibiza.",
+      "leftChoice": {
+        "label": "Decir que el médico te recetó \"aire marino y humedad controlada\"",
+        "stampText": "AIRE MARINO",
+        "flavorQuote": "Prescripción facultativa: cuarenta grados de sol y música electrónica.",
+        "modifiers": {
+          "reputacionMediatica": -14,
+          "impunidad": 8,
+          "presionJudicial": 8
+        }
+      },
+      "rightChoice": {
+        "label": "Presentar un parte retroactivo firmado por tu cuñado traumatólogo",
+        "stampText": "PARTE DE CUÑADO",
+        "flavorQuote": "Diagnóstico: lumbalgia aguda compatible con baile frenético.",
+        "modifiers": {
+          "pastaEnB": -8,
+          "impunidad": 10,
+          "presionJudicial": 10,
+          "reputacionMediatica": -4
+        }
+      },
+      "weight": 3,
+      "requiredFlags": []
+    },
+    {
+      "id": "desfase_despedida_coche_oficial",
+      "speaker": "El Comisario de las Cloacas",
+      "speakerRole": "Señor de los 32 Terabytes",
+      "speakerAvatar": "icon_comisario",
+      "sphere": "ORDEN_JUSTICIA",
+      "headline": "DESPEDIDA DE SOLTERO EN COCHE OFICIAL Y SIRENA AZUL",
+      "context": "A las cinco de la madrugada utilizáis el coche oficial blindado con los rotativos azules para cruzar Madrid a ciento cuarenta y llegar antes de que cierre el último after-hours.",
+      "leftChoice": {
+        "label": "Mantener la sirena encendida alegando \"desplazamiento de urgencia\"",
+        "stampText": "SIRENA AL AFTER",
+        "flavorQuote": "Abriendo paso entre taxis: prioridad absoluta para la última ronda.",
+        "modifiers": {
+          "impunidad": 10,
+          "presionJudicial": 10,
+          "reputacionMediatica": -8
+        }
+      },
+      "rightChoice": {
+        "label": "Mandar al escolta a comprar churros y analgésicos a las ocho de la mañana",
+        "stampText": "ESCOLTA CHURRERO",
+        "flavorQuote": "El cuerpo de seguridad del Estado también domina el chocolate caliente.",
+        "modifiers": {
+          "pastaEnB": -6,
+          "impunidad": 8,
+          "reputacionMediatica": 4
+        }
+      },
+      "weight": 3,
+      "requiredFlags": []
+    },
+    {
+      "id": "desfase_salon_masajes_senado",
+      "speaker": "La Dama del Finiquito",
+      "speakerRole": "Portavoz de la Desfachatez",
+      "speakerAvatar": "icon_dama",
+      "sphere": "POLITICA",
+      "headline": "MASAJE TÁNTRICO EN HORARIO DE PLENO Y DIETA COBRADA",
+      "context": "Te han pillado saliendo de un exclusivo spa de masajes orientales a la misma hora en que figurabas votando en el pleno y cobrando la dieta de asistencia de la jornada.",
+      "leftChoice": {
+        "label": "Justificar la factura como \"rehabilitación cervical por carga legislativa\"",
+        "stampText": "TERAPIA CERVICAL",
+        "flavorQuote": "Aprobar presupuestos genera mucha tensión en el trapecio.",
+        "modifiers": {
+          "pastaEnB": 8,
+          "reputacionMediatica": -12,
+          "impunidad": 8
+        }
+      },
+      "rightChoice": {
+        "label": "Echar la culpa al ujier por haber apretado tu botón electrónico por error",
+        "stampText": "CULPA DEL UJIER",
+        "flavorQuote": "El escaño votó solo por pura inercia democrática.",
+        "modifiers": {
+          "impunidad": 10,
+          "presionJudicial": 6,
+          "reputacionMediatica": -6
+        }
+      },
+      "weight": 3,
+      "requiredFlags": []
+    },
+    {
+      "id": "desfase_cena_navidad_sobres",
+      "speaker": "El Custodio de la Libreta",
+      "speakerRole": "Tesorero en la Sombra",
+      "speakerAvatar": "icon_tesorero",
+      "sphere": "EMPRESARIAL",
+      "headline": "CENA DE NAVIDAD: RIFA DE ROLEX Y SOBRES DE POSTRE",
+      "context": "En la cena navideña del partido, tras el brindis por la austeridad pública, sacas una bandeja de plata con relojes confiscados y sobres marrones como aguinaldo para los concejales más leales.",
+      "leftChoice": {
+        "label": "Sortear el Rolex entre los alcaldes que más obras adjudicaron",
+        "stampText": "RIFA DE ROLEX",
+        "flavorQuote": "El que más hormigón firmó este año se lleva la corona suiza.",
+        "modifiers": {
+          "pastaEnB": -12,
+          "impunidad": 14,
+          "reputacionMediatica": -6,
+          "presionJudicial": 8
+        }
+      },
+      "rightChoice": {
+        "label": "Brindar por los recortes sociales mientras repartes aguinaldo en metálico",
+        "stampText": "AGUINALDO EN B",
+        "flavorQuote": "Discurso lacrimógeno sobre apretarse el cinturón con el bolsillo bien abultado.",
+        "modifiers": {
+          "pastaEnB": -15,
+          "impunidad": 12,
+          "reputacionMediatica": 8
+        }
+      },
+      "weight": 3,
+      "requiredFlags": []
     }
   ]
 }

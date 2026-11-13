@@ -19,6 +19,7 @@ export function VerdictModal() {
   const discoveredEndings = useGameStore((state) => state.discoveredEndings);
   const lastDiceRoll = useGameStore((state) => state.lastDiceRoll);
   const nextSuccessor = useGameStore((state) => state.nextSuccessor);
+  const returnToMenu = useGameStore((state) => state.returnToMenu);
   const stats = useGameStore((state) => state.stats);
 
   useEffect(() => {
@@ -49,6 +50,19 @@ export function VerdictModal() {
         });
     } else {
       nextSuccessor();
+    }
+  };
+
+  const handleReturnToMenu = () => {
+    if (typeof document !== 'undefined' && 'startViewTransition' in document) {
+      (document as unknown as { startViewTransition: (cb: () => void) => { finished: Promise<void> } })
+        .startViewTransition(() => {
+          flushSync(() => {
+            returnToMenu();
+          });
+        });
+    } else {
+      returnToMenu();
     }
   };
 
@@ -181,15 +195,25 @@ export function VerdictModal() {
           </div>
         </div>
 
-        {/* Botón Único de Sucesión Instantánea */}
-        <button
-          type="button"
-          autoFocus
-          onClick={handleCrownSuccessor}
-          className="w-full border-3 border-black bg-black text-white hover:bg-zinc-800 active:translate-x-0.5 active:translate-y-0.5 py-3.5 px-4 font-black uppercase text-sm tracking-wider shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-center transition-all cursor-pointer"
-        >
-          ★ CORONAR AL SUCESOR #{rulerGeneration + 1} ★
-        </button>
+        {/* Botones de Sucesión o Regreso al Menú */}
+        <div className="flex flex-col gap-2.5">
+          <button
+            type="button"
+            autoFocus
+            onClick={handleCrownSuccessor}
+            className="w-full border-3 border-black bg-black text-white hover:bg-zinc-800 active:translate-x-0.5 active:translate-y-0.5 py-3.5 px-4 font-black uppercase text-sm tracking-wider shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-center transition-all cursor-pointer"
+          >
+            ★ CORONAR AL SUCESOR #{rulerGeneration + 1} ★
+          </button>
+
+          <button
+            type="button"
+            onClick={handleReturnToMenu}
+            className="w-full border-2 border-black bg-white text-black hover:bg-stone-100 active:translate-x-0.5 active:translate-y-0.5 py-2.5 px-4 font-black uppercase text-xs tracking-wider shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] text-center transition-all cursor-pointer"
+          >
+            ← VOLVER AL MENÚ PRINCIPAL
+          </button>
+        </div>
       </div>
     </dialog>
   );

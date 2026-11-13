@@ -85,7 +85,7 @@ export function ReignsCard({
   const card = propCard ?? storeCard;
 
   const x = useMotionValue(0);
-  const rotate = useTransform(x, [-180, 0, 180], [-10, 0, 10]);
+  const rotate = useTransform(x, [-180, 0, 180], [-14, 0, 14]);
 
   // Umbral sensible para móvil: a 8px empieza a verse el sello, a 45px es 100% nítido
   const leftStampOpacity = useTransform(x, [-45, -8, 0], [1, 0.6, 0]);
@@ -214,7 +214,7 @@ export function ReignsCard({
   );
 
   return (
-    <div className={`w-full max-w-lg mx-auto flex flex-col items-center relative ${className}`}>
+    <div className={`w-full max-w-[360px] sm:max-w-[380px] mx-auto flex flex-col items-center relative ${className}`}>
       {/* Micro-dado fugaz no bloqueante en esquina tras resolver un swipe */}
       {lastDiceRoll && lastDiceRoll.rolls[0] && (
         <div
@@ -244,13 +244,13 @@ export function ReignsCard({
               <span className="bg-black text-white px-1.5 py-0.5 text-[10px] font-black uppercase tracking-wider border border-white shrink-0">
                 ← {card.leftChoice.stampText || 'ACEPTAR'}
               </span>
-              <span className="text-xs font-black uppercase leading-tight line-clamp-2">
+              <span className="text-xs font-black uppercase leading-snug">
                 {card.leftChoice.label}
               </span>
             </div>
           ) : previewDirection === 'right' ? (
             <div className="flex items-center justify-center gap-2 flex-wrap">
-              <span className="text-xs font-black uppercase leading-tight line-clamp-2">
+              <span className="text-xs font-black uppercase leading-snug">
                 {card.rightChoice.label}
               </span>
               <span className="bg-black text-amber-300 px-1.5 py-0.5 text-[10px] font-black uppercase tracking-wider border border-black shrink-0">
@@ -277,7 +277,7 @@ export function ReignsCard({
 
         <motion.article
           key={card.id}
-          style={{ x, rotate }}
+          style={{ x, rotate, transformOrigin: '50% 120%' }}
           drag={disabled ? false : 'x'}
           dragConstraints={{ left: 0, right: 0 }}
           dragElastic={0.65}
@@ -285,13 +285,13 @@ export function ReignsCard({
           onDragEnd={handleDragEnd}
           animate={exitX !== null ? { x: exitX, opacity: 0 } : { x: 0, opacity: 1 }}
           transition={{ type: 'spring', stiffness: 350, damping: 25 }}
-          className={`w-full relative z-10 cursor-grab active:cursor-grabbing select-none border-4 ${
+          className={`w-full min-h-[340px] sm:min-h-[370px] flex flex-col justify-between relative z-10 cursor-grab active:cursor-grabbing select-none border-4 ${
             card.isInExtremis
               ? 'border-red-900 bg-[#fff5f5] ring-3 ring-yellow-400 shadow-[6px_6px_0px_0px_#900]'
               : isCrisis
               ? 'border-red-800 bg-[#fcedec] shadow-[6px_6px_0px_0px_#822222]'
               : 'border-[#121a12] bg-[#f5efdc] shadow-[6px_6px_0px_0px_#121a12]'
-          } p-3.5 sm:p-5 -rotate-1`}
+          } p-4 sm:p-5 -rotate-1`}
         >
           {/* Mancha sutil de moho */}
           <div className="pointer-events-none absolute inset-0 moho-corner" />
@@ -328,29 +328,29 @@ export function ReignsCard({
             </div>
           </motion.div>
 
-          {/* Personaje Recurrente + Retrato Protagonista */}
-          <header className="flex items-center gap-3 border-b-2 border-[#121a12] pb-2.5 mb-2.5 relative z-10">
-            <CharacterPortrait
-              src={card.portraitUrl ?? recurringChar.portraitUrl}
-              speaker={recurringChar.name}
-              speakerRole={recurringChar.role}
-              alt={recurringChar.name}
-              isCrisis={isCrisis}
-              crisisType={crisisType}
-              size="md"
-              className="shrink-0"
-            />
-            <div className="min-w-0 flex-1">
-              <div className="text-[10px] font-mono font-black uppercase tracking-widest text-zinc-600 truncate">
-                {recurringChar.role}
-              </div>
-              <h3 className="text-base sm:text-lg font-mono font-black uppercase text-black leading-tight truncate">
-                {recurringChar.name}
-              </h3>
-              <div className="text-[10px] font-mono font-bold uppercase text-zinc-700 truncate">
-                {card.headline}
-              </div>
+          {/* Cabecera vertical de naipe: rol, nombre, retrato centrado y titular completo */}
+          <header className="flex flex-col items-center text-center gap-2 border-b-2 border-[#121a12] pb-2.5 mb-2.5 relative z-10">
+            <div className="w-full flex items-center justify-between gap-2 text-[10px] font-mono font-black uppercase tracking-widest text-zinc-600">
+              <span>{recurringChar.role}</span>
+              <span className="text-black">{recurringChar.name}</span>
             </div>
+
+            <div className="w-full py-1.5 bg-[#ece6d0]/80 border-2 border-[#121a12] flex items-center justify-center">
+              <CharacterPortrait
+                src={card.portraitUrl ?? recurringChar.portraitUrl}
+                speaker={recurringChar.name}
+                speakerRole={recurringChar.role}
+                alt={recurringChar.name}
+                isCrisis={isCrisis}
+                crisisType={crisisType}
+                size="lg"
+                className="shrink-0"
+              />
+            </div>
+
+            <h3 className="text-xs sm:text-sm font-mono font-black uppercase text-black leading-snug">
+              {card.headline}
+            </h3>
           </header>
 
           {/* Dilema directo */}
@@ -379,7 +379,7 @@ export function ReignsCard({
           <span className="text-[10px] font-black uppercase text-red-800 tracking-wider block mb-0.5">
             ← [ {card.leftChoice.stampText} ]
           </span>
-          <p className="text-[11px] sm:text-xs font-bold text-black leading-tight line-clamp-2">
+          <p className="text-[11px] sm:text-xs font-bold text-black leading-snug">
             {card.leftChoice.label}
           </p>
         </button>
@@ -401,7 +401,7 @@ export function ReignsCard({
           <span className="text-[10px] font-black uppercase text-black tracking-wider block mb-0.5">
             [ {card.rightChoice.stampText} ] →
           </span>
-          <p className="text-[11px] sm:text-xs font-bold text-black leading-tight line-clamp-2">
+          <p className="text-[11px] sm:text-xs font-bold text-black leading-snug">
             {card.rightChoice.label}
           </p>
         </button>

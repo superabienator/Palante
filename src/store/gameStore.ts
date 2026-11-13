@@ -122,6 +122,8 @@ export interface GameState {
   startReignsGame: (archetypeId?: ArchetypeId) => boolean;
   startNewReign: (generation?: number) => void;
   nextSuccessor: () => void;
+  returnToMenu: () => void;
+  resetDynasty: () => void;
   selectCharacter?: (archetypeId?: ArchetypeId) => boolean;
   setPreviewDirection: (dir: 'left' | 'right' | null) => void;
   makeReignsChoice: (direction: 'left' | 'right') => boolean;
@@ -563,6 +565,23 @@ export const useGameStore = create<GameState>()(
       },
 
       resetToCharacterSelect: () => {
+        set(createInitialReignState(1, 'NOT_STARTED'));
+      },
+
+      returnToMenu: () => {
+        set((state) => {
+          if (state.status === 'GAME_OVER') {
+            return createInitialReignState((state.rulerGeneration || 1) + 1, 'NOT_STARTED', {
+              bestQuartersSurvived: state.bestQuartersSurvived,
+              discoveredEndings: state.discoveredEndings,
+              lastDeathReason: state.lastDeathReason,
+            });
+          }
+          return { status: 'NOT_STARTED' as const, previewDirection: null };
+        });
+      },
+
+      resetDynasty: () => {
         set(createInitialReignState(1, 'NOT_STARTED'));
       },
     }),
